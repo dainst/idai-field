@@ -208,6 +208,10 @@
       "hidden": [],
       "fields": {}
     },
+    "SpatialReferenceElement:default": {
+      "hidden": [],
+      "fields": {}
+    },
     "TypeCatalog:default": {
       "hidden": [],
       "fields": {}
@@ -299,6 +303,7 @@
     "FindCollection",
     "Inscription",
     "Sample",
+    "SpatialReferenceElement",
     "Process",
     "Image",
     "Drawing",

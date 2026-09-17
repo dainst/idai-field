@@ -113,6 +113,13 @@ export namespace Relation {
     export const UNIDIRECTIONAL = Hierarchy.ALL.concat([IS_PRESENT_IN]);
 
 
+    export module Position {
+
+        export const IS_SPATIAL_REFERENCE_ENTITY_FOR = 'isSpatialReferenceElementFor';
+        export const HAS_SPATIAL_REFERENCE_ENTITY = 'hasSpatialReferenceElement';
+    }
+
+
     /**
      * Used to connect finds with type resources
      */

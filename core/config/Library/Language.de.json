@@ -1265,6 +1265,10 @@
         }
       }
     },
+    "SpatialReferenceElement": {
+      "label": "Räumliches Bezugselement",
+      "fields": {}
+    },
     "Drawing": {
       "label": "Zeichnung",
       "fields": {

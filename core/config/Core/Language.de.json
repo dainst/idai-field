@@ -117,6 +117,12 @@
     "hasMapLayer": {
       "label": "Hat Kartenhintergrund"
     },
+    "isSpatialReferenceElementFor": {
+      "label": "Ist räumliches Bezugselement für"
+    },
+    "hasSpatialReferenceElement": {
+      "label": "Räumliches Bezugselement"
+    },
     "isInstanceOf": {
       "label": "Typologische Einordnung"
     },

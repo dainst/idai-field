@@ -210,7 +210,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -234,7 +234,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -258,7 +258,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -282,7 +282,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -306,7 +306,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -325,7 +325,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry', 'includesStratigraphicalUnits']
+                        fields: ['geometry', 'includesStratigraphicalUnits', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -344,7 +344,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry', 'includesStratigraphicalUnits']
+                        fields: ['geometry', 'includesStratigraphicalUnits', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -378,7 +378,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -419,7 +419,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -445,7 +445,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -470,7 +470,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -494,7 +494,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -517,7 +517,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -542,7 +542,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -567,7 +567,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -590,7 +590,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -613,7 +613,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -638,7 +638,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -659,7 +659,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -684,7 +684,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -714,7 +714,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry', 'isPresentIn']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY, 'isPresentIn']
                     },
                     {
                         name: Groups.TIME,
@@ -743,7 +743,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry', 'isPresentIn']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY, 'isPresentIn']
                     }
                 ]
             }
@@ -769,7 +769,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry', 'isPresentIn']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY, 'isPresentIn']
                     }
                 ]
             }
@@ -803,7 +803,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -837,7 +837,7 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
                     }
                 ]
             }
@@ -866,7 +866,22 @@ export class BuiltInConfiguration {
                     },
                     {
                         name: Groups.POSITION,
-                        fields: ['geometry']
+                        fields: ['geometry', Relation.Position.HAS_SPATIAL_REFERENCE_ENTITY]
+                    }
+                ]
+            }
+        },
+        SpatialReferenceElement: {
+            fields: {},
+            minimalForm: {
+                groups: [
+                    {
+                        name: Groups.STEM,
+                        fields: ['identifier', 'category', 'shortDescription']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: ['geometry', Relation.Position.IS_SPATIAL_REFERENCE_ENTITY_FOR]
                     }
                 ]
             }
@@ -1107,6 +1122,28 @@ export class BuiltInConfiguration {
             inputType: 'relation'
         },
         {
+            name: 'isSpatialReferenceElementFor',
+            inverse: 'hasSpatialReferenceElement',
+            domain: ['SpatialReferenceElement'],
+            range: ['Operation', 'Profile', 'Planum', 'Place', 'Level', 'Room', 'RoomWall', 'RoomFloor', 'RoomCeiling',
+                'BuildingPart', 'Opening', 'Roof', 'Stairs', 'Area', 'Damage', 'DesignElement', 'Feature',
+                'FeatureGroup', 'FeatureSegment', 'Find', 'FindCollection', 'Sample'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
+            name: 'hasSpatialReferenceElement',
+            inverse: 'isSpatialReferenceElementFor',
+            domain: ['Operation', 'Profile', 'Planum', 'Place', 'Level', 'Room', 'RoomWall', 'RoomFloor', 'RoomCeiling',
+                'BuildingPart', 'Opening', 'Roof', 'Stairs', 'Area', 'Damage', 'DesignElement', 'Feature',
+                'FeatureGroup', 'FeatureSegment', 'Find', 'FindCollection', 'Sample'],
+            range: ['SpatialReferenceElement'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
             name: 'isAfter',
             inverse: 'isBefore',
             domain: ['Feature'],
@@ -1311,7 +1348,7 @@ export class BuiltInConfiguration {
         },
         {
             name: 'isRecordedIn',
-            domain: ['Find', 'FindCollection', 'Inscription', 'Sample'],
+            domain: ['Find', 'FindCollection', 'Inscription', 'Sample', 'SpatialReferenceElement'],
             range: ['Trench', 'Building', 'Survey', 'ExcavationArea'],
             editable: false,
             visible: false,
@@ -1437,6 +1474,15 @@ export class BuiltInConfiguration {
             domain: ['DesignElement'],
             range: ['BuildingPart', 'Room', 'Level', 'RoomFloor', 'RoomWall',
                 'RoomCeiling', 'Roof', 'Stairs', 'Opening'],
+            editable: false,
+            visible: false,
+            inputType: 'relation'
+        },
+        {
+            name: 'liesWithin',
+            domain: ['SpatialReferenceElement'],
+            range: ['Place', 'FeatureGroup', 'Feature', 'Area', 'BuildingPart', 'Level', 'Room', 'RoomCeiling',
+                'RoomWall', 'RoomFloor', 'Roof', 'Opening', 'Stairs', 'DesignElement'],
             editable: false,
             visible: false,
             inputType: 'relation'

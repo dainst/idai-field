@@ -1507,7 +1507,7 @@ export class BuiltInConfiguration {
         {
             name: 'liesWithin',
             domain: ['SpatialReferencePoint', 'SpatialReferenceLine'],
-            range: ['Place', 'FeatureGroup', 'Feature', 'Area', 'BuildingPart', 'Level', 'Room', 'RoomCeiling',
+            range: ['FeatureGroup', 'Feature', 'Area', 'BuildingPart', 'Level', 'Room', 'RoomCeiling',
                 'RoomWall', 'RoomFloor', 'Roof', 'Opening', 'Stairs', 'DesignElement'],
             editable: false,
             visible: false,

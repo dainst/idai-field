@@ -97,8 +97,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public getAvailableConditionFields = () => CategoryForm.getFields(this.category);
 
-    public getAvailableGeometryTypes = () => FieldGeometry.getAvailableGeometryTypes();
-
 
     public initialize() {
 
@@ -368,6 +366,18 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public getGeometryTypeLabel(geometryType: FieldGeometryType): string {
 
         return this.utilTranslations.getTranslation('geometry.' + geometryType);
+    }
+
+
+    public getAvailableGeometryTypes() {
+
+        if (this.category.name === 'SpatialReferencePoint') {
+            return ['Point', 'MultiPoint'];
+        } else if (this.category.name === 'SpatialReferenceLine') {
+            return ['LineString', 'MultiLineString'];
+        } else {
+            return FieldGeometry.getAvailableGeometryTypes();
+        }
     }
 
     

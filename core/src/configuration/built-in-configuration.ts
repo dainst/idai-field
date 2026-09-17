@@ -872,7 +872,11 @@ export class BuiltInConfiguration {
             }
         },
         SpatialReferencePoint: {
-            fields: {},
+            fields: {
+                geometry: {
+                    geometryTypes: ['Point']
+                }
+            },
             minimalForm: {
                 groups: [
                     {
@@ -887,7 +891,11 @@ export class BuiltInConfiguration {
             }
         },
         SpatialReferenceLine: {
-            fields: {},
+            fields: {
+                geometry: {
+                    geometryTypes: ['LineString']
+                }
+            },
             minimalForm: {
                 groups: [
                     {

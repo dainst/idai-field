@@ -125,7 +125,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
             this.getClonedFieldDefinition().condition = clone(this.field.condition) ?? Condition.getEmpty('field');
         }
         if (!this.getClonedFieldDefinition().geometryTypes) {
-            this.getClonedFieldDefinition().geometryTypes = FieldGeometry.getAvailableGeometryTypes().slice();
+            this.getClonedFieldDefinition().geometryTypes = this.field.defaultGeometryTypes
+                ?? FieldGeometry.getAvailableGeometryTypes().slice();
         }
 
         this.clonedField = clone(this.field);
@@ -180,7 +181,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         }
 
         if (this.getInputType() !== Field.InputType.GEOMETRY
-                || equal(this.getClonedFieldDefinition().geometryTypes)(FieldGeometry.getAvailableGeometryTypes())) {
+                || equal(this.getClonedFieldDefinition().geometryTypes)
+                    (this.field.defaultGeometryTypes ?? FieldGeometry.getAvailableGeometryTypes())) {
             delete this.getClonedFieldDefinition().geometryTypes;
         }
 
@@ -498,8 +500,10 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     private isGeometryTypesChanged(): boolean {
 
         const geometryTypes: Array<FieldGeometryType> = this.getCustomFieldDefinition()?.geometryTypes
+            ?? this.field.defaultGeometryTypes
             ?? FieldGeometry.getAvailableGeometryTypes();
         const clonedGeometryTypes: Array<FieldGeometryType> = this.getClonedFieldDefinition()?.geometryTypes
+            ?? this.field.defaultGeometryTypes
             ?? FieldGeometry.getAvailableGeometryTypes();
 
         return !equal(geometryTypes)(clonedGeometryTypes);

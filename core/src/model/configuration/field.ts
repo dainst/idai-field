@@ -39,9 +39,10 @@ export interface Field extends BaseField {
     source?: Field.SourceType;
     references?: string[];
     semanticReferences?: Array<SemanticReference>;
-    subfields?: Array<Subfield>;                // For input type "composite"
-    constraintName?: string;                    // For input type "derivedRelation"
-    geometryTypes?: Array<FieldGeometryType>;   // For input type "geometry"
+    subfields?: Array<Subfield>;                        // For input type "composite"
+    constraintName?: string;                            // For input type "derivedRelation"
+    geometryTypes?: Array<FieldGeometryType>;           // For input type "geometry"
+    defaultGeometryTypes?: Array<FieldGeometryType>;    // For input type "geometry"
 }
 
 

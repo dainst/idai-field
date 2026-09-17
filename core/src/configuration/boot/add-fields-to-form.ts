@@ -98,6 +98,12 @@ function getField(fieldName: string, form: TransientFormDefinition, categories: 
         field.required = true;
     }
     if (field.required) field.mandatory = true;
+    const geometryTypes = parentCategoryFields?.[fieldName]?.geometryTypes
+            ?? categories?.[form.categoryName]?.fields?.[fieldName]?.geometryTypes;
+    if (geometryTypes) {
+        field.geometryTypes = geometryTypes;
+        field.defaultGeometryTypes = geometryTypes;
+    }
 
     return field;
 }

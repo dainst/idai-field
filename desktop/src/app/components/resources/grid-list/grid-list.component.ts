@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChange
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { filter, flatten, flow, Map, map, set, take, pipe, to } from 'tsfun';
 import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus,
-    Resource, ProjectConfiguration, ImageVariant, Hierarchy, SortUtil, makeLookup,
+    Resource, ProjectConfiguration, ImageVariant, Hierarchy, Comparator, makeLookup,
     CategoryForm, Named } from 'idai-field-core';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 import { NavigationPath } from '../view/state/navigation-path';
@@ -80,6 +80,7 @@ export class GridListComponent extends BaseList implements OnChanges, OnDestroy 
                 private messages: Messages,
                 private warningsService: WarningsService,
                 private resourcesComponent: ResourcesComponent,
+                private comparator: Comparator,
                 changeDetectorRef: ChangeDetectorRef,
                 viewFacade: ViewFacade,
                 loading: Loading,
@@ -317,7 +318,7 @@ export class GridListComponent extends BaseList implements OnChanges, OnDestroy 
             = await this.datastore.getMultiple(linkedResourceIds) as Array<FieldDocument>;
 
         return linkedDocuments.sort((linkedDocument1, linkedDocument2) => {
-            return SortUtil.alnumCompare(linkedDocument1.resource.identifier, linkedDocument2.resource.identifier);
+            return this.comparator.alnumCompare(linkedDocument1.resource.identifier, linkedDocument2.resource.identifier);
         });
     }
 

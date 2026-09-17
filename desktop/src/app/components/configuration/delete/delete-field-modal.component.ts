@@ -46,9 +46,14 @@ export class DeleteFieldModalComponent {
 
     public getConditionalFieldName(): string|undefined {
 
-        const conditionalField: Field = CategoryForm.getFields(this.category).find(field => {
-            return field.condition?.fieldName === this.field.name;
-        });
+        let conditionalField: Field = undefined;
+
+        for (let category of this.category.children.concat([this.category])) {
+            conditionalField = CategoryForm.getFields(category).find(field => {
+                return field.condition?.fieldName === this.field.name;
+            });
+            if (conditionalField) break;
+        }
 
         return conditionalField?.name;
     }

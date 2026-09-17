@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { intersection, set } from 'tsfun';
 import { CategoryForm, FieldDocument, Document, NewDocument, RelationsManager, Relation, Datastore,
-    SortUtil, ProjectConfiguration, SortMode, ProcessDocument } from 'idai-field-core';
+    Comparator, ProjectConfiguration, SortMode, ProcessDocument } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
 import { DoceditComponent } from '../../../docedit/docedit.component';
@@ -39,7 +39,8 @@ export class WorkflowEditorModalComponent {
                 private datastore: Datastore,
                 private messages: Messages,
                 private routing: Routing,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private comparator: Comparator) {}
 
 
     public cancel = () => this.activeModal.close();
@@ -102,7 +103,7 @@ export class WorkflowEditorModalComponent {
             constraints: { 'isCarriedOutOn:contain': this.documents.map(document => document.resource.id) }
         })).documents as Array<ProcessDocument>;
 
-        sortProcesses(this.processes, this.sortMode);
+        sortProcesses(this.processes, this.sortMode, this.comparator);
     }
 
 
@@ -129,7 +130,7 @@ export class WorkflowEditorModalComponent {
     private sortDocuments() {
 
         this.documents.sort((document1, document2) => {
-            return SortUtil.alnumCompare(document1.resource.identifier, document2.resource.identifier);
+            return this.comparator.alnumCompare(document1.resource.identifier, document2.resource.identifier);
         });
     }
 

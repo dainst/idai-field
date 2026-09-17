@@ -874,6 +874,7 @@ export class BuiltInConfiguration {
         SpatialReferencePoint: {
             fields: {
                 geometry: {
+                    required: true,
                     geometryTypes: ['Point']
                 }
             },
@@ -893,6 +894,7 @@ export class BuiltInConfiguration {
         SpatialReferenceLine: {
             fields: {
                 geometry: {
+                    required: true,
                     geometryTypes: ['LineString']
                 }
             },

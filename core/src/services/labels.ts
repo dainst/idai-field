@@ -2,9 +2,9 @@ import { isString } from 'tsfun';
 import { I18N } from '../tools/i18n';
 import { Valuelist } from '../model/configuration/valuelist';
 import { CategoryForm } from '../model/configuration/category-form';
-import { SortUtil } from '../tools/sort-util';
 import { Relation } from '../model/configuration/relation';
 import { Field } from '../model/configuration/field';
+import { Comparator } from './comparator';
 
 
 /**
@@ -12,7 +12,8 @@ import { Field } from '../model/configuration/field';
  */
 export class Labels {
 
-    constructor(private getLanguages: () => string[]) {}
+    constructor(private comparator: Comparator,
+                private getLanguages: () => string[]) {}
 
 
     public get(labeledValue: I18N.LabeledValue): string {
@@ -83,7 +84,7 @@ export class Labels {
 
     private sortAlphanumerically = (valuelist: Valuelist) => (valueA: string, valueB: string): number => {
 
-        return SortUtil.alnumCompare(
+        return this.comparator.alnumCompare(
             this.getValueLabel(valuelist, valueA).toLowerCase(),
             this.getValueLabel(valuelist, valueB).toLowerCase()
         );

@@ -1151,8 +1151,8 @@ export class BuiltInConfiguration {
             range: ['Operation', 'Profile', 'Planum', 'Place', 'Level', 'Room', 'RoomWall', 'RoomFloor', 'RoomCeiling',
                 'BuildingPart', 'Opening', 'Roof', 'Stairs', 'Area', 'Damage', 'DesignElement', 'Feature',
                 'FeatureGroup', 'FeatureSegment', 'Find', 'FindCollection', 'Sample'],
-            editable: false,
-            visible: false,
+            editable: true,
+            visible: true,
             inputType: 'relation'
         },
         {
@@ -1162,8 +1162,8 @@ export class BuiltInConfiguration {
                 'BuildingPart', 'Opening', 'Roof', 'Stairs', 'Area', 'Damage', 'DesignElement', 'Feature',
                 'FeatureGroup', 'FeatureSegment', 'Find', 'FindCollection', 'Sample'],
             range: ['SpatialReferencePoint', 'SpatialReferenceLine'],
-            editable: false,
-            visible: false,
+            editable: true,
+            visible: true,
             inputType: 'relation'
         },
         {

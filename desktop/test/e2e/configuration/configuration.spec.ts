@@ -925,7 +925,7 @@ test.describe('configuration', () => {
     });
 
 
-    test('do not allow deleting a field that is configured as a condition of another field', async () => {
+    test('do not allow deleting a field that is configured as a condition for another field', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Feature');
         await ConfigurationPage.clickAddFieldButton();
@@ -952,7 +952,7 @@ test.describe('configuration', () => {
     });
 
 
-    test('do not allow deleting a field that is configured as a condition of a subcategory field', async () => {
+    test('do not allow deleting a field that is configured as a condition for a subcategory field', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Feature');
         await ConfigurationPage.clickAddFieldButton();
@@ -978,6 +978,148 @@ test.describe('configuration', () => {
             + '"Erdbefund" konfiguriert ist.');
 
         await DeleteFieldModalPage.clickCancel();
+        await ConfigurationPage.save();
+    });
+
+
+    test('do not allow changing the input type of a boolean field that is configured as a condition for another field',
+            async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('conditionField');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('boolean', 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('field');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickSelectConditionField('test:conditionField', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('test:conditionField');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        await EditConfigurationPage.clickInputTypeSelectOption('text', 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForMessage('Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für '
+            + 'das Feld "test:field" konfiguriert wurde.');
+
+        await EditConfigurationPage.clickCancel(true);
+        await ConfigurationPage.save();
+    });
+
+
+    test('do not allow changing the input type of a boolean field that is configured as a condition for a '
+            + 'subcategory field', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('conditionField');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('boolean', 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('field');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickSelectConditionField('test:conditionField', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickOpenContextMenuForField('test:conditionField');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        await EditConfigurationPage.clickInputTypeSelectOption('text', 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForMessage('Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für '
+            + 'das Feld "test:field" der Unterkategorie "Erdbefund" konfiguriert wurde.');
+
+        await EditConfigurationPage.clickCancel(true);
+        await ConfigurationPage.save();
+    });
+
+
+    test('do not allow changing the valuelist of a field that is configured as a condition for another field',
+            async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('conditionField');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'field');
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('periods-default-1');
+        await ManageValuelistsModalPage.clickSelectValuelist('periods-default-1');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('field');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickSelectConditionField('test:conditionField', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('test:conditionField');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        await EditConfigurationPage.clickSwapValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('orientation-default-1');
+        await ManageValuelistsModalPage.clickSelectValuelist('orientation-default-1');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForMessage('Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als '
+            + 'Bedingungsfeld für das Feld "test:field" konfiguriert wurde.');
+
+        await EditConfigurationPage.clickCancel(true);
+        await ConfigurationPage.save();
+    });
+
+
+    test('do not allow changing the valuelist of a field that is configured as a condition for a '
+            + 'subcategory field', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('conditionField');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'field');
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('periods-default-1');
+        await ManageValuelistsModalPage.clickSelectValuelist('periods-default-1');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirm();
+
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('field');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickSelectConditionField('test:conditionField', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickOpenContextMenuForField('test:conditionField');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        await EditConfigurationPage.clickSwapValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('orientation-default-1');
+        await ManageValuelistsModalPage.clickSelectValuelist('orientation-default-1');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForMessage('Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als '
+            + 'Bedingungsfeld für das Feld "test:field" der Unterkategorie "Erdbefund" konfiguriert wurde.');
+
+        await EditConfigurationPage.clickCancel(true);
         await ConfigurationPage.save();
     });
 

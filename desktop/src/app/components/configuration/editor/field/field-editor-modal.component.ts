@@ -688,7 +688,11 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private assertChangesDoNotViolateConditionalFields() {
 
-        const conditionalFields: Array<Field> = CategoryForm.getFields(this.category).filter(field => {
+        const fields: Array<Field> = this.category.children.concat([this.category]).reduce((result, category) => {
+            return result.concat(CategoryForm.getFields(category));
+        }, []);
+
+        const conditionalFields: Array<Field> = fields.filter(field => {
             return field.condition?.fieldName === this.field.name;
         });
 

@@ -136,6 +136,8 @@ function getGroupNameForUnassaginedField(fieldName: string): string {
         return Groups.POSITION;
     } else if (Relation.Time.ALL.includes(fieldName)) {
         return Groups.TIME;
+    } else if (Relation.Stratigraphy.ALL.includes(fieldName)) {
+        return Groups.STRATIGRAPHY;
     } else if (Relation.Type.ALL.includes(fieldName)) {
         return Groups.IDENTIFICATION;
     } else if (Relation.Inventory.ALL.includes(fieldName)) {

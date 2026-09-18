@@ -117,29 +117,29 @@ export class EditFormGroup extends ConfigurationInfoProvider implements OnChange
         if (!this.projectConfiguration.isSubcategory(this.document.resource.category, 'Feature')) return undefined;
 
         switch (field.name) {
-            case Relation.Position.ABOVE:
-            case Relation.Position.CUTS:
-            case Relation.Position.ABUTS:
-            case Relation.Position.FILLS:
+            case Relation.Stratigraphy.ABOVE:
+            case Relation.Stratigraphy.CUTS:
+            case Relation.Stratigraphy.ABUTS:
+            case Relation.Stratigraphy.FILLS:
                 return {
                     imageName: 'above',
                     tooltip: $localize `:@@docedit.stratigraphicalRelationInfo.aboveBelow:Die Ressourcen werden in der Matrixdarstellung übereinander angezeigt.`
                 };
-            case Relation.Position.BELOW:
-            case Relation.Position.CUTBY:
-            case Relation.Position.ABUTTEDBY:
-            case Relation.Position.FILLEDBY:
+            case Relation.Stratigraphy.BELOW:
+            case Relation.Stratigraphy.CUTBY:
+            case Relation.Stratigraphy.ABUTTEDBY:
+            case Relation.Stratigraphy.FILLEDBY:
                 return {
                     imageName: 'below',
                     tooltip: $localize `:@@docedit.stratigraphicalRelationInfo.aboveBelow:Die Ressourcen werden in der Matrixdarstellung übereinander angezeigt.`
                 };
             case Relation.SAME_AS:
-            case Relation.Position.BONDSWITH:
+            case Relation.Stratigraphy.BONDSWITH:
                 return {
                     imageName: 'same',
                     tooltip: $localize `:@@docedit.stratigraphicalRelationInfo.above:Die Ressourcen werden in der Matrixdarstellung gleichgesetzt.`
                 };
-            case Relation.Position.BORDERS:
+            case Relation.Stratigraphy.BORDERS:
                 return {
                     imageName: 'none',
                     tooltip: $localize `:@@docedit.stratigraphicalRelationInfo.none:Es existiert keine direkte stratigraphische Beziehung zwischen den Ressourcen. Die Relation wird in der Matrixdarstellung nicht berücksichtigt.`

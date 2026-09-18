@@ -511,7 +511,7 @@ describe('processRelations', () => {
     test('inverse relation not found', async () => {
 
         const doc = d('nf1', 'Feature', 'one');
-        doc.resource.relations[Relation.Position.BELOW] = ['17'];
+        doc.resource.relations[Relation.Stratigraphy.BELOW] = ['17'];
 
         try {
             await processRelations(

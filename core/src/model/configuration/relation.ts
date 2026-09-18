@@ -40,7 +40,7 @@ export namespace Relation {
     /**
      * Regarding stratigraphical units (Feature category)
      */
-    export module Position {
+    export module Stratigraphy {
 
         export const BELOW = 'isBelow';                // is read off by a user by sight
         export const ABOVE = 'isAbove';                // is read off by a user by sight
@@ -116,7 +116,8 @@ export namespace Relation {
     export module Position {
 
         export const IS_SPATIAL_REFERENCE_ELEMENT_FOR = 'isSpatialReferenceElementFor';
-        export const HAS_SPATIAL_REFERENCE_ELEMENT = 'hasSpatialReferenceElement';
+        export const HAS_SPATIAL_REFERENCE_ELEMENT = 'hasSpatialReferenceElement'
+        export const ALL = [IS_SPATIAL_REFERENCE_ELEMENT_FOR, HAS_SPATIAL_REFERENCE_ELEMENT];
     }
 
 

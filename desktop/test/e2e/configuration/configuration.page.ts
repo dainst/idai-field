@@ -79,12 +79,6 @@ export class ConfigurationPage {
     }
 
 
-    public static clickConfirmFieldDeletionButton() {
-
-        return click('#delete-field-button');
-    }
-
-
     public static clickNextInAddProcessSubcategoryModal() {
 
         return click('#add-process-subcategory-modal-next-button');

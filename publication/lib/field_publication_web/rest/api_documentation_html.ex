@@ -15,8 +15,7 @@ defmodule FieldPublicationWeb.ApiDocControllerHTML do
           presets: [
             SwaggerUIBundle.presets.apis,
             SwaggerUIStandalonePreset
-          ],
-          layout: "StandaloneLayout",
+          ]
         });
       };
     </script>

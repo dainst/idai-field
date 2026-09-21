@@ -7,6 +7,7 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
     CouchService,
     Project
   }
+
   alias FieldPublication.Test.ProjectSeed
 
   import Phoenix.LiveViewTest
@@ -17,7 +18,7 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
   setup_all %{} do
     CouchService.put_database(@core_database)
 
-    {project, publication} = ProjectSeed.create_full_publication(@test_project_identifier, false)
+    {project, publication} = ProjectSeed.create_full_publication(@test_project_identifier, true)
 
     on_exit(fn ->
       Project.get(@test_project_identifier)

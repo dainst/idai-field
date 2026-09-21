@@ -1,7 +1,6 @@
 defmodule FieldPublicationWeb.Rest.Api.V1.PublicationTest do
   use FieldPublicationWeb.ConnCase
 
-
   alias FieldPublication.{
     CouchService,
     Project,
@@ -15,7 +14,6 @@ defmodule FieldPublicationWeb.Rest.Api.V1.PublicationTest do
     FieldGroup,
     RelationGroup
   }
-
 
   alias FieldPublication.Test.ProjectSeed
 

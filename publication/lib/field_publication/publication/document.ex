@@ -23,7 +23,6 @@ defmodule FieldPublication.Publication.Field do
 end
 
 defmodule FieldPublication.Publication.Document do
-
   @derive Jason.Encoder
   @enforce_keys [:id, :identifier, :category, :project_identifier, :publication_draft_date]
   defstruct [

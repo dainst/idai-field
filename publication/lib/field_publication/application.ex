@@ -5,7 +5,7 @@ defmodule FieldPublication.Application do
   alias FieldPublication.{
     ApplicationSettings,
     CouchService,
-    FileService,
+    FileService
   }
 
   use Application

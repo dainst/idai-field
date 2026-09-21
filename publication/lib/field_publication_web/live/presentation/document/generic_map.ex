@@ -14,7 +14,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
     DocumentPreview,
     Field,
     FieldGroup,
-    RelationGroup,
+    RelationGroup
   }
 
   alias FieldPublicationWeb.Components.DocumentMap

@@ -245,6 +245,9 @@ export class AppComponent {
             'false', $localize `:@@boolean.no:Nein`
         );
         this.utilTranslations.addTranslation(
+            'condition.filledIn', $localize `:@@condition.filledIn:Feld ausgefüllt`
+        );
+        this.utilTranslations.addTranslation(
             'warnings.all', $localize `:@@util.warnings.all:Alle`
         );
         this.utilTranslations.addTranslation(

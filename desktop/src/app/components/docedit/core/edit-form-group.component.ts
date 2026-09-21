@@ -167,7 +167,9 @@ export class EditFormGroup extends ConfigurationInfoProvider implements OnChange
             )
         );
 
-        if (isArray(field.condition.values) && (field.condition.values as string[]).length > 1) {
+        if (field.condition.exists) {
+            return $localize `:@@docedit.conditionalFieldInfo.tooltip.exists:Dieses Feld wird angezeigt, weil das Feld "${fieldLabel}" ausgefüllt ist.`;
+        } else if (isArray(field.condition.values) && (field.condition.values as string[]).length > 1) {
             return $localize `:@@docedit.conditionalFieldInfo.tooltip.multiple:Dieses Feld wird angezeigt, weil im Feld "${fieldLabel}" einer der folgenden Werte eingetragen ist: ${conditionLabel}`;
         } else {
             return $localize `:@@docedit.conditionalFieldInfo.tooltip.single:Dieses Feld wird angezeigt, weil im Feld "${fieldLabel}" der Wert "${conditionLabel}" eingetragen ist.`;

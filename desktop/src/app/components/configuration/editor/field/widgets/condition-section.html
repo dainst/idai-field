@@ -13,24 +13,44 @@
     <select class="form-control condition-field-select"
             [(ngModel)]="condition[type + 'Name']"
             [disabled]="disabled"
-            (change)="resetConditionValues()">
+            (change)="resetCondition()">
         <option value="" i18n="@@configuration.condition.none">- Keine -</option>
         <option *ngFor="let field of getConditionFields()" [value]="field.name">
             {{getFieldLabel(field)}}
         </option>
     </select>
-    <div *ngIf="condition[type + 'Name'] && this.getConditionType() === 'valuelist'"
+    <div *ngIf="condition[type + 'Name']"
+         class="configuration-editor-switch exists-condition-switch"
+         container="body">
+        <div class="basic-settings-label">
+            <span i18n="@@configuration.existsCondition"
+                  [class.disabled]="disabled || this.getConditionType() === 'other'">Feld beliebig ausgefüllt</span>
+        </div>
+        <div>
+            <label id="toggle-exists-condition-slider" class="switch">
+                <input type="checkbox"
+                       [checked]="condition.exists"
+                       [disabled]="disabled || this.getConditionType() === 'other'"
+                       (change)="toggleExistsCondition()">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+    <div *ngIf="condition[type + 'Name'] && this.getConditionType() === 'valuelist' && !condition.exists"
          class="valuelist-condition-checkboxes">
         <div *ngFor="let value of getConditionValues()" class="checkbox form-check form-check-inline">
             <label class="form-check-label" [class.disabled]="disabled">
-                <input class="form-check-input" [value]="value" [disabled]="disabled" type="checkbox"
-                    (click)="toggleConditionValue(value)"
-                    [checked]="isSelectedConditionValue(value)">
+                <input class="form-check-input"
+                       [value]="value"
+                       [disabled]="disabled"
+                       type="checkbox"
+                       (click)="toggleConditionValue(value)"
+                       [checked]="isSelectedConditionValue(value)">
                 {{getValueLabel(value)}}
             </label>
         </div>
     </div>
-    <div *ngIf="condition[type + 'Name'] && this.getConditionType() === 'boolean'"
+    <div *ngIf="condition[type + 'Name'] && this.getConditionType() === 'boolean' && !condition.exists"
          class="boolean-condition-radio-buttons">
         <div class="radio form-check form-check-inline">
             <label class="form-check-label">

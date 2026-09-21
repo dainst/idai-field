@@ -59,6 +59,7 @@ defmodule FieldPublicationWeb.Api do
     spec = %{
       get: %{
         tags: ["IIIF Image API 3.0"],
+        security: [%{}, %{"basic_auth" => []}],
         summary: "IIIF Image API 3.0 information request",
         description:
           "This endpoint allows users retrieve __image metadata__ according to the IIIF image
@@ -101,6 +102,7 @@ defmodule FieldPublicationWeb.Api do
       get: %{
         summary: "IIIF Image API 3.0 data request",
         tags: ["IIIF Image API 3.0"],
+        security: [%{}, %{"basic_auth" => []}],
         description: "This endpoint allows users retrieve __image data__ according the IIIF image
         API Version 3, compliance level 2. For more detailed information about what different
         parameters are available, have a look at the linked official documentation.",

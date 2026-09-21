@@ -16,6 +16,7 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
   @publication_not_found_message "Publication not found."
 
   tags(["Field Publication API 1.0"])
+  security [%{}, %{"basic_auth" => []}]
 
   operation(:index,
     summary: "Index of all documents in the given publication.",

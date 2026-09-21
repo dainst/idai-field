@@ -1,5 +1,4 @@
 defmodule FieldPublication.Publication.Geo do
-
   alias FieldPublication.{
     CouchService,
     FileService,
@@ -73,10 +72,13 @@ defmodule FieldPublication.Publication.Geo do
           name: "Vector geometries for #{publication._id}."
         },
         fn
-          %Publication.Document{
-            geometry: geometry,
-            category: %Publication.Category{} = category_info
-          } = doc,
+          {
+            :ok,
+            %Publication.Document{
+              geometry: geometry,
+              category: %Publication.Category{} = category_info
+            } = doc
+          },
           geometry_collection ->
             updated_features =
               geometry_collection.features ++
@@ -198,12 +200,10 @@ defmodule FieldPublication.Publication.Geo do
          output_epsg
        )
        when is_number(input_epsg) and is_number(output_epsg) do
-
     temp_file =
       output_file
       |> Path.dirname()
       |> Path.join("temp.geojson")
-
 
     File.write!(temp_file, Jason.encode!(geo_json))
 

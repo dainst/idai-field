@@ -12,7 +12,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
       Enum.map(
         Publication.get_current_published(),
         fn %Publication{project_identifier: project_identifier} = publication ->
-          doc = Publication.get_extended_document("project", publication)
+          {:ok, doc} = Publication.get_extended_document("project", publication)
 
           longitude =
             Document.get_field_value(

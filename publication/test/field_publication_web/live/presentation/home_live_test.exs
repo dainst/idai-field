@@ -45,7 +45,7 @@ defmodule FieldPublicationWeb.Presentation.HomeLiveTest do
 
     assert html =~ "Projects"
 
-    doc = Publication.get_extended_document("project", publication)
+    {:ok, doc} = Publication.get_extended_document("project", publication)
 
     short_description = Document.get_field_value(doc, "shortName") |> Map.get("en")
 

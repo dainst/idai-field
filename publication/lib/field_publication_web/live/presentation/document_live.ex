@@ -71,7 +71,7 @@ defmodule FieldPublicationWeb.Presentation.DocumentLive do
             message:
               "No document with id `#{Map.get(parameters, "uuid")}` for publication of project `#{publication.project_identifier}` on #{publication.draft_date}."
 
-        %Document{id: uuid} = document ->
+        {:ok, %Document{id: uuid} = document} ->
           project_map_layers = Publication.get_project_map_layers(publication)
           image_categories = Configuration.get_image_categories(publication)
 

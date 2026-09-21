@@ -169,11 +169,16 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
       ) do
     publication = Publication.get!(project_identifier, draft_date)
 
-    doc = Publication.get_extended_document(uuid, publication, true)
+    Publication.get_extended_document(uuid, publication, true)
+    |> case do
+      {:ok, doc} ->
+        conn
+        |> Plug.Conn.put_resp_header("content-type", "application/json")
+        |> Plug.Conn.send_resp(200, Jason.encode!(doc))
 
-    conn
-    |> Plug.Conn.put_resp_header("content-type", "application/json")
-    |> Plug.Conn.send_resp(200, Jason.encode!(doc))
+      _error ->
+        Plug.Conn.send_resp(conn, 404, "Not found")
+    end
   end
 
   operation(:geo_collections,

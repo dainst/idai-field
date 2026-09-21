@@ -104,11 +104,13 @@ defmodule FieldPublication.Publication do
   def set_metadatabase_name(changeset) do
     id = get_field(changeset, :_id)
 
-    db_name ="meta%2F#{id}"
+    db_name = "meta%2F#{id}"
+
     CouchService.put_database(db_name)
     |> case do
       {:ok, %{status: status}} when status in [201, 202, 412] ->
         put_change(changeset, :meta_database, db_name)
+
       error ->
         Logger.error(inspect(error))
         add_error(changeset, :meta_database, "Unable to create metadatabase for #{id}.")
@@ -724,36 +726,6 @@ defmodule FieldPublication.Publication do
         Configuration.apply_project_configuration(doc, config, publication, include_relations)
     end
   end
-
-  def get_extended_documents(
-        uuids,
-        %__MODULE__{} = publication,
-        include_relations \\ false
-      ) do
-    config = Configuration.get(publication)
-
-    uuids
-    |> get_raw_documents(publication)
-    |> Enum.map(
-      &Configuration.apply_project_configuration(&1, config, publication, include_relations)
-    )
-  end
-
-  # def list_with_geometries(%__MODULE__{} = publication) do
-  #   db_name = get_meta_database_name(publication)
-
-  #   CouchService.get_document_stream(
-  #     %{
-  #       selector: %{"preview.geometry": %{"$ne": nil}},
-  #       use_index: "previews-with-geometry-index"
-  #     },
-  #     db_name
-  #   )
-  #   |> Stream.map(fn %{"preview" => preview} ->
-  #     preview
-  #   end)
-  #   |> Stream.map(&Configuration.document_map_to_struct/1)
-  # end
 
   def recreate_database_indices(%__MODULE__{database: database} = publication) do
     %{relations: relations} =

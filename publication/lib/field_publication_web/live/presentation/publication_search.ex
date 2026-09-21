@@ -28,7 +28,7 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
       ) do
     publication = Publication.get!(project_identifier, draft_date)
 
-    project_document = Publication.get_extended_document("project", publication, true)
+    {:ok, project_document} = Publication.get_extended_document("project", publication, true)
 
     {
       :ok,

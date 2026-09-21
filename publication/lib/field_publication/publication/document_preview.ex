@@ -94,9 +94,7 @@ defmodule FieldPublication.Publication.DocumentPreview do
     end
   end
 
-  def recreate_previews(
-        %Publication{} = publication
-      ) do
+  def recreate_previews(%Publication{} = publication) do
     clear_all(publication)
     create_all(publication)
   end
@@ -157,7 +155,7 @@ defmodule FieldPublication.Publication.DocumentPreview do
       {raw_doc, Configuration.apply_project_configuration(raw_doc, config, publication)}
     end)
     |> Stream.filter(fn
-      {_raw_doc, %Document{} = _full} ->
+      {_raw_doc, {:ok, %Document{} = _full}} ->
         true
 
       {raw_doc, error} ->
@@ -180,7 +178,7 @@ defmodule FieldPublication.Publication.DocumentPreview do
 
         false
     end)
-    |> Stream.map(fn {_raw_doc, %Document{} = doc} ->
+    |> Stream.map(fn {_raw_doc, {:ok, %Document{} = doc}} ->
       # Remove groups and relations from doc
       create(doc)
     end)

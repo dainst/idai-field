@@ -220,9 +220,9 @@ defmodule FieldPublication.Publication.Configuration do
               other_relations
             end
 
-          %Document{doc | relations: all_relations}
+          {:ok, %Document{doc | relations: all_relations}}
         else
-          doc
+          {:ok, doc}
         end
 
       {:error, :unknown_category} ->

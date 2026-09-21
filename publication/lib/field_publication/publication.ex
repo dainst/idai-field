@@ -106,9 +106,9 @@ defmodule FieldPublication.Publication do
 
     db_name = "meta%2F#{id}"
 
-    CouchService.put_database(db_name)
+    create_meta_database(db_name)
     |> case do
-      {:ok, %{status: status}} when status in [201, 202, 412] ->
+      {:ok, _db_name} ->
         put_change(changeset, :meta_database, db_name)
 
       error ->
@@ -148,7 +148,7 @@ defmodule FieldPublication.Publication do
     end
   end
 
-  def create_meta_database(%__MODULE__{meta_database: meta_db}) do
+  defp create_meta_database(db_name) when is_binary(db_name) do
     index_documents =
       [
         %{
@@ -221,12 +221,12 @@ defmodule FieldPublication.Publication do
         }
       ]
 
-    CouchService.put_database(meta_db)
+    CouchService.put_database(db_name)
     |> case do
       {:ok, %{status: status}} when status in [201, 202] ->
-        Enum.each(index_documents, &CouchService.put_index_document(&1, meta_db))
+        Enum.each(index_documents, &CouchService.put_index_document(&1, db_name))
 
-        {:ok, meta_db}
+        {:ok, db_name}
 
       {:ok, %{status: 400}} ->
         {:error, :invalid_name}
@@ -238,8 +238,8 @@ defmodule FieldPublication.Publication do
         {:error, :forbidden}
 
       {:ok, %{status: 412}} ->
-        Enum.each(index_documents, &CouchService.put_index_document(&1, meta_db))
-        {:already_exists, meta_db}
+        Enum.each(index_documents, &CouchService.put_index_document(&1, db_name))
+        {:ok, db_name}
     end
   end
 

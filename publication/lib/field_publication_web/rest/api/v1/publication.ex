@@ -4,8 +4,6 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
 
   import Plug.Conn
 
-  alias OpenApiSpex.Schema
-
   alias FieldPublication.{
     FileService,
     Publication
@@ -181,8 +179,9 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
     end
   end
 
-  operation(:geo_collections,
-    summary: "GeoJSON feature collections for a given publication.",
+  operation(:list_geo_vector_data,
+    summary:
+      "Information concerning the available GeoJSON feature collections for a given publication.",
     parameters: [
       project_identifier: [
         in: :path,
@@ -199,40 +198,12 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
     ],
     responses: [
       ok: {
-        "Project and publication list",
-        "application/geo+json",
-        %Schema{
-          type: :array,
-          items: %OpenApiSpex.Reference{
-            "$ref": "https://geojson.org/schema/FeatureCollection.json"
-          }
-        }
+        "Information about the publication's default coordinate projection and alternative projections available.",
+        "application/json",
+        nil
       }
     ]
   )
-
-  def geo_collections(conn, %{
-        "project_identifier" => project_identifier,
-        "draft_date" => draft_date
-      })
-      when is_binary(project_identifier) and is_binary(draft_date) do
-    path =
-      Publication.get!(project_identifier, draft_date)
-      |> FileService.publication_geometry_path(true)
-
-    if File.exists?(path) do
-      conn
-      |> Plug.Conn.put_resp_header("content-encoding", "br")
-      |> Plug.Conn.put_resp_header("content-type", "application/geo+json")
-      # TODO: Set public/private based on publication status
-      |> Plug.Conn.put_resp_header("cache-control", "private, max-age=86400, immutable")
-      |> Plug.Conn.send_file(200, path)
-    else
-      conn
-      |> Plug.Conn.put_resp_header("content-type", "application/json")
-      |> Plug.Conn.send_resp(404, JSON.encode!(%{}))
-    end
-  end
 
   def list_geo_vector_data(conn, %{
         "project_identifier" => project_identifier,
@@ -259,6 +230,41 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
         |> send_resp(404, @publication_not_found_message)
     end
   end
+
+  operation(:geo_vector_data,
+    summary: "GeoJSON feature collection for a given publication.",
+    parameters: [
+      project_identifier: [
+        in: :path,
+        description: "The project's identifier",
+        type: :string,
+        example: nil
+      ],
+      draft_date: [
+        in: :path,
+        description: "A publication's draft date linked to the specified project",
+        type: :string,
+        example: nil
+      ],
+      epsg: [
+        in: :path,
+        description:
+          "The vector projection the returned features should use as a EPSG code. Can be either `default`, which will return whatever the
+        publication's default projection has been or a number representing the EPSG code.",
+        type: :string,
+        example: nil
+      ]
+    ],
+    responses: [
+      ok: {
+        "Project and publication list",
+        "application/geo+json",
+        %OpenApiSpex.Reference{
+          "$ref": "https://geojson.org/schema/FeatureCollection.json"
+        }
+      }
+    ]
+  )
 
   def geo_vector_data(conn, %{
         "project_identifier" => project_identifier,

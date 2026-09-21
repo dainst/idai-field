@@ -21,7 +21,6 @@ defmodule FieldPublication.Processing do
     LogEntry
   }
 
-
   require Logger
 
   @moduledoc """
@@ -58,13 +57,13 @@ defmodule FieldPublication.Processing do
   ## Start of API functions to be called from the rest of the application.
 
   @doc """
-  Start all processing tasks for the given publication.
+  Start all processing tasks for the given publication. The `:geo_collection` task is already part
+  of the `:search_index` one, so we do not start it twice.
   """
   def start(%Publication{} = publication) do
     GenServer.call(__MODULE__, {:start, publication, :web_images})
     GenServer.call(__MODULE__, {:start, publication, :tile_images})
     GenServer.call(__MODULE__, {:start, publication, :search_index})
-    GenServer.call(__MODULE__, {:start, publication, :geo_collections})
     GenServer.call(__MODULE__, {:start, publication, :preview_documents})
     GenServer.call(__MODULE__, {:start, publication, :database_indices})
   end

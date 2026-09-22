@@ -665,12 +665,26 @@
         "SpatialReferencePoint:archaeoDox": {
           "identifierPrefix": "R",
           "hidden": [],
-          "fields": {}
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            }
+          }
         },
         "SpatialReferenceLine:archaeoDox": {
           "identifierPrefix": "R",
           "hidden": [],
-          "fields": {}
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            }
+          }
         },
         "Image:archaeoDox": {
           "hidden": [],

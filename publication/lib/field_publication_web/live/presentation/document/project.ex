@@ -97,7 +97,13 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
           <% contact_person = Document.get_field(@doc, "contactPerson") %>
           <%= if contact_mail do %>
             <.labeled_value>
-              <:label><.render_field_label field={contact_person} /></:label>
+              <:label>
+                <%= if contact_person do %>
+                  <.render_field_label field={contact_person} />
+                <% else %>
+                  {gettext("contact")}
+                <% end %>
+              </:label>
               <a href={"mailto:#{contact_mail.value}"}>
                 <.icon name="hero-envelope" class="h-6 w-6 mr-1" />
                 <%= if contact_person do %>

@@ -702,22 +702,37 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     private assertChangesDoNotViolateConditionalFields() {
 
-        const conditionalFields: Array<Field> = CategoryForm.getFields(this.category).filter(field => {
-            return field.condition?.fieldName === this.field.name;
-        });
+        const conditionalFields: Array<[Field, CategoryForm]> = [this.category].concat(this.category.children)
+            .reduce((result, category) => {
+                return result.concat(
+                    CategoryForm.getFields(category)
+                        .filter(field => field.condition?.fieldName === this.field.name)
+                        .map(field => [field, category])
+                );
+            }, []);
 
         const values: string[] = this.clonedField.valuelist
             ? Object.keys(this.clonedField.valuelist.values)
             : [];
 
-        for (let field of conditionalFields) {
+        for (let [field, category] of conditionalFields) {
             if ((field.condition.values === true || field.condition.values === false)
                     && this.getInputType() !== Field.InputType.BOOLEAN) {
-                throw [M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE, this.labels.get(field)];
+                if (category === this.category) {
+                    throw [M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE, this.labels.get(field)];
+                } else {
+                    throw [M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE_CHILD_CATEGORY,
+                        this.labels.get(field), this.labels.get(category)];
+                }
             } else if (isArray(field.condition.values)
                 && (!Field.InputType.VALUELIST_INPUT_TYPES.includes(this.getInputType())
                         || !subsetOf(values, field.condition.values))) {
-                throw [M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS, this.labels.get(field)];
+                if (category === this.category) {
+                    throw [M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS, this.labels.get(field)];
+                } else {
+                    throw [M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS_CHILD_CATEGORY,
+                        this.labels.get(field), this.labels.get(category)];
+                }
             }
         }
     }

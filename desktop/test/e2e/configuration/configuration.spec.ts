@@ -804,11 +804,19 @@ test.describe('configuration', () => {
         await EditConfigurationPage.clickSelectConditionValue('valuelist', 0, 'field');
         await EditConfigurationPage.clickConfirm();
 
+        await ConfigurationPage.clickOpenContextMenuForField('featureBorders');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectConditionField('description', 'field');
+        await EditConfigurationPage.clickConfirm();
+
         await ConfigurationPage.clickSelectField('featureForm');
         expect(await ConfigurationPage.getConditionLabelText()).toEqual('Störung: Ja');
 
         await ConfigurationPage.clickSelectField('comparison');
         expect(await ConfigurationPage.getConditionLabelText()).toEqual('Form der stratigraphischen Einheit: annähernd');
+
+        await ConfigurationPage.clickSelectField('featureBorders');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Beschreibung: Feld ausgefüllt');
 
         await ConfigurationPage.save();
 
@@ -820,12 +828,16 @@ test.describe('configuration', () => {
         await waitForExist(await DoceditPage.getField('hasDisturbance'));
         await waitForNotExist(await DoceditPage.getField('featureForm'));
         await waitForNotExist(await DoceditPage.getField('comparison'));
+        await waitForNotExist(await DoceditPage.getField('featureBorders'));
 
         await DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
         await waitForExist(await DoceditPage.getField('featureForm'));
 
         await DoceditPage.clickCheckbox('featureForm', 0);
         await waitForExist(await DoceditPage.getField('comparison'));
+
+        await DoceditPage.typeInTextField('description', 'Test');
+        await waitForExist(await DoceditPage.getField('featureBorders'));
 
         await DoceditPage.clickCloseEdit('discard');
     });

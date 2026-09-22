@@ -663,10 +663,12 @@
           "color": "#ff0000"
         },
         "SpatialReferencePoint:archaeoDox": {
+          "identifierPrefix": "R",
           "hidden": [],
           "fields": {}
         },
         "SpatialReferenceLine:archaeoDox": {
+          "identifierPrefix": "R",
           "hidden": [],
           "fields": {}
         },

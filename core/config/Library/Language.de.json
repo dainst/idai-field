@@ -1267,11 +1267,19 @@
     },
     "SpatialReferencePoint": {
       "label": "Räumlicher Bezugspunkt",
-      "fields": {}
+      "fields": {
+        "spatialReferencePointType": {
+          "label": "Art des räumlichen Bezugspunkts"
+        }
+      }
     },
     "SpatialReferenceLine": {
       "label": "Räumliche Bezugslinie",
-      "fields": {}
+      "fields": {
+        "spatialReferenceLineType": {
+          "label": "Art der räumlichen Bezugslinie"
+        }
+      }
     },
     "Drawing": {
       "label": "Zeichnung",
@@ -1939,6 +1947,19 @@
         },
         "archaeoDox:soilProperties": {
           "label": "Bodeneigenschaften"
+        }
+      }
+    },
+    "SpatialReferencePoint:archaeoDox": {
+      "fields": {
+        "archaeoDox:paarView": {
+          "label": "ProfileAAR Blickrichtung"
+        },
+        "archaeoDox:paarUpts": {
+          "label": "ProfileAAR verwendete Punkte"
+        },
+        "archaeoDox:zValue": {
+          "label": "Z"
         }
       }
     }

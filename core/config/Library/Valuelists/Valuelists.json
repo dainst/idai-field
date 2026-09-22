@@ -2972,6 +2972,26 @@
       "Pollenanalyse": {}
     }
   },
+  "SpatialReferencePoint-spatialReferencePointType-default": {
+    "createdBy": "",
+    "creationDate": "",
+    "values": {
+      "Nivellement": {},
+      "Hauptmesspunkt": {},
+      "Profilnagel": {},
+      "Fotogrammnagel": {}
+    }
+  },
+  "SpatialReferenceLine-spatialReferenceLineType-default": {
+    "createdBy": "",
+    "creationDate": "",
+    "values": {
+      "Kontur unsicher": {},
+      "Profilschnitt": {},
+      "Böschung Oberkante": {},
+      "Böschung Unterkante": {}
+    }
+  },
   "TypeCatalog-criterion-default": {
     "createdBy": "",
     "creationDate": "",

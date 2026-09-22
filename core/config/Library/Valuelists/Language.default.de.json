@@ -5536,6 +5536,38 @@
       }
     }
   },
+  "SpatialReferencePoint-spatialReferencePointType-default": {
+    "values": {
+      "Nivellement": {
+        "label": "Nivellement"
+      },
+      "Hauptmesspunkt": {
+        "label": "Hauptmesspunkt"
+      },
+      "Profilnagel": {
+        "label": "Profilnagel"
+      },
+      "Fotogrammnagel": {
+        "label": "Fotogrammnagel"
+      }
+    }
+  },
+  "SpatialReferenceLine-spatialReferenceLineType-default": {
+    "values": {
+      "Kontur unsicher": {
+        "label": "Kontur unsicher"
+      },
+      "Profilschnitt": {
+        "label": "Profilschnitt"
+      },
+      "Böschung Oberkante": {
+        "label": "Böschung Oberkante"
+      },
+      "Böschung Unterkante": {
+        "label": "Böschung Unterkante"
+      }
+    }
+  },
   "TypeCatalog-criterion-default": {
     "values": {
       "Form": {

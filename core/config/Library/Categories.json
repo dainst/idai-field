@@ -1593,6 +1593,26 @@
       }
     }
   },
+  "SpatialReferencePoint": {
+    "description": {},
+    "fields": {
+      "spatialReferencePointType": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "SpatialReferencePoint-spatialReferencePointType-default"
+      }
+    }
+  },
+  "SpatialReferenceLine": {
+    "description": {},
+    "fields": {
+      "spatialReferenceLineType": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "SpatialReferenceLine-spatialReferenceLineType-default"
+      }
+    }
+  },
   "Damage": {
     "color": "#ff0000",
     "description": {},

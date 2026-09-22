@@ -1609,7 +1609,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description"]
+          "fields": ["description", "spatialReferencePointType"]
         },
         {
           "name": "position",
@@ -1622,18 +1622,29 @@
       "createdBy": "",
       "creationDate": "",
       "categoryName": "SpatialReferencePoint",
+      "fields": {
+        "archaeoDox:paarView": {
+          "inputType": "input"
+        },
+        "archaeoDox:paarUpts": {
+          "inputType": "int"
+        },
+        "archaeoDox:zValue": {
+          "inputType": "float"
+        }
+      },
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "date"]
+          "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit", "processor", "date"]
         },
         {
           "name": "properties",
-          "fields": ["description"]
+          "fields": ["description", "spatialReferencePointType", "archaeoDox:paarView", "archaeoDox:paarUpts"]
         },
         {
           "name": "position",
-          "fields": ["geometry", "isSpatialReferenceElementFor"]
+          "fields": ["geometry", "archaeoDox:zValue", "isSpatialReferenceElementFor"]
         }
       ]
     },
@@ -1649,7 +1660,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description"]
+          "fields": ["description", "spatialReferenceLineType"]
         },
         {
           "name": "position",
@@ -1669,7 +1680,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description"]
+          "fields": ["description", "spatialReferenceLineType"]
         },
         {
           "name": "position",

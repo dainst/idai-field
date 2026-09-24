@@ -14,6 +14,7 @@ import { AddFieldModalPage } from '../configuration/add-field-modal.page';
 import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
 import { WorkflowEditorModalPage } from '../widgets/workflow-editor-modal.page';
 import { AddCategoryFormModalPage } from '../configuration/add-category-form-modal.page';
+import { DeleteFieldModalPage } from '../configuration/delete-field-modal.page';
 
 
 export async function createResourceLimitWarnings(resourceIdentifiers: string[]) {
@@ -395,7 +396,7 @@ export async function createUnconfiguredFieldWarnings(resourceIdentifiers: strin
     await CategoryPickerPage.clickSelectCategory('Place');
     await ConfigurationPage.clickOpenContextMenuForField(completeFieldName);
     await ConfigurationPage.clickContextMenuDeleteOption();
-    await ConfigurationPage.clickConfirmFieldDeletionButton();
+    await DeleteFieldModalPage.clickConfirm();
     await ConfigurationPage.save();
 
     await NavbarPage.clickCloseNonResourcesTab();
@@ -423,7 +424,7 @@ export async function createUnconfiguredRelationFieldWarnings(resourceIdentifier
     await CategoryPickerPage.clickSelectCategory('Feature');
     await ConfigurationPage.clickOpenContextMenuForField(completeRelationName);
     await ConfigurationPage.clickContextMenuDeleteOption();
-    await ConfigurationPage.clickConfirmFieldDeletionButton();
+    await DeleteFieldModalPage.clickConfirm();
     await ConfigurationPage.save();
 
     await NavbarPage.clickCloseNonResourcesTab();

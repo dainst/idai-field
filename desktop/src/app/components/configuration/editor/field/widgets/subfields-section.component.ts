@@ -72,15 +72,16 @@ export class SubfieldsSectionComponent {
     }
 
 
-    public getConditionValueLabels(condition: Condition): string {
+    public getConditionValueLabel(condition: Condition): string {
 
         const subfield: Subfield = this.clonedField.subfields?.find(on(Named.NAME, is(condition.subfieldName)));
 
         return subfield
-            ? (condition.values as string[])
-                .map(valueId => this.labels.getValueLabel(subfield.valuelist, valueId))
-                .join(', ')
-            : '';
+            ? Condition.generateLabel(
+                condition,
+                key => this.utilTranslations.getTranslation(key),
+                valueId => this.labels.getValueLabel(subfield.valuelist, valueId)
+            ) : '';
     }
 
 

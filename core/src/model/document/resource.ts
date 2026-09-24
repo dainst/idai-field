@@ -4,11 +4,11 @@ import { Datastore } from '../../datastore/datastore';
 import { Document } from './document';
 import { notBothEqual, notCompareInBoth } from '../../tools/compare';
 import { Name } from '../../tools/named';
-import { SortUtil } from '../../tools/sort-util';
 import { concatIf } from '../../tools/utils';
 import { Labels, ProjectConfiguration } from '../../services';
 import { Valuelist } from '../configuration/valuelist';
 import { CategoryForm } from '../configuration/category-form';
+import { Comparator } from '../../services/comparator';
 
 
 export interface NewResource {
@@ -91,13 +91,14 @@ export module Resource {
     }
 
 
-    export async function getRelationTargetDocuments(resource: Resource, datastore: Datastore): Promise<Map<Array<Document>>> {
+    export async function getRelationTargetDocuments(resource: Resource, datastore: Datastore,
+                                                     comparator: Comparator): Promise<Map<Array<Document>>> {
 
         const targets: Map<Array<Document>> = {};
     
         for (let relationName of Object.keys(resource.relations)) {
             targets[relationName] = (await datastore.getMultiple(resource.relations[relationName]))
-                .sort((target1, target2) => SortUtil.alnumCompare(
+                .sort((target1, target2) => comparator.alnumCompare(
                     target1.resource.identifier, target2.resource.identifier
                 ));
         }

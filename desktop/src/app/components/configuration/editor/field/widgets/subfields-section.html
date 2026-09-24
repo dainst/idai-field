@@ -29,8 +29,8 @@
                                 <span *ngIf="subfield.condition.values === true" i18n="@@boolean.yes">Ja</span>
                                 <span *ngIf="subfield.condition.values === false" i18n="@@boolean.no">Nein</span>
                                 <span *ngIf="subfield.condition.values !== true && subfield.condition.values !== false">
-                                    {{getConditionValueLabels(subfield.condition)}}
-                                </span>                                          
+                                    {{getConditionValueLabel(subfield.condition)}}
+                                </span>                              
                             </div>
                             <div *ngIf="!subfield.condition" class="subfield-no-condition"
                                  i18n="@@configuration.subfields.condition.none">

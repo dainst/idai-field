@@ -291,7 +291,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static CONFIGURATION_ERROR_NO_VALUELIST = 'configuration.error.noValuelist';
     public static CONFIGURATION_ERROR_NO_SUBFIELDS = 'configuration.error.noSubfields';
     public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS = 'configuration.error.fieldConditionViolation.valuelists';
+    public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS_CHILD_CATEGORY = 'configuration.error.fieldConditionViolation.valuelists.childCategory';
     public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE = 'configuration.error.fieldConditionViolation.inputType';
+    public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE_CHILD_CATEGORY = 'configuration.error.fieldConditionViolation.inputType.childCategory';
     public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS = 'configuration.error.subfieldConditionViolation.valuelists';
     public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_INPUT_TYPE = 'configuration.error.subfieldConditionViolation.inputType';
     public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_DELETION = 'configuration.error.subfieldConditionViolation.deletion';
@@ -1267,8 +1269,16 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: $localize `:@@messages.configuration.error.fieldConditionViolation.valuelists:Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.`,
             level: 'danger'
         };
+        this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS_CHILD_CATEGORY] = {
+            content: $localize `:@@messages.configuration.error.fieldConditionViolation.valuelists.childCategory:Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Feld "[0]" der Unterkategorie "[1]" konfiguriert wurde.`,
+            level: 'danger'
+        };
         this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE] = {
             content: $localize `:@@messages.configuration.error.fieldConditionViolation.inputType:Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE_CHILD_CATEGORY] = {
+            content: $localize `:@@messages.configuration.error.fieldConditionViolation.inputType.childCategory:Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für das Feld "[0]" der Unterkategorie "[1]" konfiguriert wurde.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS] = {

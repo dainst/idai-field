@@ -10,10 +10,16 @@
           i18n="@@configuration.deleteField.body.notAllowed.inverseRelation">
           Das Feld <code>{{field.name}}</code> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird.
     </span>
-    <span *ngIf="getConditionalFieldName()"
+    <span *ngIf="conditionalFieldName && !conditionalFieldSubcategory"
           i18n="@@configuration.deleteField.body.notAllowed.conditionalField">
           Das Feld <code>{{field.name}}</code> kann nicht gelöscht werden, solange es als Bedingungsfeld für das
-          Feld <code>{{getConditionalFieldName()}}</code> konfiguriert ist.
+          Feld <code>{{conditionalFieldName}}</code> konfiguriert ist.
+    </span>
+    <span *ngIf="conditionalFieldName && conditionalFieldSubcategory"
+          i18n="@@configuration.deleteField.body.notAllowed.conditionalField.subcategory">
+          Das Feld <code>{{field.name}}</code> kann nicht gelöscht werden, solange es als Bedingungsfeld für das
+          Feld <code>{{conditionalFieldName}}</code> der Unterkategorie
+          "{{getCategoryLabel(conditionalFieldSubcategory)}}" konfiguriert ist.
     </span>
 </div>
 
@@ -24,7 +30,8 @@
          (click)="confirmDeletion()">
         <span i18n="@@buttons.delete">Löschen</span>
     </div>
-    <div class="btn btn-secondary"
+    <div id="cancel-field-deletion-button"
+         class="btn btn-secondary"
          (click)="cancel()">
         <span i18n="@@buttons.cancel">Abbrechen</span>
     </div>

@@ -19,6 +19,7 @@ import { Composite, Condition } from '../model';
 import { StringUtils } from './string-utils';
 import { ValuelistUtil } from './valuelist-util';
 import { DateSpecification } from '../model/input-types/date-specification';
+import { Comparator } from '../services/comparator';
 
 
 export interface FieldsViewGroup extends BaseGroup {
@@ -62,9 +63,12 @@ export module FieldsViewGroup {
 export module FieldsViewUtil {
 
     export async function getGroupsForResource(resource: Resource, projectConfiguration: ProjectConfiguration,
-                                               datastore: Datastore, labels: Labels): Promise<Array<FieldsViewGroup>> {
+                                               datastore: Datastore, labels: Labels,
+                                               comparator: Comparator): Promise<Array<FieldsViewGroup>> {
 
-        const relationTargets: Map<Array<Document>> = await Resource.getRelationTargetDocuments(resource, datastore);
+        const relationTargets: Map<Array<Document>> = await Resource.getRelationTargetDocuments(
+            resource, datastore, comparator
+        );
         await addDerivedRelationTargetDocuments(relationTargets, projectConfiguration, resource, datastore);
         
         return createFieldsViewGroups(

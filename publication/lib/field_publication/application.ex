@@ -2,17 +2,22 @@ defmodule FieldPublication.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
-  require Logger
-  alias FieldPublication.Settings
-  alias FieldPublication.FileService
-  alias FieldPublication.CouchService
+  alias FieldPublication.{
+    ApplicationSettings,
+    CouchService,
+    FileService
+  }
 
   use Application
+
+  require Logger
 
   @required_node_version 22
 
   @impl true
   def start(_type, _args) do
+    check_gdal_version()
+
     children = [
       # Start the Telemetry supervisor
       FieldPublicationWeb.Telemetry,
@@ -47,7 +52,7 @@ defmodule FieldPublication.Application do
     # Once all child processes are started, run the CouchDB setup.
     CouchService.initial_setup()
     FileService.initial_setup()
-    Settings.load()
+    ApplicationSettings.load()
 
     check_node_version()
     |> extract_major_node_version()
@@ -124,39 +129,55 @@ defmodule FieldPublication.Application do
     FieldPublicationWeb.Endpoint.config_change(changed, removed)
     :ok
   end
-end
 
-defimpl Jason.Encoder,
-  for: [
-    FieldPublication.DatabaseSchema.Project,
-    FieldPublication.DatabaseSchema.Publication,
-    FieldPublication.DatabaseSchema.ApplicationSettings
-  ] do
-  def encode(document, opts) do
-    document
-    |> Map.from_struct()
-    |> Map.reject(fn {k, v} -> k == :_rev and is_nil(v) end)
-    |> Map.put(
-      :_id,
-      FieldPublication.DatabaseSchema.Base.construct_doc_id(
-        document,
-        document.__struct__
-      )
-    )
-    |> Jason.Encode.map(opts)
+  @gdal_regex ~r"^GDAL 3\.(\d+)\.\d+ .+"
+  defp check_gdal_version() do
+    case System.cmd("gdalinfo", ["--version"]) do
+      {response, 0} ->
+        Regex.scan(@gdal_regex, response)
+        |> case do
+          [[response, minor_version_string]] ->
+            {minor_version, ""} = Integer.parse(minor_version_string)
+
+            if minor_version >= 11 do
+              {:ok, response}
+            else
+              {:error, response}
+            end
+        end
+
+      {response, _status_code} ->
+        {:error, response}
+    end
+    |> case do
+      {:ok, response} ->
+        Logger.info("Using `#{String.trim(response)}` installed on system.")
+        :ok
+
+      {:error, response} ->
+        raise "Field Publication requires GDAL >= 3.11 to be installed, system responded with `#{String.trim(response)}`."
+    end
   end
 end
 
 defimpl Jason.Encoder,
   for: [
-    FieldPublication.DatabaseSchema.DataPreview,
-    FieldPublication.DatabaseSchema.DataIssues
+    FieldPublication.ApplicationSettings,
+    FieldPublication.Project,
+    FieldPublication.Publication,
+    FieldPublication.Publication.DataIssues,
+    FieldPublication.Publication.DocumentPreview
   ] do
+  # When sending the JSON encoded Ecto schemas to CouchDB, `nil` value _rev entries will get rejected
+  # CouchDB. This happens for newly created documents, that have not been persisted in the DB yet. In this
+  # encoder implementation, we remove the _rev key altogether if they are `nil`, so that CouchDB is
+  # free to set it to whatever internally. The next time the document as loaded from the database, it will
+  # have a _rev value assigned by CouchDB and we can continue using the _rev field to make sure we do not
+  # override changes by other users by accident.
   def encode(document, opts) do
     document
     |> Map.from_struct()
     |> Map.reject(fn {k, v} -> k == :_rev and is_nil(v) end)
-    |> Map.put(:_id, document.__struct__.id(document))
     |> Jason.Encode.map(opts)
   end
 end

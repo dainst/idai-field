@@ -1,0 +1,12 @@
+opencollection: 1.0.0
+info:
+  name: "Field"
+  type: workspace
+
+collections:
+  - name: "Field Publication"
+    path: "collections/Field Publication"
+
+specs:
+
+docs: ''

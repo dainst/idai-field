@@ -12,12 +12,12 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   }
 
   alias FieldPublication.{
-    Publications,
+    Publication,
     Replication,
     Processing
   }
 
-  alias FieldPublication.DatabaseSchema.Publication
+  alias FieldPublication.Publication.DataIssues
 
   require Logger
 
@@ -89,9 +89,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         _session,
         socket
       ) do
-    %Publication{} = publication = Publications.get!(project_id, draft_date_string)
-
-    channel = Publications.get_doc_id(publication)
+    %Publication{_id: channel} = publication = Publication.get!(project_id, draft_date_string)
 
     PubSub.subscribe(FieldPublication.PubSub, channel)
 
@@ -113,7 +111,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
       |> assign(:tile_images, :loading)
       |> assign(:search_index, %{
         active?: Processing.show(publication, :search_index) != nil,
-        progress: Publications.Search.evaluate_active_index_state(publication)
+        progress: Publication.Search.evaluate_active_index_state(publication)
       })
       |> assign(:preview_documents, %{
         active?: Processing.show(publication, :preview_documents) != nil,
@@ -220,7 +218,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
         %{"publication" => publication_form_params},
         %{assigns: %{publication: publication}} = socket
       ) do
-    case Publications.put(publication, publication_form_params) do
+    case Publication.put(publication, publication_form_params) do
       {:ok, _updated_publication} ->
         # The update will get broadcast via PubSub and picked up by the appropriate handle_info/2 definition
         # below, so we do not need to update the socket here.
@@ -235,7 +233,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   end
 
   def handle_event("publish", _, %{assigns: %{publication: publication}} = socket) do
-    Publications.put(publication, %{publication_date: Date.utc_today()})
+    Publication.put(publication, %{publication_date: Date.utc_today()})
 
     {
       :noreply,
@@ -331,7 +329,7 @@ defmodule FieldPublicationWeb.Management.PublicationLive do
   def get_issues(%{assigns: %{publication: publication}} = socket) do
     issues =
       if publication.replication_finished do
-        Publications.Data.get_grouped_issues(publication)
+        DataIssues.get_grouped_issues(publication)
       else
         %{}
       end

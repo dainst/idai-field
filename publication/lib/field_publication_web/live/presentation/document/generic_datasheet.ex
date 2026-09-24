@@ -7,15 +7,16 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
     Image
   }
 
-  alias FieldPublication.DatabaseSchema.Publication
-  alias FieldPublication.Publications.Data
+  alias FieldPublication.Publication
 
-  alias FieldPublication.Publications.Data.{
+  alias FieldPublication.Publication.{
     Document,
     Field,
     FieldGroup,
     RelationGroup
   }
+
+  alias FieldPublicationWeb.Components.DocumentMap
 
   def render(assigns) do
     ~H"""
@@ -25,6 +26,9 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
           <% fields =
             Enum.reject(group.fields, fn %Field{name: name} ->
               name in ["identifier", "category", "geometry"]
+            end)
+            |> Enum.sort_by(fn %Field{input_type: type} ->
+              !(type in ["text"])
             end) %>
           <%= unless fields == [] do %>
             <section>
@@ -33,35 +37,33 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
               </.group_heading>
 
               <div class="grid max-md:grid-cols-1 md:grid-cols-2 gap-1 mt-2">
-                <%= for %Field{} = field <- fields do %>
-                  <.labeled_value class="border p-0.5 border-black/20">
-                    <:label><.render_field_label field={field} /></:label>
-                    <.render_field_data field={field} publication={@publication} />
-                  </.labeled_value>
+                <%= for %Field{input_type: type } = field <- fields do %>
+                  <div class={"#{if type in ["text"], do: "col-span-2"}"}>
+                    <.render_field field={field} publication={@publication} />
+                  </div>
                 <% end %>
               </div>
             </section>
           <% end %>
         <% end %>
-        <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
+        <% depicted_in = Document.get_relation(@doc, "isDepictedIn") %>
         <%= if depicted_in do %>
           <section>
             <.group_heading>
               {pick_default_translation(depicted_in.labels)} ({Enum.count(depicted_in.docs)})
             </.group_heading>
-            <div class="p-2 bg-panel overflow-auto overscroll-contain grid grid-cols-3 gap-1 mt-2 max-h-[300px] mb-5">
+            <div class="flex flex-wrap gap-1 mt-2 mb-5">
               <%= for %Document{} = doc <- depicted_in.docs do %>
                 <.link navigate={
                   ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{doc.id}"
                 }>
-                  <div class="max-w-[250px]">
-                    <.img_element
-                      size="^250,"
-                      project={@publication.project_identifier}
-                      uuid={doc.id}
-                      alt={"Project image '#{doc.identifier}' (#{pick_default_translation(doc.category.labels)})"}
-                    />
-                  </div>
+                  <.img_element
+                    class="border-1 h-full border-primary hover:border-primary-hover object-contain p-2 bg-panel"
+                    size="^!250,250"
+                    project={@publication.project_identifier}
+                    uuid={doc.id}
+                    alt={"Project image '#{doc.identifier}' (#{pick_default_translation(doc.category.labels)})"}
+                  />
                 </.link>
               <% end %>
             </div>
@@ -77,7 +79,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
                 class="mb-1"
                 target="_blank"
                 href={
-                  ~p"/api/json/raw/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
+                  ~p"/api/v1/#{@publication.project_identifier}/#{@publication.draft_date}/doc/#{@doc.id}"
                 }
               >
                 <span class="text-center inline-block w-5" style="block">{"{}"}</span> View JSON (raw)
@@ -88,7 +90,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
                 class="mb-1"
                 target="_blank"
                 href={
-                  ~p"/api/json/extended/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}"
+                  ~p"/api/v1/#{@publication.project_identifier}/#{@publication.draft_date}/doc/#{@doc.id}/extended"
                 }
               >
                 <span class="text-center inline-block w-5" style="block">{"{}"}</span>
@@ -130,7 +132,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
             </.link>
           </.group_heading>
           <.live_component
-            module={FieldPublicationWeb.Presentation.Components.DocumentViewMap}
+            module={DocumentMap}
             id="generic_doc_map"
             style="width:100%; height:500px;"
             doc={@doc}

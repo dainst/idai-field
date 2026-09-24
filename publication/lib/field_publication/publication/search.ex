@@ -1,0 +1,1290 @@
+defmodule FieldPublication.Publication.Search do
+  alias FieldPublication.{
+    OpenSearchService,
+    Publication,
+    Project
+  }
+
+  alias FieldPublication.Publication.{
+    Configuration,
+    DataIssues,
+    Document,
+    DocumentPreview,
+    Geo
+  }
+
+  alias FieldPublication.DatabaseSchema.{
+    LogEntry
+  }
+
+  require Logger
+
+  @moduledoc """
+  This module contains functions facilitating the interaction between research data and the
+  external OpenSearch search application.
+  """
+
+  @data_report_key "publications_search"
+
+  def report_key(), do: @data_report_key
+
+  defmodule SearchDocument do
+    @moduledoc """
+    Defines the data struct that is used for research data in the OpenSearch index.
+    """
+
+    @derive Jason.Encoder
+    @enforce_keys [
+      :id,
+      :identifier,
+      :category,
+      :project_identifier,
+      :publication_draft_date,
+      :configuration_based_field_mappings,
+      :preview,
+      :combined_text_content
+    ]
+    defstruct [
+      :id,
+      :identifier,
+      :category,
+      :project_identifier,
+      :publication_draft_date,
+      :configuration_based_field_mappings,
+      :geometry,
+      :parent_geometry,
+      :root_geometry,
+      :preview,
+      :combined_text_content
+    ]
+  end
+
+  def search_document_map_to_struct(map) do
+    %SearchDocument{
+      id: map["id"],
+      identifier: map["identifier"],
+      category: map["category"],
+      project_identifier: map["project_identifier"],
+      publication_draft_date: map["publication_draft_date"],
+      configuration_based_field_mappings: map["configuration_based_field_mappings"] || %{},
+      preview: Document.from_map(map["preview"]),
+      combined_text_content: map["combined_text_content"]
+    }
+  end
+
+  def create_empty_indices(%Publication{} = publication, delete_existing? \\ false) do
+    index_names = get_index_names(publication)
+
+    if delete_existing? do
+      delete_indices(publication)
+    end
+
+    index_names
+    |> Enum.map(fn name ->
+      {name, OpenSearchService.create_index(name)}
+    end)
+    |> Enum.map(fn
+      {name, {:ok, %{status: 400}}} ->
+        {
+          :already_exists,
+          name
+        }
+
+      {name, {:ok, %{status: 200}}} ->
+        {:created, name}
+    end)
+  end
+
+  def delete_indices(%Publication{} = publication) do
+    publication
+    |> get_index_names()
+    |> Enum.map(fn name ->
+      {
+        name,
+        OpenSearchService.delete_index(name)
+      }
+    end)
+    |> Enum.map(fn
+      {name, {:ok, %{status: 200}}} ->
+        {:deleted, name}
+
+      {name, {:ok, %{status: 404}}} ->
+        {:not_found, name}
+    end)
+  end
+
+  def toggle_publication_alias(%Publication{} = publication) do
+    alias_name = get_alias(publication)
+    publication_index_names = get_index_names(publication)
+
+    {next_index, old_index} =
+      publication
+      |> get_alias()
+      |> OpenSearchService.get_indices_behind_alias()
+      |> case do
+        [] ->
+          # The alias is currently not setup, pick the first index as next index.
+          {List.first(publication_index_names), nil}
+
+        [value] when is_binary(value) ->
+          # The alias is in use, pick the currently unused one as next index.
+          {Enum.find(publication_index_names, fn name -> name != value end), value}
+      end
+
+    if old_index do
+      OpenSearchService.remove_alias(old_index, alias_name)
+    end
+
+    OpenSearchService.set_alias(next_index, alias_name)
+
+    # If this publication is also used in the system wide search via the project alias, switch that
+    # alias too.
+    project_alias =
+      publication.project_identifier
+      |> Project.get!()
+      |> get_alias()
+
+    project_alias
+    |> OpenSearchService.get_indices_behind_alias()
+    |> case do
+      [index_name] when index_name != nil and index_name == old_index ->
+        OpenSearchService.set_alias(next_index, project_alias)
+
+      _ ->
+        :ok
+    end
+
+    next_index
+  end
+
+  def set_project_alias(%Publication{} = publication) do
+    publication
+    |> get_alias()
+    |> OpenSearchService.get_indices_behind_alias()
+    |> case do
+      [] ->
+        {:error, :no_active_publication_alias}
+
+      [index_name] when is_binary(index_name) ->
+        project_alias =
+          publication.project_identifier
+          |> Project.get!()
+          |> get_alias()
+
+        OpenSearchService.set_alias(index_name, project_alias)
+
+        {:ok, project_alias}
+    end
+  end
+
+  def remove_project_alias(%Publication{} = publication) do
+    publication
+    |> get_alias()
+    |> OpenSearchService.get_indices_behind_alias()
+    |> case do
+      [] ->
+        {:ok, :no_active_project_alias}
+
+      [index_name] when is_binary(index_name) ->
+        project_alias =
+          publication.project_identifier
+          |> Project.get!()
+          |> get_alias()
+
+        OpenSearchService.set_alias(index_name, project_alias)
+
+        {:ok, project_alias}
+    end
+  end
+
+  def setup_index(%Publication{} = publication, mapping, active_alias? \\ false)
+      when is_map(mapping) do
+    alias_name = get_alias(publication)
+    publication_index_names = get_index_names(publication)
+
+    index =
+      alias_name
+      |> OpenSearchService.get_indices_behind_alias()
+      |> case do
+        [] ->
+          List.first(publication_index_names)
+
+        [aliased_index_name] when is_binary(aliased_index_name) ->
+          Enum.find(publication_index_names, fn name ->
+            name == aliased_index_name == active_alias?
+          end)
+      end
+
+    OpenSearchService.delete_index(index)
+    {:ok, %{status: 200}} = OpenSearchService.create_index(index, mapping)
+
+    index
+  end
+
+  defp get_index_names(%Publication{} = publication) do
+    publication_alias = get_alias(publication)
+    ["#{publication_alias}__a__", "#{publication_alias}__b__"]
+  end
+
+  def get_alias(%Publication{_id: id}) do
+    OpenSearchService.encode_chars(id)
+  end
+
+  def get_alias(%Project{_id: id}) do
+    OpenSearchService.encode_chars(id)
+  end
+
+  def get_doc_count(%Publication{} = publication) do
+    publication
+    |> get_search_alias()
+    |> OpenSearchService.get_doc_count()
+  end
+
+  def get_category_count(%Publication{} = pub) do
+    payload = %{
+      size: 0,
+      aggs: %{
+        category_aggregation: %{
+          terms: %{
+            field: "category",
+            size: 1000
+          }
+        }
+      }
+    }
+
+    index = get_search_alias(pub)
+
+    OpenSearchService.run_query(index, payload)
+    |> case do
+      {:ok, %{status: 200, body: body}} ->
+        body
+        |> Jason.decode!()
+        |> get_in(["aggregations", "category_aggregation", "buckets"])
+        |> Enum.reduce(%{}, fn %{"doc_count" => count, "key" => category}, acc ->
+          Map.put(acc, category, count)
+        end)
+
+      _ ->
+        %{}
+    end
+  end
+
+  def search(q, filter, geometry_filter, from \\ 0, size \\ 100, publication \\ nil) do
+    index =
+      if publication == nil do
+        "project*"
+      else
+        get_search_alias(publication)
+      end
+
+    q =
+      case q do
+        q when q == "" or q == "*" ->
+          "*"
+
+        q ->
+          "*#{q}*"
+      end
+
+    payload =
+      %{
+        query: %{
+          bool: %{
+            must: %{
+              query_string: %{
+                query: q
+              }
+            }
+          }
+        },
+        aggs: generate_aggregations_queries(index),
+        from: from,
+        size: size
+      }
+
+    filter_params =
+      Enum.map(filter, fn {key, value} ->
+        cond do
+          key in ["category", "project_identifier"] ->
+            %{term: %{key => value}}
+
+          true ->
+            %{term: %{"configuration_based_field_mappings.#{key}" => value}}
+        end
+      end)
+
+    filter_params =
+      if geometry_filter do
+        filter_params ++
+          [
+            %{
+              bool: %{
+                should: [
+                  %{
+                    geo_shape: %{
+                      geometry: %{
+                        shape: %{
+                          type: "polygon",
+                          coordinates: [geometry_filter]
+                        }
+                      }
+                    }
+                  },
+                  # The `parent_geometry` contains a document's closes ancestors geometry. A special
+                  # case are ancestors that are at the root of the document hierarchy (see below).
+                  %{
+                    geo_shape: %{
+                      parent_geometry: %{
+                        shape: %{
+                          type: "polygon",
+                          coordinates: [geometry_filter]
+                        }
+                      }
+                    }
+                  },
+                  # The `root_geometry` contains a document's closes ancestors geometry, where the ancestor
+                  # is also a root document in the overall hierarchy. To avoid too broad search results,
+                  # these are only returned when completely `WITHIN` the search geometry.
+                  %{
+                    geo_shape: %{
+                      root_geometry: %{
+                        shape: %{
+                          type: "polygon",
+                          coordinates: [geometry_filter]
+                        },
+                        relation: "WITHIN"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+      else
+        filter_params
+      end
+
+    payload =
+      if Enum.empty?(filter_params) do
+        payload
+      else
+        boolean_query = Map.put(payload.query.bool, :filter, %{bool: %{must: filter_params}})
+
+        put_in(payload.query.bool, boolean_query)
+      end
+
+    OpenSearchService.run_query(index, payload)
+    |> case do
+      {:ok, %{status: 200, body: body}} ->
+        body = Jason.decode!(body)
+
+        %{
+          total: body["hits"]["total"]["value"],
+          docs:
+            body["hits"]["hits"]
+            |> Enum.map(fn %{"_source" => doc} ->
+              search_document_map_to_struct(doc)
+            end),
+          aggregations:
+            body
+            |> Map.get("aggregations", %{})
+            |> Stream.map(&parse_aggregation_result/1)
+            |> Stream.reject(fn {_field, buckets} ->
+              # Ignore empty buckets or ones that have only one entry.
+              buckets == [] || Enum.count(buckets) == 1
+            end)
+            |> Enum.sort_by(
+              # Sorts the aggregations by descending size of all bucket entries
+              fn {_field, buckets} ->
+                Enum.reduce(buckets, 0, fn %{count: count}, acc -> acc + count end)
+              end,
+              &Kernel.>=/2
+            )
+        }
+    end
+  end
+
+  defp generate_aggregations_queries(index) do
+    {:ok, %{status: 200, body: body}} = OpenSearchService.get_mapping(index)
+
+    _keyword_fields =
+      Jason.decode!(body)
+      |> Enum.reduce([], fn
+        {_publication_index_name, %{"mappings" => %{"properties" => props}}}, acc ->
+          keywords =
+            props
+            |> Enum.map(fn prop ->
+              case prop do
+                {"configuration_based_field_mappings",
+                 %{"properties" => configuration_based_props}} ->
+                  Enum.map(configuration_based_props, fn configuration_prop ->
+                    case configuration_prop do
+                      {nested_key, %{"type" => "keyword"}} ->
+                        nested_key
+
+                      _ ->
+                        nil
+                    end
+                  end)
+
+                {key, %{"type" => "keyword"}} ->
+                  key
+
+                _ ->
+                  nil
+              end
+            end)
+            |> List.flatten()
+            |> Enum.reject(fn key -> key in [nil, "id", "identifier"] end)
+
+          acc = acc ++ (keywords -- acc)
+
+          acc
+
+        {publication_index_name, invalid_mapping}, acc ->
+          Logger.error("Invalid search mapping for `#{publication_index_name}`:")
+          Logger.error(inspect(invalid_mapping, pretty: true))
+
+          acc
+      end)
+      |> Stream.map(fn key ->
+        cond do
+          key in ["category", "project_identifier"] ->
+            {key, %{terms: %{field: key, size: 200}}}
+
+          true ->
+            {key, %{terms: %{field: "configuration_based_field_mappings.#{key}", size: 200}}}
+        end
+      end)
+      |> Enum.into(%{})
+  end
+
+  defp parse_aggregation_result({field, %{"buckets" => buckets}}) do
+    {field,
+     Enum.map(
+       buckets,
+       fn %{
+            "doc_count" => count,
+            "key" => key
+          } ->
+         %{
+           key: key,
+           count: count
+         }
+       end
+     )}
+  end
+
+  def generate_index_mapping(pub) do
+    base_mapping = %{
+      id: %{
+        type: "keyword",
+        store: true
+      },
+      identifier: %{
+        type: "keyword",
+        store: true
+      },
+      category: %{
+        type: "keyword",
+        store: true
+      },
+      project_identifier: %{
+        type: "keyword",
+        store: true
+      },
+      publication_draft_date: %{
+        type: "date",
+        store: true
+      },
+      geometry: %{
+        type: "geo_shape",
+        store: true
+      },
+      parent_geometry: %{
+        type: "geo_shape",
+        ignore_malformed: true
+      },
+      root_geometry: %{
+        type: "geo_shape",
+        ignore_malformed: true
+      },
+      preview: %{
+        type: "flat_object"
+      },
+      combined_text_content: %{
+        type: "text"
+      }
+    }
+
+    %{
+      single_keyword_fields: single_keyword_fields,
+      multi_keyword_fields: multi_keyword_fields
+    } = evaluate_input_types(pub)
+
+    keyword_mapping =
+      Enum.concat([single_keyword_fields, multi_keyword_fields])
+      |> Stream.map(fn {_category_name, field_name} ->
+        {"#{field_name}_keyword", %{type: "keyword", store: true}}
+      end)
+      |> Enum.into(%{})
+
+    %{
+      mappings: %{
+        properties:
+          Map.merge(
+            base_mapping,
+            %{
+              configuration_based_field_mappings: %{
+                type: "object",
+                properties: keyword_mapping
+              }
+            }
+          )
+      }
+    }
+  end
+
+  def prepare_doc_for_indexing(
+        doc,
+        %Publication{} = publication,
+        %{
+          single_keyword_fields: single_keyword_fields,
+          multi_keyword_fields: multi_keyword_fields,
+          text_fields: text_fields
+        },
+        normalized_feature_lookup
+      ) do
+    %{"resource" => res} =
+      doc
+      |> Map.put("id", doc["_id"])
+      |> Map.delete("_id")
+
+    geo = normalized_feature_lookup[doc["_id"]]
+
+    hierarchy = Publication.get_document_hierarchy(publication)
+
+    # `parent_geo` is a fallback in cases where the document itself has no geometry attached to it.
+    {parent_geo, root_geo} =
+      if geo == nil do
+        Geo.find_next_ancestor_geometry(res["id"], hierarchy, normalized_feature_lookup)
+        |> case do
+          nil ->
+            {nil, nil}
+
+          {ancestor_uuid, geometry} ->
+            # We ignore ancestors that are root documents, these tend to too much
+            # search results.
+            if hierarchy[ancestor_uuid]["parent"] do
+              {geometry, nil}
+            else
+              {nil, geometry}
+            end
+        end
+      else
+        {nil, nil}
+      end
+
+    base_document =
+      %SearchDocument{
+        id: res["id"],
+        identifier: res["identifier"],
+        # Based on the project configuration, we add a category's parent categories' keys to the search
+        # document. As an example, this allows us to return not only "Image" documents when filtering by category key "Image",
+        # but also all documents that are in one of its child categories ("Photo" and "Drawing" by default.).
+        category:
+          [res["category"]] ++ Configuration.get_parent_categories(publication, res["category"]),
+        publication_draft_date: publication.draft_date,
+        project_identifier: publication.project_identifier,
+        configuration_based_field_mappings: %{},
+        geometry: geo,
+        parent_geometry: parent_geo,
+        root_geometry: root_geo,
+        preview: List.first(DocumentPreview.list(publication, [res["id"]])),
+        #  full_doc: full_doc,
+        combined_text_content:
+          text_fields
+          |> Stream.filter(fn {category_name, _field_name} ->
+            category_name == res["category"]
+          end)
+          |> Enum.map(fn {_this_category, field_name} ->
+            Map.get(res, field_name)
+            |> case do
+              val when is_map(val) ->
+                Map.values(val)
+
+              values when is_list(values) ->
+                values
+
+              val ->
+                [val]
+            end
+            |> Enum.join(" ")
+          end)
+          |> Enum.reject(fn val -> is_nil(val) || val == "" end)
+          |> Enum.join(" ")
+      }
+
+    config_mapping_single_keyword =
+      single_keyword_fields
+      |> Stream.filter(fn {category_name, _field_name} ->
+        category_name == res["category"]
+      end)
+      |> Stream.map(fn {_this_category, field_name} ->
+        {"#{field_name}_keyword", Map.get(res, field_name)}
+      end)
+      |> Stream.reject(fn {_field_name, value} ->
+        value == nil
+      end)
+      |> Enum.into(%{})
+
+    config_mapping_multi_keyword =
+      multi_keyword_fields
+      |> Stream.filter(fn {category_name, _field_name} ->
+        category_name == res["category"]
+      end)
+      |> Stream.map(fn {_this_category, field_name} ->
+        value_list =
+          Map.get(res, field_name)
+          |> case do
+            values when is_list(values) ->
+              values
+
+            values when is_map(values) ->
+              Map.values(values)
+
+            values when is_binary(values) ->
+              msg =
+                "Based on the project configuration expected Map or List values for field '#{field_name}', but got '#{values}'."
+
+              DataIssues.add_entry(
+                res["id"],
+                LogEntry.create(%{
+                  type: "data_to_configuration_mismatch",
+                  reported_by: @data_report_key,
+                  severity: :warning,
+                  message: msg
+                }),
+                publication
+              )
+
+              [values]
+
+            nil ->
+              nil
+          end
+
+        {"#{field_name}_keyword", value_list}
+      end)
+      |> Stream.reject(fn {_field_name, value} = val ->
+        value == nil or is_binary(val)
+      end)
+      |> Enum.into(%{})
+
+    Map.put(
+      base_document,
+      :configuration_based_field_mappings,
+      Map.merge(config_mapping_single_keyword, config_mapping_multi_keyword)
+    )
+  end
+
+  def get_system_wide_label_usage() do
+    Cachex.get(:document_cache, :system_wide_label_usage)
+    |> case do
+      {:ok, nil} ->
+        evaluate_system_wide_label_usage()
+
+      {:ok, info} ->
+        info
+    end
+  end
+
+  def evaluate_system_wide_label_usage() do
+    info =
+      Publication.get_current_published()
+      |> Enum.map(fn %Publication{} = pub ->
+        config = Configuration.get(pub)
+
+        {category_labels, field_labels} =
+          Enum.map(config, &extract_labels_for_configuration_item/1)
+          |> Enum.reduce({%{}, %{}}, fn {category_result, field_result},
+                                        {category_acc, field_acc} ->
+            {
+              Map.merge(category_result, category_acc),
+              Map.merge(field_result, field_acc)
+            }
+          end)
+
+        {
+          pub.project_identifier,
+          category_labels,
+          field_labels
+        }
+      end)
+      |> Enum.reduce(
+        # We now merge the label information for all projects into one accumulator.
+        %{category_labels: %{}, field_labels: %{}},
+        fn {
+             project_identifier,
+             category_labels,
+             field_labels
+           },
+           %{
+             category_labels: category_labels_acc,
+             field_labels: field_labels_acc
+           } = outer_acc ->
+          {updated_category_acc, _project_identifier} =
+            Enum.reduce(
+              category_labels,
+              {category_labels_acc, project_identifier},
+              &evaluate_category_label_usage/2
+            )
+
+          {updated_field_acc, _project_identifier} =
+            Enum.reduce(
+              field_labels,
+              {field_labels_acc, project_identifier},
+              &evaluate_field_label_usage/2
+            )
+
+          outer_acc
+          |> put_in([:category_labels], updated_category_acc)
+          |> put_in([:field_labels], updated_field_acc)
+        end
+      )
+
+    Cachex.put(:document_cache, :system_wide_label_usage, info)
+
+    info
+  end
+
+  defp extract_labels_for_configuration_item(%{
+         "item" => %{
+           "label" => label,
+           "name" => name,
+           "groups" => groups
+         },
+         "trees" => child_categories
+       }) do
+    field_labels =
+      groups
+      |> Enum.map(&extract_labels_for_fields/1)
+      |> List.flatten()
+      |> Enum.reduce(%{}, fn result, acc -> Map.merge(result, acc) end)
+
+    {child_category_labels, child_field_labels} =
+      child_categories
+      |> Enum.map(&extract_labels_for_configuration_item/1)
+      |> Enum.reduce({%{}, %{}}, fn {category_result, field_result}, {category_acc, field_acc} ->
+        {
+          Map.merge(category_result, category_acc),
+          Map.merge(field_result, field_acc)
+        }
+      end)
+
+    {
+      Map.merge(%{name => label}, child_category_labels),
+      Map.merge(field_labels, child_field_labels)
+    }
+  end
+
+  defp extract_labels_for_fields(%{"fields" => fields}) do
+    fields
+    |> Stream.filter(fn %{"inputType" => input_type} ->
+      input_type != "relation"
+    end)
+    |> Enum.map(fn %{"label" => field_labels, "name" => field_name} = field ->
+      value_labels =
+        field
+        |> Map.get("valuelist", %{})
+        |> Map.get("values", %{})
+        |> Enum.map(fn {key, map} -> {key, Map.get(map, "label", %{})} end)
+        |> Enum.reject(fn {_key, map} -> Enum.empty?(map) end)
+        |> Enum.into(%{})
+
+      %{field_name => %{"labels" => field_labels, "value_labels" => value_labels}}
+    end)
+  end
+
+  defp evaluate_category_label_usage({name, labels}, {acc, project_identifier}) do
+    existing = Map.get(acc, name, %{})
+
+    translations =
+      if Enum.empty?(existing) do
+        Enum.map(labels, fn {lang, text} ->
+          {lang, [{text, 1, [project_identifier]}]}
+        end)
+        |> Enum.into(%{})
+      else
+        Enum.map(labels, fn {lang, text} ->
+          if Map.has_key?(existing, lang) do
+            {matching_variant, other_variants} =
+              existing[lang]
+              |> Enum.split_with(fn {variant_text, _count, _project_list} ->
+                variant_text == text
+              end)
+
+            variants =
+              case matching_variant do
+                [] ->
+                  existing[lang] ++ [{text, 1, [project_identifier]}]
+
+                [{text, count, projects_list}] ->
+                  [{text, count + 1, projects_list ++ [project_identifier]}] ++ other_variants
+              end
+
+            {lang, variants}
+          else
+            {lang, [{text, 1, [project_identifier]}]}
+          end
+        end)
+        |> Enum.reduce(%{}, fn {lang, translations}, acc ->
+          Map.merge(acc, %{lang => translations})
+        end)
+      end
+
+    {
+      Map.put(acc, name, translations),
+      project_identifier
+    }
+  end
+
+  defp evaluate_field_label_usage(
+         {field_name, %{"labels" => labels, "value_labels" => value_labels}},
+         {acc, project_identifier}
+       ) do
+    existing = Map.get(acc, field_name, %{})
+
+    {label_translations, value_label_translations} =
+      if Enum.empty?(existing) do
+        {
+          Enum.map(labels, fn {lang, text} ->
+            {lang, [{text, 1, [project_identifier]}]}
+          end)
+          |> Enum.into(%{}),
+          Enum.map(value_labels, fn {value_name, labels} ->
+            translations =
+              Enum.map(labels, fn {lang, text} ->
+                {lang, [{text, 1, [project_identifier]}]}
+              end)
+              |> Enum.reduce(%{}, fn {lang, info}, inner_acc ->
+                Map.put(inner_acc, lang, info)
+              end)
+
+            {value_name, translations}
+          end)
+          |> Enum.into(%{})
+        }
+      else
+        {
+          Enum.map(labels, fn {lang, text} ->
+            if Map.has_key?(existing, lang) do
+              {matching_variant, other_variants} =
+                existing[lang]
+                |> Enum.split_with(fn {variant_text, _count, _project_list} ->
+                  variant_text == text
+                end)
+
+              variants =
+                case matching_variant do
+                  [] ->
+                    existing[lang] ++ [{text, 1, [project_identifier]}]
+
+                  [{text, count, projects_list}] ->
+                    [{text, count + 1, projects_list ++ [project_identifier]}] ++ other_variants
+                end
+
+              {lang, variants}
+            else
+              {lang, [{text, 1, [project_identifier]}]}
+            end
+          end)
+          |> Enum.reduce(%{}, fn {lang, translations}, acc ->
+            Map.merge(acc, %{lang => translations})
+          end),
+          Enum.map(value_labels, fn {value_name, value_list_labels} ->
+            translations =
+              Enum.map(value_list_labels, fn {lang, text} ->
+                if Map.has_key?(existing["value_labels"], value_name) do
+                  if Map.has_key?(existing["value_labels"][value_name], lang) do
+                    {matching_variant, other_variants} =
+                      existing["value_labels"][value_name][lang]
+                      |> Enum.split_with(fn {variant_text, _count, _project_list} ->
+                        variant_text == text
+                      end)
+
+                    variants =
+                      case matching_variant do
+                        [] ->
+                          existing["value_labels"][value_name][lang] ++
+                            [{text, 1, [project_identifier]}]
+
+                        [{text, count, projects_list}] ->
+                          [{text, count + 1, projects_list ++ [project_identifier]}] ++
+                            other_variants
+                      end
+
+                    {lang, variants}
+                  else
+                    {lang, [{text, 1, [project_identifier]}]}
+                  end
+                else
+                  {lang, [{text, 1, [project_identifier]}]}
+                end
+              end)
+              |> Enum.reduce(%{}, fn {lang, translations}, acc ->
+                Map.merge(acc, %{lang => translations})
+              end)
+
+            {value_name, translations}
+          end)
+          |> Enum.into(%{})
+        }
+      end
+
+    {
+      Map.put(acc, field_name, %{
+        "labels" => label_translations,
+        "value_labels" => value_label_translations
+      }),
+      project_identifier
+    }
+  end
+
+  def evaluate_input_types(%Publication{} = publication) do
+    field_names_and_input_types =
+      Configuration.get(publication)
+      |> Enum.map(&flatten_input_types/1)
+      |> List.flatten()
+      |> Enum.uniq()
+      |> Enum.group_by(
+        fn {_categoy, _name, input_type} ->
+          input_type
+        end,
+        fn {category, name, _input_type} ->
+          {category, name}
+        end
+      )
+
+    keyword_candidates =
+      field_names_and_input_types
+      |> Enum.filter(fn {input_type, _category_and_field_names} ->
+        input_type in get_keyword_inputs()
+      end)
+      |> Enum.map(fn {_input_type, category_and_field_names} -> category_and_field_names end)
+      |> List.flatten()
+
+    multi_keyword_candidates =
+      field_names_and_input_types
+      |> Enum.filter(fn {input_type, _category_and_field_names} ->
+        input_type in get_keyword_multi_inputs()
+      end)
+      |> Enum.map(fn {_input_type, category_and_field_names} -> category_and_field_names end)
+      |> List.flatten()
+
+    text_candidates =
+      field_names_and_input_types
+      |> Enum.filter(fn {input_type, _category_and_field_names} ->
+        input_type in get_text_inputs()
+      end)
+      |> Enum.map(fn {_input_type, category_and_field_names} -> category_and_field_names end)
+      |> List.flatten()
+
+    %{
+      single_keyword_fields: keyword_candidates,
+      multi_keyword_fields: multi_keyword_candidates,
+      text_fields: text_candidates
+    }
+  end
+
+  @not_indexed_document_uuids ["project", "configuration"]
+
+  defp count_database_documents(publication) do
+    database_count = Publication.get_doc_count(publication)
+
+    # We do not count documents 'project' or 'configuration' because they are not added to the index.
+    if database_count >= 2,
+      do: database_count - Enum.count(@not_indexed_document_uuids),
+      else: 0
+  end
+
+  def evaluate_active_index_state(%Publication{} = publication) do
+    database_count = count_database_documents(publication)
+
+    if database_count == 0 do
+      %{
+        counter: 0,
+        percentage: 0,
+        overall: 0
+      }
+    else
+      indexed_count = get_doc_count(publication)
+
+      %{
+        counter: indexed_count,
+        percentage: indexed_count / database_count * 100,
+        overall: database_count
+      }
+    end
+  end
+
+  def index_documents(%Publication{epsg_code: epsg_code} = publication) do
+    mapping = generate_index_mapping(publication)
+    special_input_types = evaluate_input_types(publication)
+
+    # TODO: Check if they exist?
+    Geo.generate_feature_collections(publication)
+
+    index_name = setup_index(publication, mapping)
+
+    normalized_feature_lookup =
+      if is_nil(epsg_code) do
+        %{}
+      else
+        Geo.uuid_to_epsg_4326_feature_mapping(publication)
+      end
+
+    initial_state = %{
+      counter: 0,
+      percentage: 0,
+      overall: count_database_documents(publication)
+    }
+
+    {:ok, counter_pid} =
+      Agent.start_link(fn -> initial_state end)
+
+    Publication.broadcast(publication, {
+      :processing_progress,
+      :search_index,
+      initial_state
+    })
+
+    DataIssues.remove_entries(@data_report_key, publication)
+
+    publication
+    |> Publication.get_doc_stream_for_all()
+    |> Stream.reject(fn %{"_id" => id} ->
+      id in @not_indexed_document_uuids
+    end)
+    |> Stream.reject(fn doc ->
+      # Reject all documents marked as deleted
+      Map.get(doc, "deleted", false)
+    end)
+    |> Stream.map(
+      &prepare_doc_for_indexing(
+        &1,
+        publication,
+        special_input_types,
+        normalized_feature_lookup
+      )
+    )
+    |> Stream.chunk_every(100)
+    |> Enum.map(fn doc_batch ->
+      batch_size = Enum.count(doc_batch)
+
+      success_count =
+        doc_batch
+        |> OpenSearchService.insert_documents(index_name)
+        |> case do
+          {:ok, %{status: 200, body: body}} ->
+            Jason.decode!(body)
+            |> case do
+              %{"errors" => true} = response ->
+                # Batch was indexed, but atleast one document had an error.
+                response["items"]
+                |> Stream.map(&check_indexing_item_for_error(&1, publication))
+                |> Stream.reject(fn val -> val == :error end)
+                |> Enum.count()
+
+              _ ->
+                # Batch was indexed, without any errors.
+                batch_size
+            end
+
+          {:ok, %{status: status, body: body}} ->
+            # Batch was not indexed.
+            msg =
+              "status code #{status} for\n #{inspect(body)}"
+
+            DataIssues.add_entry(
+              "general",
+              LogEntry.create(%{
+                type: "unexpected_open_search_response",
+                reported_by: @data_report_key,
+                severity: :error,
+                message: msg
+              }),
+              publication
+            )
+
+            0
+        end
+
+      updated_state =
+        Agent.get_and_update(counter_pid, fn %{counter: counter, overall: overall} = state ->
+          state =
+            state
+            |> Map.put(:counter, counter + success_count)
+            |> Map.put(:percentage, (counter + success_count) / overall * 100)
+
+          {state, state}
+        end)
+
+      Publication.broadcast(publication, {:processing_progress, :search_index, updated_state})
+    end)
+    |> Enum.to_list()
+
+    toggle_publication_alias(publication)
+    evaluate_system_wide_label_usage()
+  end
+
+  defp check_indexing_item_for_error(
+         %{
+           "index" => %{
+             "_id" => uuid,
+             "status" => 400,
+             "error" => %{
+               "reason" => msg,
+               "caused_by" => %{"caused_by" => %{"reason" => reason}}
+             }
+           }
+         },
+         %Publication{} = publication
+       )
+       when msg in [
+              "failed to parse field [geometry] of type [geo_shape]",
+              "failed to parse field [parent_geometry] of type [geo_shape]",
+              "failed to parse field [root_geometry] of type [geo_shape]"
+            ] do
+    DataIssues.add_entry(
+      uuid,
+      LogEntry.create(%{
+        type: "malformed_geometry",
+        reported_by: @data_report_key,
+        severity: :warning,
+        message: reason
+      }),
+      publication
+    )
+
+    :error
+  end
+
+  defp check_indexing_item_for_error(
+         %{
+           "index" => %{
+             "_id" => uuid,
+             "status" => 400,
+             "error" => %{
+               "reason" => msg,
+               "caused_by" => %{"reason" => reason}
+             }
+           }
+         },
+         %Publication{} = publication
+       )
+       when msg in [
+              "failed to parse field [geometry] of type [geo_shape]",
+              "failed to parse field [parent_geometry] of type [geo_shape]",
+              "failed to parse field [root_geometry] of type [geo_shape]"
+            ] do
+    DataIssues.add_entry(
+      uuid,
+      LogEntry.create(%{
+        type: "malformed_geometry",
+        reported_by: @data_report_key,
+        severity: :warning,
+        message: reason
+      }),
+      publication
+    )
+
+    :error
+  end
+
+  defp check_indexing_item_for_error(
+         %{"index" => %{"_id" => uuid, "error" => error}},
+         %Publication{} = publication
+       ) do
+    DataIssues.add_entry(
+      uuid,
+      LogEntry.create(%{
+        type: "unknown",
+        reported_by: @data_report_key,
+        severity: :error,
+        message: inspect(error)
+      }),
+      publication
+    )
+
+    :error
+  end
+
+  defp check_indexing_item_for_error(
+         _response_item_without_error,
+         _publication
+       ) do
+    :ok
+  end
+
+  defp flatten_input_types(
+         %{
+           "item" => %{"name" => category, "groups" => groups},
+           "trees" => child_items
+         } = _config_item
+       ) do
+    (Enum.map(groups, fn %{"fields" => fields} ->
+       Enum.map(fields, fn %{"name" => name, "inputType" => input_type} ->
+         {category, name, input_type}
+       end)
+     end)
+     |> List.flatten()) ++ Enum.map(child_items, &flatten_input_types/1)
+  end
+
+  defp flatten_input_types(nil) do
+    []
+  end
+
+  def get_keyword_inputs(), do: ["dropdown", "radio"]
+  def get_keyword_multi_inputs(), do: ["checkboxes", "dropdownRange"]
+  def get_text_inputs(), do: ["input", "text"]
+
+  def get_search_alias(%Publication{_id: id}) do
+    OpenSearchService.encode_chars(id)
+  end
+
+  def get_search_alias(%Project{_id: id}) do
+    OpenSearchService.encode_chars(id)
+  end
+
+  def get_currently_aliased_publication(%Project{} = project) do
+    project
+    |> get_search_alias()
+    |> OpenSearchService.get_indices_behind_alias()
+    |> case do
+      [] ->
+        {:error, :alias_not_set}
+
+      values when is_list(values) ->
+        values
+        |> List.first()
+        |> index_name_to_publication()
+        |> case do
+          {:error, :not_found} ->
+            {:error, :publication_not_found}
+
+          success ->
+            success
+        end
+    end
+  end
+
+  def index_name_to_publication(name) do
+    regex = ~r/^publication_(.*)_(\d{4}-\d{2}-\d{2})__[ab]__$/
+
+    [[_full_match, project_identifier, draft_date_iso_8601]] = Regex.scan(regex, name)
+
+    Publication.get(project_identifier, draft_date_iso_8601)
+  end
+end

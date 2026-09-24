@@ -1,0 +1,326 @@
+import Map from "ol/Map.js";
+import View from "ol/View.js";
+import { createEmpty, extend, isEmpty } from "ol/extent.js";
+import VectorSource from "ol/source/Vector";
+import VectorLayer from "ol/layer/Vector";
+import GeoJSON from "ol/format/GeoJSON.js";
+
+import proj4 from "proj4";
+
+import {
+    extentIsPoint,
+    styleFunction,
+    setFillForLayer,
+    clearAllHighlights,
+    highlightFeature,
+    getDefaultAlpha,
+    loadFeatureCollection,
+} from "./map/features";
+import PublicationTileLayers from "./map/tile-layers";
+import PreviewOverlay from "./map/preview-overlay.js";
+import PublicationSelection from "./map/selection";
+
+export default (getDocumentViewMapHook = () => {
+    return {
+        map: null,
+        projectKey: null,
+        draftDate: null,
+        publicationTileLayers: null,
+        docId: null,
+        setupDone: false,
+        nothingToShow: true,
+        linkedDocIds: [],
+        categoriesMetadata: [],
+        mainFeature: null,
+        featureLayers: [],
+        selectionMode: false,
+        activeVectorExtent: null,
+        fullExtent: null, // includes vector extent + the tile layers (map background images)
+        mounted() {
+            this.initialize();
+
+            this.handleEvent(
+                `document-map-update-${this.el.id}`,
+                ({ uuid, linked_uuids }) => {
+                    this.docId = uuid;
+                    this.linkedDocIds = linked_uuids;
+
+                    this.resetActiveVectorExtent();
+                    this.resetFeatures();
+                },
+            );
+
+            this.handleEvent(
+                `map-highlight-feature-${this.el.id}`,
+                ({ feature_id }) => {
+                    clearAllHighlights(this.featureLayers);
+                    const vectorLayerFeatures = this.map
+                        .getAllLayers()
+                        .filter((layer) => layer instanceof VectorLayer)
+                        .map((layer) => layer.getSource().getFeatures())
+                        .flat();
+
+                    const feature = vectorLayerFeatures.find(function (f) {
+                        return f.getProperties().uuid == feature_id;
+                    });
+
+                    if (feature) highlightFeature(feature, 0.5);
+                },
+            );
+
+            this.handleEvent(`map-clear-highlights-${this.el.id}`, () => {
+                this.resetFeatures();
+            });
+
+            this.handleEvent(
+                `set-draw-box-mode-${this.el.id}`,
+                ({ new_value }) => {
+                    this.selectionMode = new_value;
+                    if (new_value == true) {
+                        this.overlay.hide();
+                        this.selection.startDrawing();
+                    } else {
+                        this.selection.stopDrawing();
+                    }
+                },
+            );
+        },
+
+        async initialize() {
+            const _this = this;
+            this.id = this.el.getAttribute("id");
+            this.docId = this.el.getAttribute("initial_uuid");
+            this.linkedDocIds = this.el
+                .getAttribute("initial_linked")
+                .split("|");
+
+            this.projectKey = this.el.getAttribute("project_identifier");
+            this.draftDate = this.el.getAttribute("draft_date");
+            this.language = this.el.getAttribute("language");
+            this.projectionName = this.el.getAttribute("projection_name");
+            this.projection = this.el.getAttribute("projection");
+
+            if (this.projectionName && this.projection) {
+                proj4.defs(
+                    this.projectionName,
+                    this.projection,
+                );
+            }
+
+            this.map = new Map({
+                target: `${this.el.getAttribute("id")}-map`,
+                view: new View(),
+            });
+
+            this.publicationTileLayers = new PublicationTileLayers(
+                this,
+                this.map,
+                this.projectKey,
+                this.draftDate,
+            );
+
+            this.selection = new PublicationSelection(this.map, (resultPolygon) => {
+                if (resultPolygon) {
+                    const reprojected = [];
+                    for (var i = 0; i < resultPolygon.length; i++) {
+                        reprojected.push(proj4(this.projectionName, "EPSG:4326", resultPolygon[i]));
+                    }
+                    this.pushEventTo(this.el, "drawn-selection", {
+                        coordinates: reprojected,
+                    });
+                } else {
+                    this.selectionMode = false;
+                    this.resetFeatures();
+                }
+            });
+
+            this.el.addEventListener("pointerenter", function (e) {
+                setFillForLayer(_this.docLayer, false);
+            });
+
+            this.el.addEventListener("pointerleave", function (e) {
+                _this.overlay.hide();
+                _this.resetFeatures();
+            });
+
+            this.map.on("pointermove", async function (e) {
+                if (e.dragging || _this.selectionMode) {
+                    return;
+                }
+
+                clearAllHighlights(_this.featureLayers);
+
+                const hitFeatures = _this.map.getFeaturesAtPixel(e.pixel, {
+                    layerFilter: (layer) => {
+                        const properties = layer.getProperties();
+                        return (
+                            properties &&
+                            !properties.mainDocumentLayer &&
+                            !properties.drawn
+                        );
+                    },
+                });
+
+                for (feature of hitFeatures) {
+                    highlightFeature(feature);
+                }
+
+                _this.overlay.mapHover(e, hitFeatures);
+            });
+
+            this.map.on("singleclick", async function (e) {
+                if (_this.selectionMode) return;
+                _this.overlay.mapClicked(e);
+            });
+
+            const featureCollections = await loadFeatureCollection(
+                this.projectKey,
+                this.draftDate,
+            );
+
+            this.setMapFeatures(featureCollections);
+
+            const overlayDiv = document.getElementById(
+                `${this.el.getAttribute("id")}-identifier-tooltip`,
+            );
+            const fullscreen = this.el.getAttribute("fullscreen") !== null;
+
+            this.overlay = new PreviewOverlay(
+                this,
+                this.map,
+                overlayDiv,
+                this.projectKey,
+                this.draftDate,
+                this.language,
+                fullscreen,
+            );
+
+            document.getElementById(
+                `${this.id}-loading-indicator`,
+            ).style.display = "none";
+        },
+        setMapFeatures(collection) {
+            for (const index in this.featureLayers) {
+                this.map.removeLayer(this.featureLayer[index]);
+            }
+            this.featureLayers = [];
+
+            const vectorSource = new VectorSource({
+                features: new GeoJSON().readFeatures(collection),
+            });
+
+            const featureLayer = new VectorLayer({
+                name: "project-geometries",
+                source: vectorSource,
+                style: styleFunction,
+            });
+
+            this.featureLayers.push(featureLayer);
+
+            this.map.addLayer(featureLayer);
+            this.resetActiveVectorExtent();
+            this.fullExtent = createEmpty();
+
+            this.fullExtent = extend(this.fullExtent, this.activeVectorExtent);
+            this.fullExtent = extend(
+                this.fullExtent,
+                this.publicationTileLayers.getExtents().project,
+            );
+
+            if (!isEmpty(this.fullExtent)) {
+                this.map
+                    .getView()
+                    .fit(this.fullExtent, { padding: [10, 10, 10, 10] });
+                this.map.setView(
+                    new View({
+                        extent: this.map
+                            .getView()
+                            .calculateExtent(this.map.getSize()),
+                        maxZoom: 40,
+                    }),
+                );
+            } else {
+                // Nothing to fit the view to, pick [0,0] center as a default.
+                this.map.setView(
+                    new View({
+                        center: [0, 0],
+                        maxZoom: 40,
+                    }),
+                );
+            }
+
+            this.setupDone = true;
+            this.resetFeatures();
+        },
+
+        resetActiveVectorExtent() {
+            const vectorLayerFeatures = this.map
+                .getAllLayers()
+                .filter((layer) => layer instanceof VectorLayer)
+                .map((layer) => layer.getSource().getFeatures())
+                .flat();
+
+            const uuid = this.docId;
+            const linkedDocIds = this.linkedDocIds;
+
+            const activeVectorExtent = createEmpty();
+            vectorLayerFeatures.map(function (f) {
+                properties = f.getProperties();
+
+                if (
+                    properties.uuid == uuid ||
+                    linkedDocIds.includes(properties.uuid)
+                ) {
+                    extend(activeVectorExtent, f.getGeometry().getExtent());
+                }
+            });
+
+            this.activeVectorExtent = activeVectorExtent;
+        },
+
+        resetFeatures() {
+            if (!this.setupDone) return;
+
+            if (!isEmpty(this.activeVectorExtent) && !extentIsPoint(this.activeVectorExtent)) {
+                this.map.getView().fit(this.activeVectorExtent, {
+                    padding: [10, 10, 10, 10],
+                });
+            } else if (!isEmpty(this.fullExtent)) {
+                this.map.getView().fit(this.fullExtent, {
+                    padding: [10, 10, 10, 10],
+                });
+            } else {
+                this.return;
+            }
+
+            const vectorLayerFeatures = this.map
+                .getAllLayers()
+                .filter((layer) => layer instanceof VectorLayer)
+                .map((layer) => layer.getSource().getFeatures())
+                .flat();
+
+            const uuid = this.docId;
+            const linkedDocIds = this.linkedDocIds;
+
+            vectorLayerFeatures.map(function (f) {
+                properties = f.getProperties();
+
+                if (properties.uuid == uuid) {
+                    properties.hidden = false;
+                    properties.highlight = true;
+                    properties.alpha = 0.5;
+                } else if (linkedDocIds.includes(properties.uuid)) {
+                    properties.hidden = false;
+                    properties.highlight = false;
+                    properties.alpha = getDefaultAlpha();
+                } else {
+                    properties.hidden = true;
+                    properties.highlight = false;
+                    properties.alpha = getDefaultAlpha();
+                }
+
+                f.setProperties(properties);
+            });
+        },
+    };
+});

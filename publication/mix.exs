@@ -26,7 +26,10 @@ defmodule FieldPublication.MixProject do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(:dev), do: ["lib", "test/support/fixtures/seed_project"]
+
+  defp elixirc_paths(:dev),
+    do: ["lib", "test/support/fixtures/seed_project", "test/support/data_fields"]
+
   defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
@@ -34,11 +37,13 @@ defmodule FieldPublication.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix_live_view, "~> 1.1"},
+      {:phoenix, "~> 1.8"},
+      {:phoenix_html, "~> 4.3"},
+      {:phoenix_live_view, "~> 1.2"},
       {:phoenix_live_dashboard, "~> 0.8"},
       {:phoenix_ecto, "~> 4.7"},
       {:phoenix_live_reload, "~> 1.5", only: :dev},
-      {:mdex, "~> 0.13.0"},
+      {:mdex, "~> 0.13"},
       {:geo, "~> 4.1"},
       {:esbuild, "~> 0.10", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.4", runtime: Mix.env() == :dev},
@@ -55,7 +60,8 @@ defmodule FieldPublication.MixProject do
       {:cachex, "~> 4.1"},
       {:cors_plug, "~> 3.0"},
       {:iiif_image_plug, "~> 1.0"},
-      {:ex_brotli, "~> 0.6.0"}
+      {:ex_brotli, "~> 0.6.0"},
+      {:open_api_spex, "~> 3.22"}
     ]
   end
 
@@ -84,7 +90,7 @@ defmodule FieldPublication.MixProject do
         "phx.digest"
       ],
       seed: [
-        "run --eval 'FieldPublication.Test.ProjectSeed.start(\"testopolis\")'"
+        "run --eval 'FieldPublication.Test.ProjectSeed.create_full_publication(\"testopolis\")'"
       ]
     ]
   end

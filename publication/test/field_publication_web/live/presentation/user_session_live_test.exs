@@ -5,10 +5,8 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
 
   alias FieldPublication.{
     CouchService,
-    Projects
+    Project
   }
-
-  alias FieldPublication.DatabaseSchema.Project
 
   alias FieldPublication.Test.ProjectSeed
 
@@ -20,13 +18,13 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
   setup_all %{} do
     CouchService.put_database(@core_database)
 
-    {project, publication} = ProjectSeed.start(@test_project_identifier, false)
+    {project, publication} = ProjectSeed.create_full_publication(@test_project_identifier, true)
 
     on_exit(fn ->
-      Projects.get(@test_project_identifier)
+      Project.get(@test_project_identifier)
       |> case do
         {:ok, %Project{} = project} ->
-          Projects.delete(project)
+          Project.delete(project)
 
         _ ->
           :ok

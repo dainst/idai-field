@@ -12,6 +12,7 @@ import { Lookup, makeLookup, Name } from '../../src/tools';
 import { RelationsManager, Template } from '../../src/model';
 import { createDocuments, makeExpectDocuments, NiceDocs } from '../test-helpers';
 import { basicIndexConfiguration } from '../../src/basic-index-configuration';
+import { Comparator } from '../../src/services/comparator';
 
 import PouchDB = require('pouchdb-node');
 
@@ -95,6 +96,7 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
         createdConstraintIndex,
         createdFulltextIndex,
         projectConfiguration,
+        new Comparator('de'),
         false
     );
 

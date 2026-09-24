@@ -1187,6 +1187,7 @@ Desteklenen içe aktarma biçimleri şunlardır:
 
 Lütfen yeni resimlerin yalnızca "Araçlar" ➝ "Görüntü yönetimi" menüsü üzerinden içe aktarılabileceğini unutmayın. Ancak önceden içe aktarılan resimlerin girdi verileri CSV veya JSON Satırları içe aktarımı yoluyla düzenlenebilir.
 
+Proje yapılandırmalarının (.configuration) içe aktarılmasına ilgili bilgiler, *Proje yapılandırması* bölümünde yer almaktadır.
 
 ## Dışa aktarma
 
@@ -1201,6 +1202,8 @@ Desteklenen dışa aktarma biçimleri şunlardır:
 * GeoJSON (.geojson, .json)
 * Shapefile (.zip)
 * Catalog (.catalog)
+
+Proje yapılandırmalarının (.configuration) dışa aktarılmasına ilgili bilgiler, *Proje yapılandırması* bölümünde yer almaktadır.
 
 
 ## Formatlar (ç.n. Dosya Biçimleri)

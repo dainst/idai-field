@@ -1,11 +1,18 @@
 defmodule FieldPublicationWeb.Presentation.PublicationSearch do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Publications
-  alias FieldPublication.Publications.Search
-  alias FieldPublication.Publications.Data
+  alias FieldPublication.{
+    Publication
+  }
 
-  import FieldPublicationWeb.Presentation.Components.Search
+  alias FieldPublication.Publication.{
+    Document,
+    Search
+  }
+
+  import FieldPublicationWeb.Components.Search
+
+  alias FieldPublicationWeb.Components.PublicationMap
 
   import FieldPublicationWeb.Components.Data.{
     Field
@@ -19,9 +26,9 @@ defmodule FieldPublicationWeb.Presentation.PublicationSearch do
         _session,
         socket
       ) do
-    publication = Publications.get!(project_identifier, draft_date)
+    publication = Publication.get!(project_identifier, draft_date)
 
-    project_document = Publications.Data.get_extended_document("project", publication, true)
+    {:ok, project_document} = Publication.get_extended_document("project", publication, true)
 
     {
       :ok,

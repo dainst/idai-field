@@ -7,6 +7,12 @@ import { click, getLocator, getText, waitForExist } from '../app';
  */
 export class FieldsViewPage {
 
+    public static getFieldsView() {
+
+        return getLocator('fields-view');
+    }
+
+
     public static getTabs() {
 
         return getLocator('fields-view div .card-header');

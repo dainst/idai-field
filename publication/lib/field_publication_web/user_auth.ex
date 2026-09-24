@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.UserAuth do
   alias FieldPublication.{
-    Publications,
-    Projects
+    Publication,
+    Project
   }
 
   use FieldPublicationWeb, :verified_routes
@@ -99,16 +99,22 @@ defmodule FieldPublicationWeb.UserAuth do
   end
 
   @doc """
-  Authenticates the user by looking into the session
-  and remember me token.
+  Authenticates the user by looking into the session, remember me token or basic auth (in that order).
   """
   def fetch_current_user(conn, _opts) do
-    {user_token, conn} = ensure_user_token(conn)
-    user = user_token && get_user_by_session_token(user_token)
+    {user, conn} =
+      case check_user_token(conn) do
+        {nil, conn} ->
+          check_basic_auth(conn)
+
+        {user, conn} ->
+          {user, conn}
+      end
+
     assign(conn, :current_user, user)
   end
 
-  defp ensure_user_token(conn) do
+  defp check_user_token(conn) do
     if token = get_session(conn, :user_token) do
       {token, conn}
     else
@@ -119,6 +125,25 @@ defmodule FieldPublicationWeb.UserAuth do
       else
         {nil, conn}
       end
+    end
+    |> case do
+      {nil, conn} ->
+        # No token in HTTP request.
+        {nil, conn}
+
+      {user_token, conn} ->
+        {get_user_by_session_token(user_token), conn}
+    end
+  end
+
+  defp check_basic_auth(conn) do
+    # No or no valid token in HTTP request, check basic auth.
+    with {user, pass} <- Plug.BasicAuth.parse_basic_auth(conn),
+         {:ok, :valid} <- FieldPublication.CouchService.authenticate(user, pass) do
+      {user, conn}
+    else
+      _ ->
+        {nil, conn}
     end
   end
 
@@ -177,14 +202,14 @@ defmodule FieldPublicationWeb.UserAuth do
   end
 
   def on_mount(
-        :ensure_has_project_access,
+        :ensure_project_access,
         %{"project_identifier" => project_identifier},
         session,
         socket
       ) do
     socket = mount_current_user(socket, session)
 
-    if Projects.has_project_access?(
+    if Project.has_project_access?(
          project_identifier,
          socket.assigns.current_user
        ) do
@@ -200,14 +225,14 @@ defmodule FieldPublicationWeb.UserAuth do
   end
 
   def on_mount(
-        :ensure_project_published_or_project_access,
+        :ensure_publication_access,
         %{"project_identifier" => project_identifier, "draft_date" => draft_date} = _opts,
         session,
         socket
       ) do
     socket = mount_current_user(socket, session)
 
-    Publications.get(project_identifier, draft_date)
+    Publication.get(project_identifier, draft_date)
     |> case do
       {:error, :not_found} ->
         {
@@ -217,8 +242,8 @@ defmodule FieldPublicationWeb.UserAuth do
           |> Phoenix.LiveView.redirect(to: ~p"/")
         }
 
-      {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} ->
-        if not Projects.has_publication_access?(publication, socket.assigns.current_user) do
+      {:ok, %Publication{} = publication} ->
+        if not Project.has_publication_access?(publication, socket.assigns.current_user) do
           {
             :halt,
             socket
@@ -232,14 +257,14 @@ defmodule FieldPublicationWeb.UserAuth do
   end
 
   def on_mount(
-        :ensure_project_published_or_project_access,
+        :ensure_publication_access,
         %{"project_identifier" => project_identifier},
         session,
         socket
       ) do
     socket = mount_current_user(socket, session)
 
-    Publications.get_most_recent(project_identifier, socket.assigns.current_user)
+    Publication.get_most_recent(project_identifier, socket.assigns.current_user)
     |> case do
       nil ->
         {
@@ -249,7 +274,7 @@ defmodule FieldPublicationWeb.UserAuth do
           |> Phoenix.LiveView.redirect(to: ~p"/")
         }
 
-      %FieldPublication.DatabaseSchema.Publication{} = _most_recent ->
+      %Publication{} = _most_recent ->
         {:cont, socket}
     end
   end
@@ -318,11 +343,11 @@ defmodule FieldPublicationWeb.UserAuth do
   @doc """
   Used for routes that require the user to be authenticated.
   """
-  def require_project_access(
+  def ensure_project_access(
         %{params: %{"project_identifier" => project_identifier}} = conn,
         _opts
       ) do
-    if Projects.has_project_access?(
+    if Project.has_project_access?(
          project_identifier,
          conn.assigns[:current_user]
        ) do
@@ -335,12 +360,12 @@ defmodule FieldPublicationWeb.UserAuth do
     end
   end
 
-  def require_published_or_project_access(
+  def ensure_publication_access(
         %{params: %{"project_identifier" => project_identifier, "draft_date" => draft_date}} =
           conn,
         _options
       ) do
-    Publications.get(project_identifier, draft_date)
+    Publication.get(project_identifier, draft_date)
     |> case do
       {:error, _} ->
         conn
@@ -350,8 +375,8 @@ defmodule FieldPublicationWeb.UserAuth do
         )
         |> halt()
 
-      {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} ->
-        if not Projects.has_publication_access?(publication, conn.assigns.current_user) do
+      {:ok, %Publication{} = publication} ->
+        if not Project.has_publication_access?(publication, conn.assigns.current_user) do
           conn
           |> resp(403, "You are not allowed to access that page.")
           |> halt()
@@ -361,18 +386,18 @@ defmodule FieldPublicationWeb.UserAuth do
     end
   end
 
-  def require_published_or_project_access(
+  def ensure_publication_access(
         %{params: %{"project_identifier" => project_identifier}} = conn,
         _opts
       ) do
-    Publications.get_most_recent(project_identifier, conn.assigns.current_user)
+    Publication.get_most_recent(project_identifier, conn.assigns.current_user)
     |> case do
       nil ->
         conn
         |> resp(404, "No publications found for project '#{project_identifier}'.")
         |> halt()
 
-      %FieldPublication.DatabaseSchema.Publication{} = _most_recent ->
+      %Publication{} = _most_recent ->
         conn
     end
   end
@@ -391,52 +416,70 @@ defmodule FieldPublicationWeb.UserAuth do
     end
   end
 
-  def ensure_image_published(
+  def ensure_image_access(
         %{params: %{"project_identifier" => project_identifier, "uuid" => uuid}} = conn,
         _options
       ) do
     check_image_access(conn, project_identifier, uuid)
   end
 
-  def ensure_image_published(
+  def ensure_image_access(
         %{
-          path_info: ["api", "image", "iiif", "3", image_name | _everything_afterwards]
+          path_info: ["api", "iiif", "image", "v3", identifier | _everything_afterwards]
         } =
           conn,
         _opts
       ) do
-    # This is the variant of ensure_image_published/2 that is used for the reverse proxy routes of the
-    # cantaloupe image server. We can not extract project_identifier and uuid beforehand.
-    image_name
-    |> String.replace_suffix(".tif", "")
-    |> String.split("%2F")
+    # This is the variant of ensure_image_access/2 that is used for IIIF requests.
+    # We can not extract project_identifier and uuid beforehand.
+    identifier
+    |> FieldPublicationWeb.Api.IIIFImage.split_identifier()
     |> case do
       [project_identifier, uuid] ->
         check_image_access(conn, project_identifier, uuid)
 
       _ ->
         conn
-        |> resp(404, "")
+        |> resp(404, "Unknown identifier.")
         |> halt()
     end
   end
 
   defp check_image_access(conn, project_identifier, uuid) do
+    # Inline function this is used further down.
+    check_user_access = fn project_identifier, conn ->
+      cond do
+        Project.has_project_access?(project_identifier, conn.assigns[:current_user]) ->
+          conn
+
+        conn.assigns[:current_user] ->
+          # Neither published nor user access.
+          conn
+          |> put_resp_header("content-type", "text/plain")
+          |> resp(403, "You are not allowed to view this image.")
+          |> halt()
+
+        true ->
+          conn
+          |> put_resp_header("content-type", "text/plain")
+          |> resp(401, "Please authenticate.")
+          |> halt()
+      end
+    end
+
+    # For each project, we retain an in memory cache about which images are already published. This
+    # is done in order to avoid hitting the database for every image tile that is served by the
+    # IIIF plug.
+    #
+    # The cache is populated lazily below (on demand).
     case Cachex.get(:published_images, {project_identifier, uuid}) do
       {:ok, true} ->
         # The image was evaluated as published before, image access is granted.
         conn
 
       {:ok, false} ->
-        if Projects.has_project_access?(project_identifier, conn.assigns[:current_user]) do
-          # The image is part of a non published draft the user has access to, image access is granted.
-          conn
-        else
-          # Neither published nor user access.
-          conn
-          |> resp(403, "The image you requested has not been published.")
-          |> halt()
-        end
+        # The image was evaluated before, but turned out to be not published (yet).
+        check_user_access.(project_identifier, conn)
 
       _ ->
         # The image has not been evaluated since the start of the application (not found in cache).
@@ -447,25 +490,16 @@ defmodule FieldPublicationWeb.UserAuth do
         else
           # Put `false` as cache value, but with a time to live (ttl) of 60 minutes.
           Cachex.put(:published_images, {project_identifier, uuid}, false, ttl: 1000 * 60 * 60)
-
-          if Projects.has_project_access?(project_identifier, conn.assigns[:current_user]) do
-            # The image is part of a non published draft the user has access to, image access is granted.
-            conn
-          else
-            # Neither published nor user access.
-            conn
-            |> resp(403, "The image you requested has not been published.")
-            |> halt()
-          end
+          check_user_access.(project_identifier, conn)
         end
     end
   end
 
   defp is_image_published?(project_identifier, uuid) do
     publication =
-      Publications.get_published(project_identifier)
+      Publication.get_published(project_identifier)
       |> Enum.find(fn pub ->
-        Publications.Data.document_exists?(uuid, pub)
+        Publication.document_exists?(uuid, pub)
       end)
 
     case publication do

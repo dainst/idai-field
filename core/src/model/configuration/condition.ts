@@ -6,7 +6,8 @@ export interface Condition {
 
     fieldName?: string;
     subfieldName?: string;
-    values: string[]|boolean;
+    values?: string[]|boolean;
+    exists?: true;
 }
 
 
@@ -18,7 +19,8 @@ export module Condition {
             && condition[type + 'Name']
             && (condition.values === true
                 || condition.values === false
-                || isArray(condition.values) && condition.values.length > 0
+                || (isArray(condition.values) && condition.values.length > 0)
+                || condition.exists
             );
     }
 
@@ -34,11 +36,13 @@ export module Condition {
 
         const data: any = fieldContainer[conditionField.name];
         const fulfilled: boolean = data !== undefined
-            ? isArray(condition.values)
-                ? isArray(data)
-                    ? intersect(data)(condition.values).length > 0
-                    : condition.values.includes(data)
-                : data === condition.values
+            ? condition.exists
+                ? true
+                : isArray(condition.values)
+                    ? isArray(data)
+                        ? intersect(data)(condition.values).length > 0
+                        : condition.values.includes(data)
+                    : data === condition.values
             : false;
 
         return fulfilled
@@ -51,9 +55,7 @@ export module Condition {
 
     export function getEmpty(type: 'field'|'subfield'): Condition {
         
-        const condition: Condition = {
-            values: undefined
-        };
+        const condition: Condition = {};
         
         if (type === 'field') {
             condition.fieldName = '';
@@ -70,7 +72,9 @@ export module Condition {
 
         if (!condition) return '';
 
-        if (condition.values === true) {
+        if (condition.exists) {
+            return translate('condition.filledIn');
+        } else if (condition.values === true) {
             return translate('true');
         } else if (condition.values === false) {
             return translate('false');

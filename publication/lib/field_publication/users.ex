@@ -34,7 +34,7 @@ defmodule FieldPublication.Users do
   @doc """
   Create a new user
 
-  Returns `{:ok, :created}` if successful or `{:error, :already_exists}` a user of that name already exists.
+  Returns `{:ok, %User{}}` if successful or `{:error, changeset}` a user of that name already exists.
 
   __Parameters__
   - `user_name` the user's name.
@@ -55,13 +55,10 @@ defmodule FieldPublication.Users do
             {:ok, user}
 
           {:ok, %{status: 409}} ->
-            {
-              :error,
-              user
-              |> User.changeset()
-              |> Ecto.Changeset.add_error(:name, "name '#{name}' already taken.")
-              |> Ecto.Changeset.apply_action(:validate)
-            }
+            user
+            |> User.changeset()
+            |> Ecto.Changeset.add_error(:name, "name '#{name}' already taken.")
+            |> Ecto.Changeset.apply_action(:validate)
         end
     end
   end

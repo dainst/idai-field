@@ -13,6 +13,10 @@ entryPoints:
           to: "websecure"
   websecure:
     address: ":443"
+    transport:
+      respondingTimeouts:
+        # Setting the timeout to 1 hour, up from 1 minute. Otherwise uploads of large images might get cancelled.
+        readTimeout: "1h"
 
 certificatesResolvers:
   dfn:

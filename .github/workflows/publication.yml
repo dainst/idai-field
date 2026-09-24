@@ -10,7 +10,10 @@ on:
       - ".github/workflows/publication.yml"
 jobs:
   Tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v6
       - uses: erlef/setup-beam@v1
@@ -20,7 +23,9 @@ jobs:
       - name: Start CouchDB and OpenSearch
         run: docker compose -f docker-compose.yml up -d
         working-directory: publication
-      - name: Sleep to await CouchDB startup
+      - name: Install GDAL
+        run: sudo apt-get update && sudo apt-get install -y gdal-bin
+      - name: Sleep to await CouchDB and OpenSearch startup
         run: sleep 15s
       - name: Restore dependencies cache
         uses: actions/cache@v5

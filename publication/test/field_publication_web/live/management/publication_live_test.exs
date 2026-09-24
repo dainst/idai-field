@@ -1,9 +1,10 @@
 defmodule FieldPublicationWeb.Management.PublicationLiveTest do
-  alias FieldPublication.Processing
-  alias FieldPublication.Publications
-  alias FieldPublication.Projects
-  alias FieldPublication.CouchService
-  alias FieldPublication.DatabaseSchema.Project
+  alias FieldPublication.{
+    CouchService,
+    Processing,
+    Project,
+    Publication
+  }
 
   use FieldPublicationWeb.ConnCase
   import Phoenix.LiveViewTest
@@ -21,22 +22,22 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
     CouchService.put_database(@core_database)
     CouchService.create_user(@test_user)
 
-    Projects.put(%Project{}, %{"identifier" => @test_project_identifier})
+    Project.put(%Project{}, %{"identifier" => @test_project_identifier})
 
-    project = Projects.get!(@test_project_identifier)
+    project = Project.get!(@test_project_identifier)
 
     on_exit(fn ->
-      Publications.get(@test_project_identifier, Date.utc_today())
+      Publication.get(@test_project_identifier, Date.utc_today())
       |> case do
         {:ok, publication} ->
-          Publications.delete(publication)
+          Publication.delete(publication)
           Processing.stop(publication)
 
         _ ->
           :ok
       end
 
-      Projects.delete(project)
+      Project.delete(project)
       CouchService.delete_database(@core_database)
       CouchService.delete_user(@test_user.name)
       FieldHubHelper.stop()
@@ -66,15 +67,15 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
 
   test "editors have access to the input view", %{conn: conn} do
     @test_project_identifier
-    |> Projects.get!()
-    |> Projects.put(%{"editors" => [@test_user.name]})
+    |> Project.get!()
+    |> Project.put(%{"editors" => [@test_user.name]})
 
     conn = log_in_user(conn, @test_user.name)
 
     on_exit(fn ->
       @test_project_identifier
-      |> Projects.get!()
-      |> Projects.put(%{"editors" => []})
+      |> Project.get!()
+      |> Project.put(%{"editors" => []})
     end)
 
     assert {:ok, _live_process, html} =

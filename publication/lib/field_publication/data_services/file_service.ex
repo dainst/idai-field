@@ -1,5 +1,5 @@
 defmodule FieldPublication.FileService do
-  alias FieldPublication.DatabaseSchema.Publication
+  alias FieldPublication.Publication
 
   @file_store_path Application.compile_env(:field_publication, :file_store_directory_root)
   @custom_assets_path "#{@file_store_path}/custom_assets/"
@@ -62,21 +62,6 @@ defmodule FieldPublication.FileService do
       @file_store_path,
       "iiif_cache",
       project_identifier
-    ])
-  end
-
-  def get_iiif_cache_path(%Plug.Conn{
-        path_info: [id, region, scaling, rotation, quality_and_format]
-      }) do
-    [project_identifier, uuid] = String.split(id, "%2F")
-
-    Path.join([
-      get_iiif_cache_path(project_identifier),
-      uuid,
-      region,
-      scaling,
-      rotation,
-      quality_and_format
     ])
   end
 
@@ -191,6 +176,57 @@ defmodule FieldPublication.FileService do
         |> publication_geometry_path()
         |> File.rm()
     }
+  end
+
+  def geo_data_path(%Publication{
+        project_identifier: project_identifier,
+        draft_date: draft_date
+      }) do
+    Path.join([
+      @file_store_path,
+      "geo_data",
+      project_identifier,
+      Date.to_string(draft_date)
+    ])
+  end
+
+  def geo_vector_data_path(
+        %Publication{epsg_code: default_code} = publication,
+        epsg_code,
+        compression
+      )
+      when (is_number(epsg_code) or (is_nil(epsg_code) and is_nil(default_code))) and
+             compression in [:br, :gzip, :none] do
+    compression_suffix =
+      case compression do
+        :br ->
+          ".br"
+
+        :gzip ->
+          ".gz"
+
+        :none ->
+          ""
+      end
+
+    file_name =
+      if is_number(epsg_code) do
+        "vector_geometries_EPSG-#{epsg_code}.geojson#{compression_suffix}"
+      else
+        "vector_geometries_custom-crs.geojson#{compression_suffix}"
+      end
+
+    path =
+      Path.join([
+        geo_data_path(publication),
+        file_name
+      ])
+
+    if File.exists?(path) do
+      {:ok, path}
+    else
+      {:error, :not_found}
+    end
   end
 
   def publication_geometry_path(%Publication{} = publication, compressed? \\ false) do

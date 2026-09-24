@@ -524,6 +524,21 @@
       },
       "Schliffrillendekor": {
         "label": "linear cut"
+      },
+      "Schlangenfadendekor": {
+        "label": "snake-thread decoration"
+      },
+      "Tupfendekor": {
+        "label": "blob decoration"
+      },
+      "figürlicher Schliffdekor": {
+        "label": "figural cut decoration"
+      },
+      "Reticelladekor": {
+        "label": "reticella decoration"
+      },
+      "Zwischengoldglas": {
+        "label": "gold-glass"
       }
     }
   },
@@ -582,6 +597,12 @@
       },
       "Unsicher bzw. unbestimmbar": {
         "label": "uncertain or indeterminate"
+      },
+      "Rührstab": {
+        "label": "stirring rod"
+      },
+      "Scheiben": {
+        "label": "discs"
       }
     }
   },
@@ -613,6 +634,9 @@
       },
       "Sonstige Abdrücke": {
         "label": "other impressions"
+      },
+      "Wischzeichen": {
+        "label": "wipe mark"
       }
     }
   },
@@ -660,6 +684,15 @@
     "values": {
       "Foto": {
         "label": "Foto"
+      },
+      "Endoskopie": {
+        "label": "endoscopy"
+      },
+      "Histologie": {
+        "label": "histology"
+      },
+      "Röntgen": {
+        "label": "x-ray"
       }
     }
   },
@@ -670,6 +703,54 @@
       },
       "Lehmziegelmauerwerk": {
         "label": "Mudbrick masonry"
+      },
+      "regelmäßiges Polygonalmauerwerk": {
+        "label": "regular polygonal masonry"
+      },
+      "regelmäßiges Trapezoidalmauerwerk": {
+        "label": "regular trapezoidal masonry"
+      },
+      "unregelmäßiges Trapezoidalmauerwerk": {
+        "label": "irregular trapezoidal masonry"
+      },
+      "unspezifisches Mauerwerk": {
+        "label": "unspecified masonry"
+      },
+      "Kyklopenmauerwerk": {
+        "label": "Cyclopean masonry"
+      },
+      "Polygonalmauerwerk": {
+        "label": "polygonal masonry"
+      },
+      "Feldsteinmauerwerk": {
+        "label": "fieldstone masonry"
+      },
+      "Opus Caementitium": {
+        "label": "opus caementicium"
+      },
+      "Unregelmäßiges Polygonalmauerwerk": {
+        "label": "irregular polygonal masonry"
+      },
+      "Ziegelmauerwerk": {
+        "label": "brick masonry"
+      },
+      "irreguläres Mauerwerk": {
+        "label": "irregular masonry"
+      },
+      "regelmäßiges Quadermauerwerk": {
+        "label": "regular ashlar masonry"
+      },
+      "unregelmäßiges Quadermauerwerk": {
+        "label": "irregular ashlar masonry"
+      },
+      "Quadermauerwerk": {
+        "label": "ashlar masonry"
+      },
+      "Spolienmauerwerk": {
+        "label": "spolia masonry"
+      },
+      "Mischform Polygonal-/Quadermauerwerk": {
+        "label": "mixed polygonal and ashlar masonry"
       }
     }
   },
@@ -695,6 +776,21 @@
       },
       "Deckelgefäß": {
         "label": "vessel with lid"
+      },
+      "Aschenurne": {
+        "label": "cremation urn"
+      },
+      "Krug": {
+        "label": "Jug"
+      },
+      "Becher": {
+        "label": "beaker"
+      },
+      "Topf": {
+        "label": "Pot"
+      },
+      "Schüssel": {
+        "label": "bowl"
       }
     }
   },
@@ -759,6 +855,33 @@
       },
       "zarte Rippenschale": {
         "label": "delicate ribbed bowl ('zarte Rippenschale')"
+      },
+      "Kopfflasche": {
+        "label": "head-shaped bottle"
+      },
+      "Stamnos": {
+        "label": "Stamnos"
+      },
+      "Tierflasche": {
+        "label": "animal flask"
+      },
+      "Pelike": {
+        "label": "Pelike"
+      },
+      "Sprenkler": {
+        "label": "sprinkler flask"
+      },
+      "Oinochoe": {
+        "label": "Oinochoe"
+      },
+      "Spitzamphora": {
+        "label": "pointed Amphora"
+      },
+      "Luterion": {
+        "label": "louterion"
+      },
+      "Faltenbecher": {
+        "label": "indented beaker"
       }
     }
   },
@@ -772,6 +895,9 @@
       },
       "Werkstatt": {
         "label": "Workshop"
+      },
+      "Haus": {
+        "label": "house"
       }
     }
   },
@@ -892,6 +1018,12 @@
       },
       "Säulenhalle": {
         "label": "Portico"
+      },
+      "Mauerkurtine": {
+        "label": "curtain wall"
+      },
+      "Toranlage": {
+        "label": "gate complex"
       }
     }
   },
@@ -956,6 +1088,36 @@
       },
       "Kalk": {
         "label": "lime"
+      },
+      "Fliesen": {
+        "label": "tiles"
+      },
+      "Stahlbeton": {
+        "label": "steel-reinforced concrete"
+      },
+      "Holzwerkstoff": {
+        "label": "wood-based material"
+      },
+      "Kunststoff": {
+        "label": "synthetic material"
+      },
+      "Naturstein": {
+        "label": "natural stone"
+      },
+      "Stahl": {
+        "label": "steel"
+      },
+      "Unbekannt/Unerkannt": {
+        "label": "unknown/unrecognized"
+      },
+      "Kalzit": {
+        "label": "calcite"
+      },
+      "Kreide": {
+        "label": "chalk"
+      },
+      "Gips": {
+        "label": "gypsum"
       }
     }
   },
@@ -1008,6 +1170,12 @@
       },
       "Schmuck": {
         "label": "jewelry"
+      },
+      "Grabmarkierung": {
+        "label": "grave marker"
+      },
+      "Grabplatte": {
+        "label": "tomb slab"
       }
     }
   },
@@ -1039,6 +1207,27 @@
       },
       "tonnenförmig": {
         "label": "barrel-shaped"
+      },
+      "ausladend": {
+        "label": "flaring"
+      },
+      "schlank": {
+        "label": "slender"
+      },
+      "hochoval": {
+        "label": "narrowly oval"
+      },
+      "breitoval": {
+        "label": "broadly oval"
+      },
+      "doppelkonisch": {
+        "label": "biconical"
+      },
+      "halbkugelig": {
+        "label": "hemispherical"
+      },
+      "spindelförmig": {
+        "label": "spindle-shaped"
       }
     }
   },
@@ -1049,6 +1238,87 @@
       },
       "Villa": {
         "label": "villa"
+      },
+      "Tumulus": {
+        "label": "tumulus"
+      },
+      "Palästra": {
+        "label": "palestra"
+      },
+      "Peripteros": {
+        "label": "peripteros"
+      },
+      "Peripteros sine portico": {
+        "label": "peripteros sine portico"
+      },
+      "Peristylhaus": {
+        "label": "peristyle house"
+      },
+      "Pseudo-Dipteros": {
+        "label": "pseudo-dipteros"
+      },
+      "Pseudo-Peripteros": {
+        "label": "Pseudo-Peripteros"
+      },
+      "Rundbau": {
+        "label": "rotunda"
+      },
+      "Schatzhaus": {
+        "label": "treasure house"
+      },
+      "Terassenheiligtum": {
+        "label": "terraced sanctuary"
+      },
+      "Tholos": {
+        "label": "Tholos"
+      },
+      "Torbogen": {
+        "label": "arch"
+      },
+      "Triumphbogen": {
+        "label": "triumphal arch"
+      },
+      "dreischiffig": {
+        "label": "three-aisled"
+      },
+      "fünfschiffig": {
+        "label": "five-aisled"
+      },
+      "griechisches Theater": {
+        "label": "greek theatre"
+      },
+      "römisches Theater": {
+        "label": "roman theatre"
+      },
+      "vierschiffig": {
+        "label": "four-aisled"
+      },
+      "zweischiffig": {
+        "label": "two-aisled"
+      },
+      "Dipteros": {
+        "label": "dipteros"
+      },
+      "Hoftempel": {
+        "label": "courtyard temple"
+      },
+      "Palast": {
+        "label": "palace"
+      },
+      "Ehrensäule": {
+        "label": "honorary column"
+      },
+      "Aediculabau": {
+        "label": "aedicula structure"
+      },
+      "Atriumhaus": {
+        "label": "atrium house"
+      },
+      "Rednertribüne": {
+        "label": "Speaker's platform"
+      },
+      "Ehrenbogen": {
+        "label": "honorary arch"
       }
     }
   },
@@ -1133,6 +1403,27 @@
       },
       "Lehmiger Ton": {
         "label": "loamy clay"
+      },
+      "Grobsand": {
+        "label": "fine gravel"
+      },
+      "Feinstsand": {
+        "label": "fine sand"
+      },
+      "Mergel": {
+        "label": "marl"
+      },
+      "Lehm": {
+        "label": "loam"
+      },
+      "Sand": {
+        "label": "sand"
+      },
+      "Sandiger Lehm": {
+        "label": "sandy loam"
+      },
+      "Sandiger Schluff": {
+        "label": "sandy silt"
       }
     }
   },
@@ -1149,6 +1440,15 @@
       },
       "Vergoldung/metallischer Überzug": {
         "label": "gilding/metallic plating"
+      },
+      "Applik": {
+        "label": "applique decoration"
+      },
+      "Ritzung": {
+        "label": "scratching"
+      },
+      "Schnitzung": {
+        "label": "carving"
       }
     }
   },
@@ -1338,6 +1638,12 @@
       },
       "gedreht (auf Drehscheibe)": {
         "label": "wheel turned"
+      },
+      "In offene Halbformen geblasen": {
+        "label": "Blown into open two-part moulds"
+      },
+      "In Vorformen geblasen": {
+        "label": "Blown into a preform mould"
       }
     }
   },
@@ -1375,6 +1681,15 @@
       },
       "Wandziegel": {
         "label": "wall brick"
+      },
+      "Hypokaustziegel": {
+        "label": "hypocaust brick"
+      },
+      "Leistenziegel": {
+        "label": "ledge/lateral tile"
+      },
+      "Lochziegel/Hohlziegel": {
+        "label": "hollow brick"
       }
     }
   },
@@ -1397,6 +1712,30 @@
       },
       "Wandziegel": {
         "label": "wall brick"
+      },
+      "Abschläge": {
+        "label": "flakes"
+      },
+      "Berg": {
+        "label": "mountain"
+      },
+      "Geröll": {
+        "label": "gravel"
+      },
+      "Platten": {
+        "label": "slabs"
+      },
+      "Variierend": {
+        "label": "varying"
+      },
+      "Ziegelbruch": {
+        "label": "brick fragment"
+      },
+      "Hohlziegel": {
+        "label": "hollow brick"
+      },
+      "Hypokaustziegel": {
+        "label": "hypocaust brick"
       }
     }
   },
@@ -1422,6 +1761,12 @@
       },
       "Weich gebrannt": {
         "label": "soft fired"
+      },
+      "Oberfläche glatt": {
+        "label": "smooth surface"
+      },
+      "Oberfläche rau": {
+        "label": "rough surface"
       }
     }
   },
@@ -1481,6 +1826,27 @@
       },
       "Lehm": {
         "label": "loam"
+      },
+      "Fliesen": {
+        "label": "tiles"
+      },
+      "Kunststoff": {
+        "label": "synthetic material"
+      },
+      "Gips": {
+        "label": "gypsum"
+      },
+      "Holzwerkstoff": {
+        "label": "wood-based material"
+      },
+      "Naturstein": {
+        "label": "natural stone"
+      },
+      "Stahlbeton": {
+        "label": "steel-reinforced concrete"
+      },
+      "Unbekannt/Unerkannt": {
+        "label": "unknown/unrecognized"
       }
     }
   },
@@ -1512,6 +1878,12 @@
       },
       "Kalk": {
         "label": "lime"
+      },
+      "Kalzit": {
+        "label": "calcite"
+      },
+      "Kreide": {
+        "label": "chalk"
       }
     }
   },
@@ -1535,6 +1907,9 @@
       },
       "durchsichtig": {
         "label": "transparent"
+      },
+      "versintert": {
+        "label": "sintered"
       }
     }
   },
@@ -1542,6 +1917,27 @@
     "values": {
       "Unsicher bzw. unbestimmbar": {
         "label": "uncertain or indeterminate"
+      },
+      "Massengrab": {
+        "label": "mass burial"
+      },
+      "Mehrfachbestattung": {
+        "label": "multiple burial"
+      },
+      "Doppelbestattung": {
+        "label": "double burial"
+      },
+      "Dreifachbestattung": {
+        "label": "triple burial"
+      },
+      "Einzelbestattung": {
+        "label": "single burial"
+      },
+      "Grabdeponat": {
+        "label": "grave deposit"
+      },
+      "Kollektivbestattung": {
+        "label": "collective burial"
       }
     }
   },
@@ -1549,6 +1945,12 @@
     "values": {
       "Unsicher bzw. unbestimmbar": {
         "label": "uncertain or indeterminate"
+      },
+      "Primäre Bestattung": {
+        "label": "primary burial"
+      },
+      "Sekundäre Bestattung": {
+        "label": "secondary burial"
       }
     }
   },
@@ -1563,6 +1965,18 @@
     "values": {
       "Unsicher bzw. unbestimmbar": {
         "label": "uncertain or indeterminate"
+      },
+      "Bauchlage": {
+        "label": "prone position"
+      },
+      "Rückenlage": {
+        "label": "supine position"
+      },
+      "Seitenlage, links": {
+        "label": "lateral position, left"
+      },
+      "Seitenlage, rechts": {
+        "label": "lateral position, right"
       }
     }
   },
@@ -1573,6 +1987,9 @@
       },
       "Brandspuren": {
         "label": "burning marks (partly burned)"
+      },
+      "Keine Brandspuren": {
+        "label": "no burn marks"
       }
     }
   },
@@ -1613,6 +2030,9 @@
       },
       "Billon": {
         "label": "Billon"
+      },
+      "Aluminium": {
+        "label": "aluminum"
       }
     }
   },
@@ -1620,6 +2040,24 @@
     "values": {
       "Unsicher bzw. unbestimmbar": {
         "label": "uncertain or indeterminate"
+      },
+      "am Kinn": {
+        "label": "on the chin"
+      },
+      "auf dem Becken": {
+        "label": "on the pelvis"
+      },
+      "auf der Brust": {
+        "label": "on the chest"
+      },
+      "ungleichmäßig": {
+        "label": "uneven"
+      },
+      "auf dem Bauch": {
+        "label": "on the stomach"
+      },
+      "an den Seiten": {
+        "label": "on the sides"
       }
     }
   },
@@ -1709,6 +2147,21 @@
       },
       "Werkzeug": {
         "label": "tool"
+      },
+      "Anhänger": {
+        "label": "pendant"
+      },
+      "Antefix": {
+        "label": "Antefix"
+      },
+      "Sarkophag": {
+        "label": "sarcophagus"
+      },
+      "Siegel": {
+        "label": "seal"
+      },
+      "Becken": {
+        "label": "basin"
       }
     }
   },
@@ -1755,6 +2208,9 @@
       },
       "Werkzeug": {
         "label": "tool"
+      },
+      "Anhänger": {
+        "label": "pendant"
       }
     }
   },
@@ -1801,6 +2257,84 @@
       },
       "Produktionsfragment": {
         "label": "production residue"
+      },
+      "Anhänger": {
+        "label": "pendant"
+      },
+      "Architekturdekor": {
+        "label": "architectural decoration"
+      },
+      "Becken": {
+        "label": "basin"
+      },
+      "Fußbodenfragment": {
+        "label": "floor fragment"
+      },
+      "Grabmarkierung": {
+        "label": "grave marker"
+      },
+      "Grabplatte": {
+        "label": "tomb slab"
+      },
+      "Herme": {
+        "label": "herm"
+      },
+      "Mörser": {
+        "label": "mortar"
+      },
+      "Ring": {
+        "label": "ring"
+      },
+      "Rührstab": {
+        "label": "stirring rod"
+      },
+      "Sarkophag": {
+        "label": "sarcophagus"
+      },
+      "Schmuck": {
+        "label": "jewelry"
+      },
+      "Siegel": {
+        "label": "seal"
+      },
+      "Spielbrett": {
+        "label": "game board"
+      },
+      "Spielstein": {
+        "label": "game piece"
+      },
+      "Spinnwirtel": {
+        "label": "spindle whorl"
+      },
+      "Spolie": {
+        "label": "spolium"
+      },
+      "Statuenbasis": {
+        "label": "statue base"
+      },
+      "Stele": {
+        "label": "stele"
+      },
+      "Tessera": {
+        "label": "tessera"
+      },
+      "Tischfuß": {
+        "label": "table leg"
+      },
+      "Waffe": {
+        "label": "weapon"
+      },
+      "Webgewicht": {
+        "label": "loom weight"
+      },
+      "Werkzeug": {
+        "label": "tool"
+      },
+      "Ölpresse": {
+        "label": "oil press"
+      },
+      "Inkrustation": {
+        "label": "incrustation"
       }
     }
   },
@@ -1808,6 +2342,174 @@
     "values": {
       "Unsicher bzw. unbestimmbar": {
         "label": "uncertain or indeterminate"
+      },
+      "1 1/2 Skripula": {
+        "label": "1 1/2 scripula"
+      },
+      "1 1/2 Solidus": {
+        "label": "1 1/2 solidi"
+      },
+      "1/2 Stater (Hemistater)": {
+        "label": "1/2 stater (hemistater)"
+      },
+      "1/30 Drachme": {
+        "label": "1/30 drachm"
+      },
+      "1/4  Stater (Tetarte)": {
+        "label": "1/4 stater (tetarte)"
+      },
+      "1/4 Einheit": {
+        "label": "tetarte"
+      },
+      "1/5 Drachme": {
+        "label": "1/5 drachm"
+      },
+      "2 Solidus": {
+        "label": "2 solidi"
+      },
+      "3 Solidus": {
+        "label": "3 solidi"
+      },
+      "4 1/2 Solidus": {
+        "label": "4 1/2 solidi"
+      },
+      "60 As": {
+        "label": "60 asses"
+      },
+      "9 Siliqua": {
+        "label": "9 siliquae"
+      },
+      "9 Solidus": {
+        "label": "9 solidi"
+      },
+      "Antoninian": {
+        "label": "antoninianus"
+      },
+      "Argenteus": {
+        "label": "argenteus"
+      },
+      "As": {
+        "label": "as"
+      },
+      "Aureus": {
+        "label": "aureus"
+      },
+      "Aureus¹": {
+        "label": "aureus¹"
+      },
+      "Aureus²": {
+        "label": "aureus²"
+      },
+      "Bruchteil": {
+        "label": "fraction"
+      },
+      "Cistophor": {
+        "label": "cistophorus"
+      },
+      "Denar": {
+        "label": "denarius"
+      },
+      "Denar (serratus)": {
+        "label": "denarius (serratus)"
+      },
+      "Didrachme": {
+        "label": "didrachm"
+      },
+      "Diobol": {
+        "label": "diobol"
+      },
+      "Distater": {
+        "label": "distater"
+      },
+      "Doppelter Sesterz": {
+        "label": "double sestertius"
+      },
+      "Drachme": {
+        "label": "drachm"
+      },
+      "Dupondius": {
+        "label": "dupondius"
+      },
+      "Gold-mehrfaches": {
+        "label": "gold multiple"
+      },
+      "Halber Solidus": {
+        "label": "semissis/semis"
+      },
+      "Hekte (1/6 Stater)": {
+        "label": "hekte (1/6 stater)"
+      },
+      "Hemidrachme": {
+        "label": "hemidrachm"
+      },
+      "Hemiobol": {
+        "label": "hemiobol"
+      },
+      "Medaillon": {
+        "label": "medaillon"
+      },
+      "Miliarense (leicht)": {
+        "label": "miliarense (light)"
+      },
+      "Miliarense (schwer)": {
+        "label": "miliarense (heavy)"
+      },
+      "Obolus": {
+        "label": "obol"
+      },
+      "Quadrans": {
+        "label": "quadrans"
+      },
+      "Quinar": {
+        "label": "quinarius"
+      },
+      "Quinar Aureus": {
+        "label": "quinarius aureus"
+      },
+      "Reduzierte Siliqua": {
+        "label": "reduced siliqua"
+      },
+      "Semis": {
+        "label": "semis"
+      },
+      "Semissis": {
+        "label": "semissis"
+      },
+      "Semuncia": {
+        "label": "semuncia"
+      },
+      "Sesterz": {
+        "label": "sestertius"
+      },
+      "Sextans": {
+        "label": "sextans"
+      },
+      "Silber-Mehrfaches": {
+        "label": "silver multiple"
+      },
+      "Siliqua": {
+        "label": "siliqua"
+      },
+      "Solidus": {
+        "label": "solidus"
+      },
+      "Stater": {
+        "label": "stater"
+      },
+      "Tetradrachme": {
+        "label": "tetradrachm"
+      },
+      "Tremissis": {
+        "label": "tremissis"
+      },
+      "Triens": {
+        "label": "triens"
+      },
+      "Uncia": {
+        "label": "uncia"
+      },
+      "Victoriatus": {
+        "label": "victoriatus"
       }
     }
   },
@@ -1815,6 +2517,9 @@
     "values": {
       "Unsicher bzw. unbestimmbar": {
         "label": "uncertain or indeterminate"
+      },
+      "Geprägt": {
+        "label": "embossed"
       }
     }
   },
@@ -1948,6 +2653,630 @@
       },
       "Sardinien": {
         "label": "Sardinia"
+      },
+      "Alexandrien": {
+        "label": "Alexandria"
+      },
+      "Apollonia": {
+        "label": "Apollonia"
+      },
+      "Aquileia": {
+        "label": "Aquileia"
+      },
+      "Archaiischer Bund": {
+        "label": "Achaean League"
+      },
+      "Arelate (Arles)": {
+        "label": "Arelate (Arles)"
+      },
+      "Argos": {
+        "label": "Argos"
+      },
+      "Argos Amphilochicum": {
+        "label": "Argos Amphilochicum"
+      },
+      "Arles": {
+        "label": "Arles"
+      },
+      "Arpi": {
+        "label": "Arpi"
+      },
+      "Asia Minor": {
+        "label": "Asia Minor"
+      },
+      "Asien": {
+        "label": "Asia"
+      },
+      "Aspendos": {
+        "label": "Aspendos"
+      },
+      "Assos": {
+        "label": "Assos"
+      },
+      "Astibus": {
+        "label": "Astibus"
+      },
+      "Athen": {
+        "label": "Athens"
+      },
+      "Aydın": {
+        "label": "Aydın"
+      },
+      "Babylon": {
+        "label": "Babylon"
+      },
+      "Barcino (Barcelona)": {
+        "label": "Barcino (Barcelona)"
+      },
+      "Beirut": {
+        "label": "Beirut"
+      },
+      "Bozcaada": {
+        "label": "Bozcaada"
+      },
+      "Byblos": {
+        "label": "Byblos"
+      },
+      "Byzantion": {
+        "label": "Byzantion"
+      },
+      "Böotien": {
+        "label": "Boeotia"
+      },
+      "Caesaraugusta": {
+        "label": "Caesaraugusta"
+      },
+      "Caesarea in Kappadokien": {
+        "label": "Caesarea in Cappadocia"
+      },
+      "Cales": {
+        "label": "Cales"
+      },
+      "Camulodunum (Colchester)": {
+        "label": "Camulodunum (Colchester)"
+      },
+      "Canosa di Puglia": {
+        "label": "Canosa di Puglia"
+      },
+      "Carnuntum": {
+        "label": "Carnuntum"
+      },
+      "Carthago (Tunis)": {
+        "label": "Carthage (Tunis)"
+      },
+      "Catania": {
+        "label": "Catania"
+      },
+      "Caulonia": {
+        "label": "Caulonia"
+      },
+      "Chalcedon": {
+        "label": "Chalcedon"
+      },
+      "Chalkida": {
+        "label": "Chalkida"
+      },
+      "Chalkidiki": {
+        "label": "Chalcidice"
+      },
+      "Chersones": {
+        "label": "Chersonesus"
+      },
+      "Chios": {
+        "label": "Chios"
+      },
+      "Colchester": {
+        "label": "Colchester"
+      },
+      "Colonia Agrippina (Köln)": {
+        "label": "Colonia Agrippina (Cologne)"
+      },
+      "Colonia Patricia": {
+        "label": "Colonia Patricia"
+      },
+      "Comitatenses": {
+        "label": "Comitatenses"
+      },
+      "Constantinopolis (Istanbul)": {
+        "label": "Constantinopolis (Istanbul)"
+      },
+      "Crotone": {
+        "label": "Croton"
+      },
+      "Cyme": {
+        "label": "Cyme"
+      },
+      "Damaskus": {
+        "label": "Damascus"
+      },
+      "Diesseitiges Gallian / Norditalien": {
+        "label": "Cisalpine Gaul / Northern Italy"
+      },
+      "Dionysopolis": {
+        "label": "Dionysopolis"
+      },
+      "Dyrrhachium": {
+        "label": "Dyrrhachium"
+      },
+      "Ekbatana": {
+        "label": "Ecbatana"
+      },
+      "Elea": {
+        "label": "Elea"
+      },
+      "Elis": {
+        "label": "Elis"
+      },
+      "Emerita": {
+        "label": "Emerita"
+      },
+      "Empüries": {
+        "label": "Emporion"
+      },
+      "Ephesos": {
+        "label": "Ephesus"
+      },
+      "Eretria": {
+        "label": "Eretria"
+      },
+      "Erythrai": {
+        "label": "Erythrai"
+      },
+      "Euböa": {
+        "label": "Euboea"
+      },
+      "Foça": {
+        "label": "Foça"
+      },
+      "Gela": {
+        "label": "Gela"
+      },
+      "Germe": {
+        "label": "Germe"
+      },
+      "Gortyn": {
+        "label": "Gortyn"
+      },
+      "Halikarnassos": {
+        "label": "Halicarnassus"
+      },
+      "Harran": {
+        "label": "Harran"
+      },
+      "Heraclea": {
+        "label": "Heraclea"
+      },
+      "Herakleia": {
+        "label": "Herakleia"
+      },
+      "Herakleia Pontike": {
+        "label": "Herakleia Pontike"
+      },
+      "Himera": {
+        "label": "Himera"
+      },
+      "Hispanien": {
+        "label": "Hispania"
+      },
+      "Hispanien-Punisch": {
+        "label": "Punic Hispania"
+      },
+      "Histria": {
+        "label": "Histria"
+      },
+      "Homs": {
+        "label": "Homs"
+      },
+      "Ibiza": {
+        "label": "Ibiza"
+      },
+      "Idalion": {
+        "label": "Idalion"
+      },
+      "Italien (Südosten)": {
+        "label": "Italy (southeast)"
+      },
+      "Kabile": {
+        "label": "Cabyle"
+      },
+      "Kamarina": {
+        "label": "Kamarina"
+      },
+      "Karien": {
+        "label": "Caria"
+      },
+      "Karystos": {
+        "label": "Karystos"
+      },
+      "Kelenderis": {
+        "label": "Kelenderis"
+      },
+      "Kertsch": {
+        "label": "Kerch"
+      },
+      "Klazomenai": {
+        "label": "Klazomenai"
+      },
+      "Knidos": {
+        "label": "Knidos"
+      },
+      "Kolchis": {
+        "label": "Colchis"
+      },
+      "Kolophon": {
+        "label": "Colophon"
+      },
+      "Konstantinopel": {
+        "label": "Constantinople"
+      },
+      "Korfu": {
+        "label": "Corfu"
+      },
+      "Korinthischer Bund": {
+        "label": "Hellenic League"
+      },
+      "Kos": {
+        "label": "Kos"
+      },
+      "Kydonia": {
+        "label": "Kydonia"
+      },
+      "Kyrenaika": {
+        "label": "Cyrenaica"
+      },
+      "Kyrene": {
+        "label": "Cyrene"
+      },
+      "Kyzikos": {
+        "label": "Kyzikos"
+      },
+      "Köln": {
+        "label": "Cologne"
+      },
+      "Lampsakos": {
+        "label": "Lampsakos"
+      },
+      "Laodikeia am Lykos": {
+        "label": "Laodicea on the Lycus"
+      },
+      "Lapta": {
+        "label": "Lapta"
+      },
+      "Larissa": {
+        "label": "Larissa"
+      },
+      "Larnaka": {
+        "label": "Larnaca"
+      },
+      "Latakia": {
+        "label": "Latakia"
+      },
+      "Lefkada": {
+        "label": "Lefkada"
+      },
+      "Lentini": {
+        "label": "Lentini"
+      },
+      "Lete": {
+        "label": "Lete"
+      },
+      "Locri": {
+        "label": "Locri"
+      },
+      "Locri Opuntii (Opus)": {
+        "label": "Locri Opuntii (Opus)"
+      },
+      "Londinium": {
+        "label": "Londinium"
+      },
+      "Lucera": {
+        "label": "Lucera"
+      },
+      "Lugdunum": {
+        "label": "Lugdunum"
+      },
+      "Lydien": {
+        "label": "Lydia"
+      },
+      "Lykien": {
+        "label": "Lycia"
+      },
+      "Lysimacheia": {
+        "label": "Lysimacheia"
+      },
+      "Lyttos": {
+        "label": "Lyttos"
+      },
+      "Magnesia am Mäander": {
+        "label": "Magnesia on the Maeander"
+      },
+      "Mainz": {
+        "label": "Mainz"
+      },
+      "Makedonien": {
+        "label": "Macedonia"
+      },
+      "Mangalia": {
+        "label": "Mangalia"
+      },
+      "Marmetini": {
+        "label": "Marmetini"
+      },
+      "Maroneia": {
+        "label": "Maroneia"
+      },
+      "Marseille": {
+        "label": "Marseille"
+      },
+      "Mediolanum": {
+        "label": "Mediolanum"
+      },
+      "Megalopoli": {
+        "label": "Megalopoli"
+      },
+      "Memphis": {
+        "label": "Memphis"
+      },
+      "Messene": {
+        "label": "Messene"
+      },
+      "Messina": {
+        "label": "Messina"
+      },
+      "Metapont": {
+        "label": "Metapontum"
+      },
+      "Milet": {
+        "label": "Miletus"
+      },
+      "Mithymna": {
+        "label": "Mithymna"
+      },
+      "Mittelitalien": {
+        "label": "Central Italy"
+      },
+      "Myriandrus": {
+        "label": "Myriandrus"
+      },
+      "Myrina": {
+        "label": "Myrina"
+      },
+      "Mytilini": {
+        "label": "Mytilene"
+      },
+      "Narbo": {
+        "label": "Narbo"
+      },
+      "Neapel": {
+        "label": "Naples"
+      },
+      "Nessebar": {
+        "label": "Nessebar"
+      },
+      "Nikomedia": {
+        "label": "Nicomedia"
+      },
+      "Nisibis": {
+        "label": "Nisibis"
+      },
+      "Nuceria": {
+        "label": "Nuceria"
+      },
+      "Olbia": {
+        "label": "Olbia"
+      },
+      "Oreus": {
+        "label": "Oreus"
+      },
+      "Oria": {
+        "label": "Oria"
+      },
+      "Ostia Antica": {
+        "label": "Ostia Antica"
+      },
+      "Ouranoupolis": {
+        "label": "Ouranoupolis"
+      },
+      "Paestum": {
+        "label": "Paestum"
+      },
+      "Paphos": {
+        "label": "Paphos"
+      },
+      "Parion": {
+        "label": "Parion"
+      },
+      "Pella": {
+        "label": "Pella"
+      },
+      "Peloponnes": {
+        "label": "Peloponnese"
+      },
+      "Pergamon": {
+        "label": "Pergamon"
+      },
+      "Perge": {
+        "label": "Perge"
+      },
+      "Persien": {
+        "label": "Persia"
+      },
+      "Phanagoria": {
+        "label": "Phanagoria"
+      },
+      "Phaselis": {
+        "label": "Phaselis"
+      },
+      "Phokis": {
+        "label": "Phocis"
+      },
+      "Prusias ad Hypium": {
+        "label": "Prusias ad Hypium"
+      },
+      "Ravenna": {
+        "label": "Ravenna"
+      },
+      "Reggio Calabria": {
+        "label": "Reggio Calabria"
+      },
+      "Republik Zypern": {
+        "label": "Republic of Cyprus"
+      },
+      "Rom": {
+        "label": "Rome"
+      },
+      "Rouen": {
+        "label": "Rouen"
+      },
+      "Salamis": {
+        "label": "Salamis"
+      },
+      "Sardes": {
+        "label": "Sardis"
+      },
+      "Segesta": {
+        "label": "Segesta"
+      },
+      "Seleukia Pieria": {
+        "label": "Seleucia Pieria"
+      },
+      "Seleukia am Tigris": {
+        "label": "Seleucia on the Tigris"
+      },
+      "Selinus": {
+        "label": "Selinus"
+      },
+      "Sestos": {
+        "label": "Sestos"
+      },
+      "Side": {
+        "label": "Side"
+      },
+      "Sidon": {
+        "label": "Sidon"
+      },
+      "Sikyon": {
+        "label": "Sicyon"
+      },
+      "Sinop": {
+        "label": "Sinop"
+      },
+      "Sirmium": {
+        "label": "Sirmium"
+      },
+      "Sisak": {
+        "label": "Sisak"
+      },
+      "Sizilien 2 (Republican period)": {
+        "label": "Sicily 2 (Republican period)"
+      },
+      "Sizilisch-Punisch": {
+        "label": "Siculo-Punic"
+      },
+      "Smyrna": {
+        "label": "Smyrna"
+      },
+      "Sofia": {
+        "label": "Sofia"
+      },
+      "Soloi": {
+        "label": "Soloi"
+      },
+      "Sosopol": {
+        "label": "Sozopol"
+      },
+      "Susa (Persien)": {
+        "label": "Susa (Persia)"
+      },
+      "Sybaris": {
+        "label": "Sybaris"
+      },
+      "Syrakus": {
+        "label": "Syracuse"
+      },
+      "Südgallische Münzstätte": {
+        "label": "Southern Gallic mint"
+      },
+      "Tanagra": {
+        "label": "Tanagra"
+      },
+      "Taras": {
+        "label": "Taras"
+      },
+      "Tarraco": {
+        "label": "Tarraco"
+      },
+      "Tarsus": {
+        "label": "Tarsus"
+      },
+      "Tegea": {
+        "label": "Tegea"
+      },
+      "Temnus": {
+        "label": "Temnus"
+      },
+      "Teos": {
+        "label": "Teos"
+      },
+      "Terina": {
+        "label": "Terina"
+      },
+      "Tessin": {
+        "label": "Ticino"
+      },
+      "Thessalische Liga": {
+        "label": "Thessalian League"
+      },
+      "Thessalonica": {
+        "label": "Thessalonica"
+      },
+      "Thessaloniki": {
+        "label": "Thessalonica"
+      },
+      "Thiva": {
+        "label": "Thebes"
+      },
+      "Thrakien": {
+        "label": "Thrace"
+      },
+      "Thurioi": {
+        "label": "Thurii"
+      },
+      "Thyrrheium": {
+        "label": "Thyrrheium"
+      },
+      "Trier": {
+        "label": "Trier"
+      },
+      "Tripoli (Libanon)": {
+        "label": "Tripoli (Lebanon)"
+      },
+      "Tyros": {
+        "label": "Tyre"
+      },
+      "Viminatium": {
+        "label": "Viminacium"
+      },
+      "Vindobona": {
+        "label": "Vindobona"
+      },
+      "Warna": {
+        "label": "Varna"
+      },
+      "Zancle": {
+        "label": "Zancle"
+      },
+      "Äegina": {
+        "label": "Aegina"
+      },
+      "Äeneas": {
+        "label": "Aeneas"
+      },
+      "Äetolien": {
+        "label": "Aetolia"
+      },
+      "Makedonien (1. Region)": {
+        "label": "Macedonia (1. Region)"
       }
     }
   },
@@ -1958,6 +3287,9 @@
       },
       "Perle": {
         "label": "bead"
+      },
+      "Anhänger": {
+        "label": "pendant"
       }
     }
   },
@@ -1999,6 +3331,51 @@
       },
       "Zeder": {
         "label": "cedar"
+      },
+      "Birke": {
+        "label": "birch"
+      },
+      "Buche": {
+        "label": "beech"
+      },
+      "Eibe": {
+        "label": "yew"
+      },
+      "Erle": {
+        "label": "alder"
+      },
+      "Esche": {
+        "label": "ash"
+      },
+      "Fichte": {
+        "label": "spruce"
+      },
+      "Kastanie": {
+        "label": "chestnut"
+      },
+      "Ahorn": {
+        "label": "maple"
+      },
+      "Kiefer": {
+        "label": "pine"
+      },
+      "Kirsche": {
+        "label": "cherry"
+      },
+      "Lerche": {
+        "label": "lark"
+      },
+      "Linde": {
+        "label": "lime"
+      },
+      "Pappel": {
+        "label": "poplar"
+      },
+      "Tanne": {
+        "label": "fir"
+      },
+      "Ulme": {
+        "label": "elm"
       }
     }
   },
@@ -2059,6 +3436,12 @@
     "values": {
       "Lesesteine": {
         "label": "field stones"
+      },
+      "Bruchsteine": {
+        "label": "quarry-stones"
+      },
+      "Werksteine": {
+        "label": "dressed stones"
       }
     }
   },
@@ -2088,6 +3471,81 @@
       },
       "zylindrische Flasche": {
         "label": "cylindrical flask"
+      },
+      "Alabastron": {
+        "label": "Alabastron"
+      },
+      "Amphoriskos": {
+        "label": "amphoriskos"
+      },
+      "Aryballos": {
+        "label": "aryballos"
+      },
+      "Hydria": {
+        "label": "hydria"
+      },
+      "Balsamarium": {
+        "label": "balsamarium"
+      },
+      "Dattelflasche": {
+        "label": "Date-shaped bottle"
+      },
+      "Faltenbecher": {
+        "label": "indented beaker"
+      },
+      "Kopfflasche": {
+        "label": "head-shaped bottle"
+      },
+      "Kotyle": {
+        "label": "Kotyle"
+      },
+      "Krater": {
+        "label": "Krater"
+      },
+      "Kylix": {
+        "label": "Kylix"
+      },
+      "Lekane": {
+        "label": "Lekane"
+      },
+      "Lekythos": {
+        "label": "Lekythos"
+      },
+      "Luterion": {
+        "label": "Louterion"
+      },
+      "Lutrophore": {
+        "label": "Loutrophoros"
+      },
+      "Oinochoe": {
+        "label": "Oinochoe"
+      },
+      "Pelike": {
+        "label": "Pelike"
+      },
+      "Pithos": {
+        "label": "Pithos"
+      },
+      "Pyxis": {
+        "label": "Pyxis"
+      },
+      "Skyphos": {
+        "label": "Skyphos"
+      },
+      "Spitzamphora": {
+        "label": "pointed Amphora"
+      },
+      "Sprenkler": {
+        "label": "sprinkler vessel"
+      },
+      "Stamnos": {
+        "label": "Stamnos"
+      },
+      "Tierflasche": {
+        "label": "animal flask"
+      },
+      "Tischamphore": {
+        "label": "table Amphora"
       }
     }
   },
@@ -2095,6 +3553,69 @@
     "values": {
       "Zahn": {
         "label": "tooth"
+      },
+      "Becken (Pelvis)": {
+        "label": "Pelvis"
+      },
+      "Brustbein (Sternum)": {
+        "label": "Sternum"
+      },
+      "Elle (Ulna)": {
+        "label": "Ulna"
+      },
+      "Fingerknochen (Phalanges)": {
+        "label": "Phalanges"
+      },
+      "Fußknochen": {
+        "label": "Bones of the foot"
+      },
+      "Handknochen": {
+        "label": "Bones of the hand"
+      },
+      "Kniescheibe (Patella)": {
+        "label": "Patella"
+      },
+      "Langknochen": {
+        "label": "long bone"
+      },
+      "Oberarm (Humerus)": {
+        "label": "Humerus"
+      },
+      "Oberschenkel (Femur)": {
+        "label": "Femur"
+      },
+      "Rippen": {
+        "label": "Ribs"
+      },
+      "Schienenbein (Tibia)": {
+        "label": "Tibia"
+      },
+      "Schlüsselbein (Clavicula)": {
+        "label": "Clavicle"
+      },
+      "Schulterblatt (Scapula)": {
+        "label": "Scapula"
+      },
+      "Schädel (Cranium)": {
+        "label": "Skull (Cranium)"
+      },
+      "Speiche (Radius)": {
+        "label": "Radius"
+      },
+      "Steißbein": {
+        "label": "Coccyx"
+      },
+      "Undefinierbar": {
+        "label": "indefinable"
+      },
+      "Unterkiefer (Mandibula)": {
+        "label": "Mandible"
+      },
+      "Wadenbein (Fibula)": {
+        "label": "Fibula"
+      },
+      "Wirbel": {
+        "label": "Vertebra"
       }
     }
   },
@@ -2180,6 +3701,24 @@
       },
       "Deckelgefäß": {
         "label": "vessel with lid"
+      },
+      "Amphore": {
+        "label": "Amphora"
+      },
+      "Aschenurne": {
+        "label": "cremation urn"
+      },
+      "Becher": {
+        "label": "beaker"
+      },
+      "Flasche": {
+        "label": "flask"
+      },
+      "Krug": {
+        "label": "jug"
+      },
+      "Schüssel": {
+        "label": "bowl"
       }
     }
   },
@@ -2199,6 +3738,63 @@
       },
       "zylindrische Flasche": {
         "label": "cylindrical flask"
+      },
+      "Alabastron": {
+        "label": "Alabastron"
+      },
+      "Amphoriskos": {
+        "label": "Amphoriskos"
+      },
+      "Aryballos": {
+        "label": "Aryballos"
+      },
+      "Dattelflasche": {
+        "label": "Date-shaped bottle"
+      },
+      "Faltenbecher": {
+        "label": "indented beaker"
+      },
+      "Hydria": {
+        "label": "Hydria"
+      },
+      "Kopfflasche": {
+        "label": "head-shaped bottle"
+      },
+      "Kotyle": {
+        "label": "Kotyle"
+      },
+      "Krater": {
+        "label": "Krater"
+      },
+      "Kylix": {
+        "label": "Kylix"
+      },
+      "Lekythos": {
+        "label": "Lekythos"
+      },
+      "Luterion": {
+        "label": "Louterion"
+      },
+      "Lutrophore": {
+        "label": "Loutrophoros"
+      },
+      "Oinochoe": {
+        "label": "Oinochoe"
+      },
+      "Pelike": {
+        "label": "Pelike"
+      },
+      "Pithos": {
+        "label": "Pithos"
+      },
+      "Skyphos": {
+        "label": "Skyphos"
+      },
+      "Spitzamphora": {
+        "label": "pointed Amphora"
+      },
+      "Stamnos": {
+        "label": "Stamnos"
       }
     }
   },
@@ -2243,6 +3839,30 @@
       },
       "Sandstein": {
         "label": "sandstone"
+      },
+      "Andesit": {
+        "label": "andesite"
+      },
+      "Basalt": {
+        "label": "basalt"
+      },
+      "Feldspat": {
+        "label": "feldspar"
+      },
+      "Kalzit": {
+        "label": "calcite"
+      },
+      "Kreide": {
+        "label": "chalk"
+      },
+      "Sinter": {
+        "label": "sinter"
+      },
+      "Trachyt": {
+        "label": "trachyte"
+      },
+      "Tuff": {
+        "label": "tuff"
       }
     }
   },
@@ -2282,6 +3902,45 @@
       },
       "Wandverkleidung": {
         "label": "wall panels"
+      },
+      "Akroter": {
+        "label": "acroterion"
+      },
+      "Architrav": {
+        "label": "architrave"
+      },
+      "Archtitravfriesblock": {
+        "label": "architave-frieze block"
+      },
+      "Basis": {
+        "label": "base"
+      },
+      "Bauplastik": {
+        "label": "architectural sculpture"
+      },
+      "Gesims": {
+        "label": "cornice"
+      },
+      "Kapitell": {
+        "label": "capital"
+      },
+      "Konsole": {
+        "label": "bracket"
+      },
+      "Profilstück": {
+        "label": "profile piece"
+      },
+      "Quaderblock": {
+        "label": "ashlar"
+      },
+      "Rinne": {
+        "label": "gutter"
+      },
+      "Schwellenblock": {
+        "label": "threshold block"
+      },
+      "Sima": {
+        "label": "sima"
       }
     }
   },
@@ -2301,6 +3960,12 @@
       },
       "Ziegel": {
         "label": "bricks or tiles"
+      },
+      "Opus signinum": {
+        "label": "opus signinum"
+      },
+      "Terrazzo": {
+        "label": "terrazzo"
       }
     }
   },
@@ -2320,6 +3985,9 @@
       },
       "Warzendekor": {
         "label": "pincered decoration"
+      },
+      "Riefeldekor": {
+        "label": "grooved decoration"
       }
     }
   },
@@ -2367,6 +4035,12 @@
       },
       "unregelmäßig": {
         "label": "irregular"
+      },
+      "formlos": {
+        "label": "shapeless"
+      },
+      "langgezogen": {
+        "label": "elongated"
       }
     }
   },
@@ -2401,6 +4075,18 @@
       },
       "erkennbar": {
         "label": "discernible"
+      },
+      "regelmäßig": {
+        "label": "regular"
+      },
+      "uneben": {
+        "label": "uneven"
+      },
+      "unklar": {
+        "label": "unclear"
+      },
+      "wellig": {
+        "label": "wavy"
       }
     }
   },
@@ -2414,6 +4100,18 @@
       },
       "Poliert": {
         "label": "polished"
+      },
+      "Andere": {
+        "label": "other"
+      },
+      "Glasur": {
+        "label": "glaze"
+      },
+      "Verstrichen": {
+        "label": "hand-smoothed"
+      },
+      "Überzug": {
+        "label": "coating"
       }
     }
   },
@@ -2430,6 +4128,30 @@
       },
       "Red Slip Ware": {
         "label": ""
+      },
+      "Schlichte Ware": {
+        "label": "plain ware"
+      },
+      "Terra sigilata": {
+        "label": "terra sigilata"
+      },
+      "Arretina schwarz": {
+        "label": "black Arretine ware"
+      },
+      "Attische Keramik": {
+        "label": "Attic pottery"
+      },
+      "Attische Rotfigurige Keramik": {
+        "label": "Attic red-figure pottery"
+      },
+      "Attische Schwarzfigurige Keramik": {
+        "label": "Attic black-figure pottery"
+      },
+      "Attische Schwarzglanzton Ware": {
+        "label": "Attic black-glazed ware"
+      },
+      "Bemalte Keramik": {
+        "label": "colored pottery"
       }
     }
   },
@@ -2462,6 +4184,39 @@
       },
       "Deckelgefäß": {
         "label": "vessel with lid"
+      },
+      "Teller": {
+        "label": "plate"
+      },
+      "Vorratsgefäß": {
+        "label": "storage vessel"
+      },
+      "Amphore": {
+        "label": "Amphora"
+      },
+      "Aschenurne": {
+        "label": "cremation urn"
+      },
+      "Becher": {
+        "label": "beaker"
+      },
+      "Flasche": {
+        "label": "flask"
+      },
+      "Krug": {
+        "label": "jug"
+      },
+      "Räuchergefäß": {
+        "label": "incense burner"
+      },
+      "Schüssel": {
+        "label": "bowl"
+      },
+      "Topf": {
+        "label": "pot"
+      },
+      "Unbestimmt": {
+        "label": "indeterminate"
       }
     }
   },
@@ -2515,6 +4270,9 @@
       },
       "mittel": {
         "label": "medium"
+      },
+      "dominant": {
+        "label": "dominant"
       }
     }
   },
@@ -2559,6 +4317,15 @@
       },
       "2 (Fingernagel ritzt)": {
         "label": "2 (can be scratched by fingernail)"
+      },
+      "1 (Fingernagel schabt, ritzt leicht)": {
+        "label": "1 (fingernail scrapes, scratches lightly)"
+      },
+      "6 (Fensterglas ritzt schwer, Stahlfeile ritzt)": {
+        "label": "6 (Window glass cuts heavily, steel scratches)"
+      },
+      "7-10 (Fensterglas wird geritzt, Stahl schlägt Funken)": {
+        "label": "7-10 (Window glass is being scratched, steel produces sparks)"
       }
     }
   },
@@ -2578,6 +4345,9 @@
       },
       "Harz": {
         "label": "Harz"
+      },
+      "Alpen": {
+        "label": "the Alps"
       }
     }
   },
@@ -2585,6 +4355,9 @@
     "values": {
       "Gebrauchskeramik (Grobe Ware)": {
         "label": "Coarse ware"
+      },
+      "Feinkeramik (Feine Ware)": {
+        "label": "fine ware"
       }
     }
   },
@@ -2592,6 +4365,15 @@
     "values": {
       "Redslip": {
         "label": "Engobe vermelho (Red slip)"
+      },
+      "Schwarzfirnis": {
+        "label": "black glaze"
+      },
+      "Tongrundig": {
+        "label": "uncoated"
+      },
+      "Glasur": {
+        "label": "glaze"
       }
     }
   },
@@ -2602,6 +4384,9 @@
       },
       "Sand": {
         "label": "sand"
+      },
+      "Feinsand": {
+        "label": "fine sand"
       }
     }
   },
@@ -2958,6 +4743,447 @@
       },
       "mineralStrain": {
         "label": "Strain (unknown width) MIN"
+      }
+    }
+  },
+  "Mollusk-classification-default": {
+    "values": {
+      "Muschelschale (Bivalvia)": {
+        "label": "shell (Bivalvia)"
+      },
+      "Schneckenhaus (Gastropoda)": {
+        "label": "snail shell (Gastropoda)"
+      },
+      "Schuppe": {
+        "label": "scale"
+      }
+    }
+  },
+  "Burial-graveFeature-default": {
+    "values": {
+      "Teil-Körperbestattung": {
+        "label": "partial inhumation"
+      },
+      "Brandbestattung": {
+        "label": "cremation"
+      },
+      "Kenotaph": {
+        "label": "cenotaph"
+      },
+      "Körperbestattung": {
+        "label": "inhumation"
+      },
+      "Ossuar": {
+        "label": "ossuary"
+      }
+    }
+  },
+  "Building-architecturalOrders-default": {
+    "values": {
+      "Dorische Ordnung": {
+        "label": "Doric order"
+      },
+      "Ionische Ordnung": {
+        "label": "Ionic order"
+      },
+      "Komposite Ordnung": {
+        "label": "Composite order"
+      },
+      "Korinthische Ordnung": {
+        "label": "Corinthian order"
+      },
+      "Toskanische Ordnung": {
+        "label": "Tuscan order"
+      }
+    }
+  },
+  "Architecture-blockTreatment-default": {
+    "values": {
+      "gespitzt": {
+        "label": "knapped"
+      },
+      "grob behauen": {
+        "label": "roughly boast"
+      },
+      "grob geglättet": {
+        "label": "roughly abraded"
+      },
+      "fein geglättet": {
+        "label": "finely smoothed"
+      },
+      "unbehauen": {
+        "label": "un-dressed"
+      }
+    }
+  },
+  "Architecture-construction-default": {
+    "values": {
+      "zweischalig mit Binderlagen": {
+        "label": "two exterior rows with binders"
+      },
+      "Fundament: Geschüttet": {
+        "label": "foundation: dumped"
+      },
+      "Fundament: gesetzt": {
+        "label": "foundation: set"
+      },
+      "einschalig vor Feld/Hang": {
+        "label": "single row at slope"
+      }
+    }
+  },
+  "Drawing-drawingMaterial-default": {
+    "values": {
+      "Digitale Datei": {
+        "label": "digital file"
+      },
+      "Karton": {
+        "label": "cardboard"
+      },
+      "Mikrofilm": {
+        "label": "microfilm"
+      },
+      "Millimeterpapier": {
+        "label": "millimeter graph paper"
+      },
+      "Papier": {
+        "label": "paper"
+      }
+    }
+  },
+  "Drawing-drawingTool-default": {
+    "values": {
+      "Bleistift": {
+        "label": "pencil"
+      },
+      "Buntstift": {
+        "label": "colored pencil"
+      },
+      "digital erstellt": {
+        "label": "digitally created"
+      }
+    }
+  },
+  "Drawing-scale-default": {
+    "values": {
+      "1:1": {
+        "label": "1:1"
+      },
+      "1:10": {
+        "label": "1:10"
+      },
+      "1:100": {
+        "label": "1:100"
+      },
+      "1:1000": {
+        "label": "1:1000"
+      },
+      "1:10000": {
+        "label": "1:10000"
+      },
+      "1:20": {
+        "label": "1:20"
+      },
+      "1:50": {
+        "label": "1:50"
+      },
+      "1:500": {
+        "label": "1:500"
+      },
+      "1:5000": {
+        "label": "1:5000"
+      }
+    }
+  },
+  "Find-storagePlace-default": {
+    "values": {
+      "Landesamt": {
+        "label": "state office"
+      },
+      "Museum": {
+        "label": "museum"
+      },
+      "Museum Bergama": {
+        "label": "Museum Bergama"
+      },
+      "Pergamon Depot": {
+        "label": "Pergamon depot"
+      },
+      "Privatbesitz": {
+        "label": "private property"
+      },
+      "Regionalverwaltung": {
+        "label": "regional administration"
+      },
+      "Restaurierungswerkstatt": {
+        "label": "restauration workshop"
+      },
+      "Staatsbesitz": {
+        "label": "state-owned property"
+      }
+    }
+  },
+  "storagePlace-default": {
+    "values": {
+      "Landesamt": {
+        "label": "state office"
+      },
+      "Museum": {
+        "label": "museum"
+      },
+      "Privatbesitz": {
+        "label": "private property"
+      },
+      "Restaurierungswerkstatt": {
+        "label": "restauration workshop"
+      },
+      "Staatsbesitz": {
+        "label": "state-owned property"
+      }
+    }
+  },
+  "Metal-vesselFormSpecific-default": {
+    "values": {
+      "Alabastron": {
+        "label": "Alabastron"
+      },
+      "Amphoriskos": {
+        "label": "Amphoriskos"
+      },
+      "Aryballos": {
+        "label": "Aryballos"
+      },
+      "Balsamarium": {
+        "label": "balsamarium"
+      },
+      "Dattelflasche": {
+        "label": "Date-shaped bottle"
+      },
+      "Faltenbecher": {
+        "label": "indented beaker"
+      },
+      "Hydria": {
+        "label": "Hydria"
+      },
+      "Kopfflasche": {
+        "label": "head-shaped bottle"
+      },
+      "Kotyle": {
+        "label": "Kotyle"
+      },
+      "Kragenschale": {
+        "label": "collar rim bowl"
+      },
+      "Krater": {
+        "label": "Krater"
+      },
+      "Kylix": {
+        "label": "Kylix"
+      },
+      "Lekythos": {
+        "label": "Lekythos"
+      },
+      "Luterion": {
+        "label": "Louterion"
+      },
+      "Oinochoe": {
+        "label": "Oinochoe"
+      },
+      "Pelike": {
+        "label": "Pelike"
+      },
+      "Rippenschale": {
+        "label": "ribbed bowl"
+      },
+      "Schliffrillenschale": {
+        "label": "linear cut bowl"
+      },
+      "Skyphos": {
+        "label": "Skyphos"
+      },
+      "Spitzamphora": {
+        "label": "pointed Amphora"
+      },
+      "Sprenkler": {
+        "label": "sprinkler vessel"
+      },
+      "Stamnos": {
+        "label": "Stamnos"
+      },
+      "Vierkantflasche": {
+        "label": "square bottle"
+      },
+      "hexagonale Flasche": {
+        "label": "hexagonal flask"
+      },
+      "zylindrische Flasche": {
+        "label": "cylindrical flask"
+      }
+    }
+  },
+  "Grave-graveType-default": {
+    "values": {
+      "Felsgrab": {
+        "label": "rock-cut tomb"
+      },
+      "Kistengrab": {
+        "label": "cist grave"
+      }
+    }
+  },
+  "damages-default": {
+    "values": {
+      "totalCollapse": {
+        "label": "total collapse"
+      },
+      "partialCollapse": {
+        "label": "partial collapse"
+      },
+      "missingconst": {
+        "label": "missing structural element"
+      },
+      "looseconst": {
+        "label": "loose structural element"
+      },
+      "fractures": {
+        "label": "fracture/break"
+      },
+      "riss1": {
+        "label": "crack (<1mm)"
+      },
+      "riss2": {
+        "label": "crack (1mm-5mm)"
+      },
+      "riss3": {
+        "label": "crack (>5mm)"
+      },
+      "riss4": {
+        "label": "crack (>10mm)"
+      },
+      "deformationSwelling": {
+        "label": "deformation: swelling/bulge"
+      },
+      "delamination": {
+        "label": "delamination/peeling of the walls"
+      },
+      "moisture": {
+        "label": "moisture"
+      },
+      "cavities": {
+        "label": "cavities"
+      },
+      "exfoliation": {
+        "label": "exfoliation"
+      },
+      "spalling": {
+        "label": "spalling/breakout"
+      },
+      "efflorescence": {
+        "label": "efflorescence"
+      },
+      "bioSettlement": {
+        "label": "biological growth"
+      },
+      "fireDamage": {
+        "label": "fire damage"
+      },
+      "erosion": {
+        "label": "erosion"
+      },
+      "corrosion": {
+        "label": "corrosion"
+      },
+      "crusting": {
+        "label": "crusting"
+      },
+      "mechanicDamage": {
+        "label": "mechanic damage"
+      },
+      "discoloration": {
+        "label": "discoloration"
+      },
+      "contamination": {
+        "label": "contamination"
+      },
+      "fragmentation": {
+        "label": "fragmentation"
+      },
+      "ruin": {
+        "label": "ruin"
+      },
+      "weathering": {
+        "label": "weathering"
+      },
+      "rotting": {
+        "label": "rotting/wood damage (structurally sound)"
+      },
+      "rottingstr": {
+        "label": "rotting/wood damage (structurally unsound)"
+      },
+      "vandalizm": {
+        "label": "vandalizm"
+      },
+      "fissure": {
+        "label": "cracks in the plaster"
+      }
+    }
+  },
+  "Coin-stampPositioning-default": {
+    "values": {
+      "- 1 Uhr": {
+        "label": "- 1 o'clock"
+      },
+      "- 2 Uhr": {
+        "label": "- 2 o'clock"
+      },
+      "- 3 Uhr": {
+        "label": "- 3 o'clock"
+      },
+      "- 4 Uhr": {
+        "label": "- 4 o'clock"
+      },
+      "- 5 Uhr": {
+        "label": "- 5 o'clock"
+      },
+      "- 6 Uhr": {
+        "label": "- 6 o'clock"
+      },
+      "- 7 Uhr": {
+        "label": "- 7 o'clock"
+      },
+      "- 8 Uhr": {
+        "label": "- 8 o'clock"
+      },
+      "- 9 Uhr": {
+        "label": "- 9 o'clock"
+      },
+      "- 10 Uhr": {
+        "label": "- 10 o'clock"
+      },
+      "- 11 Uhr": {
+        "label": "- 11 o'clock"
+      },
+      "- 12 Uhr": {
+        "label": "- 12 o'clock"
+      }
+    }
+  },
+  "Bone-burningGrade-default": {
+    "values": {
+      "I - 200°-300°C - Verfärbung etwa gelblichweiß-elfenbein glasig": {
+        "label": "I - 200°-300°C - Discoloration approximately yellowish-white to ivory glassy"
+      },
+      "II - 300°-400°C - Verfärbung etwa braun-dunkelbraun/schwarz": {
+        "label": "II - 300°-400°C - Discoloration approximately brown to dark brown/black"
+      },
+      "III - um 550°C - Verfärbung etwa grau/blaugrau-milchig hellgrau": {
+        "label": "III - around 550°C - Discoloration approximately gray/blue-gray to milky light grey"
+      },
+      "IV - 650°-750°C - Verfärbung etwa milchig weiß-mattweiß/kreideartig": {
+        "label": "IV - 650°-750°C - Discoloration approximately milky white to matte white/chalky"
+      },
+      "V - ab 800°C - Verfärbung etwa altweiß/schmutzigweiß": {
+        "label": "V - 800°C or higher - Discoloration approximately off-white/dirty white"
       }
     }
   }

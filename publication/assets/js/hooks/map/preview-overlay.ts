@@ -1,38 +1,40 @@
 import "phoenix_html";
 
-import Feature from "ol/Feature.js";
+import { FeatureLike } from "ol/Feature.js";
 import Overlay from "ol/Overlay.js";
 import Map from "ol/Map.js";
 
 import { ViewHook } from "../../../../deps/phoenix_live_view/assets/js/phoenix_live_view";
-
-interface CategoryMetadata {
-    category: string;
-    category_color: string;
-    category_label: { [key: string]: string };
-}
+import { findFeaturesAtPixel } from "./features";
 
 export default class PreviewOverlay {
     hook: ViewHook;
     map: Map;
     overlay: Overlay;
     projectKey: string;
-  projectDraftDate: string;
-  fullscreen: boolean
+    projectDraftDate: string;
+    fullscreen: boolean;
+    language: string;
+    isPinned: boolean;
+
     constructor(
-        hook: any,
+        hook: ViewHook,
         map: Map,
         container: HTMLElement,
         projectKey: string,
-      projectDraftDate: string,
-        fullscreen: boolean = false
+        projectDraftDate: string,
+        language: string,
+        fullscreen: boolean = false,
     ) {
         this.hook = hook;
         this.map = map;
         this.projectKey = projectKey;
-      this.projectDraftDate = projectDraftDate;
+        this.projectDraftDate = projectDraftDate;
 
-      this.fullscreen = fullscreen;
+        this.fullscreen = fullscreen;
+        this.language = language;
+
+        this.isPinned = false;
 
         this.overlay = new Overlay({
             element: container,
@@ -41,16 +43,18 @@ export default class PreviewOverlay {
 
         this.map.addOverlay(this.overlay);
 
+        const _this = this;
+        this.map
+            .getTargetElement()
+            .addEventListener("pointerleave", function (e) {
+                // Hides the overlay if mouse is completely off the map.
+                _this.hide();
+            });
+
         this.hide();
     }
 
-    public update(
-        features: Feature[],
-        categoriesMetadata: CategoryMetadata[],
-        coordinate: number[],
-        selectedLanguage: string,
-        pinned: boolean = false,
-    ) {
+    public update(features: FeatureLike[], coordinate: number[]) {
         const contentNode = this.overlay.getElement();
 
         while (contentNode.firstChild) {
@@ -58,14 +62,7 @@ export default class PreviewOverlay {
         }
 
         if (features.length > 0) {
-            contentNode.appendChild(
-                this.renderPreviewList(
-                    selectedLanguage,
-                    categoriesMetadata,
-                    features,
-                    pinned,
-                ),
-            );
+            contentNode.appendChild(this.renderPreviewList(features));
 
             const anchorPixel = this.map.getPixelFromCoordinate(coordinate);
             const mapSize = this.map.getSize();
@@ -84,14 +81,36 @@ export default class PreviewOverlay {
 
     public hide() {
         this.overlay.setPosition(undefined);
+        this.isPinned = false;
     }
 
-    private renderPreviewList(
-        preferredLanguage: string,
-        categoriesMetadata: CategoryMetadata[],
-        features: Feature[],
-        addButton: boolean,
-    ) {
+    public mapClicked(e: any) {
+        const features = findFeaturesAtPixel(e.pixel, this.map);
+
+        if (features.length > 1) {
+            this.isPinned = true;
+            this.update(features, e.coordinate);
+        } else if (features.length === 1) {
+            const properties = features[0].getProperties();
+            this.hook
+                .js()
+                .navigate(
+                    `/projects/${this.projectKey}/${this.projectDraftDate}/${properties.uuid}`,
+                );
+            this.hide();
+        }
+    }
+
+    public mapHover(e: any, features: FeatureLike[] = []) {
+        if (this.isPinned) return;
+
+        if (features.length == 0) {
+            features = findFeaturesAtPixel(e.pixel, this.map);
+        }
+        this.update(features, e.coordinate);
+    }
+
+    private renderPreviewList(features: FeatureLike[]) {
         const container = document.createElement("div");
 
         container.classList.add("flex", "gap-0.5");
@@ -107,18 +126,12 @@ export default class PreviewOverlay {
 
         for (let feature of features) {
             if (validFeature(feature))
-                list.appendChild(
-                    this.renderPreviewIcon(
-                        preferredLanguage,
-                        categoriesMetadata,
-                        feature,
-                    ),
-                );
+                list.appendChild(this.renderPreviewIcon(feature));
         }
 
         container.appendChild(list);
 
-        if (addButton) {
+        if (this.isPinned) {
             const closeButton = document.createElement("button");
 
             closeButton.classList.add(
@@ -134,22 +147,14 @@ export default class PreviewOverlay {
 
             closeButton.appendChild(document.createTextNode("x"));
             closeButton.onclick = (e) => {
-                window.dispatchEvent(
-                    new CustomEvent(
-                        `phx:close-preview-list-${this.hook.el.getAttribute("id")}`,
-                    ),
-                );
+                this.hide();
             };
             container.appendChild(closeButton);
         }
         return container;
     }
 
-    private renderPreviewIcon(
-        preferredLanguage: string,
-        categoriesMetadata: CategoryMetadata[],
-        feature: Feature,
-    ) {
+    private renderPreviewIcon(feature: FeatureLike) {
         const properties = feature.getProperties();
 
         const preview = document.createElement("div");
@@ -165,13 +170,9 @@ export default class PreviewOverlay {
             "font-thin",
         );
 
-        const categoryMetadata = categoriesMetadata.find(
-            (elem) => elem.category == properties.category,
-        );
-
         categoryLabel.appendChild(
             document.createTextNode(
-                `${pickTranslation(categoryMetadata.category_label, preferredLanguage)}`,
+                `${pickTranslation(properties.labels, this.language)}`,
             ),
         );
 
@@ -193,25 +194,34 @@ export default class PreviewOverlay {
 
         let documentInfoText = properties.identifier;
 
-        if (Object.keys(properties.description).length > 0) {
-            documentInfoText += ` | ${pickTranslation(properties.description, preferredLanguage)}`;
-        }
-
         documentInfo.appendChild(document.createTextNode(documentInfoText));
 
+        if (
+            properties.description &&
+            Object.keys(properties.description).length > 0
+        ) {
+            const documentDescription = document.createElement("span");
+            documentDescription.classList.add("font-light");
 
+            documentDescription.appendChild(
+                document.createTextNode(
+                    ` ${pickTranslation(properties.description, this.language)}`,
+                ),
+            );
 
+            documentInfo.appendChild(documentDescription);
+        }
 
-      let url = `/projects/${this.projectKey}/${this.projectDraftDate}/${properties.uuid}`
+        let url = `/projects/${this.projectKey}/${this.projectDraftDate}/${properties.uuid}`;
 
-      if (this.fullscreen) {
-        url = `/projects/${this.projectKey}/${this.projectDraftDate}/${properties.uuid}/map`
-      }
+        if (this.fullscreen) {
+            url = `/projects/${this.projectKey}/${this.projectDraftDate}/${properties.uuid}/map`;
+        }
 
-      const hook = this.hook
+        const hook = this.hook;
 
         documentInfo.addEventListener("click", function (event) {
-            return hook                .js()                .navigate(                   url                );
+            return hook.js().navigate(url);
         });
 
         preview.appendChild(CategoryMetadata);
@@ -228,7 +238,7 @@ function pickTranslation(options: { [key: string]: string }, selected: string) {
     return options[Object.keys(options)[0]];
 }
 
-function validFeature(feature: Feature) {
+function validFeature(feature: FeatureLike) {
     const properties = feature.getProperties();
     return (
         properties.uuid &&

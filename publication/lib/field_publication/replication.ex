@@ -6,12 +6,15 @@ defmodule FieldPublication.Replication do
     Replication.CouchReplication,
     Replication.FileReplication,
     Processing,
-    Publications
+    Publication
+  }
+
+  alias FieldPublication.Publication.{
+    Geo
   }
 
   alias FieldPublication.DatabaseSchema.{
     ReplicationInput,
-    Publication,
     LogEntry
   }
 
@@ -55,7 +58,7 @@ defmodule FieldPublication.Replication do
   ## Start of API functions to be called from the rest of the application.
 
   def initialize_publication(%ReplicationInput{} = params) do
-    with {:ok, publication} <- Publications.create_from_replication_input(params),
+    with {:ok, publication} <- Publication.create_from_replication_input(params),
          {:ok, :connection_successful} <- check_source_connection(params) do
       {:ok, publication}
     else
@@ -130,12 +133,10 @@ defmodule FieldPublication.Replication do
   task has finished/crashed...).
   """
   def handle_call(
-        {:start, %ReplicationInput{} = input, %Publication{} = publication},
+        {:start, %ReplicationInput{} = input, %Publication{_id: publication_id} = publication},
         _from,
         running_replications
       ) do
-    publication_id = Publications.get_doc_id(publication)
-
     if publication_id in running_replications do
       {:reply, :already_running, running_replications}
     else
@@ -153,11 +154,12 @@ defmodule FieldPublication.Replication do
           persisted_log(publication, :info, "Replicating files for #{publication_id}.")
           FileReplication.start(parameters)
 
-          persisted_log(
-            publication,
-            :info,
-            "Reconstructing project configuration for '#{publication_id}'."
-          )
+          {:ok, publication} =
+            persisted_log(
+              publication,
+              :info,
+              "Reconstructing project configuration for '#{publication_id}'."
+            )
 
           reconstruct_project_configuraton(publication)
 
@@ -176,13 +178,27 @@ defmodule FieldPublication.Replication do
                 []
             end
 
-          Publications.Data.recreate_meta_database(publication)
+          contact =
+            CouchService.get_document("project", publication.database)
+            |> case do
+              {:ok, %{status: 200, body: body}} ->
+                body
+                |> Jason.decode!()
+                |> Map.get("resource", %{})
+                |> Map.get("contactMail", nil)
+
+              _ ->
+                nil
+            end
+
+          {:ok, publication} = Geo.read_and_set_epsg_code(publication)
 
           persisted_log(publication, :info, "Draft creation finished.")
 
           {:ok, %Publication{} = final_publication} =
-            Publications.get!(publication.project_identifier, publication.draft_date)
-            |> Publications.put(%{
+            Publication.get!(publication.project_identifier, publication.draft_date)
+            |> Publication.put(%{
+              "contact" => contact,
               "replication_finished" => DateTime.utc_now(),
               "languages" => languages
             })
@@ -194,9 +210,11 @@ defmodule FieldPublication.Replication do
     end
   end
 
-  def handle_call({:stop, %Publication{} = publication}, _from, running_replications) do
-    publication_id = Publications.get_doc_id(publication)
-
+  def handle_call(
+        {:stop, %Publication{_id: publication_id} = publication},
+        _from,
+        running_replications
+      ) do
     case Map.get(running_replications, publication_id) do
       nil ->
         {:reply, :not_found, running_replications}
@@ -211,9 +229,11 @@ defmodule FieldPublication.Replication do
     end
   end
 
-  def handle_call({:show, %Publication{} = publication}, _from, running_replications) do
-    publication_id = Publications.get_doc_id(publication)
-
+  def handle_call(
+        {:show, %Publication{_id: publication_id}},
+        _from,
+        running_replications
+      ) do
     case Map.get(running_replications, publication_id) do
       nil ->
         {:reply, nil, running_replications}
@@ -224,13 +244,12 @@ defmodule FieldPublication.Replication do
   end
 
   def handle_info(
-        {_ref, {:ok, {:draft_created, publication}}},
+        {_ref, {:ok, {:draft_created, %Publication{_id: publication_id} = publication}}},
         running_replications
       ) do
     # Handles the success result of the async process started in `start/2` above. We check
     # if the input requested immediate processing and otherwise let the process stop, which will
     # get picked up in the handle_info/2 below that checks for the :DOWN atom.
-    publication_id = Publications.get_doc_id(publication)
 
     {_finished_task, %{input: %{processing: start_processing_immediately}}} =
       Map.get(running_replications, publication_id)
@@ -263,7 +282,7 @@ defmodule FieldPublication.Replication do
         persisted_log(publication, :error, "#{msg} #{inspect(other)}")
     end
 
-    Publications.broadcast(publication, {:replication_stopped})
+    Publication.broadcast(publication, {:replication_stopped})
 
     {:noreply, cleanup(ref, running_replications)}
   end
@@ -296,9 +315,9 @@ defmodule FieldPublication.Replication do
         reported_by: "replication"
       })
 
-    Publications.get!(publication.project_identifier, publication.draft_date)
+    Publication.get!(publication.project_identifier, publication.draft_date)
     |> Map.update(:replication_logs, [], fn existing -> existing ++ [log_entry] end)
-    |> Publications.put(%{})
+    |> Publication.put(%{})
   end
 
   def reconstruct_project_configuraton(%Publication{

@@ -1,14 +1,17 @@
 defmodule FieldPublicationWeb.Management.OverviewLive do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.DatabaseSchema.{
+  alias FieldPublication.{
     Project,
-    Publication,
-    ReplicationInput
+    Publication
   }
 
-  alias FieldPublication.Projects
-  alias FieldPublication.Publications
+  alias FieldPublication.Publication.{
+    Search
+  }
+
+  alias FieldPublication.DatabaseSchema.ReplicationInput
+
   alias FieldPublication.Processing
   alias FieldPublication.Users
 
@@ -37,7 +40,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
   defp apply_action(socket, :edit_project, %{"project_identifier" => id}) do
     socket
     |> assign(:page_title, "Publishing | Edit Project")
-    |> assign(:project, Projects.get!(id))
+    |> assign(:project, Project.get!(id))
   end
 
   defp apply_action(socket, :new_project, _params) do
@@ -49,7 +52,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
   defp apply_action(socket, :new_publication, %{"project_identifier" => id}) do
     socket
     |> assign(:page_title, "Publishing | New publication draft")
-    |> assign(:project, Projects.get!(id))
+    |> assign(:project, Project.get!(id))
   end
 
   defp apply_action(socket, :index, _params) do
@@ -187,8 +190,8 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
 
   @impl true
   def handle_event("delete", %{"project_id" => id}, socket) do
-    project = Projects.get!(id)
-    {:ok, _} = Projects.delete(project)
+    project = Project.get!(id)
+    {:ok, _} = Project.delete(project)
 
     {:noreply, load_projects(socket)}
   end
@@ -198,10 +201,10 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
         %{"project_identifier" => project_identifier, "draft_date" => draft_date},
         socket
       ) do
-    Publications.get(project_identifier, draft_date)
+    Publication.get(project_identifier, draft_date)
     |> case do
       {:ok, publication} ->
-        Publications.delete(publication)
+        Publication.delete(publication)
 
       _ ->
         :ok
@@ -211,14 +214,14 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
   end
 
   def handle_event("reindex_all_search_indices", _, socket) do
-    Publications.list()
+    Publication.list()
     |> Enum.each(&Processing.start(&1, :search_index))
 
     {:noreply, socket}
   end
 
   def handle_event("recreate_previews", _, socket) do
-    Publications.list()
+    Publication.list()
     |> Enum.each(&Processing.start(&1, :preview_documents))
 
     {:noreply, socket}
@@ -236,30 +239,28 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
     |> Enum.find(fn publication ->
       Date.to_string(publication.draft_date) == draft_date
     end)
-    |> Publications.Search.set_project_alias()
+    |> Search.set_project_alias()
 
     {:noreply, load_projects(socket)}
   end
 
   defp load_projects(socket) do
     projects =
-      Projects.list()
+      Project.list()
       |> Enum.filter(fn %Project{} = project ->
-        Projects.has_project_access?(project.identifier, socket.assigns.current_user)
+        Project.has_project_access?(project.identifier, socket.assigns.current_user)
       end)
       |> Enum.map(fn project ->
-        publications = Publications.list(project.identifier)
+        publications = Publication.list(project.identifier)
 
         Enum.each(publications, fn publication ->
-          channel = Publications.get_doc_id(publication)
-          PubSub.subscribe(FieldPublication.PubSub, channel)
+          PubSub.subscribe(FieldPublication.PubSub, publication._id)
         end)
 
         %{
           project: project,
           publications: publications,
-          search_aliased_publication:
-            Publications.Search.get_currently_aliased_publication(project)
+          search_aliased_publication: Search.get_currently_aliased_publication(project)
         }
       end)
 

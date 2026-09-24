@@ -1,4 +1,4 @@
-import { includedIn, is, isNot, isnt, on, Path, to, clone } from 'tsfun';
+import { includedIn, isNot, isnt, Path, to, clone, isString } from 'tsfun';
 import { CategoryForm, Field, Relation, InPlace, Dating, Measurement, Resource, Named,
     DateSpecification } from 'idai-field-core';
 import { CsvExportConsts } from '../../export/csv/csv-export-consts';
@@ -166,8 +166,9 @@ function convertNumber(container: any, path: Path, type: 'int'|'float') {
  */
 function convertBoolean(container: any, path: Path) {
 
-    const val = to(path, undefined)(container);
-    if (!val) return;
-    if (isNot(includedIn(['true', 'false']))(val)) throw [ParserErrors.CSV_NOT_A_BOOLEAN, val, path];
-    InPlace.setOn(container, path)(val === 'true');
+    let value = to(path, undefined)(container);
+    if (!value) return;
+    if (isString(value)) value = value.toLowerCase();
+    if (isNot(includedIn(['true', 'false']))(value)) throw [ParserErrors.CSV_NOT_A_BOOLEAN, value, path];
+    InPlace.setOn(container, path)(value === 'true');
 }

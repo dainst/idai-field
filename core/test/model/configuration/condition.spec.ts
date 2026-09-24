@@ -51,6 +51,50 @@ describe('Condition', () => {
         expect(Condition.isFulfilled(subfields[1].condition, { subfield1: true }, subfields, 'subfield')).toBe(false);
         expect(Condition.isFulfilled(subfields[1].condition, {}, subfields, 'subfield')).toBe(false);
     });
+
+
+    it('check exists condition for fields', () => {
+
+        const fields: Array<Field> = [
+            {
+                name: 'field1',
+                inputType: 'input'
+            },
+            {
+                name: 'field2',
+                inputType: 'text',
+                condition: {
+                    fieldName: 'field1',
+                    exists: true
+                }
+            }
+        ];
+    
+        expect(Condition.isFulfilled(fields[1].condition, { field1: 'Text' }, fields, 'field')).toBe(true);
+        expect(Condition.isFulfilled(fields[1].condition, {}, fields, 'field')).toBe(false);
+    });
+
+
+    it('check exists condition for subfields', () => {
+
+        const subfields: Array<Subfield> = [
+            {
+                name: 'subfield1',
+                inputType: 'input'
+            },
+            {
+                name: 'subfield2',
+                inputType: 'text',
+                condition: {
+                    subfieldName: 'subfield1',
+                    exists: true
+                }
+            }
+        ];
+    
+        expect(Condition.isFulfilled(subfields[1].condition, { subfield1: 'Text' }, subfields, 'subfield')).toBe(true);
+        expect(Condition.isFulfilled(subfields[1].condition, {}, subfields, 'subfield')).toBe(false);
+    });
     
     
     it('check single value condition for dropdown subfield', () => {

@@ -1,0 +1,9 @@
+<%= for %{data: field, description: description} <- @examples do %>
+  <section class="grid grid-cols-2 gap-2">
+    <div class="font-mono col-span-2 p-4 mt-4 bg-panel">{description}</div>
+    <div class="max-h-80 overflow-auto">
+      <pre>{inspect(field, pretty: true)}</pre>
+    </div>
+    <.render_field field={field} publication={@publication} />
+  </section>
+<% end %>

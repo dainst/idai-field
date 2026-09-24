@@ -34,30 +34,52 @@ export class ConditionSectionComponent {
     public getConditionFields(): Array<BaseField> {
 
         if (!this.availableFields) return [];
+ 
+        const FORBIDDEN_INPUT_TYPES = [Field.InputType.DERIVED_RELATION, Field.InputType.CATEGORY,
+            Field.InputType.IDENTIFIER, Field.InputType.NONE];
 
         return this.availableFields.filter(field => {
             return field.name !== this.field.name
-                && (field.inputType === Field.InputType.BOOLEAN || field.valuelist)
+                && (!FORBIDDEN_INPUT_TYPES.includes(field.inputType))
                 && this.isValidConditionField(field);
         });
     }
 
 
-    public resetConditionValues() {
+    public toggleExistsCondition() {
 
-        if (this.getConditionType() === 'valuelist') {
-            this.condition.values = [];
+        if (this.condition.exists) {
+            delete this.condition.exists;
+            this.condition.values = this.getConditionType() === 'valuelist' ? [] : true;
         } else {
-            this.condition.values = true;
+            this.condition.exists = true;
+            delete this.condition.values;
         }
     }
 
 
-    public getConditionType(): 'valuelist'|'boolean' {
+    public resetCondition() {
+
+        if (this.getConditionType() === 'valuelist') {
+            delete this.condition.exists;
+            this.condition.values = [];
+        } else if (this.getConditionType() === 'boolean') {
+            delete this.condition.exists;
+            this.condition.values = true;
+        } else {
+            this.condition.exists = true;
+            delete this.condition.values;
+        }
+    }
+
+
+    public getConditionType(): 'valuelist'|'boolean'|'other' {
 
         return this.getConditionField()?.inputType === 'boolean'
             ? 'boolean'
-            : 'valuelist';
+            : this.getConditionField()?.valuelist
+                ? 'valuelist'
+                : 'other';
     }
 
 

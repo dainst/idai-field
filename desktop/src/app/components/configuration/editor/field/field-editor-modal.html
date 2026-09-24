@@ -59,11 +59,10 @@
                 <label id="toggle-mandatory-slider"
                        class="switch"
                        [class.disabled]="!isMandatoryOptionEnabled()">
-                    <input
-                        type="checkbox"
-                        [checked]="isMandatory()"
-                        [disabled]="!isMandatoryOptionEnabled()"
-                        (change)="toggleMandatory()">
+                    <input type="checkbox"
+                           [checked]="isMandatory()"
+                           [disabled]="!isMandatoryOptionEnabled()"
+                           (change)="toggleMandatory()">
                     <span class="slider round"></span>
                 </label>
             </div>

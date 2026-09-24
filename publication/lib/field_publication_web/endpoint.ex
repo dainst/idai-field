@@ -21,13 +21,15 @@ defmodule FieldPublicationWeb.Endpoint do
     only: ["images", "css"]
 
   # Serve at "/" the static files from "priv/static" directory.
-  #
-  # You should set gzip to true if you are running phx.digest
-  # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
     from: :field_publication,
-    gzip: false,
+    encodings: [
+      {"br", ".br"},
+      {"gzip", ".gz"}
+    ],
+    gzip: true,
+    brotli: true,
     only: FieldPublicationWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the

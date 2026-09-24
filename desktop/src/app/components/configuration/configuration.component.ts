@@ -517,6 +517,7 @@ export class ConfigurationComponent extends ContextMenuProvider implements OnIni
 
         componentInstance.field = field;
         componentInstance.category = category;
+        componentInstance.initialize();
 
         this.modals.awaitResult(result,
             () => this.deleteField(category, field),

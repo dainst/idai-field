@@ -1,30 +1,17 @@
 <div>
-  <% category = Data.get_field_value(@doc, "category") %>
+  <% category = Document.get_field_value(@doc, "category") %>
 
   <div class="flex gap-2 justify-between">
-    <PublicationSelection.render
+    <.publication_navigation
+      projects={@projects}
       publications={@publications}
       current_publication={@publication}
       uuid={@uuid}
       identifier={
         if category != "Project",
-          do: Data.get_field_value(@doc, "identifier")
+          do: Document.get_field_value(@doc, "identifier")
       }
     />
-
-    <form phx-submit="search">
-      <div class="flex border border-black/20">
-        <button class="bg-(--primary-color) hover:bg-(--primary-color-hover) inline-block text-white p-1">
-          <.icon name="hero-magnifying-glass" />
-        </button>
-        <input
-          class="grow pl-2"
-          type="text"
-          name="search_input"
-          placeholder="Search in publication"
-        />
-      </div>
-    </form>
   </div>
 
   <.document_heading :if={category != "Project"}>
@@ -49,7 +36,7 @@
     <% category in @type_categories -> %>
       <.live_component
         id={"type-#{@doc.id}"}
-        module={FieldPublicationWeb.Presentation.Document.Type}
+        module={FieldPublicationWeb.Presentation.Document.GenericDatasheet}
         doc={@doc}
         publication={@publication}
       />

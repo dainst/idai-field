@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop } from 'tsfun';
-import { ConfigurationDocument, SortUtil, Valuelist } from 'idai-field-core';
+import { ConfigurationDocument, Comparator, Valuelist } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { ValuelistEditorModalComponent } from '../../editor/valuelist/valuelist-editor-modal.component';
@@ -49,6 +49,7 @@ export class ManageValuelistsModalComponent extends ContextMenuProvider implemen
     constructor(public activeModal: NgbActiveModal,
                 protected configurationIndex: ConfigurationIndex,
                 protected modals: Modals,
+                protected comparator: Comparator,
                 private menus: Menus,
                 private messages: Messages,
                 private settingsProvider: SettingsProvider,
@@ -177,7 +178,7 @@ export class ManageValuelistsModalComponent extends ContextMenuProvider implemen
     protected submitQuery(): Array<Valuelist> {
 
         return this.configurationIndex.findValuelists(this.searchQuery.queryString)
-            .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
+            .sort((valuelist1, valuelist2) => this.comparator.alnumCompare(valuelist1.id, valuelist2.id));
     }
 
 

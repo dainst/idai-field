@@ -2,13 +2,31 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   use FieldPublicationWeb, :html
 
   require Logger
-  alias FieldPublication.DatabaseSchema.Publication
-  alias FieldPublication.Publications.Data.Field
-  alias FieldPublication.Publications.Search
+
+  alias FieldPublication.Publication
+
+  alias FieldPublication.Publication.{
+    Field,
+    Search
+  }
+
   alias FieldPublicationWeb.Components.LanguageSelection
 
   defp is_search_keyword?(input_type) do
     input_type in (Search.get_keyword_inputs() ++ Search.get_keyword_multi_inputs())
+  end
+
+  attr(:publication, Publication, required: true)
+  attr(:field, Field)
+  attr(:hide_language_selection?, :boolean, default: false)
+
+  def render_field(assigns) do
+    ~H"""
+    <.labeled_value class="h-full border p-0.5 border-black/20">
+      <:label><.render_field_label field={@field} /></:label>
+      <.render_field_data field={@field} publication={@publication} />
+    </.labeled_value>
+    """
   end
 
   attr(:publication, Publication, required: true)
@@ -230,40 +248,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   def render_field_label(%{field: %Field{labels: labels}} = assigns) when is_map(labels) do
     ~H"""
     <% language_keys = Map.keys(@field.labels) %>
-    <% ui_lang = pick_default_language_key(language_keys) %>
-    <% rendered_order = Enum.reject(language_keys, fn key -> key == ui_lang end) %>
-    {@field.labels[ui_lang]}
-    <!-- <div aria-describedby={description_id}>
-      {@field.labels[ui_lang]}
-    </div>
-    <div id={description_id} role="tooltip" class="hidden">
-      <%= for language_key <- rendered_order do %>
-        <div class={"#{if language_key == ui_lang, do: "bg-primary/20"}"}>
-          {Map.get(@field.labels, language_key)} <span class="text-xs" phx-hook="DisplayLanguage" id={"#{description_id}_#{language_key}"} lang={language_key}>{language_key}</span>
-        </div>
-      <% end %>
-    </div> -->
-    <!-- <div class="relative">
-
-
-
-        <button
-          class="cursor-pointer"
-          phx-click={JS.show(to: "#field_#{@field.name}_label_translations")}
-        >
-            {@field.labels[ui_lang]}
-
-            <div class="absolute bg-white left-8 z-55 hidden" id={"field_#{@field.name}_label_translations"}
-              phx-click={JS.hide(to: "#field_#{@field.name}_label_translations")}>
-    <%= for language_key <- rendered_order do %>
-      <div class={"#{if language_key == ui_lang, do: "bg-primary/20"}"}>
-      {Map.get(@field.labels, language_key)} <span class="text-xs" phx-hook="DisplayLanguage" id={"field_#{@field.name}_label_translations_#{language_key}"} lang={language_key}>{language_key}</span>
-      </div>
-    <% end %>
-    </div>
-    </button>
-
-    </div>-->
+    {@field.labels[pick_default_language_key(language_keys)]}
     """
   end
 

@@ -1,35 +1,35 @@
-import { parseDate, DateSpecification, SortMode, SortUtil, ProcessDocument } from 'idai-field-core';
+import { parseDate, DateSpecification, SortMode, Comparator, ProcessDocument } from 'idai-field-core';
 
 
-export function sortProcesses(processes: Array<ProcessDocument>, sortMode: SortMode) {
+export function sortProcesses(processes: Array<ProcessDocument>, sortMode: SortMode, comparator: Comparator) {
 
     processes.sort((process1: ProcessDocument, process2: ProcessDocument) => {
         switch (sortMode) {
             case SortMode.Alphanumeric:
-                return compareAlphanumerically(process1, process2);
+                return compareAlphanumerically(process1, process2, comparator);
             case SortMode.AlphanumericDescending:
-                return compareAlphanumerically(process1, process2) * -1;
+                return compareAlphanumerically(process1, process2, comparator) * -1;
             case SortMode.Date:
-                return compareByDate(process1, process2);
+                return compareByDate(process1, process2, comparator);
             case SortMode.DateDescending:
-                return compareByDate(process1, process2) * -1;
+                return compareByDate(process1, process2, comparator) * -1;
         }
     });
 }
 
 
-function compareAlphanumerically(process1: ProcessDocument, process2: ProcessDocument): number {
+function compareAlphanumerically(process1: ProcessDocument, process2: ProcessDocument, comparator: Comparator): number {
 
-    return SortUtil.alnumCompare(
+    return comparator.alnumCompare(
         process1.resource.identifier,
         process2.resource.identifier
     );
 }
 
 
-function compareByDate(process1: ProcessDocument, process2: ProcessDocument): number {
+function compareByDate(process1: ProcessDocument, process2: ProcessDocument, comparator: Comparator): number {
 
-    return SortUtil.numberCompare(
+    return comparator.numberCompare(
         getDateTime(process1.resource.date),
         getDateTime(process2.resource.date)
     );

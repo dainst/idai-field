@@ -1,7 +1,7 @@
 <.link navigate={~p"/"}>Back to overview</.link>
 <h1>Create a new project</h1>
 
-<form phx-change="update" phx-submit="create">
+<form id="project-creation-form" phx-change="update" phx-submit="create">
   <button style="width: 100%" disabled={Enum.count(@issues) > 0}>
     Create project
   </button>

@@ -264,6 +264,18 @@ export class DocumentsManager {
     }
 
 
+    public async populateAndDeselectIfNecessary() {
+
+        await this.populateDocumentList();
+
+        const selectedDocument: FieldDocument = ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
+
+        if (!this.documents.find(Document.hasEqualId(selectedDocument))) {
+            this.deselect();
+        }
+    }
+
+
     private getAllowedCategoryNames(): string[] {
 
         return this.resourcesStateManager.isInOverview()
@@ -309,18 +321,6 @@ export class DocumentsManager {
     }
 
 
-    private async populateAndDeselectIfNecessary() {
-
-        await this.populateDocumentList();
-
-        const selectedDocument: FieldDocument = ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
-
-        if (!this.documents.find(Document.hasEqualId(selectedDocument))) {
-            this.deselect();
-        }
-    }
-
-
     private async handleRemoteChange(remoteChangeInfo: RemoteChangeInfo) {
 
         if (!this.documents) return;
@@ -345,8 +345,6 @@ export class DocumentsManager {
 
 
     private async makeSureSelectedDocumentAppearsInList(documentToSelect: FieldDocument) {
-
-        console.log('make sure this appears in list:', documentToSelect);
 
         await this.resourcesStateManager.updateNavigationPathForDocument(documentToSelect);
         await this.adjustQuerySettingsIfNecessary(documentToSelect);

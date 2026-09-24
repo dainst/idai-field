@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { intersection, to } from 'tsfun';
 import { CategoryForm, ProjectConfiguration, Document, Relation, Datastore, Labels, Named, DateSpecification,
-    SortMode, ProcessDocument } from 'idai-field-core';
+    SortMode, ProcessDocument, Comparator } from 'idai-field-core';
 import { sortProcesses } from '../sort-processes';
 import { getSystemTimezone } from '../../../../../util/timezones';
 import { Settings } from '../../../../../services/settings/settings';
@@ -37,7 +37,8 @@ export class LinkProcessModalComponent {
                 private datastore: Datastore,
                 private labels: Labels,
                 private utilTranslations: UtilTranslations,
-                private menuService: Menus) {}
+                private menuService: Menus,
+                private comparator: Comparator) {}
 
 
     public getCategoryLabel = (process: Document) =>
@@ -65,7 +66,7 @@ export class LinkProcessModalComponent {
 
         this.selectedDocument = document;
         this.availableProcesses = await this.getAvailableProcesses();
-        sortProcesses(this.availableProcesses, SortMode.Date);
+        sortProcesses(this.availableProcesses, SortMode.Date, this.comparator);
     }
 
 

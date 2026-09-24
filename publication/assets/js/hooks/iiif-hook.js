@@ -32,8 +32,7 @@ export default getIIIFHook = () => {
 
             const imageInfo = await (response).json()
 
-            const options = new IIIFInfo(imageInfo).getTileSourceOptions();
-
+            const options = new IIIFInfo(imageInfo).getTileSourceOptions({format: "webp"});
 
             options.zDirection = -1;
             const iiifTileSource = new IIIF(options);

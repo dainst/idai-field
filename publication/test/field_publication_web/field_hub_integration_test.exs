@@ -14,13 +14,11 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
     FileService,
     Replication,
     Processing,
-    Projects,
-    Publications
+    Project,
+    Publication
   }
 
   alias FieldPublication.DatabaseSchema.{
-    Project,
-    Publication,
     LogEntry
   }
 
@@ -30,23 +28,23 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
     FieldHubHelper.start()
     CouchService.put_database(@core_database)
 
-    Projects.put(%Project{}, %{"identifier" => @test_project_identifier})
+    Project.put(%Project{}, %{"identifier" => @test_project_identifier})
 
-    project = Projects.get!(@test_project_identifier)
+    project = Project.get!(@test_project_identifier)
 
     on_exit(fn ->
-      Publications.get(@test_project_identifier, Date.utc_today())
+      Publication.get(@test_project_identifier, Date.utc_today())
       |> case do
         {:ok, publication} ->
           Replication.stop(publication)
           Processing.stop(publication)
-          Publications.delete(publication)
+          Publication.delete(publication)
 
         _ ->
           :ok
       end
 
-      Projects.delete(project)
+      Project.delete(project)
       CouchService.delete_database(@core_database)
       FieldHubHelper.stop()
     end)
@@ -64,17 +62,18 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
     pid = live_process.pid
     :erlang.trace(pid, true, [:receive])
 
-    assert live_process
-           |> form("#replication-form", %{
-             replication_input: %{
-               source_url: FieldHubHelper.get_url(),
-               source_user: FieldHubHelper.get_admin_name(),
-               source_password: FieldHubHelper.get_admin_password(),
-               source_project_identifier: "testopolis",
-               delete_existing_publication: true
-             }
-           })
-           |> render_submit()
+    _html =
+      live_process
+      |> form("#replication-form", %{
+        replication_input: %{
+          source_url: FieldHubHelper.get_url(),
+          source_user: FieldHubHelper.get_admin_name(),
+          source_password: FieldHubHelper.get_admin_password(),
+          source_project_identifier: "testopolis",
+          delete_existing_publication: true
+        }
+      })
+      |> render_submit()
 
     {publication_path, _flash} = assert_redirect(live_process, 5000)
 
@@ -93,7 +92,7 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
       project_identifier: @test_project_identifier,
       drafted_by: "couch_admin",
       replication_logs: logs
-    } = Publications.get!(@test_project_identifier, "#{Date.utc_today()}")
+    } = Publication.get!(@test_project_identifier, "#{Date.utc_today()}")
 
     assert %LogEntry{
              # The rest would be something containing a date like: ""Replicating database for publication_test_project_a_<current date> by first replicating the database."

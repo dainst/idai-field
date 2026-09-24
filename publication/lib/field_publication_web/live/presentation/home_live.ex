@@ -1,26 +1,27 @@
 defmodule FieldPublicationWeb.Presentation.HomeLive do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Publications
-  alias FieldPublication.DatabaseSchema.Publication
+  alias FieldPublication.Publication
 
-  alias FieldPublication.Publications.Data
+  alias FieldPublication.Publication.{
+    Document
+  }
 
   def mount(_assigns, _session, socket) do
     published_projects =
       Enum.map(
-        Publications.get_current_published(),
+        Publication.get_current_published(),
         fn %Publication{project_identifier: project_identifier} = publication ->
-          doc = Publications.Data.get_extended_document("project", publication)
+          {:ok, doc} = Publication.get_extended_document("project", publication)
 
           longitude =
-            Data.get_field_value(
+            Document.get_field_value(
               doc,
               "longitude"
             )
 
           latitude =
-            Data.get_field_value(
+            Document.get_field_value(
               doc,
               "latitude"
             )

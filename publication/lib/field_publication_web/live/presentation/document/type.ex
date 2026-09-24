@@ -7,17 +7,14 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
     Image
   }
 
-  alias FieldPublication.Publications.Data
-
-  alias FieldPublication.Publications.Data.{
-    Document,
-    RelationGroup
+  alias FieldPublication.Publication.{
+    Document
   }
 
   def render(assigns) do
     # IO.inspect(assigns)
     ~H"""
-    <div class="flex flex-row gap-4" >
+    <div class="flex flex-row gap-4">
       <div class="basis-1/3">
         {@todo} #{@doc.id} #{@doc.identifier}
       </div>

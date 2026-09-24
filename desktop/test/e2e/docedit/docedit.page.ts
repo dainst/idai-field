@@ -391,6 +391,12 @@ export class DoceditPage {
     }
 
 
+    public static async typeInTextField(fieldName: string, text: string) {
+
+        return typeIn((await this.getField(fieldName)).locator('textarea'), text);
+    }
+
+
     public static async typeInDateInputField(fieldName: string, date: string) {
 
         const element = (await this.getField(fieldName)).locator('input');

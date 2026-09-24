@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <link rel="icon" type="image/x-icon" href={Settings.get_favicon_url()} />
+    <link rel="icon" type="image/x-icon" href={ApplicationSettings.get_favicon_url()} />
 
-    <% page_name = Settings.get_page_name() %>
+    <% page_name = ApplicationSettings.get_page_name() %>
 
     <.live_title suffix={" · #{page_name}"}>
       {assigns[:page_title]}
@@ -27,11 +27,11 @@
     <%= if assigns[:page_description] do %>
       <meta property="og:description" content={assigns[:page_description]} />
     <% end %>
-    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <link phx-track-static rel="stylesheet" href={~p"/assets/ol.css"} />
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
 
     <style>
-      <%= FieldPublication.Settings.get_customized_css() %>
+      <%= ApplicationSettings.get_customized_css() %>
     </style>
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>

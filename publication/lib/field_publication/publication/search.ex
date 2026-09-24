@@ -1029,12 +1029,12 @@ defmodule FieldPublication.Publication.Search do
     end
   end
 
-  def index_documents(%Publication{epsg_code: epsg_code} = publication) do
+  def index_documents!(%Publication{epsg_code: epsg_code} = publication) do
     mapping = generate_index_mapping(publication)
     special_input_types = evaluate_input_types(publication)
 
     # TODO: Check if they exist?
-    Geo.generate_feature_collections(publication)
+    Geo.generate_feature_collections!(publication)
 
     index_name = setup_index(publication, mapping)
 

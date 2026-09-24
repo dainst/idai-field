@@ -39,7 +39,7 @@ defmodule FieldPublication.Publication.Geo do
   - If the project has an ESPG code, the system will create a EPSG:4326 collection, as well as a
   collection with the original projection (if the original was not EPSG:4326 already).
   """
-  def generate_feature_collections(
+  def generate_feature_collections!(
         %Publication{project_identifier: project_identifier, draft_date: draft_date, database: db} =
           publication
       ) do
@@ -160,7 +160,7 @@ defmodule FieldPublication.Publication.Geo do
 
     if project_epsg_id do
       # To set the OGC urn in the geo json's "crs" field, we trigger a "reprojection" to the same ESPG code.
-      reproject_geo_json(
+      reproject_geo_json!(
         geometry_collection,
         Path.join([temp_path, "vector_geometries_EPSG-#{project_epsg_id}.geojson"]),
         project_epsg_id,
@@ -169,7 +169,7 @@ defmodule FieldPublication.Publication.Geo do
 
       if project_epsg_id != 4326 do
         # When there is no EPSG code given, assume custom crs and do not attempt any reprojections.
-        reproject_geo_json(
+        reproject_geo_json!(
           geometry_collection,
           Path.join([temp_path, "vector_geometries_EPSG-4326.geojson"]),
           project_epsg_id,
@@ -193,7 +193,7 @@ defmodule FieldPublication.Publication.Geo do
     File.rm_rf!(temp_path)
   end
 
-  defp reproject_geo_json(
+  defp reproject_geo_json!(
          %{properties: collection_properties} = geo_json,
          output_file,
          input_epsg,
@@ -207,7 +207,7 @@ defmodule FieldPublication.Publication.Geo do
 
     File.write!(temp_file, Jason.encode!(geo_json))
 
-    result =
+    {_, 0} =
       System.cmd(
         "gdal",
         [
@@ -223,29 +223,22 @@ defmodule FieldPublication.Publication.Geo do
         ],
         stderr_to_stdout: true
       )
-      |> case do
-        {_, 0} ->
-          # GDAL leaves quite a lot of whitespace in the result files, this makes sure the whitespace gets minimized by `Jason.encode!/2`.
-          minimized =
-            File.read!(output_file)
-            |> Jason.decode!()
-            # GDAL does not keep the FeatureCollection properties when reprojecting, properties on FeatureCollections is not a GeoJSON standard.
-            # We re-add them manually again here.
-            |> Map.put(:properties, collection_properties)
-            |> Jason.encode!()
 
-          File.write!(output_file, minimized)
-          File.write!("#{output_file}.gz", minimized |> :zlib.gzip())
-          File.write!("#{output_file}.br", minimized |> ExBrotli.compress!())
-          :ok
+    minimized =
+      File.read!(output_file)
+      |> Jason.decode!()
+      # GDAL does not keep the FeatureCollection properties when reprojecting, properties on FeatureCollections is not a GeoJSON standard.
+      # We re-add them manually again here.
+      |> Map.put(:properties, collection_properties)
+      |> Jason.encode!()
 
-        {msg, code} ->
-          {:error, {msg, code}}
-      end
+    File.write!(output_file, minimized)
+    File.write!("#{output_file}.gz", minimized |> :zlib.gzip())
+    File.write!("#{output_file}.br", minimized |> ExBrotli.compress!())
 
     File.rm!(temp_file)
 
-    result
+    :ok
   end
 
   def vector_geometries(%Publication{} = publication, epsg_code) do

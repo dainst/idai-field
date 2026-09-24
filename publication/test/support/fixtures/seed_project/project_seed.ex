@@ -146,12 +146,12 @@ defmodule FieldPublication.Test.ProjectSeed do
 
     if seed_data? && preprocess? do
       Publication.Geo.read_and_set_epsg_code(publication)
-      Publication.Geo.generate_feature_collections(publication)
+      Publication.Geo.generate_feature_collections!(publication)
 
       [{:ok, %Finch.Response{status: 201}}] =
         Publication.DocumentPreview.recreate_previews(publication)
 
-      %{field_labels: _, category_labels: _} = Publication.Search.index_documents(publication)
+      %{field_labels: _, category_labels: _} = Publication.Search.index_documents!(publication)
 
       {:ok, _} = Publication.Search.set_project_alias(publication)
 

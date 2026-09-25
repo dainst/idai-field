@@ -13,7 +13,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
   alias FieldPublication.DatabaseSchema.ReplicationInput
 
   alias FieldPublication.Processing
-  alias FieldPublication.Users
+  alias FieldPublication.User
 
   alias Phoenix.PubSub
 
@@ -26,7 +26,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
       socket
       |> load_projects()
       |> update_processing_state()
-      |> assign(:users, Users.list())
+      |> assign(:users, User.list())
       |> assign(:today, Date.utc_today())
       |> assign(:page_title, "Publishing")
     }
@@ -269,7 +269,7 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
 
   defp update_processing_state(socket) do
     processing_state =
-      if FieldPublication.Users.is_admin?(socket.assigns.current_user) do
+      if User.is_admin?(socket.assigns.current_user) do
         Processing.show()
         |> Enum.map(fn {_task, type, id} -> {id, %{type => nil}} end)
         |> Enum.into(%{})

@@ -1,7 +1,10 @@
 defmodule FieldPublicationWeb.ContactAndImprintLive do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.ApplicationSettings
+  alias FieldPublication.{
+    ApplicationSettings,
+    User
+  }
 
   alias FieldPublication.DatabaseSchema.{
     Translation
@@ -61,7 +64,7 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
       </div>
 
       <.link
-        :if={FieldPublication.Users.is_admin?(@current_user)}
+        :if={User.is_admin?(@current_user)}
         class="pl-4 text-sm"
         navigate={~p"/management/settings"}
       >

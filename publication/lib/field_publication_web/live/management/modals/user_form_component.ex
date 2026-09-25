@@ -2,8 +2,7 @@ defmodule FieldPublicationWeb.Management.Modals.UserFormComponent do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.CouchService
-  alias FieldPublication.Users
-  alias FieldPublication.DatabaseSchema.User
+  alias FieldPublication.User
 
   @impl true
   def render(assigns) do
@@ -87,7 +86,7 @@ defmodule FieldPublicationWeb.Management.Modals.UserFormComponent do
 
   defp save_user(socket, :edit, form_params) do
     %User{}
-    |> Users.update(form_params)
+    |> User.update(form_params)
     |> case do
       {:error, changeset} ->
         {:noreply, assign(socket, :form, to_form(changeset))}
@@ -103,7 +102,7 @@ defmodule FieldPublicationWeb.Management.Modals.UserFormComponent do
   end
 
   defp save_user(socket, :new, form_params) do
-    Users.create(form_params)
+    User.create(form_params)
     |> case do
       {:error, changeset} ->
         {:noreply, assign(socket, :form, to_form(changeset))}

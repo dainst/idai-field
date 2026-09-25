@@ -1,7 +1,7 @@
 <.back navigate={~p"/"}>{gettext("Back to landing page")}</.back>
 
 <.document_heading>Management</.document_heading>
-<%= if FieldPublication.Users.is_admin?(@current_user) do %>
+<%= if User.is_admin?(@current_user) do %>
   <.group_heading>Administration</.group_heading>
   <section class="flex">
     <ul class="p-4 min-w-80 list-disc list-inside">
@@ -92,7 +92,7 @@
                   Draft new publication
                 </.link>
               </li>
-              <%= if FieldPublication.Users.is_admin?(@current_user) do %>
+              <%= if User.is_admin?(@current_user) do %>
                 <li>
                   <.link
                     navigate={~p"/management/projects/#{project.identifier}/edit"}
@@ -176,8 +176,7 @@
                         </li>
 
                         <li :if={
-                          is_nil(publication.publication_date) ||
-                            FieldPublication.Users.is_admin?(@current_user)
+                          is_nil(publication.publication_date) || User.is_admin?(@current_user)
                         }>
                           <.link
                             phx-click={
@@ -271,7 +270,7 @@
   show
   on_cancel={JS.patch(~p"/management")}
 >
-  <%= if FieldPublication.Users.is_admin?(@current_user) do %>
+  <%= if User.is_admin?(@current_user) do %>
     <.live_component
       module={FieldPublicationWeb.Management.Modals.ProjectFormComponent}
       id={@project.identifier || :new}

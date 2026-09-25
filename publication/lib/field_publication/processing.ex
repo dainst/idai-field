@@ -3,22 +3,20 @@ defmodule FieldPublication.Processing do
 
   alias Phoenix.PubSub
 
-  alias FieldPublication.Publication
+  alias FieldPublication.EmbeddedSchema.LogEntry
 
   alias FieldPublication.Processing.{
     WebImage,
     MapTiles
   }
 
+  alias FieldPublication.Publication
+
   alias FieldPublication.Publication.{
     DocumentPreview,
     DataIssues,
     Geo,
     Search
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    LogEntry
   }
 
   require Logger

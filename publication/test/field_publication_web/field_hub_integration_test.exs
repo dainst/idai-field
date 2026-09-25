@@ -11,15 +11,12 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
 
   alias FieldPublication.{
     CouchService,
+    EmbeddedSchema.LogEntry,
     FileService,
     Replication,
     Processing,
     Project,
     Publication
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    LogEntry
   }
 
   import Phoenix.LiveViewTest

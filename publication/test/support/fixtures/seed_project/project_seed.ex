@@ -3,13 +3,10 @@ defmodule FieldPublication.Test.ProjectSeed do
     FileService,
     CouchService,
     Replication,
+    Replication.ReplicationInput,
     Processing,
     Project,
     Publication
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    ReplicationInput
   }
 
   require Logger

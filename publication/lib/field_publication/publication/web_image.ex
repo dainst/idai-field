@@ -5,6 +5,7 @@ defmodule FieldPublication.Processing.WebImage do
   }
 
   alias FieldPublication.{
+    EmbeddedSchema.LogEntry,
     FileService,
     Publication
   }
@@ -12,10 +13,6 @@ defmodule FieldPublication.Processing.WebImage do
   alias FieldPublication.Publication.{
     Configuration,
     DataIssues
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    LogEntry
   }
 
   require Logger

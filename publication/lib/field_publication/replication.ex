@@ -2,20 +2,17 @@ defmodule FieldPublication.Replication do
   use GenServer
 
   alias FieldPublication.{
+    EmbeddedSchema.LogEntry,
     CouchService,
-    Replication.CouchReplication,
-    Replication.FileReplication,
     Processing,
-    Publication
+    Publication,
+    Publication.Geo
   }
 
-  alias FieldPublication.Publication.{
-    Geo
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    ReplicationInput,
-    LogEntry
+  alias FieldPublication.Replication.{
+    CouchReplication,
+    FileReplication,
+    ReplicationInput
   }
 
   require Logger

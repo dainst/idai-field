@@ -4,6 +4,7 @@ defmodule FieldPublication.Publication.DocumentPreview do
   import Ecto.Changeset
 
   alias FieldPublication.{
+    EmbeddedSchema.LogEntry,
     CouchService,
     Publication
   }
@@ -13,8 +14,6 @@ defmodule FieldPublication.Publication.DocumentPreview do
     Document,
     DataIssues
   }
-
-  alias FieldPublication.DatabaseSchema.LogEntry
 
   require Logger
 

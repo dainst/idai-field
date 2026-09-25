@@ -1,13 +1,8 @@
 defmodule FieldPublicationWeb.Presentation.Document.Project do
   use FieldPublicationWeb, :live_component
 
-  import FieldPublicationWeb.Components.Data.{
-    DocumentLink,
-    Field,
-    Image
-  }
-
   alias FieldPublication.{
+    EmbeddedSchema.Translation,
     Publication
   }
 
@@ -18,11 +13,15 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
     Search
   }
 
-  alias FieldPublication.DatabaseSchema.Translation
-
   alias FieldPublicationWeb.Components.{
     LanguageSelection,
     PublicationMap
+  }
+
+  import FieldPublicationWeb.Components.Data.{
+    DocumentLink,
+    Field,
+    Image
   }
 
   def render(assigns) do

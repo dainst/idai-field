@@ -2,18 +2,13 @@ defmodule FieldPublicationWeb.Management.OverviewLive do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.{
+    Replication.ReplicationInput,
+    Processing,
     Project,
-    Publication
+    Publication,
+    Publication.Search,
+    User
   }
-
-  alias FieldPublication.Publication.{
-    Search
-  }
-
-  alias FieldPublication.DatabaseSchema.ReplicationInput
-
-  alias FieldPublication.Processing
-  alias FieldPublication.User
 
   alias Phoenix.PubSub
 

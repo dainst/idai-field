@@ -4,11 +4,8 @@ defmodule FieldPublicationWeb.Management.Modals.ReplicationFormComponent do
 
   alias FieldPublication.{
     Publication,
-    Replication
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    ReplicationInput
+    Replication,
+    Replication.ReplicationInput
   }
 
   @impl true

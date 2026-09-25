@@ -3,11 +3,8 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
 
   alias FieldPublication.{
     ApplicationSettings,
+    EmbeddedSchema.Translation,
     User
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    Translation
   }
 
   def render(assigns) do

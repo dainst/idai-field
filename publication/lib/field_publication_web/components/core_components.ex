@@ -21,10 +21,9 @@ defmodule FieldPublicationWeb.CoreComponents do
 
   alias Phoenix.LiveView.JS
 
-  alias FieldPublication.Publication
-
-  alias FieldPublication.DatabaseSchema.{
-    LogEntry
+  alias FieldPublication.{
+    EmbeddedSchema.LogEntry,
+    Publication
   }
 
   @doc """
@@ -678,8 +677,6 @@ defmodule FieldPublicationWeb.CoreComponents do
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
   end
-
-  alias FieldPublication.DatabaseSchema.LogEntry
 
   @doc """
   Component for displaying lists of LogEntry schemas.

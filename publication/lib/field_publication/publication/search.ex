@@ -1,5 +1,6 @@
 defmodule FieldPublication.Publication.Search do
   alias FieldPublication.{
+    EmbeddedSchema.LogEntry,
     OpenSearchService,
     Publication,
     Project
@@ -11,10 +12,6 @@ defmodule FieldPublication.Publication.Search do
     Document,
     DocumentPreview,
     Geo
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    LogEntry
   }
 
   require Logger

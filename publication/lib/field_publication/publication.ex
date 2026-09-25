@@ -8,21 +8,18 @@ defmodule FieldPublication.Publication do
   alias FieldPublication.{
     CouchService,
     FileService,
-    Project
+    Project,
+    Replication.ReplicationInput
+  }
+
+  alias FieldPublication.EmbeddedSchema.{
+    Translation,
+    LogEntry
   }
 
   alias FieldPublication.Publication.{
     Configuration,
     Search
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    Translation,
-    LogEntry
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    ReplicationInput
   }
 
   require Logger

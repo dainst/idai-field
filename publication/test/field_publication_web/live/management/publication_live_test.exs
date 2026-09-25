@@ -3,7 +3,8 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
     CouchService,
     Processing,
     Project,
-    Publication
+    Publication,
+    User
   }
 
   use FieldPublicationWeb.ConnCase
@@ -11,7 +12,7 @@ defmodule FieldPublicationWeb.Management.PublicationLiveTest do
 
   @core_database Application.compile_env(:field_publication, :core_database)
   @test_project_identifier "test_project_a"
-  @test_user %FieldPublication.DatabaseSchema.User{
+  @test_user %User{
     name: "test_user",
     password: "pw",
     label: "Test user"

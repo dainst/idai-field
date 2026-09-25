@@ -6,7 +6,7 @@ defmodule FieldPublicationWeb.Rest.Api.V1Test do
   alias FieldPublication.{
     CouchService,
     Project,
-    Users
+    User
   }
 
   alias FieldPublication.Test.ProjectSeed
@@ -25,7 +25,7 @@ defmodule FieldPublicationWeb.Rest.Api.V1Test do
     {project_a, _publication} = ProjectSeed.create_full_publication(@test_project_identifier_a)
 
     {:ok, user} =
-      Users.create(%{
+      User.create(%{
         name: @test_editor_name,
         password: @test_editor_password,
         label: "some user"
@@ -43,7 +43,7 @@ defmodule FieldPublicationWeb.Rest.Api.V1Test do
 
     on_exit(fn ->
       Enum.each([empty_project, project_a, project_b], &Project.delete/1)
-      Users.delete(@test_editor_name)
+      User.delete(@test_editor_name)
       CouchService.delete_database(@core_database)
     end)
   end

@@ -1,5 +1,5 @@
 defmodule FieldPublication.CouchService do
-  alias FieldPublication.DatabaseSchema.User
+  alias FieldPublication.User
 
   @core_database Application.compile_env(:field_publication, :core_database)
 

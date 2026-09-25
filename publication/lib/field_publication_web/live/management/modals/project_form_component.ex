@@ -2,7 +2,7 @@ defmodule FieldPublicationWeb.Management.Modals.ProjectFormComponent do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.Project
-  alias FieldPublication.Users
+  alias FieldPublication.User
 
   @impl true
   def render(assigns) do
@@ -54,7 +54,7 @@ defmodule FieldPublicationWeb.Management.Modals.ProjectFormComponent do
 
     users =
       Enum.map(
-        Users.list(),
+        User.list(),
         fn %{name: name, label: label} -> {label, name} end
       )
 

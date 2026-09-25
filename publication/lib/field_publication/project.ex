@@ -4,15 +4,11 @@ defmodule FieldPublication.Project do
   import Ecto.Changeset
   alias Ecto.Changeset
 
-  alias FieldPublication.DatabaseSchema.{
-    User
-  }
-
   alias FieldPublication.{
     CouchService,
     FileService,
     Publication,
-    Users
+    User
   }
 
   @doc_type "project"
@@ -262,7 +258,7 @@ defmodule FieldPublication.Project do
 
   def has_project_access?(identifier, user_name)
       when is_binary(identifier) and is_binary(user_name) do
-    if Users.is_admin?(user_name) do
+    if User.is_admin?(user_name) do
       true
     else
       project = get!(identifier)

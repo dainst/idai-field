@@ -38,6 +38,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
       <.translation_input
         field={@setting_form[:imprint]}
         language_options={@imprint_options}
+        markdown?={true}
       >
         <:heading>Imprint</:heading>
         <:no_translations>You currently have no imprint.</:no_translations>

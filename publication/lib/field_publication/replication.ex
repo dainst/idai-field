@@ -192,13 +192,19 @@ defmodule FieldPublication.Replication do
 
           persisted_log(publication, :info, "Draft creation finished.")
 
+          final_metadata_additions =
+            Map.merge(
+              %{
+                contact: contact,
+                replication_finished: DateTime.utc_now(),
+                languages: languages
+              },
+              get_project_description_and_name(publication)
+            )
+
           {:ok, %Publication{} = final_publication} =
             Publication.get!(publication.project_identifier, publication.draft_date)
-            |> Publication.put(%{
-              "contact" => contact,
-              "replication_finished" => DateTime.utc_now(),
-              "languages" => languages
-            })
+            |> Publication.put(final_metadata_additions)
 
           {:ok, {:draft_created, final_publication}}
         end)
@@ -340,6 +346,38 @@ defmodule FieldPublication.Replication do
       )
 
     :ok
+  end
+
+  defp get_project_description_and_name(%Publication{} = publication) do
+    project_doc = Publication.get_raw_document("project", publication)
+
+    description =
+      get_in(project_doc, ["resource", "shortDescription"])
+      |> case do
+        val when is_map(val) ->
+          Enum.map(val, fn {key, value} -> %{language: key, text: value} end)
+
+        val when is_binary(val) ->
+          %{language: "en", text: val}
+
+        _ ->
+          nil
+      end
+
+    name =
+      get_in(project_doc, ["resource", "shortName"])
+      |> case do
+        val when is_map(val) ->
+          Enum.map(val, fn {key, value} -> %{language: key, text: value} end)
+
+        val when is_binary(val) ->
+          %{language: "en", text: val}
+
+        _ ->
+          %{language: "en", text: get_in(project_doc, ["resource", "identifier"])}
+      end
+
+    %{project_description: description, project_label: name}
   end
 
   defp cleanup(ref, running_replications) do

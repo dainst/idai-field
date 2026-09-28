@@ -167,11 +167,27 @@
         placeholder="mail@example.org"
       />
       <.translation_input
-        field={@publication_form[:comments]}
+        field={@publication_form[:project_label]}
         language_options={@translation_options}
       >
-        <:heading>Publication comments</:heading>
-        <:no_translations>No comments for this publication</:no_translations>
+        <:heading>Project labels</:heading>
+        <:no_translations>No labels defined for this project.</:no_translations>
+      </.translation_input>
+      <.translation_input
+        field={@publication_form[:project_description]}
+        language_options={@translation_options}
+        markdown?={true}
+      >
+        <:heading>Project descriptions</:heading>
+        <:no_translations>No description for this project</:no_translations>
+      </.translation_input>
+      <.translation_input
+        field={@publication_form[:publication_description]}
+        language_options={@translation_options}
+        markdown?={true}
+      >
+        <:heading>Publication descriptions</:heading>
+        <:no_translations>No description for this publication</:no_translations>
       </.translation_input>
       <.button class="mt-4" phx-disable-with="Saving...">Save changes</.button>
     </.form>

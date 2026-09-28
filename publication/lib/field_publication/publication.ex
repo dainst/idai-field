@@ -52,7 +52,9 @@ defmodule FieldPublication.Publication do
     # a new major version. These then could get communicated differently through
     # the web UI.
     field(:version, Ecto.Enum, values: [:major, :revision], default: :major)
-    embeds_many(:comments, Translation, on_replace: :delete)
+    embeds_many(:project_label, Translation, on_replace: :delete)
+    embeds_many(:project_description, Translation, on_replace: :delete)
+    embeds_many(:publication_description, Translation, on_replace: :delete)
     embeds_many(:replication_logs, LogEntry, on_replace: :delete)
   end
 
@@ -74,12 +76,22 @@ defmodule FieldPublication.Publication do
       :contact,
       :epsg_code
     ])
-    |> cast_embed(:comments,
-      sort_param: :comments_sort,
-      drop_param: :comments_drop
+    |> cast_embed(:project_description,
+      sort_param: :project_description_sort,
+      drop_param: :project_description_drop
     )
+    |> Translation.language_unique_constraint(:project_description)
+    |> cast_embed(:project_label,
+      sort_param: :project_label_sort,
+      drop_param: :project_label_drop
+    )
+    |> Translation.language_unique_constraint(:project_label)
+    |> cast_embed(:publication_description,
+      sort_param: :publication_description_sort,
+      drop_param: :publication_description_drop
+    )
+    |> Translation.language_unique_constraint(:publication_description)
     |> cast_embed(:replication_logs)
-    |> Translation.language_unique_constraint(:comments)
     |> validate_required([
       :project_identifier,
       :source_url,

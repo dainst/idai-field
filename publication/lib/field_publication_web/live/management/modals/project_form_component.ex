@@ -1,8 +1,10 @@
 defmodule FieldPublicationWeb.Management.Modals.ProjectFormComponent do
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.Project
-  alias FieldPublication.User
+  alias FieldPublication.{
+    Project,
+    User
+  }
 
   @impl true
   def render(assigns) do

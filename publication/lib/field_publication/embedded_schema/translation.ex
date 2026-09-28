@@ -16,7 +16,7 @@ defmodule FieldPublication.EmbeddedSchema.Translation do
   end
 
   def language_unique_constraint(changeset, field) when is_atom(field) do
-    comments = get_field(changeset, field)
+    comments = get_field(changeset, field, [])
 
     too_many_entries =
       comments

@@ -14,29 +14,33 @@
 <%= if @users != [] do %>
   <table class="w-full mt-8">
     <thead>
-      <tr>
-        <th class="text-left">{gettext("User name")}</th>
-        <th class="text-left">{gettext("Full name")}</th>
-        <th class="text-right">{gettext("Actions")}</th>
+      <tr class="text-left">
+        <th>{gettext("User name")}</th>
+        <th>{gettext("Full name")}</th>
+        <th>{gettext("Email")}</th>
+        <th>{gettext("Administrator")}</th>
+        <th>{gettext("Actions")}</th>
       </tr>
     </thead>
     <tbody class="divide-y border-t">
-      <%= for user <- @users do %>
+      <%= for %User{name: name, label: label, email: email, admin?: admin?} <- @users do %>
         <tr class="group hover:bg-slate-50">
-          <td class="text-left">{user.name}</td>
-          <td class="text-left">{user.label}</td>
-          <td class="text-right">
+          <td>{name}</td>
+          <td>{label}</td>
+          <td>{email}</td>
+          <td><.icon :if={admin?} name="hero-check" /></td>
+          <td>
             <div class="space-x-4">
               <span>
-                <.link patch={~p"/management/users/#{user.name}/edit"}>
+                <.link patch={~p"/management/users/#{name}/edit"}>
                   {gettext("Edit")}
                 </.link>
               </span>
               <span>
                 <.link
                   phx-click={
-                    JS.push("delete", value: %{name: user.name})
-                    |> hide("##{user.name}")
+                    JS.push("delete", value: %{name: name})
+                    |> hide("##{name}")
                   }
                   data-confirm="Are you sure?"
                 >
@@ -59,10 +63,10 @@
 >
   <.live_component
     module={UserFormComponent}
-    id={@user.name || :new}
+    id="user-form"
     title={@page_title}
     action={@live_action}
-    user={@user}
+    user={@user || nil}
     patch={~p"/management/users"}
   />
 </.modal>

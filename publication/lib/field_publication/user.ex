@@ -4,24 +4,72 @@ defmodule FieldPublication.User do
 
   alias FieldPublication.CouchService
 
+  @user_db "_users"
+
   @moduledoc """
   This module defines the primary `User` struct as an embedded Ecto schema and its related functions for
   creating, updating and deleting users in CouchDB.
   """
   @primary_key false
   embedded_schema do
+    field(:_id, :string)
+    field(:_rev, :string)
+    field(:type, :string, default: "user")
+    field(:roles, {:array, :string}, default: [])
     field(:name, :string)
     field(:password, :string, redact: true)
     field(:label, :string)
+    field(:admin?, :boolean, default: false)
+    field(:email, :string)
   end
 
   def changeset(%__MODULE__{name: existing_name} = user, attrs \\ %{}, create? \\ false) do
-    required_fields = [:name, :label] ++ if create?, do: [:password], else: []
+    required_fields = [:name, :label, :email] ++ if create?, do: [:password], else: []
 
     user
-    |> cast(attrs, [:name, :password, :label])
+    |> cast(attrs, [:type, :roles, :name, :password, :label, :admin?, :email])
     |> validate_required(required_fields)
+    |> set_id()
+    |> validate_unique_email()
     |> prevent_name_change(existing_name)
+  end
+
+  defp set_id(changeset) do
+    id =
+      changeset
+      |> get_field(:name)
+      |> id()
+
+    put_change(changeset, :_id, id)
+  end
+
+  defp validate_unique_email(changeset) do
+    email = get_field(changeset, :email)
+
+    if email do
+      name = get_field(changeset, :name)
+
+      payload = %{
+        selector: %{
+          email: email
+        }
+      }
+
+      CouchService.get_document_stream(payload, @user_db)
+      |> Enum.to_list()
+      |> case do
+        [] ->
+          changeset
+
+        [%{"name" => existing_name}] when existing_name == name ->
+          changeset
+
+        _other ->
+          add_error(changeset, :email, "Email already associated with different user.")
+      end
+    else
+      changeset
+    end
   end
 
   defp prevent_name_change(changeset, nil) do
@@ -36,13 +84,19 @@ defmodule FieldPublication.User do
     end
   end
 
+  defp id(name) when is_binary(name), do: "org.couchdb.user:#{name}"
+  defp id(%__MODULE__{name: name}), do: id(name)
+  defp id(_), do: nil
+
   @doc """
   Get `%User{}` from the database by `name`.
 
   Returns `{:ok, %User{}}` on success, `{:error, :not_found}` otherwise.
   """
   def get(name) when is_binary(name) do
-    CouchService.get_user(name)
+    id = id(name)
+
+    CouchService.get_document(id, @user_db)
     |> case do
       {:ok, %{status: 200, body: body}} ->
         params = Jason.decode!(body)
@@ -53,6 +107,26 @@ defmodule FieldPublication.User do
 
       {:ok, %{status: 404}} = _response ->
         {:error, :not_found}
+    end
+  end
+
+  def get_by_email(email) when is_binary(email) do
+    payload = %{
+      selector: %{
+        email: email
+      }
+    }
+
+    CouchService.get_document_stream(payload, @user_db)
+    |> Enum.to_list()
+    |> case do
+      [user_params] ->
+        %__MODULE__{}
+        |> changeset(user_params)
+        |> apply_action!(:create)
+
+      [] ->
+        nil
     end
   end
 
@@ -73,31 +147,28 @@ defmodule FieldPublication.User do
       {:error, _changeset} = error ->
         error
 
-      {:ok, %__MODULE__{name: name} = user} ->
-        CouchService.create_user(user)
+      {:ok, %__MODULE__{} = user} ->
+        CouchService.put_document(user._id, user, @user_db)
         |> case do
-          {:ok, %{status: 201}} ->
-            {:ok, user}
+          {:ok, %{status: 201, body: body}} ->
+            rev =
+              body
+              |> Jason.decode!()
+              |> Map.get("_rev")
+
+            {:ok, Map.put(user, :_rev, rev)}
 
           {:ok, %{status: 409}} ->
             user
             |> changeset()
-            |> Ecto.Changeset.add_error(:name, "name '#{name}' already taken.")
-            |> Ecto.Changeset.apply_action(:validate)
+            |> add_error(:name, "name '#{user.name}' already taken.")
+            |> apply_action(:validate)
         end
     end
   end
 
-  @doc """
-  Deletes a user.
-
-  Returns `{:ok, :deleted}` if successful or `{:error, :not_found}` if user is unknown.
-
-  ## Parameters
-  - `name` the user's name.
-  """
-  def delete(name) do
-    CouchService.delete_user(name)
+  def delete(%__MODULE__{} = user) do
+    CouchService.delete_document(user._id, user._rev, @user_db)
     |> case do
       {:ok, %{status: 200}} ->
         {:ok, :deleted}
@@ -117,7 +188,7 @@ defmodule FieldPublication.User do
   - `params` map with containing `password` or `label`. The map will get validated
   via `User.changeset/2`.
   """
-  def update(user, params) do
+  def update(%__MODULE__{} = user, params) do
     user
     |> changeset(params)
     |> apply_action(:update)
@@ -126,10 +197,15 @@ defmodule FieldPublication.User do
         error
 
       {:ok, user} ->
-        CouchService.update_user(user)
+        CouchService.put_document(user._id, user, @user_db)
         |> case do
-          {:ok, %{status: 201}} ->
-            {:ok, user}
+          {:ok, %{status: 201, body: body}} ->
+            rev =
+              body
+              |> Jason.decode!()
+              |> Map.get("_rev")
+
+            {:ok, Map.put(user, :_rev, rev)}
 
           {:ok, %{status: 404}} ->
             {
@@ -148,8 +224,17 @@ defmodule FieldPublication.User do
   ## Parameters
   - `name` the user's name.
   """
-  def is_admin?(name) do
-    name == Application.get_env(:field_publication, :couchdb_admin_name)
+  def is_admin?(nil) do
+    false
+  end
+
+  def is_admin?(name) when is_binary(name) do
+    name == Application.get_env(:field_publication, :couchdb_admin_name) ||
+      get(name)
+      |> case do
+        {:ok, %__MODULE__{admin?: val}} -> val
+        _ -> false
+      end
   end
 
   @doc """

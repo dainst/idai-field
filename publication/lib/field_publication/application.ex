@@ -99,7 +99,8 @@ defimpl Jason.Encoder,
     FieldPublication.Project,
     FieldPublication.Publication,
     FieldPublication.Publication.DataIssues,
-    FieldPublication.Publication.DocumentPreview
+    FieldPublication.Publication.DocumentPreview,
+    FieldPublication.User
   ] do
   # When sending the JSON encoded Ecto schemas to CouchDB, `nil` value _rev entries will get rejected
   # CouchDB. This happens for newly created documents, that have not been persisted in the DB yet. In this

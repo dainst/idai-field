@@ -1,10 +1,10 @@
 defmodule FieldPublicationWeb.Presentation.HomeLive do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Publication
-
-  alias FieldPublication.Publication.{
-    Document
+  alias FieldPublication.{
+    Publication,
+    Publication.Document,
+    User
   }
 
   def mount(_assigns, _session, socket) do

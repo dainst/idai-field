@@ -110,26 +110,6 @@ defmodule FieldPublication.User do
     end
   end
 
-  def get_by_email(email) when is_binary(email) do
-    payload = %{
-      selector: %{
-        email: email
-      }
-    }
-
-    CouchService.get_document_stream(payload, @user_db)
-    |> Enum.to_list()
-    |> case do
-      [user_params] ->
-        %__MODULE__{}
-        |> changeset(user_params)
-        |> apply_action!(:create)
-
-      [] ->
-        nil
-    end
-  end
-
   @doc """
   Creates a new user.
 

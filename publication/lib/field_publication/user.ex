@@ -134,7 +134,7 @@ defmodule FieldPublication.User do
             rev =
               body
               |> Jason.decode!()
-              |> Map.get("_rev")
+              |> Map.get("rev")
 
             {:ok, Map.put(user, :_rev, rev)}
 

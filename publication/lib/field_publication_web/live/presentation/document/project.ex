@@ -50,26 +50,39 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
 
       <div class="flex flex-col lg:flex-row gap-4">
         <div class="lg:basis-2/3">
-          <section>
-            <% description = Document.get_field(@doc, "description") %>
-            <%= if description do %>
-              <.render_field_data_as_markdown field={description} />
-            <% else %>
-              <div class="italic">No project description available.</div>
-            <% end %>
-          </section>
-
-          <% comments =
-            @publication.comments
+          <% project_descriptions =
+            @publication.project_description
             |> Enum.map(fn %Translation{language: lang, text: text} -> {lang, text} end)
             |> Enum.into(%{}) %>
           <section>
-            <%= if comments != %{} do %>
+            <%= if project_descriptions != %{} do %>
               <.live_component
                 :let={comment}
                 module={LanguageSelection}
-                id="publication_comments"
-                translations={comments}
+                id="publication_publication_descriptions"
+                translations={project_descriptions}
+              >
+                <span class="markdown">
+                  {comment
+                  |> MDEx.to_html!()
+                  |> Phoenix.HTML.raw()}
+                </span>
+              </.live_component>
+            <% else %>
+              <div class="italic mt-8">No project description available.</div>
+            <% end %>
+          </section>
+          <% publication_descriptions =
+            @publication.publication_description
+            |> Enum.map(fn %Translation{language: lang, text: text} -> {lang, text} end)
+            |> Enum.into(%{}) %>
+          <section>
+            <%= if publication_descriptions != %{} do %>
+              <.live_component
+                :let={comment}
+                module={LanguageSelection}
+                id="publication_publication_descriptions"
+                translations={publication_descriptions}
               >
                 <span class="markdown">
                   {comment

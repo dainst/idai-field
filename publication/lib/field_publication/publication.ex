@@ -110,26 +110,6 @@ defmodule FieldPublication.Publication do
     @doc_type
   end
 
-  def set_metadatabase_name(changeset) do
-    id = get_field(changeset, :_id)
-
-    db_name = "meta%2F#{id}"
-
-    create_meta_database(db_name)
-    |> case do
-      {:ok, _db_name} ->
-        put_change(changeset, :meta_database, db_name)
-
-      error ->
-        Logger.error(inspect(error))
-        add_error(changeset, :meta_database, "Unable to create metadatabase for #{id}.")
-    end
-  end
-
-  def id(project_identifier, draft_date) do
-    Enum.join([@doc_type, project_identifier, draft_date], "_")
-  end
-
   defp ensure_project_exists(changeset) do
     project_identifier = get_field(changeset, :project_identifier)
 
@@ -144,6 +124,26 @@ defmodule FieldPublication.Publication do
           :project_identifier,
           "Project #{project_identifier} document not found."
         )
+    end
+  end
+
+  def id(project_identifier, draft_date) do
+    Enum.join([@doc_type, project_identifier, draft_date], "_")
+  end
+
+  def set_metadatabase_name(changeset) do
+    id = get_field(changeset, :_id)
+
+    db_name = "meta%2F#{id}"
+
+    create_meta_database(db_name)
+    |> case do
+      {:ok, _db_name} ->
+        put_change(changeset, :meta_database, db_name)
+
+      error ->
+        Logger.error(inspect(error))
+        add_error(changeset, :meta_database, "Unable to create metadatabase for #{id}.")
     end
   end
 
@@ -487,6 +487,8 @@ defmodule FieldPublication.Publication do
           |> apply_action(:create)
         end)
 
+      align_raw_data(updated_publication)
+
       broadcast(updated_publication)
 
       {:ok, updated_publication}
@@ -530,6 +532,37 @@ defmodule FieldPublication.Publication do
            :database_exists,
            "A publication database '#{get_field(changeset, :database)}' already exists."
          )}
+    end
+  end
+
+  defp align_raw_data(%__MODULE__{
+         database: database,
+         project_label: project_label,
+         project_description: project_description
+       }) do
+    with {:ok, %{status: 200, body: body}} <- CouchService.get_document("project", database),
+         raw_doc <- JSON.decode!(body) do
+      short_name =
+        Enum.map(project_label, fn %Translation{language: language, text: text} ->
+          {language, text}
+        end)
+        |> Enum.into(%{})
+
+      short_description =
+        Enum.map(project_description, fn %Translation{language: language, text: text} ->
+          {language, text}
+        end)
+        |> Enum.into(%{})
+
+      updated_raw_doc =
+        raw_doc
+        |> put_in(["resource", "shortName"], short_name)
+        |> put_in(["resource", "shortDescription"], short_description)
+
+      CouchService.put_document(updated_raw_doc["_id"], updated_raw_doc, database)
+    else
+      _ ->
+        {:error, :not_found}
     end
   end
 

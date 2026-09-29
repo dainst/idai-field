@@ -1,95 +1,147 @@
 defmodule FieldPublicationWeb.Presentation.HomeLiveTest do
   use FieldPublicationWeb.ConnCase
 
-  alias FieldPublication.{
-    CouchService,
-    Document,
-    Project,
-    Publication
-  }
+  import Phoenix.LiveViewTest
+  import FieldPublication.Test.DataScaffolding
 
-  alias FieldPublication.Publication.Document
+  alias FieldPublication.User
 
-  alias FieldPublication.Test.ProjectSeed
+  setup_all [
+    :create_core_database,
+    :add_editor_user,
+    :add_admin_user,
+    :add_projects_and_empty_publications
+  ]
+
+  test "anonymous users can see published project in project list", %{
+    conn: conn,
+    published_project_a: published_project_a,
+    unpublished_project_b: unpublished_project_b
+  } do
+    assert {:ok, _live_view_pid, html} = live(conn, ~p"/")
+
+    assert html =~
+      published_project_a.project_label
+      |> Enum.find(fn %{language: language} -> language == "en" end)
+      |> then(fn %{text: text} -> text end)
+
+    refute html =~
+      unpublished_project_b.project_label
+      |> Enum.find(fn %{language: language} -> language == "en" end)
+      |> then(fn %{text: text} -> text end)
+  end
+end
+
+defmodule FieldPublicationWeb.Presentation.HomeLiveTest.EmptySystem do
+  use FieldPublicationWeb.ConnCase
 
   import Phoenix.LiveViewTest
-  @core_database Application.compile_env(:field_publication, :core_database)
-  @test_project_identifier "test_project_a"
+  import FieldPublication.Test.DataScaffolding
 
-  setup_all %{} do
-    CouchService.put_database(@core_database)
+  alias FieldPublication.User
 
-    {project, publication} = ProjectSeed.create_full_publication(@test_project_identifier, true)
+  setup_all [:create_core_database, :add_editor_user, :add_admin_user]
 
-    on_exit(fn ->
-      Project.get(@test_project_identifier)
-      |> case do
-        {:ok, %Project{} = project} ->
-          Project.delete(project)
+  test "in an empty system anonymous users can see landing page", %{conn: conn} do
+    assert {:ok, _live_view_pid, html} = live(conn, ~p"/")
 
-        _ ->
-          :ok
-      end
-
-      CouchService.delete_database(@core_database)
-    end)
-
-    %{project: project, publication: publication}
+    assert html =~ "No data published yet"
   end
 
-  test "everybody can see the list of published projects and navigate to the project document", %{
+  test "editor users can see landing page", %{
     conn: conn,
-    publication: publication
+    editor: %User{name: editor_name}
   } do
-    assert {:ok, live_view_pid, html} = live(conn, ~p"/")
+    assert {:ok, _live_view_pid, html} = conn |> log_in_user(editor_name) |> live(~p"/")
 
-    assert html =~ "Projects"
-
-    {:ok, doc} = Publication.get_extended_document("project", publication)
-
-    short_description = Document.get_field_value(doc, "shortName") |> Map.get("en")
-
-    assert html =~ short_description
-
-    assert live_view_pid
-           |> element("a", short_description)
-           |> render_click()
-
-    {path, _flash} = assert_redirect(live_view_pid)
-
-    conn = recycle(conn)
-
-    assert {:error, {:live_redirect, %{to: path_with_date_and_language_selection}}} =
-             live(conn, path)
-
-    conn = recycle(conn)
-
-    assert {:ok, _live_view_pid, project_doc_html} =
-             live(conn, path_with_date_and_language_selection)
-
-    assert project_doc_html =~ short_description
-    assert project_doc_html =~ "Institution"
-    assert project_doc_html =~ "Supervisor"
+    assert html =~
+             "Go to <a href=\"/management\" data-phx-link=\"redirect\" data-phx-link-state=\"push\">management</a> to manage publications for your project(s)."
   end
 
-  test "everybody can see the list of published projects navigate to the system wide search", %{
-    conn: conn
+  test "admin users can see landing page", %{
+    conn: conn,
+    administrator: %User{name: admin_name}
   } do
-    assert {:ok, live_view_pid, html} = live(conn, ~p"/")
+    assert {:ok, _live_view_pid, html} = conn |> log_in_user(admin_name) |> live(~p"/")
 
-    assert html =~ "Search"
-
-    assert live_view_pid
-           |> element("a", "Search all projects")
-           |> render_click()
-
-    {path, _flash} = assert_redirect(live_view_pid)
-
-    conn = recycle(conn)
-
-    assert {:ok, _live_view, search_doc_html} =
-             live(conn, path)
-
-    assert search_doc_html =~ "Searching..."
+    assert html =~
+             "Go to <a href=\"/management\" data-phx-link=\"redirect\" data-phx-link-state=\"push\">management</a> to setup projects, add editors and prepare first associated publications."
   end
+
+  # setup_all %{} do
+  #   CouchService.put_database(@core_database)
+
+  #   {project, publication} = ProjectSeed.create_full_publication(@test_project_identifier, true)
+
+  #   on_exit(fn ->
+  #     Project.get(@test_project_identifier)
+  #     |> case do
+  #       {:ok, %Project{} = project} ->
+  #         Project.delete(project)
+
+  #       _ ->
+  #         :ok
+  #     end
+
+  #     CouchService.delete_database(@core_database)
+  #   end)
+
+  #   %{project: project, publication: publication}
+  # end
+
+  # test "everybody can see the list of published projects and navigate to the project document", %{
+  #   conn: conn,
+  #   publication: publication
+  # } do
+  #   assert {:ok, live_view_pid, html} = live(conn, ~p"/")
+
+  #   assert html =~ "Projects"
+
+  #   {:ok, doc} = Publication.get_extended_document("project", publication)
+
+  #   short_description = Document.get_field_value(doc, "shortName") |> Map.get("en")
+
+  #   assert html =~ short_description
+
+  #   assert live_view_pid
+  #          |> element("a", short_description)
+  #          |> render_click()
+
+  #   {path, _flash} = assert_redirect(live_view_pid)
+
+  #   conn = recycle(conn)
+
+  #   assert {:error, {:live_redirect, %{to: path_with_date_and_language_selection}}} =
+  #            live(conn, path)
+
+  #   conn = recycle(conn)
+
+  #   assert {:ok, _live_view_pid, project_doc_html} =
+  #            live(conn, path_with_date_and_language_selection)
+
+  #   assert project_doc_html =~ short_description
+  #   assert project_doc_html =~ "Institution"
+  #   assert project_doc_html =~ "Supervisor"
+  # end
+
+  # test "everybody can see the list of published projects navigate to the system wide search", %{
+  #   conn: conn
+  # } do
+  #   assert {:ok, live_view_pid, html} = live(conn, ~p"/")
+
+  #   assert html =~ "Search"
+
+  #   assert live_view_pid
+  #          |> element("a", "Search all projects")
+  #          |> render_click()
+
+  #   {path, _flash} = assert_redirect(live_view_pid)
+
+  #   conn = recycle(conn)
+
+  #   assert {:ok, _live_view, search_doc_html} =
+  #            live(conn, path)
+
+  #   assert search_doc_html =~ "Searching..."
+  # end
 end

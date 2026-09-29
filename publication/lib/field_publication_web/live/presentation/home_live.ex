@@ -2,49 +2,21 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   use FieldPublicationWeb, :live_view
 
   alias FieldPublication.{
+    EmbeddedSchema.Translation,
     Publication,
     Publication.Document,
     User
   }
 
   def mount(_assigns, _session, socket) do
-    published_projects =
-      Enum.map(
-        Publication.get_current_published(),
-        fn %Publication{project_identifier: project_identifier} = publication ->
-          {:ok, doc} = Publication.get_extended_document("project", publication)
-
-          longitude =
-            Document.get_field_value(
-              doc,
-              "longitude"
-            )
-
-          latitude =
-            Document.get_field_value(
-              doc,
-              "latitude"
-            )
-
-          metadata = %{
-            name: project_identifier,
-            doc: doc
-          }
-
-          if !is_nil(latitude) and !is_nil(longitude) do
-            Map.put(metadata, :coordinates, %{longitude: longitude, latitude: latitude})
-          else
-            metadata
-          end
-        end
-      )
+    publications = Publication.get_current_published()
 
     {
       :ok,
       socket
       |> assign(
-        :published_projects,
-        published_projects
+        :publications,
+        publications
       )
       |> assign(:highlighted, nil)
       |> assign(:search_results, %{})

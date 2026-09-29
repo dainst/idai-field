@@ -189,6 +189,7 @@ defmodule FieldPublication.Replication do
             end
 
           {:ok, publication} = Geo.read_and_set_epsg_code(publication)
+          {:ok, publication} = Geo.read_and_set_coordinate(publication)
 
           persisted_log(publication, :info, "Draft creation finished.")
 

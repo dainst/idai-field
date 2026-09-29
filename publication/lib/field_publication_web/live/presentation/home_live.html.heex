@@ -1,4 +1,4 @@
-<%= if @published_projects == [] do %>
+<%= if @publications == [] do %>
   <div :if={User.is_admin?(@current_user)}>
     {gettext_with_link(
       "Go to %{link_start}management%{link_end} to setup projects, add editors and prepare first associated publications.",
@@ -18,29 +18,33 @@
     <div class="mt-4 lg:mt-0 lg:basis-1/3 mr-2">
       <div>
         <.link navigate={~p"/search"}>{gettext("Search all projects")}</.link>
-        <%= for %{doc: doc} = project <- @published_projects do %>
+        <%= for %Publication{project_identifier: project_identifier, project_label: project_label} <- @publications do %>
           <div
-            id={"project_list_#{project[:name]}"}
+            id={"project_list_#{project_identifier}"}
             phx-hook="HoverHighlightMapFeature"
             target_dom_element="project_overview_map"
-            target_id={project[:name]}
+            target_id={project_identifier}
           >
             <!-- The custom hook above triggers the marker highlight on the map component below when hovering this element. -->
             <!-- In parallel to the hook above, phx-click and phx-value-* below implement the click behaviour
               with standard liveview attributes. -->
-            <.link navigate={~p"/projects/#{project[:name]}"}>
+            <.link navigate={~p"/projects/#{project_identifier}"}>
               <div
-                class={"rounded #{if @highlighted == project[:name] do "bg-primary-hover text-primary-inverse-hover" else "bg-primary text-primary-inverse" end}  p-2 mt-2 cursor-pointer"}
-                phx-value-id={project[:name]}
+                class={"rounded #{if @highlighted == project_identifier do "bg-primary-hover text-primary-inverse-hover" else "bg-primary text-primary-inverse" end}  p-2 mt-2 cursor-pointer"}
+                phx-value-id={project_identifier}
               >
                 <div class="text-center">
-                  <%= case Document.get_field_value(doc, "shortName") do %>
-                    <% val when is_map(val) -> %>
-                      {pick_default_translation(val)}
-                    <% val when is_binary(val) -> %>
-                      {val}
-                    <% _ -> %>
-                      {project[:name]}
+                  <%= case project_label do %>
+                    <% [] -> %>
+                      {project_identifier}
+                    <% translations -> %>
+                      <% translations =
+                        Enum.map(translations, fn %Translation{language: lang, text: text} ->
+                          {lang, text}
+                        end)
+                        |> Enum.into(%{}) %>
+
+                      {pick_default_translation(translations)}
                   <% end %>
                 </div>
               </div>
@@ -55,7 +59,7 @@
         module={FieldPublicationWeb.Components.WorldMap}
         id="project_overview_map"
         style="width:100%; height:var(--ol-full-height);"
-        projects={@published_projects}
+        publications={@publications}
       />
     </div>
   </div>

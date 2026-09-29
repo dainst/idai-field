@@ -20,6 +20,19 @@ defmodule FieldPublication.Publication.Geo do
     end
   end
 
+  def read_and_set_coordinate(%Publication{database: db} = publication) do
+    {:ok, %{status: 200, body: body}} = CouchService.get_document("project", db)
+
+    case Jason.decode!(body) do
+      %{"resource" => %{"latitude" => lat, "longitude" => lon}}
+      when not is_nil(lat) and not is_nil(lon) ->
+        Publication.put(publication, %{latitude: lat, longitude: lon})
+
+      _ ->
+        Publication.put(publication, %{latitude: nil, longitude: nil})
+    end
+  end
+
   def get_projection(epsg_code) do
     Path.join([
       Application.app_dir(:field_publication),

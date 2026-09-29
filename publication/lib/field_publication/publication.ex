@@ -45,6 +45,8 @@ defmodule FieldPublication.Publication do
     field(:database, :string)
     field(:meta_database, :string)
     field(:languages, {:array, :string}, default: [])
+    field(:latitude, :float)
+    field(:longitude, :float)
     field(:contact, :string)
     field(:epsg_code, :integer)
     # Version is currently not used, the default is saved. The idea is to maybe
@@ -72,6 +74,8 @@ defmodule FieldPublication.Publication do
       :configuration_doc,
       :database,
       :languages,
+      :latitude,
+      :longitude,
       :version,
       :contact,
       :epsg_code

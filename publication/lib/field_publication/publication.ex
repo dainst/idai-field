@@ -483,7 +483,7 @@ defmodule FieldPublication.Publication do
 
     with {:ok, publication} <- apply_action(changeset, :create),
          {:ok, %{status: 201}} <- CouchService.put_document(doc_id, publication) do
-      {:ok, %__MODULE__{} = updated_publication} =
+      {:ok, %__MODULE__{replication_finished: replication_finished} = updated_publication} =
         CouchService.get_document(doc_id)
         |> then(fn {:ok, %{status: 200, body: body}} ->
           %__MODULE__{}
@@ -491,7 +491,10 @@ defmodule FieldPublication.Publication do
           |> apply_action(:create)
         end)
 
-      align_raw_data(updated_publication)
+      if replication_finished do
+        # Only align raw data after the initial replication is done completely.
+        align_raw_data(updated_publication)
+      end
 
       broadcast(updated_publication)
 

@@ -59,7 +59,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
               <.live_component
                 :let={comment}
                 module={LanguageSelection}
-                id="publication_publication_descriptions"
+                id="publication_project_descriptions"
                 translations={project_descriptions}
               >
                 <span class="markdown">

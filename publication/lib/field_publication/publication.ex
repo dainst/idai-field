@@ -552,7 +552,7 @@ defmodule FieldPublication.Publication do
         end)
         |> Enum.into(%{})
 
-      short_description =
+      description =
         Enum.map(project_description, fn %Translation{language: language, text: text} ->
           {language, text}
         end)
@@ -561,7 +561,7 @@ defmodule FieldPublication.Publication do
       updated_raw_doc =
         raw_doc
         |> put_in(["resource", "shortName"], short_name)
-        |> put_in(["resource", "shortDescription"], short_description)
+        |> put_in(["resource", "description"], description)
 
       CouchService.put_document(updated_raw_doc["_id"], updated_raw_doc, database)
     else

@@ -160,52 +160,12 @@ defmodule FieldPublication.Replication do
 
           reconstruct_project_configuraton(publication)
 
-          languages =
-            CouchService.get_document("configuration", publication.database)
-            |> case do
-              {:ok, %{status: 200, body: body}} ->
-                body
-                |> Jason.decode!()
-                |> Map.get("resource", %{})
-                |> Map.get("projectLanguages", [])
-
-              _ ->
-                # Projects created before Field Desktop 3 do not have a
-                # configuration document.
-                []
-            end
-
-          contact =
-            CouchService.get_document("project", publication.database)
-            |> case do
-              {:ok, %{status: 200, body: body}} ->
-                body
-                |> Jason.decode!()
-                |> Map.get("resource", %{})
-                |> Map.get("contactMail", nil)
-
-              _ ->
-                nil
-            end
-
           {:ok, publication} = Geo.read_and_set_epsg_code(publication)
           {:ok, publication} = Geo.read_and_set_coordinate(publication)
 
-          persisted_log(publication, :info, "Draft creation finished.")
+          {:ok, publication} = persisted_log(publication, :info, "Draft creation finished.")
 
-          final_metadata_additions =
-            Map.merge(
-              %{
-                contact: contact,
-                replication_finished: DateTime.utc_now(),
-                languages: languages
-              },
-              get_project_description_and_name(publication)
-            )
-
-          {:ok, %Publication{} = final_publication} =
-            Publication.get!(publication.project_identifier, publication.draft_date)
-            |> Publication.put(final_metadata_additions)
+          {:ok, final_publication} = finalize_metadata(publication)
 
           {:ok, {:draft_created, final_publication}}
         end)
@@ -349,36 +309,62 @@ defmodule FieldPublication.Replication do
     :ok
   end
 
-  defp get_project_description_and_name(%Publication{} = publication) do
-    project_doc = Publication.get_raw_document("project", publication)
+  def finalize_metadata(%Publication{} = publication) do
+    languages =
+      CouchService.get_document("configuration", publication.database)
+      |> case do
+        {:ok, %{status: 200, body: body}} ->
+          body
+          |> Jason.decode!()
+          |> Map.get("resource", %{})
+          |> Map.get("projectLanguages", [])
+
+        _ ->
+          # Projects created before Field Desktop 3 do not have a
+          # configuration document.
+          []
+      end
+
+    {:ok, %{status: 200, body: body}} = CouchService.get_document("project", publication.database)
+
+    project_doc = Jason.decode!(body)
+
+    contact = get_in(project_doc, ["resource", "contactMail"])
 
     description =
-      get_in(project_doc, ["resource", "shortDescription"])
+      get_in(project_doc, ["resource", "description"])
       |> case do
         val when is_map(val) ->
           Enum.map(val, fn {key, value} -> %{language: key, text: value} end)
 
         val when is_binary(val) ->
-          %{language: "en", text: val}
+          [%{language: "en", text: val}]
 
         _ ->
-          nil
+          []
       end
 
-    name =
+    label =
       get_in(project_doc, ["resource", "shortName"])
       |> case do
         val when is_map(val) ->
           Enum.map(val, fn {key, value} -> %{language: key, text: value} end)
 
         val when is_binary(val) ->
-          %{language: "en", text: val}
+          [%{language: "en", text: val}]
 
         _ ->
-          %{language: "en", text: get_in(project_doc, ["resource", "identifier"])}
+          [%{language: "en", text: get_in(project_doc, ["resource", "identifier"])}]
       end
 
-    %{project_description: description, project_label: name}
+    publication
+    |> Publication.put(%{
+      contact: contact,
+      replication_finished: DateTime.utc_now(),
+      languages: languages,
+      project_label: label,
+      project_description: description
+    })
   end
 
   defp cleanup(ref, running_replications) do

@@ -155,11 +155,25 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
           {gettext("Main documents")}
         </.group_heading>
         <div class="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-1 max-h-96 overflow-y-auto">
-          <%= for doc <- @top_level_docs do %>
+          <%= for doc <- Enum.filter(@top_level_docs, fn doc -> doc.category.name != "TypeCatalog" end) do %>
             <.document_link image_count={10} doc={doc} />
           <% end %>
         </div>
       </div>
+      <div>
+        <%= type_catalog_documents = Enum.filter(@top_level_docs, fn doc -> doc.category.name == "TypeCatalog" end)
+          if  type_catalog_documents  do %>
+          <%= if  Enum.at(type_catalog_documents,2)  do %>
+            <.group_heading>{gettext("Type Catalogs")}</.group_heading>
+          <% end %>
+          <div class="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-1 mt-4 max-h-96 overflow-y-auto">
+            <%= for doc <- type_catalog_documents do %>
+              <.document_link image_count={0} doc={doc} />
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
       <div class="flex flex-col lg:flex-row gap-4 mt-4" id="map-offset-element">
         <div class="basis-2/3 flex-none p-2">
           <.live_component

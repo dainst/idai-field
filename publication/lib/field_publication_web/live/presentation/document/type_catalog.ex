@@ -12,39 +12,44 @@ defmodule FieldPublicationWeb.Presentation.Document.TypeCatalog do
 
   def render(assigns) do
     ~H"""
-    <div class="p-1 bg-panel">
-      <form class="p-2">
-        <div class="inline-block">
-          <div class="flex border border-black/20">
-            <input class="hero-magnifying-glass text-gray-400" />
-            <input
-              phx-change="filter_identifier"
-              value={@filter}
-              phx-target={@myself}
-              name="identifier-filter"
-              type="text"
-              placeholder="Search in type catalog"
-            />
-          </div>
-          <div
-            class="text-gray-700"
-            phx-click="toggle_sort"
-            phx-target={@myself}
-          >
-            Showing {Enum.count(@type_list)} of {@total_type_number} types
-            <.icon :if={@sort_order == :asc} name="hero-chevron-up" />
-            <.icon :if={@sort_order == :desc} name="hero-chevron-down" />
-          </div>
-        </div>
-      </form>
-      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 overflow-y-auto max-h-[200vh]">
-        <%= for doc <- @type_list do %>
-          <.document_link
-            doc={doc}
-            image_count={10}
-          />
+    <div>
+      <div class="p-1 bg-panel">
+        <%= if @total_type_number > 4 do %>
+          <form class="p-2">
+            <div class="inline-block">
+              <div class="flex border border-black/20">
+                <input class="hero-magnifying-glass text-gray-400" />
+                <input
+                  phx-change="filter_identifier"
+                  value={@filter}
+                  phx-target={@myself}
+                  name="identifier-filter"
+                  type="text"
+                  placeholder="Search type in this catalog"
+                />
+              </div>
+              <div
+                class="text-gray-700"
+                phx-click="toggle_sort"
+                phx-target={@myself}
+              >
+                Showing {Enum.count(@type_list)} of {@total_type_number} types
+                <.icon :if={@sort_order == :asc} name="hero-chevron-up" />
+                <.icon :if={@sort_order == :desc} name="hero-chevron-down" />
+              </div>
+            </div>
+          </form>
         <% end %>
-      </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 overflow-y-auto max-h-[200vh]">
+          <%= for doc <- @type_list do %>
+            <.document_link
+              doc={doc}
+              image_count={10}
+            />
+          <% end %>
+        </section>
+      </div>
     </div>
     """
   end

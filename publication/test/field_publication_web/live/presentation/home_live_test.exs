@@ -4,7 +4,12 @@ defmodule FieldPublicationWeb.Presentation.HomeLiveTest do
   import Phoenix.LiveViewTest
   import FieldPublication.Test.DataScaffolding
 
-  alias FieldPublication.User
+  alias FieldPublication.{
+    Publication,
+    User
+  }
+
+  alias FieldPublicationWeb.Presentation.HomeLive
 
   setup_all [
     :create_core_database,
@@ -13,22 +18,115 @@ defmodule FieldPublicationWeb.Presentation.HomeLiveTest do
     :add_projects_and_empty_publications
   ]
 
-  test "anonymous users can see published project in project list", %{
+  test "project link renders also if no label is set" do
+    # Normally the link will be generated using the translated `project_label` of the publication, using the
+    # identifier is the fallback.
+    identifier = "some_id"
+
+    html =
+      render_component(
+        &HomeLive.publication_link/1,
+        %{
+          publication: %Publication{
+            project_identifier: identifier,
+            project_label: []
+          }
+        }
+      )
+
+    assert html =~ "<a href=\"/projects/#{identifier}\""
+  end
+
+  test "anonymous users can only see published project in project list", %{
     conn: conn,
     published_project_a: published_project_a,
+    unpublished_project_a: unpublished_project_a,
     unpublished_project_b: unpublished_project_b
   } do
     assert {:ok, _live_view_pid, html} = live(conn, ~p"/")
 
+    assert html =~ "href=\"/search\""
+
     assert html =~
-      published_project_a.project_label
-      |> Enum.find(fn %{language: language} -> language == "en" end)
-      |> then(fn %{text: text} -> text end)
+             published_project_a.project_label
+             |> Enum.find(fn %{language: language} -> language == "en" end)
+             |> then(fn %{text: text} -> text end)
+
+    assert html =~ "href=\"/projects/#{published_project_a.project_identifier}\""
 
     refute html =~
-      unpublished_project_b.project_label
-      |> Enum.find(fn %{language: language} -> language == "en" end)
-      |> then(fn %{text: text} -> text end)
+             unpublished_project_a.project_label
+             |> Enum.find(fn %{language: language} -> language == "en" end)
+             |> then(fn %{text: text} -> text end)
+
+    refute html =~
+             unpublished_project_b.project_label
+             |> Enum.find(fn %{language: language} -> language == "en" end)
+             |> then(fn %{text: text} -> text end)
+
+    refute html =~ "href=\"/projects/#{unpublished_project_b.project_identifier}\""
+  end
+
+  test "editor users can only see published project in project list", %{
+    conn: conn,
+    editor: %User{name: editor_name},
+    published_project_a: published_project_a,
+    unpublished_project_a: unpublished_project_a,
+    unpublished_project_b: unpublished_project_b
+  } do
+    assert {:ok, _live_view_pid, html} = conn |> log_in_user(editor_name) |> live(~p"/")
+
+    assert html =~ "href=\"/search\""
+
+    assert html =~
+             published_project_a.project_label
+             |> Enum.find(fn %{language: language} -> language == "en" end)
+             |> then(fn %{text: text} -> text end)
+
+    assert html =~ "href=\"/projects/#{published_project_a.project_identifier}\""
+
+    refute html =~
+             unpublished_project_a.project_label
+             |> Enum.find(fn %{language: language} -> language == "en" end)
+             |> then(fn %{text: text} -> text end)
+
+    refute html =~
+             unpublished_project_b.project_label
+             |> Enum.find(fn %{language: language} -> language == "en" end)
+             |> then(fn %{text: text} -> text end)
+
+    refute html =~ "href=\"/projects/#{unpublished_project_b.project_identifier}\""
+  end
+
+  test "admin users can only see published project in project list", %{
+    conn: conn,
+    administrator: %User{name: admin_name},
+    published_project_a: published_project_a,
+    unpublished_project_a: unpublished_project_a,
+    unpublished_project_b: unpublished_project_b
+  } do
+    assert {:ok, _live_view_pid, html} = conn |> log_in_user(admin_name) |> live(~p"/")
+
+    assert html =~ "href=\"/search\""
+
+    assert html =~
+             published_project_a.project_label
+             |> Enum.find(fn %{language: language} -> language == "en" end)
+             |> then(fn %{text: text} -> text end)
+
+    assert html =~ "href=\"/projects/#{published_project_a.project_identifier}\""
+
+    refute html =~
+             unpublished_project_a.project_label
+             |> Enum.find(fn %{language: language} -> language == "en" end)
+             |> then(fn %{text: text} -> text end)
+
+    refute html =~
+             unpublished_project_b.project_label
+             |> Enum.find(fn %{language: language} -> language == "en" end)
+             |> then(fn %{text: text} -> text end)
+
+    refute html =~ "href=\"/projects/#{unpublished_project_b.project_identifier}\""
   end
 end
 

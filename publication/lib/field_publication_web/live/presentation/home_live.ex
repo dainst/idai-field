@@ -4,9 +4,47 @@ defmodule FieldPublicationWeb.Presentation.HomeLive do
   alias FieldPublication.{
     EmbeddedSchema.Translation,
     Publication,
-    Publication.Document,
     User
   }
+
+  attr :publication, Publication, required: true
+  attr :highlighted?, :boolean, default: false
+
+  def publication_link(assigns) do
+    ~H"""
+    <div
+      id={"project_list_#{@publication.project_identifier}"}
+      phx-hook="HoverHighlightMapFeature"
+      target_dom_element="project_overview_map"
+      target_id={@publication.project_identifier}
+    >
+      <!-- The custom hook above triggers the marker highlight on the map component below when hovering this element. -->
+      <!-- In parallel to the hook above, phx-click and phx-value-* below implement the click behaviour
+        with standard liveview attributes. -->
+      <.link navigate={~p"/projects/#{@publication.project_identifier}"}>
+        <div
+          class={"rounded #{if @highlighted? do "bg-primary-hover text-primary-inverse-hover" else "bg-primary text-primary-inverse" end}  p-2 mt-2 cursor-pointer"}
+          phx-value-id={@publication.project_identifier}
+        >
+          <div class="text-center">
+            <%= case @publication.project_label do %>
+              <% [] -> %>
+                {@publication.project_identifier}
+              <% translations -> %>
+                <% translations =
+                  Enum.map(translations, fn %Translation{language: lang, text: text} ->
+                    {lang, text}
+                  end)
+                  |> Enum.into(%{}) %>
+
+                {pick_default_translation(translations)}
+            <% end %>
+          </div>
+        </div>
+      </.link>
+    </div>
+    """
+  end
 
   def mount(_assigns, _session, socket) do
     publications = Publication.get_current_published()

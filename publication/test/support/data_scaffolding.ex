@@ -9,7 +9,7 @@ defmodule FieldPublication.Test.DataScaffolding do
     User
   }
 
-  alias FieldPublication.Test.ProjectSeed
+  # alias FieldPublication.Test.ProjectSeed
 
   @core_database Application.compile_env(:field_publication, :core_database)
 
@@ -117,29 +117,29 @@ defmodule FieldPublication.Test.DataScaffolding do
         draft_date: Date.from_iso8601!("2026-09-29")
       })
 
-      {:ok, unpublished_project_a} =
-        Publication.put(unpublished_project_a, %{
-          project_label: [
-            %{
-              language: "de",
-              text: "Projekt A"
-            },
-            %{
-              language: "en",
-              text: "Project A"
-            }
-          ],
-          project_description: [
-            %{
-              language: "de",
-              text: "Dies ist die Projektbeschreibung."
-            },
-            %{
-              language: "en",
-              text: "This is the project description."
-            }
-          ]
-        })
+    {:ok, unpublished_project_a} =
+      Publication.put(unpublished_project_a, %{
+        project_label: [
+          %{
+            language: "de",
+            text: "Projekt A, Fortgesetzt"
+          },
+          %{
+            language: "en",
+            text: "Project A, Continued"
+          }
+        ],
+        project_description: [
+          %{
+            language: "de",
+            text: "Dies ist die Projektbeschreibung."
+          },
+          %{
+            language: "en",
+            text: "This is the project description."
+          }
+        ]
+      })
 
     {:ok, unpublished_project_b} =
       Publication.create_from_replication_input(%ReplicationInput{
@@ -152,7 +152,6 @@ defmodule FieldPublication.Test.DataScaffolding do
         drafted_by: "mix seed",
         draft_date: Date.from_iso8601!("2026-09-29")
       })
-
 
     {:ok, unpublished_project_b} =
       Publication.put(unpublished_project_b, %{

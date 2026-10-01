@@ -793,8 +793,9 @@ defmodule FieldPublication.Publication do
           acc
       end)
 
-    [
-      %{index: %{fields: relations}, name: "document-relations-index", type: "json"},
+      Enum.map(relations, fn relation ->
+        %{index: %{fields: [relation]}, name: "document-relations-#{relation}-index", type: "json"}
+      end) ++    [
       %{index: %{fields: ["resource.category"]}, name: "document-category-index", type: "json"}
     ]
     |> Enum.map(&CouchService.put_index_document(&1, database))

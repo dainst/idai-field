@@ -136,6 +136,13 @@ defmodule FieldPublication.User do
               |> Jason.decode!()
               |> Map.get("rev")
 
+            user =
+              user
+              |> Map.put(:_rev, rev)
+              # Strip password from struct to avoid leakage. Querying the document from CouchDB
+              # will also returned without the password value as a CouchDB default behaviour.
+              |> Map.put(:password, nil)
+
             {:ok, Map.put(user, :_rev, rev)}
 
           {:ok, %{status: 409}} ->

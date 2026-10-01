@@ -24,10 +24,12 @@ defmodule FieldPublication.Test.DataScaffolding do
   end
 
   def add_editor_user(context) do
+    password = "pw"
+
     {:ok, user} =
       User.create(%{
         name: "test_editor",
-        password: "pw",
+        password: password,
         label: "Test Editor",
         email: "test_editor@example.org"
       })
@@ -36,14 +38,19 @@ defmodule FieldPublication.Test.DataScaffolding do
       User.delete(user)
     end)
 
+    # User.create will not return with a set password, but we want to provide it for the tests.
+    user = Map.put(user, :password, password)
+
     Map.put(context, :editor, user)
   end
 
   def add_admin_user(context) do
+    password = "pw"
+
     {:ok, user} =
       User.create(%{
         name: "test_admin",
-        password: "pw",
+        password: password,
         label: "Test Admin",
         email: "test_admin@example.org",
         admin?: true
@@ -52,6 +59,9 @@ defmodule FieldPublication.Test.DataScaffolding do
     on_exit(fn ->
       User.delete(user)
     end)
+
+    # User.create will not return with a set password, but we want to provide it for the tests.
+    user = Map.put(user, :password, password)
 
     Map.put(context, :administrator, user)
   end

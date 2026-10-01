@@ -27,7 +27,7 @@ defmodule FieldPublicationWeb.Management.Modals.UserFormComponent do
         <% end %>
         <.input field={@form[:label]} type="text" label="Full name" />
         <.input field={@form[:email]} type="text" label="Email" />
-        <.input field={@form[:password]} type="text" label="New Password" />
+        <.input field={@form[:password]} type="password" label="New Password" />
         <.input field={@form[:admin?]} type="checkbox" label="Administrator" />
 
         <button
@@ -110,7 +110,6 @@ defmodule FieldPublicationWeb.Management.Modals.UserFormComponent do
   defp save_user(socket, form_params) do
     # New user.
     User.create(form_params)
-    |> IO.inspect()
     |> case do
       {:error, changeset} ->
         {:noreply, assign(socket, :form, to_form(changeset))}

@@ -27,7 +27,8 @@ defmodule FieldPublication.User do
     required_fields = [:name, :label, :email] ++ if create?, do: [:password], else: []
 
     user
-    |> cast(attrs, [:type, :roles, :name, :password, :label, :admin?, :email])
+    |> cast(attrs, [:_id, :_rev, :type, :roles, :name, :password, :label, :admin?, :email])
+    |> validate_length(:password, min: 10)
     |> validate_required(required_fields)
     |> set_id()
     |> validate_unique_email()

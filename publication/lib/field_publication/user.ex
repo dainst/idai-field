@@ -28,7 +28,9 @@ defmodule FieldPublication.User do
 
     user
     |> cast(attrs, [:_id, :_rev, :type, :roles, :name, :password, :label, :admin?, :email])
-    |> validate_length(:password, min: 10)
+    |> validate_length(:password,
+      min: Application.get_env(:field_publication, :min_password_length)
+    )
     |> validate_required(required_fields)
     |> set_id()
     |> validate_unique_email()
@@ -223,6 +225,33 @@ defmodule FieldPublication.User do
         {:ok, %__MODULE__{admin?: val}} -> val
         _ -> false
       end
+  end
+
+  def primary_admin_name(), do: Application.get_env(:field_publication, :couchdb_admin_name)
+
+  @doc """
+  Returns a map for quick user metadata lookup for each user name.
+
+  ## Example
+      iex> FieldPublication.User.user_info()
+      %{
+        "couch_admin" => %{label: "CouchDB Administrator", email: "<Email set via ApplicationSetting>"},
+        "max_mustermann" => %{label: "Max Mustermann", email: "mmustermann@example.org"}
+      }
+  """
+  def user_info() do
+    user_info = %{
+      primary_admin_name() => %{
+        label: "CouchDB Administrator",
+        email: FieldPublication.ApplicationSettings.get_contact_email()
+      }
+    }
+
+    list()
+    |> Enum.map(fn %__MODULE__{name: name, label: label, email: email} ->
+      {name, %{label: label, email: email}}
+    end)
+    |> Enum.into(user_info)
   end
 
   @doc """

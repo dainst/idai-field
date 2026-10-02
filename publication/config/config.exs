@@ -28,7 +28,8 @@ config :field_publication,
   couchdb_admin_name: "couch_admin",
   couchdb_admin_password: "couch_admin_password",
   opensearch_url: "http://localhost:9200",
-  opensearch_admin_password: "DevelopmentPassword!123"
+  opensearch_admin_password: "DevelopmentPassword!123",
+  min_password_length: 16
 
 # Configures the mailer
 #

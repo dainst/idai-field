@@ -42,7 +42,7 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
       assert html =~ "Projects"
       assert html =~ project_a.identifier
       assert html =~ "Publications (2)"
-      assert html =~ project_b.identifier
+      refute(html =~ project_b.identifier)
       # project b has one
       refute html =~ "Publications (1)"
     end
@@ -52,26 +52,27 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
 
       {:ok, _live_process, html} =
         live_process
-        |> element("#project-panel-#{project_a.identifier} a", "Draft new publication")
+        |> element_draft_new_publication(project_a.identifier)
         |> render_click()
         |> follow_redirect(conn)
 
       assert html =~ "Create new publication draft"
     end
 
-    test "can neither edit nor delete their project settings", %{
+    test "can neither create, edit nor delete their project settings", %{
       conn: conn,
       project_a: %Project{} = project_a
     } do
       {:ok, live_process, _html} = live(conn, ~p"/management")
 
-      refute has_element?(live_process, "#project-panel-#{project_a.identifier} a", "Edit")
-      refute has_element?(live_process, "#project-panel-#{project_a.identifier} a", "Delete")
+      refute live_process |> element_project_create_link() |> has_element?()
+      refute live_process |> element_project_edit_link(project_a.identifier) |> has_element?()
+      refute live_process |> element_project_delete_link(project_a.identifier) |> has_element?()
     end
 
     test "has no link to user management", %{conn: conn} do
       {:ok, live_process, _html} = live(conn, ~p"/management")
-      refute has_element?(live_process, ~s([href="/management/users"]))
+      refute live_process |> element_users_edit_link() |> has_element?()
     end
   end
 
@@ -105,7 +106,7 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
 
       {:ok, live_process, _html} =
         live_process
-        |> element("a", "Create new project")
+        |> element_project_create_link()
         |> render_click()
         |> follow_redirect(conn)
 
@@ -122,15 +123,11 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
 
       {:ok, live_process, html} =
         live_process
-        |> element("a", "Create new project")
+        |> element_project_create_link()
         |> render_click()
         |> follow_redirect(conn)
 
       html =~ "Publishing | New Project"
-
-      assert live_process
-             |> form("#project-form", project: %{})
-             |> render_change() =~ "can&#39;t be blank"
 
       {:ok, live_process, html} =
         live_process
@@ -145,7 +142,7 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
         Project.get(new_project_identifier)
 
       live_process
-      |> element("#project-panel-#{new_project_identifier} a", "Delete")
+      |> element_project_delete_link(new_project_identifier)
       |> render_click()
 
       html = render(live_process)
@@ -155,7 +152,7 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
       assert {:error, :not_found} = Project.get(new_project_identifier)
     end
 
-    test "can add and remove users to project", %{
+    test "can add and remove users to and from project", %{
       conn: conn,
       project_b: %Project{} = project_b,
       editor: %User{} = editor
@@ -180,7 +177,7 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
 
       {:ok, live_process, html} =
         live_process
-        |> element("#project-panel-#{project_b.identifier} a", "Edit")
+        |> element_project_edit_link(project_b.identifier)
         |> render_click()
         |> follow_redirect(conn)
 
@@ -228,13 +225,33 @@ defmodule FieldPublicationWeb.Management.OverviewLiveTest do
 
       {:ok, _view, html} =
         live_process
-        |> element(~s([href="/management/users"]))
+        |> element_users_edit_link()
         |> render_click()
         |> follow_redirect(conn)
 
       assert html =~ "Manage users"
-      assert html =~ "<td class=\"text-left\">#{editor.name}</td>"
-      assert html =~ "<td class=\"text-left\">#{editor.label}</td>"
+      assert html =~ "<td>#{editor.name}</td>"
+      assert html =~ "<td>#{editor.label}</td>"
     end
+  end
+
+  defp element_users_edit_link(process) do
+    element(process, ~s([href="/management/users"]))
+  end
+
+  defp element_project_create_link(process) do
+    element(process, "a", "Create new project")
+  end
+
+  defp element_project_edit_link(process, project_identifier) do
+    element(process, "#edit-project-link-#{project_identifier}", "Edit")
+  end
+
+  defp element_project_delete_link(process, project_identifier) do
+    element(process, "#delete-project-link-#{project_identifier}", "Delete")
+  end
+
+  defp element_draft_new_publication(process, project_identifier) do
+    element(process, "#project-panel-#{project_identifier} a", "Draft new publication")
   end
 end

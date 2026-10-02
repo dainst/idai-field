@@ -609,6 +609,9 @@
       },
       "Scheiben": {
         "label": "discs"
+      },
+      "Weinheber": {
+        "label": "wine-siphon"
       }
     }
   },
@@ -1676,6 +1679,9 @@
       },
       "in Form gedreht": {
         "label": "turned into shape"
+      },
+      "nachgedreht (überdreht)": {
+        "label": "wheel-finished (reworked on the wheel)"
       }
     }
   },
@@ -4614,6 +4620,12 @@
       },
       "Korinthische Keramik": {
         "label": "Corinthian pottery"
+      },
+      "Attisch farbig aufgehöhte Schwarzglanzton Ware": {
+        "label": "Attic black-glazed ware with added color"
+      },
+      "Schwarzglanzton Ware": {
+        "label": "black-glazed ware"
       }
     }
   },
@@ -5583,6 +5595,60 @@
       },
       "Urnengrab": {
         "label": "urn burial"
+      },
+      "Baumsargbestattung": {
+        "label": "log-coffin burial"
+      },
+      "Brandgrubengrab": {
+        "label": "cremation pit grave"
+      },
+      "Brandschüttung": {
+        "label": "cremation deposit"
+      },
+      "Doliengrab": {
+        "label": "burial in a dolium"
+      },
+      "Dolmen": {
+        "label": "dolmen"
+      },
+      "Erdgrab": {
+        "label": "earth grave"
+      },
+      "Felsnischengrab": {
+        "label": "rock-cut niche tomb"
+      },
+      "Flachgrab": {
+        "label": "flat grave"
+      },
+      "Ganggrab": {
+        "label": "passage grave"
+      },
+      "Gemauertes Grab": {
+        "label": "masonry built grave"
+      },
+      "Glockengrab": {
+        "label": "bell grave"
+      },
+      "Gruft": {
+        "label": "crypt"
+      },
+      "Hügelgrab": {
+        "label": "barrow"
+      },
+      "Megalithgrab": {
+        "label": "megalithic tomb"
+      },
+      "Schachthöhlengrab": {
+        "label": "shaft tomb"
+      },
+      "Steineinfassung": {
+        "label": "stone enclosure"
+      },
+      "Steinplattengrab": {
+        "label": "slab lined grave"
+      },
+      "Ziegelplattengrab": {
+        "label": "tile grave"
       }
     }
   },
@@ -5761,6 +5827,9 @@
       },
       "Läuferverband": {
         "label": "stretcher bond"
+      },
+      "Märkischer Verband": {
+        "label": "monk bond"
       }
     }
   },
@@ -5884,6 +5953,9 @@
       },
       "In Krug": {
         "label": "burial inside jug"
+      },
+      "a cappuccina": {
+        "label": "a cappuccina"
       }
     }
   }

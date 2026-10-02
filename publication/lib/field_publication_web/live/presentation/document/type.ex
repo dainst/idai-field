@@ -30,7 +30,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
             |> Enum.sort_by(fn %Field{input_type: type} ->
               !(type in ["text"])
             end) %>
-          <%= unless fields == [] do %>
+          <%= unless fields |> Enum.reject(fn field -> field.name == "shortDescription" end) == [] do %>
             <section>
               <.group_heading>
                 {pick_default_translation(group.labels)}

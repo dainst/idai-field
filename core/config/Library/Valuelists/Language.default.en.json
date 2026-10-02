@@ -2301,6 +2301,9 @@
       },
       "Astragal": {
         "label": "astragalus"
+      },
+      "Weinheber": {
+        "label": "wine-siphon"
       }
     }
   },
@@ -3581,6 +3584,9 @@
       },
       "Zierbeschlag": {
         "label": "decorative mount"
+      },
+      "Weinheber": {
+        "label": "wine-siphon"
       }
     }
   },
@@ -5956,6 +5962,28 @@
       },
       "a cappuccina": {
         "label": "a cappuccina"
+      },
+      "bruchsteingemauertes Grab": {
+        "label": "rubble-built grave"
+      },
+      "quadergemauertes Grab": {
+        "label": "block-built grave"
+      },
+      "ziegelgemauertes Grab": {
+        "label": "brick-built grave"
+      }
+    }
+  },
+  "Grave-tombBuilding-default": {
+    "values": {
+      "Bruchsteingemauert": {
+        "label": "rubble-built"
+      },
+      "Quadergemauert": {
+        "label": "block-built"
+      },
+      "Ziegelgemauert": {
+        "label": "brick-built"
       }
     }
   }

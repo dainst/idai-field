@@ -1,9 +1,10 @@
 defmodule FieldPublicationWeb.Management.Modals.ProjectFormComponent do
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.DatabaseSchema.Project
-  alias FieldPublication.Users
-  alias FieldPublication.Projects
+  alias FieldPublication.{
+    Project,
+    User
+  }
 
   @impl true
   def render(assigns) do
@@ -55,7 +56,7 @@ defmodule FieldPublicationWeb.Management.Modals.ProjectFormComponent do
 
     users =
       Enum.map(
-        Users.list(),
+        User.list(),
         fn %{name: name, label: label} -> {label, name} end
       )
 
@@ -83,7 +84,7 @@ defmodule FieldPublicationWeb.Management.Modals.ProjectFormComponent do
   end
 
   defp save_project(socket, :edit_project, project_params) do
-    {:ok, updated_project} = Projects.put(socket.assigns.project, project_params)
+    {:ok, updated_project} = Project.put(socket.assigns.project, project_params)
 
     notify_parent({:saved, updated_project})
 
@@ -96,7 +97,7 @@ defmodule FieldPublicationWeb.Management.Modals.ProjectFormComponent do
   end
 
   defp save_project(socket, :new_project, project_params) do
-    case Projects.put(%Project{}, project_params) do
+    case Project.put(%Project{}, project_params) do
       {:ok, created_project} ->
         notify_parent({:saved, created_project})
 

@@ -1,14 +1,11 @@
 defmodule FieldPublicationWeb.Rest.ApiTest do
   use FieldPublicationWeb.ConnCase
 
-  alias FieldPublication.Publications.Data
-
   alias FieldPublication.{
     CouchService,
-    Projects
+    Project,
+    Publication
   }
-
-  alias FieldPublication.DatabaseSchema.Project
 
   alias FieldPublication.Test.ProjectSeed
 
@@ -21,10 +18,10 @@ defmodule FieldPublicationWeb.Rest.ApiTest do
     {project, publication} = ProjectSeed.create_full_publication(@test_project_identifier, true)
 
     on_exit(fn ->
-      Projects.get(@test_project_identifier)
+      Project.get(@test_project_identifier)
       |> case do
         {:ok, %Project{} = project} ->
-          Projects.delete(project)
+          Project.delete(project)
 
         _ ->
           :ok
@@ -34,12 +31,12 @@ defmodule FieldPublicationWeb.Rest.ApiTest do
     end)
 
     image_doc =
-      Data.get_raw_document("project", publication)
+      Publication.get_raw_document("project", publication)
       |> Map.get("resource", %{})
       |> Map.get("relations", %{})
       |> Map.get("hasMapLayer", [])
       |> List.first()
-      |> Data.get_raw_document(publication)
+      |> Publication.get_raw_document(publication)
 
     %{project: project, publication: publication, image_doc: image_doc}
   end

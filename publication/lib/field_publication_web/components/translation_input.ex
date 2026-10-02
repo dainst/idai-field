@@ -16,6 +16,9 @@ defmodule FieldPublicationWeb.Components.TranslationInput do
   attr :field, Phoenix.HTML.FormField, required: true
   attr :language_options, :list, required: true
   attr :exclusive?, :boolean, default: true
+  attr :multiline?, :boolean, default: true
+  attr :multiline_rows, :integer, default: 15
+  attr :markdown?, :boolean, default: false
 
   slot :heading, required: true
   slot :no_translations, required: true
@@ -67,11 +70,24 @@ defmodule FieldPublicationWeb.Components.TranslationInput do
             />
           </div>
 
-          <.input type="textarea" field={nested[:text]} placeholder="Add some markdown here" />
+          <.input
+            :if={@multiline?}
+            type="textarea"
+            rows={@multiline_rows}
+            field={nested[:text]}
+            placeholder={if @markdown?, do: "Add some markdown here"}
+          />
+
+          <.input
+            :if={!@multiline?}
+            type="text"
+            field={nested[:text]}
+            placeholder={if @markdown?, do: "Add some markdown here"}
+          />
         </div>
 
-        <div class="ml-2 p-2 bg-gray-100 border border-black basis-1/2">
-          <div class="text-lg mb-8 font-thin">Preview</div>
+        <div :if={@markdown?} class="ml-2 p-2 bg-gray-100 border border-black basis-1/2">
+          <div class="text-lg mb-8 font-thin">Markdown preview</div>
           <div class="markdown">
             <% text = Phoenix.HTML.Form.input_value(nested, :text) || "" %>
             {MDEx.to_html!(text)

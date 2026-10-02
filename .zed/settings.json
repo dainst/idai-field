@@ -4,6 +4,12 @@
 // see the documentation: https://zed.dev/docs/configuring-zed#settings-files
 {
   "languages": {
+    "TypeScript": {
+      "tab_size": 4
+    },
+    "JavaScript": {
+      "tab_size": 4
+    },
     "Elixir": {
       "language_servers": ["expert"]
     },

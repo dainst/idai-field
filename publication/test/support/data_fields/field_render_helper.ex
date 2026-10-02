@@ -1,8 +1,8 @@
 defmodule FieldRenderHelper do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.DatabaseSchema.Publication
-  alias FieldPublication.Publications.Data.Field, as: FieldData
+  alias FieldPublication.Publication
+  alias FieldPublication.Publication.Field, as: FieldData
   import FieldPublicationWeb.Components.Data.Field
 
   defmodule FieldExample do

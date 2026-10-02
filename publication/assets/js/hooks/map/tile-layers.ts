@@ -1,6 +1,6 @@
 import { Extent, createEmpty, extend } from "ol/extent.js";
 import Map from "ol/Map.js";
-import { TileImage } from "ol/source.js";
+import { ImageTile } from "ol/source.js";
 import TileGrid from "ol/tilegrid/TileGrid";
 import TileLayer from "ol/layer/Tile.js";
 
@@ -27,10 +27,10 @@ export default class PublicationTileLayers {
     map: Map;
     projectKey: string;
     draftDate: string;
-    projectLayerGroup: TileLayer<TileImage>[];
+    projectLayerGroup: TileLayer<ImageTile>[];
     projectLayerGroupExtent: Extent;
 
-    documentLayerGroup: TileLayer<TileImage>[];
+    documentLayerGroup: TileLayer<ImageTile>[];
     documentLayerGroupExtent: Extent;
 
     preferenceReportTarget: PhxTarget;
@@ -140,7 +140,7 @@ export default class PublicationTileLayers {
 
     private setLayerGroup(
         featuresMetadata: TileLayerMetadata[],
-        group: TileLayer<TileImage>[],
+        group: TileLayer<ImageTile>[],
         extent: Extent,
     ) {
         for (let metadata of featuresMetadata) {
@@ -206,18 +206,19 @@ function createTileLayer(metadata: TileLayerMetadata, projectKey: string) {
         metadata.height,
     );
 
-    const source = new TileImage({
+    const source = new ImageTile({
         tileGrid: new TileGrid({
             extent,
             origin: [extent[0], extent[3]],
             resolutions,
             tileSize,
         }),
-        tileUrlFunction: (tileCoord) => {
+        url: (z, x, y) => {
             return pathTemplate
-                .replace("{z}", String(tileCoord[0]))
-                .replace("{x}", String(tileCoord[1]))
-                .replace("{y}", String(tileCoord[2]));
+                .replace("{z}", String(z))
+                .replace("{x}", String(x))
+                .replace("{y}", String(y)
+                );
         },
     });
 

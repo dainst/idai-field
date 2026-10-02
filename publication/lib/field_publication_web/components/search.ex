@@ -3,8 +3,8 @@ defmodule FieldPublicationWeb.Components.Search do
 
   import FieldPublicationWeb.Components.Data.DocumentLink
 
-  alias FieldPublication.Publications.Search
-  alias FieldPublication.Publications.Search.SearchDocument
+  alias FieldPublication.Publication.Search
+  alias FieldPublication.Publication.Search.SearchDocument
 
   attr(:current_query, :string, required: true)
   attr(:total, :integer, required: true)

@@ -1,10 +1,11 @@
 defmodule FieldPublication.ProjectTest do
   use ExUnit.Case
 
-  alias FieldPublication.FileService
-  alias FieldPublication.CouchService
-  alias FieldPublication.DatabaseSchema.Project
-  alias FieldPublication.Projects
+  alias FieldPublication.{
+    CouchService,
+    FileService,
+    Project
+  }
 
   @core_database Application.compile_env(:field_publication, :core_database)
   @project_fixture %{"identifier" => "test"}
@@ -22,24 +23,14 @@ defmodule FieldPublication.ProjectTest do
 
   describe "projects" do
     test "can create a new project" do
-      {:ok, %Project{_rev: rev}} = Projects.put(%Project{}, @project_fixture)
+      {:ok, %Project{_rev: rev}} = Project.put(%Project{}, @project_fixture)
 
       assert is_binary(rev)
     end
 
-    # test "can update project" do
-    #   {:ok, %Project{_rev: rev, hidden: true} = initial} =
-    #     Projects.put(%Project{}, @project_fixture)
-
-    #   {:ok, %Project{_rev: rev_updated}} =
-    #     Projects.put(initial, %{"hidden" => false})
-
-    #   assert rev != rev_updated
-    # end
-
     test "trying to update/override a project without rev results in error" do
-      assert {:ok, %Project{}} = Projects.put(%Project{}, @project_fixture)
-      assert {:error, changeset} = Projects.put(%Project{}, @project_fixture)
+      assert {:ok, %Project{}} = Project.put(%Project{}, @project_fixture)
+      assert {:error, changeset} = Project.put(%Project{}, @project_fixture)
 
       assert %{
                errors: [
@@ -55,32 +46,32 @@ defmodule FieldPublication.ProjectTest do
       first_identifier = @project_fixture["identifier"]
       second_identifier = "test2"
 
-      Projects.put(%Project{}, @project_fixture)
+      Project.put(%Project{}, @project_fixture)
 
       {:ok, second_project} =
-        Projects.put(%Project{}, Map.put(@project_fixture, "identifier", second_identifier))
+        Project.put(%Project{}, Map.put(@project_fixture, "identifier", second_identifier))
 
       [%Project{identifier: ^first_identifier}, %Project{identifier: ^second_identifier}] =
-        Projects.list()
+        Project.list()
 
       # Cleanup after test.
       on_exit(fn ->
-        Projects.delete(second_project)
+        Project.delete(second_project)
       end)
     end
 
     test "can get/1 by identifier" do
-      Projects.put(%Project{}, @project_fixture)
-      assert {:ok, %Project{}} = Projects.get(@project_fixture["identifier"])
+      Project.put(%Project{}, @project_fixture)
+      assert {:ok, %Project{}} = Project.get(@project_fixture["identifier"])
     end
 
     test "get/1 for unknown project returns error" do
-      assert {:error, :not_found} = Projects.get(@project_fixture["identifier"])
+      assert {:error, :not_found} = Project.get(@project_fixture["identifier"])
     end
 
     test "can get!/1 by identifier" do
-      Projects.put(%Project{}, @project_fixture)
-      assert %Project{} = Projects.get!(@project_fixture["identifier"])
+      Project.put(%Project{}, @project_fixture)
+      assert %Project{} = Project.get!(@project_fixture["identifier"])
     end
   end
 end

@@ -1,16 +1,11 @@
 defmodule FieldPublication.Test.ProjectSeed do
   alias FieldPublication.{
-    Projects,
     FileService,
     CouchService,
     Replication,
+    Replication.ReplicationInput,
     Processing,
-    Publications
-  }
-
-  alias FieldPublication.DatabaseSchema.{
     Project,
-    ReplicationInput,
     Publication
   }
 
@@ -20,10 +15,10 @@ defmodule FieldPublication.Test.ProjectSeed do
 
   def create_full_publication(project_identifier, seed_and_preprocess? \\ false, publish? \\ true) do
     project =
-      case Projects.get(project_identifier) do
-        {:ok, %FieldPublication.DatabaseSchema.Project{} = project} ->
+      case Project.get(project_identifier) do
+        {:ok, %Project{} = project} ->
           Logger.info("Recreating project '#{project_identifier}'.")
-          {:ok, :deleted} = Projects.delete(project)
+          {:ok, :deleted} = Project.delete(project)
 
           {:ok, %Project{} = project} = create_project(project_identifier)
           project
@@ -78,7 +73,7 @@ defmodule FieldPublication.Test.ProjectSeed do
   end
 
   def create_project(identifier) do
-    Projects.put(%Project{}, %{
+    Project.put(%Project{}, %{
       "identifier" => identifier
     })
   end
@@ -90,7 +85,7 @@ defmodule FieldPublication.Test.ProjectSeed do
         publish? \\ true
       ) do
     {:ok, %Publication{} = publication} =
-      Publications.create_from_replication_input(replication_input)
+      Publication.create_from_replication_input(replication_input)
 
     :ok = Replication.reconstruct_project_configuraton(publication)
 
@@ -100,8 +95,8 @@ defmodule FieldPublication.Test.ProjectSeed do
     # publication =
     #   FieldPublication.Publications.get!(publication.project_identifier, publication.draft_date)
 
-    {:ok, %FieldPublication.DatabaseSchema.Publication{} = publication} =
-      Publications.put(publication, %{
+    {:ok, %Publication{} = publication} =
+      Publication.put(publication, %{
         "publication_date" => if(publish?, do: publication.draft_date, else: nil),
         "comments" => [
           %{
@@ -147,13 +142,15 @@ defmodule FieldPublication.Test.ProjectSeed do
     end
 
     if seed_data? && preprocess? do
-      # Expecting one batch created.
+      Publication.Geo.read_and_set_epsg_code(publication)
+      Publication.Geo.generate_feature_collections!(publication)
+
       [{:ok, %Finch.Response{status: 201}}] =
-        Publications.Data.recreate_meta_database(publication)
+        Publication.DocumentPreview.recreate_previews(publication)
 
-      %{field_labels: _, category_labels: _} = Publications.Search.index_documents(publication)
+      %{field_labels: _, category_labels: _} = Publication.Search.index_documents!(publication)
 
-      {:ok, _} = Publications.Search.set_project_alias(publication)
+      {:ok, _} = Publication.Search.set_project_alias(publication)
 
       [] =
         Processing.MapTiles.start(publication)

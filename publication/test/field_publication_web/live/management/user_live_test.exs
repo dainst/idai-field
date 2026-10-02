@@ -3,9 +3,12 @@ defmodule FieldPublicationWeb.Management.UserLiveTest do
 
   import Phoenix.LiveViewTest
 
-  alias FieldPublication.CouchService
+  alias FieldPublication.{
+    CouchService,
+    User
+  }
 
-  @test_user %FieldPublication.DatabaseSchema.User{
+  @test_user %User{
     name: "test_user",
     password: "pw",
     label: "Test user"

@@ -10,12 +10,12 @@ import Draw from "ol/interaction/Draw.js";
 import { Coordinate } from "ol/coordinate";
 
 export default class PublicationSelection {
-  map: Map;
+map: Map;
+  callback: (result:  Coordinate[] ) => any;
   source: VectorSource;
   layer: VectorLayer<VectorSource<Feature<Geometry>>>;
   extent: Extent;
   draw: Draw;
-  callback: (result: { geometry: Coordinate[][] }) => any;
 
   /**
    * Attaches OpenLayers draw functionality to the provided map. It starts inactive, waiting
@@ -24,7 +24,7 @@ export default class PublicationSelection {
    * @param map The OpenLayers map that the selection is attached to.
    * @param drawEndCallback is called once the drawn polygon has been closed.
    */
-  constructor(map: Map, drawEndCallback: (result: {geometry: Coordinate[][]}) => any) {
+  constructor(map: Map, drawEndCallback: (result: Coordinate[]) => any) {
     this.map = map;
     this.callback = drawEndCallback;
 
@@ -108,9 +108,9 @@ export default class PublicationSelection {
       this.map.removeInteraction(this.draw);
       this.extent = feature.getGeometry().getExtent();
 
-      this.callback({
-        geometry: (<Polygon>feature.getGeometry()).getCoordinates(),
-      });
+      this.callback(
+        (<Polygon>feature.getGeometry()).getCoordinates()[0],
+      );
     });
 
     this.map.addInteraction(this.draw);

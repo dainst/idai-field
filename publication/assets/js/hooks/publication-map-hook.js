@@ -5,6 +5,8 @@ import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import GeoJSON from "ol/format/GeoJSON.js";
 
+import proj4 from "proj4";
+
 import {
     findFeature,
     findFeaturesAtPixel,
@@ -12,6 +14,7 @@ import {
     clearAllHighlights,
     styleFunction,
     loadFeatureCollection,
+    extentIsPoint,
 } from "./map/features";
 import PublicationTileLayers from "./map/tile-layers";
 import PreviewOverlay from "./map/preview-overlay";
@@ -63,7 +66,13 @@ export default (getPublicationMapHook = () => {
             this.handleEvent(
                 `set-selection-polygon-${this.el.id}`,
                 ({ geometry }) => {
-                    this.selection.presetSelection(geometry);
+                    if (geometry) {
+                        this.selection.presetSelection(
+                            this.reprojectSelectionPolygon(geometry, false),
+                        );
+                    } else {
+                        this.selection.presetSelection(null);
+                    }
                 },
             );
 
@@ -84,6 +93,15 @@ export default (getPublicationMapHook = () => {
             this.projectKey = this.el.getAttribute("project_identifier");
             this.draftDate = this.el.getAttribute("draft_date");
             this.language = this.el.getAttribute("language");
+            this.projectionName = this.el.getAttribute("projection_name");
+            this.projection = this.el.getAttribute("projection");
+
+            if (this.projectionName && this.projection) {
+                proj4.defs(
+                    this.projectionName,
+                    this.projection,
+                );
+            }
 
             const _this = this;
             const container = document.getElementById(`${this.id}-map`);
@@ -111,17 +129,28 @@ export default (getPublicationMapHook = () => {
                 this.draftDate,
             );
 
-            this.selection = new PublicationSelection(this.map, (result) => {
-                if (result.geometry) {
-                    this.pushEventTo(this.el, "drawn-selection", {
-                        coordinates: result.geometry,
-                    });
+            this.selection = new PublicationSelection(
+                this.map,
+                (resultPolygon) => {
+                    if (resultPolygon) {
+                        this.pushEventTo(this.el, "drawn-selection", {
+                            coordinates: this.reprojectSelectionPolygon(
+                                resultPolygon,
+                                true,
+                            ),
+                        });
+                    }
                     this.lastInteractionBlock = Date.now();
-                } else {
-                    this.refitView();
-                }
-                this.selectionMode = false;
-            });
+                    this.selectionMode = false;
+                },
+            );
+
+            const featureCollection = await loadFeatureCollection(
+                this.projectKey,
+                this.draftDate,
+            );
+
+            this.setMapFeatures(featureCollection);
 
             this.map.on("pointermove", async function (e) {
                 if (e.dragging || _this.selectionMode) {
@@ -145,31 +174,14 @@ export default (getPublicationMapHook = () => {
                 _this.overlay.mapClicked(e);
             });
 
-            const featureCollections = await loadFeatureCollection(
-                this.projectKey,
-                this.draftDate,
-            );
-
-            for (let collection of featureCollections) {
-                this.categoriesMetadata.push(collection.properties);
-
-                for (let feature of collection.features) {
-                    feature.properties["color"] =
-                        collection.properties.category_color;
-                }
-            }
-
             this.overlay = new PreviewOverlay(
                 this,
                 this.map,
                 overlayDiv,
                 this.projectKey,
                 this.draftDate,
-                this.categoriesMetadata,
                 this.language,
             );
-
-            this.setMapFeatures(featureCollections);
 
             document.getElementById(
                 `${this.id}-loading-indicator`,
@@ -207,6 +219,7 @@ export default (getPublicationMapHook = () => {
         highlightDocument(uuid) {
             if (this.map) {
                 feature = findFeature(uuid, this.map);
+                featureExtent = feature.getGeometry().getExtent()
                 parentId = feature.getProperties().parent;
 
                 if (this.selection.getExtent()) {
@@ -225,30 +238,25 @@ export default (getPublicationMapHook = () => {
                         );
                         combinedExtent = extend(
                             combinedExtent,
-                            feature.getGeometry().getExtent(),
+                            featureExtent,
                         );
 
                         this.map.getView().fit(combinedExtent, {
                             padding: [10, 10, 10, 10],
                             duration: highlightZoomDuration,
                         });
-                    } else if (feature.getProperties().type != "Point") {
-                        this.map
-                            .getView()
-                            .fit(feature.getGeometry().getExtent(), {
-                                padding: [10, 10, 10, 10],
-                                duration: highlightZoomDuration,
-                            });
                     } else {
                         console.log(
                             `No geometry or parent geometry to zoom to for ${uuid}`,
                         );
                     }
-                } else {
-                    this.map.getView().fit(feature.getGeometry().getExtent(), {
-                        padding: [10, 10, 10, 10],
-                        duration: highlightZoomDuration,
-                    });
+                } else if (feature.getProperties().type != "Point") {
+                    this.map
+                        .getView()
+                        .fit(featureExtent, {
+                            padding: [10, 10, 10, 10],
+                            duration: highlightZoomDuration,
+                        });
                 }
                 highlightFeature(feature);
             }
@@ -269,31 +277,26 @@ export default (getPublicationMapHook = () => {
             }
         },
 
-        setMapFeatures(featureCollections) {
+        setMapFeatures(featureCollection) {
             for (const index in this.featureLayers) {
                 this.map.removeLayer(this.featureLayer[index]);
             }
             this.featureLayers = [];
 
-            this.fullVectorExtent = createEmpty();
+            const vectorSource = new VectorSource({
+                features: new GeoJSON().readFeatures(featureCollection),
+            });
 
-            for (let key in featureCollections) {
-                let collection = featureCollections[key];
-                const vectorSource = new VectorSource({
-                    features: new GeoJSON().readFeatures(collection),
-                });
+            const featureLayer = new VectorLayer({
+                name: "Vector Features",
+                source: vectorSource,
+                style: styleFunction,
+            });
 
-                const featureLayer = new VectorLayer({
-                    name: key,
-                    source: vectorSource,
-                    style: styleFunction,
-                });
+            this.featureLayers.push(featureLayer);
+            this.map.addLayer(featureLayer);
 
-                this.featureLayers.push(featureLayer);
-                this.map.addLayer(featureLayer);
-
-                extend(this.fullVectorExtent, vectorSource.getExtent());
-            }
+            this.fullVectorExtent = vectorSource.getExtent();
 
             let fullExtent = createEmpty();
 
@@ -315,6 +318,19 @@ export default (getPublicationMapHook = () => {
 
             this.refitView();
             clearAllHighlights(this.featureLayers);
+        },
+
+        reprojectSelectionPolygon(geometry, to4326) {
+            const reprojected = [];
+
+            const input = to4326 ? this.projectionName : "EPSG:4326";
+            const output = to4326 ? "EPSG:4326" : this.projectionName;
+
+            for (var i = 0; i < geometry.length; i++) {
+                reprojected.push(proj4(input, output, geometry[i]));
+            }
+
+            return reprojected;
         },
     };
 });

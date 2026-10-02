@@ -5,11 +5,7 @@ defmodule FieldPublication.Replication.CouchReplication do
   alias FieldPublication.{
     CouchService,
     Replication,
-    Publications
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    ReplicationInput,
+    Replication.ReplicationInput,
     Publication
   }
 
@@ -118,7 +114,7 @@ defmodule FieldPublication.Replication.CouchReplication do
     Jason.decode!(body)
     |> case do
       %{"state" => "running", "info" => %{"docs_written" => docs_written}} ->
-        Publications.broadcast(
+        Publication.broadcast(
           publication,
           {:document_replication_count, %{counter: docs_written, overall: source_doc_count}}
         )
@@ -132,7 +128,7 @@ defmodule FieldPublication.Replication.CouchReplication do
         poll_replication_status!(source_doc_count, parameters)
 
       %{"state" => "completed"} ->
-        Publications.broadcast(
+        Publication.broadcast(
           publication,
           {:document_replication_count, %{counter: source_doc_count, overall: source_doc_count}}
         )

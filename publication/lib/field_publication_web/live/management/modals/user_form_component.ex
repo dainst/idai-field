@@ -2,8 +2,7 @@ defmodule FieldPublicationWeb.Management.Modals.UserFormComponent do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.CouchService
-  alias FieldPublication.Users
-  alias FieldPublication.DatabaseSchema.User
+  alias FieldPublication.User
 
   @impl true
   def render(assigns) do
@@ -27,7 +26,9 @@ defmodule FieldPublicationWeb.Management.Modals.UserFormComponent do
             <.input field={@form[:name]} type="text" label="User name" />
         <% end %>
         <.input field={@form[:label]} type="text" label="Full name" />
-        <.input field={@form[:password]} type="text" label="New Password" />
+        <.input field={@form[:email]} type="text" label="Email" />
+        <.input field={@form[:password]} type="password" label="New Password" />
+        <.input field={@form[:admin?]} type="checkbox" label="Administrator" />
 
         <button
           class="border cursor-pointer border-primary hover:border-primary-hover p-2 w-full"
@@ -58,9 +59,13 @@ defmodule FieldPublicationWeb.Management.Modals.UserFormComponent do
   end
 
   @impl true
-  def handle_event("validate", %{"user" => form_params}, socket) do
+  def handle_event(
+        "validate",
+        %{"user" => form_params},
+        %{assigns: %{user: %User{} = user}} = socket
+      ) do
     changeset =
-      User.changeset(%User{}, form_params, socket.assigns.action == :new)
+      User.changeset(user, form_params, socket.assigns.action == :new)
 
     {:noreply, assign(socket, :form, to_form(changeset))}
   end
@@ -82,12 +87,12 @@ defmodule FieldPublicationWeb.Management.Modals.UserFormComponent do
   end
 
   def handle_event("save", %{"user" => form_params}, socket) do
-    save_user(socket, socket.assigns.action, form_params)
+    save_user(socket, form_params)
   end
 
-  defp save_user(socket, :edit, form_params) do
-    %User{}
-    |> Users.update(form_params)
+  defp save_user(%{assigns: %{user: %User{} = user, action: :edit}} = socket, form_params) do
+    user
+    |> User.update(form_params)
     |> case do
       {:error, changeset} ->
         {:noreply, assign(socket, :form, to_form(changeset))}
@@ -102,8 +107,9 @@ defmodule FieldPublicationWeb.Management.Modals.UserFormComponent do
     end
   end
 
-  defp save_user(socket, :new, form_params) do
-    Users.create(form_params)
+  defp save_user(socket, form_params) do
+    # New user.
+    User.create(form_params)
     |> case do
       {:error, changeset} ->
         {:noreply, assign(socket, :form, to_form(changeset))}

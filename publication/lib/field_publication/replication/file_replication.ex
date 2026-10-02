@@ -2,11 +2,7 @@ defmodule FieldPublication.Replication.FileReplication do
   alias FieldPublication.{
     FileService,
     Replication,
-    Publications
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    ReplicationInput,
+    Replication.ReplicationInput,
     Publication
   }
 
@@ -149,7 +145,7 @@ defmodule FieldPublication.Replication.FileReplication do
 
     Agent.update(counter_pid, fn state -> Map.put(state, :counter, state[:counter] + 1) end)
 
-    Publications.broadcast(
+    Publication.broadcast(
       publication,
       {
         :file_replication_count,

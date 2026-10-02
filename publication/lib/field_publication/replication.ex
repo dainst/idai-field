@@ -2,17 +2,17 @@ defmodule FieldPublication.Replication do
   use GenServer
 
   alias FieldPublication.{
+    EmbeddedSchema.LogEntry,
     CouchService,
-    Replication.CouchReplication,
-    Replication.FileReplication,
     Processing,
-    Publications
+    Publication,
+    Publication.Geo
   }
 
-  alias FieldPublication.DatabaseSchema.{
-    ReplicationInput,
-    Publication,
-    LogEntry
+  alias FieldPublication.Replication.{
+    CouchReplication,
+    FileReplication,
+    ReplicationInput
   }
 
   require Logger
@@ -55,7 +55,7 @@ defmodule FieldPublication.Replication do
   ## Start of API functions to be called from the rest of the application.
 
   def initialize_publication(%ReplicationInput{} = params) do
-    with {:ok, publication} <- Publications.create_from_replication_input(params),
+    with {:ok, publication} <- Publication.create_from_replication_input(params),
          {:ok, :connection_successful} <- check_source_connection(params) do
       {:ok, publication}
     else
@@ -151,53 +151,21 @@ defmodule FieldPublication.Replication do
           persisted_log(publication, :info, "Replicating files for #{publication_id}.")
           FileReplication.start(parameters)
 
-          persisted_log(
-            publication,
-            :info,
-            "Reconstructing project configuration for '#{publication_id}'."
-          )
+          {:ok, publication} =
+            persisted_log(
+              publication,
+              :info,
+              "Reconstructing project configuration for '#{publication_id}'."
+            )
 
           reconstruct_project_configuraton(publication)
 
-          languages =
-            CouchService.get_document("configuration", publication.database)
-            |> case do
-              {:ok, %{status: 200, body: body}} ->
-                body
-                |> Jason.decode!()
-                |> Map.get("resource", %{})
-                |> Map.get("projectLanguages", [])
+          {:ok, publication} = Geo.read_and_set_epsg_code(publication)
+          {:ok, publication} = Geo.read_and_set_coordinate(publication)
 
-              _ ->
-                # Projects created before Field Desktop 3 do not have a
-                # configuration document.
-                []
-            end
+          {:ok, publication} = persisted_log(publication, :info, "Draft creation finished.")
 
-          contact =
-            CouchService.get_document("project", publication.database)
-            |> case do
-              {:ok, %{status: 200, body: body}} ->
-                body
-                |> Jason.decode!()
-                |> Map.get("resource", %{})
-                |> Map.get("contactMail", nil)
-
-              _ ->
-                nil
-            end
-
-          Publications.Data.recreate_meta_database(publication)
-
-          persisted_log(publication, :info, "Draft creation finished.")
-
-          {:ok, %Publication{} = final_publication} =
-            Publications.get!(publication.project_identifier, publication.draft_date)
-            |> Publications.put(%{
-              "contact" => contact,
-              "replication_finished" => DateTime.utc_now(),
-              "languages" => languages
-            })
+          {:ok, final_publication} = finalize_metadata(publication)
 
           {:ok, {:draft_created, final_publication}}
         end)
@@ -278,7 +246,7 @@ defmodule FieldPublication.Replication do
         persisted_log(publication, :error, "#{msg} #{inspect(other)}")
     end
 
-    Publications.broadcast(publication, {:replication_stopped})
+    Publication.broadcast(publication, {:replication_stopped})
 
     {:noreply, cleanup(ref, running_replications)}
   end
@@ -311,9 +279,9 @@ defmodule FieldPublication.Replication do
         reported_by: "replication"
       })
 
-    Publications.get!(publication.project_identifier, publication.draft_date)
+    Publication.get!(publication.project_identifier, publication.draft_date)
     |> Map.update(:replication_logs, [], fn existing -> existing ++ [log_entry] end)
-    |> Publications.put(%{})
+    |> Publication.put(%{})
   end
 
   def reconstruct_project_configuraton(%Publication{
@@ -339,6 +307,64 @@ defmodule FieldPublication.Replication do
       )
 
     :ok
+  end
+
+  def finalize_metadata(%Publication{} = publication) do
+    languages =
+      CouchService.get_document("configuration", publication.database)
+      |> case do
+        {:ok, %{status: 200, body: body}} ->
+          body
+          |> Jason.decode!()
+          |> Map.get("resource", %{})
+          |> Map.get("projectLanguages", [])
+
+        _ ->
+          # Projects created before Field Desktop 3 do not have a
+          # configuration document.
+          []
+      end
+
+    {:ok, %{status: 200, body: body}} = CouchService.get_document("project", publication.database)
+
+    project_doc = Jason.decode!(body)
+
+    contact = get_in(project_doc, ["resource", "contactMail"])
+
+    description =
+      get_in(project_doc, ["resource", "description"])
+      |> case do
+        val when is_map(val) ->
+          Enum.map(val, fn {key, value} -> %{language: key, text: value} end)
+
+        val when is_binary(val) ->
+          [%{language: "en", text: val}]
+
+        _ ->
+          []
+      end
+
+    label =
+      get_in(project_doc, ["resource", "shortName"])
+      |> case do
+        val when is_map(val) ->
+          Enum.map(val, fn {key, value} -> %{language: key, text: value} end)
+
+        val when is_binary(val) ->
+          [%{language: "en", text: val}]
+
+        _ ->
+          [%{language: "en", text: get_in(project_doc, ["resource", "identifier"])}]
+      end
+
+    publication
+    |> Publication.put(%{
+      contact: contact,
+      replication_finished: DateTime.utc_now(),
+      languages: languages,
+      project_label: label,
+      project_description: description
+    })
   end
 
   defp cleanup(ref, running_replications) do

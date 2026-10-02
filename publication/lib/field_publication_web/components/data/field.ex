@@ -2,9 +2,14 @@ defmodule FieldPublicationWeb.Components.Data.Field do
   use FieldPublicationWeb, :html
 
   require Logger
-  alias FieldPublication.DatabaseSchema.Publication
-  alias FieldPublication.Publications.Data.Field
-  alias FieldPublication.Publications.Search
+
+  alias FieldPublication.Publication
+
+  alias FieldPublication.Publication.{
+    Field,
+    Search
+  }
+
   alias FieldPublicationWeb.Components.LanguageSelection
 
   defp is_search_keyword?(input_type) do
@@ -17,7 +22,7 @@ defmodule FieldPublicationWeb.Components.Data.Field do
 
   def render_field(assigns) do
     ~H"""
-    <.labeled_value class="border p-0.5 border-black/20">
+    <.labeled_value class="h-full border p-0.5 border-black/20">
       <:label><.render_field_label field={@field} /></:label>
       <.render_field_data field={@field} publication={@publication} />
     </.labeled_value>

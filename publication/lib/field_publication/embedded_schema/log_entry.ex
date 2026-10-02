@@ -1,4 +1,4 @@
-defmodule FieldPublication.DatabaseSchema.LogEntry do
+defmodule FieldPublication.EmbeddedSchema.LogEntry do
   use Ecto.Schema
 
   import Ecto.Changeset

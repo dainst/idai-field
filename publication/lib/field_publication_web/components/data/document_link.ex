@@ -1,7 +1,7 @@
 defmodule FieldPublicationWeb.Components.Data.DocumentLink do
   use FieldPublicationWeb, :html
 
-  alias FieldPublication.Publications.Data.Document
+  alias FieldPublication.Publication.Document
 
   import FieldPublicationWeb.Components.Data.Image
 

@@ -12,7 +12,7 @@ config :field_publication, FieldPublicationWeb.Endpoint,
   adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
   render_errors: [
-    formats: [html: FieldPublicationWeb.ErrorHTML, json: FieldPublicationWeb.ErrorJSON],
+    formats: [html: FieldPublicationWeb.UI.ErrorHTML, json: FieldPublicationWeb.ErrorJSON],
     layout: false
   ],
   pubsub_server: FieldPublication.PubSub,

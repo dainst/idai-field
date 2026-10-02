@@ -1,0 +1,380 @@
+defmodule FieldPublicationWeb.UI.Components.Data.Field do
+  use FieldPublicationWeb, :html
+
+  require Logger
+
+  alias FieldPublication.Publication
+
+  alias FieldPublication.Publication.{
+    Field,
+    Search
+  }
+
+  alias FieldPublicationWeb.UI.Components.LanguageSelection
+
+  defp is_search_keyword?(input_type) do
+    input_type in (Search.get_keyword_inputs() ++ Search.get_keyword_multi_inputs())
+  end
+
+  attr(:publication, Publication, required: true)
+  attr(:field, Field)
+  attr(:hide_language_selection?, :boolean, default: false)
+
+  def render_field(assigns) do
+    ~H"""
+    <.labeled_value class="h-full border p-0.5 border-black/20">
+      <:label><.render_field_label field={@field} /></:label>
+      <.render_field_data field={@field} publication={@publication} />
+    </.labeled_value>
+    """
+  end
+
+  attr(:publication, Publication, required: true)
+  attr(:field, Field)
+  attr(:hide_language_selection?, :boolean, default: false)
+
+  def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
+      when input_type in ["boolean"] do
+    # Explictly calling gettext("true") and gettext("false") to enable the Gettext to pickup the value
+    # just doing {gettext("#{@field.value})} would make it impossible for Gettext
+    # to extract the key.
+    ~H"""
+    {if @field.value == true, do: gettext("true"), else: gettext("false")}
+    """
+  end
+
+  def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
+      when input_type in ["input", "simpleInput", "text"] do
+    ~H"""
+    <.maybe_language_select
+      :let={text}
+      hide_selection?={@hide_language_selection?}
+      field={@field}
+      value={@field.value}
+      id={@field.name}
+    >
+      <.maybe_search_link field={@field} publication={@publication}>
+        {text}
+      </.maybe_search_link>
+    </.maybe_language_select>
+    """
+  end
+
+  def render_field_data(
+        %{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns
+      )
+      when input_type in ["dropdown", "radio"] and is_map(value_labels) do
+    ~H"""
+    <.maybe_language_select
+      :let={text}
+      hide_selection?={@hide_language_selection?}
+      field={@field}
+      value={@field.value}
+      id={@field.name}
+    >
+      <.maybe_search_link field={@field} publication={@publication}>
+        {text}
+      </.maybe_search_link>
+    </.maybe_language_select>
+    """
+  end
+
+  def render_field_data(%{field: %Field{input_type: input_type, value: value}} = assigns)
+      when input_type == "checkboxes" and is_list(value) do
+    # Checkboxes where the selected value is mapped to a label.
+    ~H"""
+    <%= for value <- @field.value do %>
+      <.maybe_language_select
+        :let={text}
+        field={@field}
+        hide_selection?={@hide_language_selection?}
+        value={value}
+        id={"#{@field.name}_#{value}"}
+      >
+        <.maybe_search_link field={@field} value={value} publication={@publication}>
+          {text}
+        </.maybe_search_link>
+      </.maybe_language_select>
+    <% end %>
+    """
+  end
+
+  def render_field_data(
+        %{field: %Field{input_type: input_type, value_labels: value_labels}} = assigns
+      )
+      when input_type in ["dropdownRange"] and is_map(value_labels) do
+    ~H"""
+    <% start_value = @field.value["value"] %>
+    <% end_value = @field.value["endValue"] %>
+
+    <div class="flex gap-1">
+      <.maybe_language_select
+        :let={text}
+        field={@field}
+        hide_selection?={@hide_language_selection?}
+        value={start_value}
+        id={"#{@field.name}_#{start_value}"}
+      >
+        <.maybe_search_link field={@field} value={start_value} publication={@publication}>
+          {text}
+        </.maybe_search_link>
+      </.maybe_language_select>
+
+      <%= if end_value do %>
+        -
+        <.maybe_language_select
+          :let={text}
+          field={@field}
+          hide_selection?={@hide_language_selection?}
+          value={end_value}
+          id={
+            "#{@field.name}_#{end_value}" |> Base.encode16() |> String.replace_prefix("", "language_")
+          }
+        >
+          <.maybe_search_link field={@field} value={end_value} publication={@publication}>
+            {text}
+          </.maybe_search_link>
+        </.maybe_language_select>
+      <% end %>
+    </div>
+    """
+  end
+
+  def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
+      when input_type in ["unsignedInt", "unsignedFloat"] do
+    ~H"""
+    {@field.value}
+    """
+  end
+
+  def render_field_data(%{field: %Field{input_type: input_type, value: value}} = assigns)
+      when input_type == "date" and is_binary(value) do
+    ~H"""
+    {@field.value}
+    """
+  end
+
+  def render_field_data(
+        %{field: %Field{input_type: input_type, value: %{"isRange" => false} = value}} = assigns
+      )
+      when input_type == "date" and is_map(value) do
+    ~H"""
+    {@field.value["value"]}
+    """
+  end
+
+  def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
+      when input_type in ["literature"] do
+    ~H"""
+    <%= if is_list(@field.value) do %>
+      <ul>
+        <%= for value <- @field.value do %>
+          <%= cond do %>
+            <% Map.has_key?(value, "doi") -> %>
+              <li>
+                <a href={value["doi"]} target="_blank">{value["quotation"]}</a>
+              </li>
+            <% Map.has_key?(value, "zenonId") -> %>
+              <li>
+                <a href={value["zenonId"]} target="_blank">{value["quotation"]}</a>
+              </li>
+            <% Map.has_key?(value, "quotation") -> %>
+              <li>
+                {value["quotation"]}
+              </li>
+            <% true -> %>
+              <li>
+                <.render_warning value={value} />
+              </li>
+          <% end %>
+        <% end %>
+      </ul>
+    <% else %>
+      <.render_warning {assigns} />
+    <% end %>
+    """
+  end
+
+  def render_field_data(%{field: %Field{input_type: input_type}} = assigns)
+      when input_type in ["dimension"] do
+    ~H"""
+    <%= for measurement <- @field.value do %>
+      <div>
+        <%= case measurement do %>
+          <% %{
+            "inputUnit" => unit,
+            "inputValue" => value
+          } -> %>
+            <% position = Map.get(measurement, "position") %>
+            <% imprecise? = Map.get(measurement, "imprecise?") %>
+            {if position, do: "#{position}: "} {value} {unit} {if imprecise?,
+              do: " (#{gettext("imprecise")})"}
+          <% _ -> %>
+            {render_warning(assigns)}
+        <% end %>
+      </div>
+    <% end %>
+    """
+  end
+
+  def render_field_data(assigns) do
+    render_warning(assigns)
+  end
+
+  attr(:field, Field, required: true)
+  attr(:hide_language_selection?, :boolean, default: false)
+
+  def render_field_data_as_markdown(%{field: %Field{input_type: input_type}} = assigns)
+      when input_type in ["input", "simpleInput", "text"] do
+    ~H"""
+    <.maybe_language_select
+      :let={text}
+      hide_selection?={@hide_language_selection?}
+      field={@field}
+      value={@field.value}
+      id={@field.name}
+    >
+      <span class="markdown">
+        {text
+        |> MDEx.to_html!()
+        |> Phoenix.HTML.raw()}
+      </span>
+    </.maybe_language_select>
+    """
+  end
+
+  attr(:field, Field, required: true)
+
+  def render_field_label(%{field: %Field{labels: labels}} = assigns) when is_map(labels) do
+    ~H"""
+    <% language_keys = Map.keys(@field.labels) %>
+    {@field.labels[pick_default_language_key(language_keys)]}
+    """
+  end
+
+  def render_field_label(assigns) do
+    ~H"""
+    <.render_warning {assigns} />
+    """
+  end
+
+  attr(:id, :string, required: true)
+  attr(:field, Field, required: true)
+  attr(:hide_selection?, :boolean, default: false)
+  attr(:value, :any, required: true)
+  slot(:inner_block, required: true)
+
+  defp maybe_language_select(
+         %{
+           field: %Field{value_labels: value_labels},
+           value: value
+         } = assigns
+       )
+       when is_binary(value) and (value_labels == %{} or is_nil(value_labels)) do
+    # The field's "value" is just a single binary value.
+    # There are also no translated labels for the value.
+
+    ~H"""
+    <div class={"#{LanguageSelection.padding()}"}>
+      {render_slot(@inner_block, @value)}
+    </div>
+    """
+  end
+
+  defp maybe_language_select(%{value: value} = assigns) when is_map(value) do
+    ~H"""
+    <%= case Map.keys(@value) do %>
+      <% [one_language_key] -> %>
+        <div class={"#{LanguageSelection.padding()}"}>
+          {# If there is only one key, just show that single value.
+          render_slot(@inner_block, @value[one_language_key])}
+        </div>
+      <% _multiple_language_keys -> %>
+        <.live_component
+          :let={text}
+          module={LanguageSelection}
+          id={ensure_valid_id(@id)}
+          translations={@value}
+          hide_selection?={@hide_selection?}
+        >
+          {render_slot(@inner_block, text)}
+        </.live_component>
+    <% end %>
+    """
+  end
+
+  defp maybe_language_select(%{value: value, field: %Field{value_labels: value_labels}} = assigns)
+       when is_binary(value) and is_map(value_labels) do
+    # The field's "value" is just a single binary value.
+    # There are also translated labels for the value.
+
+    ~H"""
+    <% value_translations = @field.value_labels[@value] %>
+
+    <%= if value_translations && value_translations != %{} do %>
+      <.live_component
+        :let={text}
+        module={LanguageSelection}
+        id={ensure_valid_id(@id)}
+        translations={value_translations}
+        hide_selection?={@hide_selection?}
+      >
+        {render_slot(@inner_block, text)}
+      </.live_component>
+    <% else %>
+      <div class={"#{LanguageSelection.padding()}"}>
+        {# there was a map of translations, but this specific value was not
+        # translated so we fallback to just rendering the value
+        render_slot(@inner_block, @value)}
+      </div>
+    <% end %>
+    """
+  end
+
+  defp maybe_language_select(assigns) do
+    ~H"""
+    <.render_warning {assigns} />
+    """
+  end
+
+  attr(:publication, Publication, required: true)
+  attr(:field, Field, required: true)
+
+  attr(:value, :string,
+    default: nil,
+    doc:
+      "Explicitly define which value to use, for example if the field's `value` key is a list of selected values."
+  )
+
+  slot(:inner_block, required: true)
+
+  defp maybe_search_link(assigns) do
+    ~H"""
+    <% value = if @value, do: @value, else: @field.value %>
+    <%= cond do %>
+      <% is_search_keyword?(@field.input_type) -> %>
+        <.link navigate={
+          ~p"/projects/search/#{@publication.project_identifier}/#{@publication.draft_date}?#{%{filters: %{"#{@field.name}_keyword" => value}}}"
+        }>
+          {render_slot(@inner_block)}
+        </.link>
+        <!-- TODO: Add further variants that are not keywords? -->
+      <% true -> %>
+        {render_slot(@inner_block)}
+    <% end %>
+    """
+  end
+
+  defp render_warning(assigns) do
+    Logger.warning("Unhandled field data: #{inspect(assigns)}")
+
+    ~H"""
+    <div class="border-yellow-400 border-4 m-2 p-2">
+      Unhandled input type {inspect(@field)}
+    </div>
+    """
+  end
+
+  @regex ~r/[^\da-zA-z_:.]/
+  def ensure_valid_id(input) when is_binary(input), do: String.replace(input, @regex, "_")
+end

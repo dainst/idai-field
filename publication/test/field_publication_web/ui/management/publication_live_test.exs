@@ -1,0 +1,96 @@
+defmodule FieldPublicationWeb.UI.Management.PublicationLiveTest do
+  alias FieldPublication.{
+    CouchService,
+    Processing,
+    Project,
+    Publication,
+    User
+  }
+
+  use FieldPublicationWeb.ConnCase
+  import Phoenix.LiveViewTest
+
+  @core_database Application.compile_env(:field_publication, :core_database)
+  @test_project_identifier "test_project_a"
+  @test_user %User{
+    name: "test_user",
+    password: "pw",
+    label: "Test user"
+  }
+
+  setup_all %{} do
+    FieldHubHelper.start()
+    CouchService.put_database(@core_database)
+    CouchService.create_user(@test_user)
+
+    Project.put(%Project{}, %{"identifier" => @test_project_identifier})
+
+    project = Project.get!(@test_project_identifier)
+
+    on_exit(fn ->
+      Publication.get(@test_project_identifier, Date.utc_today())
+      |> case do
+        {:ok, publication} ->
+          Publication.delete(publication)
+          Processing.stop(publication)
+
+        _ ->
+          :ok
+      end
+
+      Project.delete(project)
+      CouchService.delete_database(@core_database)
+      CouchService.delete_user(@test_user.name)
+      FieldHubHelper.stop()
+    end)
+
+    %{test_project: project}
+  end
+
+  test "only the administrator or editors have access to the input view", %{conn: conn} do
+    # Error without being logged in
+    assert {
+             :error,
+             {:redirect,
+              %{to: _, flash: %{"error" => "You are not allowed to access that page."}}}
+           } = live(conn, ~p"/management/projects/#{@test_project_identifier}/publication/new")
+
+    conn = recycle(conn)
+    log_in_user(conn, @test_user.name)
+
+    # Error for logged in user that is not defined as project editor
+    assert {
+             :error,
+             {:redirect,
+              %{to: _, flash: %{"error" => "You are not allowed to access that page."}}}
+           } = live(conn, ~p"/management/projects/#{@test_project_identifier}/publication/new")
+  end
+
+  test "editors have access to the input view", %{conn: conn} do
+    @test_project_identifier
+    |> Project.get!()
+    |> Project.put(%{"editors" => [@test_user.name]})
+
+    conn = log_in_user(conn, @test_user.name)
+
+    on_exit(fn ->
+      @test_project_identifier
+      |> Project.get!()
+      |> Project.put(%{"editors" => []})
+    end)
+
+    assert {:ok, _live_process, html} =
+             live(conn, ~p"/management/projects/#{@test_project_identifier}/publication/new")
+
+    assert html =~ "Create new publication draft"
+  end
+
+  test "administrators have access to the input view", %{conn: conn} do
+    conn = log_in_user(conn, Application.get_env(:field_publication, :couchdb_admin_name))
+
+    assert {:ok, _live_process, html} =
+             live(conn, ~p"/management/projects/#{@test_project_identifier}/publication/new")
+
+    assert html =~ "Create new publication draft"
+  end
+end

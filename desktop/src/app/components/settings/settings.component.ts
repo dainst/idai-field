@@ -1,3 +1,4 @@
+import { internalIpV4 } from 'internal-ip';
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { clone, equal, flatten } from 'tsfun';
@@ -41,7 +42,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
 
     public settings: Settings;
     public originalKeepBackupSettings: KeepBackupsSettings;
-    public ipAddress: string = address.ip();
+    public ipAddress: string;
     public saving: boolean = false;
     public advancedSettingsCollapsed: boolean = true;
     public isLinux: boolean;
@@ -75,11 +76,12 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     public hasMonthlyBackups = () => this.settings.keepBackups.monthly > 0;
 
 
-    ngOnInit() {
+    async ngOnInit() {
 
         this.isLinux = remote.getGlobal('os') === 'Linux';
         this.settings = this.settingsProvider.getSettings();
         this.originalKeepBackupSettings = clone(this.settings.keepBackups);
+        this.ipAddress = await internalIpV4() ?? address.ip();
     }
 
 

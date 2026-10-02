@@ -13,7 +13,7 @@ defmodule FieldPublicationWeb.Management.Modals.ProjectFormComponent do
       <.document_heading>
         <%= case @action do %>
           <% :edit_project -> %>
-            Edit project
+            Edit project {@project.identifier}
           <% :new_project -> %>
             Create a new project
           <% _ -> %>
@@ -31,7 +31,7 @@ defmodule FieldPublicationWeb.Management.Modals.ProjectFormComponent do
 
         <%= case @action do %>
           <% :edit_project -> %>
-            <.group_heading>{@project.identifier}</.group_heading>
+            <.input field={@form[:identifier]} type="hidden" />
           <% :new_project -> %>
             <.input field={@form[:identifier]} type="text" label="Project key" />
           <% _ -> %>
@@ -57,7 +57,7 @@ defmodule FieldPublicationWeb.Management.Modals.ProjectFormComponent do
     users =
       Enum.map(
         User.list(),
-        fn %{name: name, label: label} -> {label, name} end
+        fn %{name: name, label: label, email: email} -> {"#{label} (#{email})", name} end
       )
 
     {

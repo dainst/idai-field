@@ -373,11 +373,14 @@ defmodule FieldPublicationWeb.CoreComponents do
     ~H"""
     <div phx-feedback-for={@name} class="text-sm">
       <.label for={@id}>{@label}</.label>
-      <div class="mt-1 w-full bg-white border border-gray-300">
+      <div class="mt-1 w-full bg-white">
         <div class="grid grid-cols-1 gap-1 text-sm items-baseline">
           <input type="hidden" name={@name} value="" />
           <div :for={{label, value} <- @options}>
-            <label for={"#{@name}-#{value}"}>
+            <label
+              class="inline-block w-full p-2 cursor-pointer hover:bg-primary/30"
+              for={"#{@name}-#{value}"}
+            >
               <input
                 type="checkbox"
                 id={"#{@name}-#{value}"}

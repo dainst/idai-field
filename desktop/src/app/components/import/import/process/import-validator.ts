@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { isnt, to } from 'tsfun';
-import { Document, Datastore, Relation, NewDocument, Query, Resource, Named, ProjectConfiguration,
-     CategoryForm } from 'idai-field-core';
+import { Document, Datastore, Relation, NewDocument, Query, Resource, Named, ProjectConfiguration, CategoryForm, 
+     FieldResource } from 'idai-field-core';
 import { Validations } from '../../../../model/validations';
 import { Validator } from '../../../../model/validator';
 import { ImportErrors as E } from '../import-errors';
@@ -178,7 +178,7 @@ export class ImportValidator extends Validator {
      */
     public assertIsWellformed(document: Document|NewDocument): void {
 
-        Validations.assertNoFieldsMissing(document, this.projectConfiguration);
+        Validations.assertNoFieldsMissing(document, this.projectConfiguration, [FieldResource.GEOMETRY]);
         Validations.assertMaxCharactersRespected(document, this.projectConfiguration);
         Validations.assertCorrectnessOfNumericalValues(document, this.projectConfiguration, false);
         Validations.assertCorrectnessOfUrls(document, this.projectConfiguration);

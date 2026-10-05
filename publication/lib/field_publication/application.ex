@@ -112,8 +112,23 @@ defimpl Jason.Encoder,
     document
     |> Map.from_struct()
     |> Map.reject(fn {k, v} -> k == :_rev and is_nil(v) end)
+    |> handle_individual(document)
     |> Jason.Encode.map(opts)
   end
+
+  def handle_individual(map, %FieldPublication.User{} = _document) when is_map(map) do
+    # For user documents CouchDB will generate some fields automatically, so when a new user is created
+    # we do not want to add those fields as `nil` to the document.
+    #
+    # Also we do not set the password to `nil` when only updating the user's other fields (email etc.).
+    map
+    |> Map.reject(fn {k, v} ->
+      k in [:password, :derived_key, :salt, :password_scheme, :iterations, :pbkdf2_prf] and
+        is_nil(v)
+    end)
+  end
+
+  def handle_individual(map, _other_doc_type) when is_map(map), do: map
 end
 
 # This tells phoenix how to use date fields (like those of the Publication schema) as part of URLs in path helpers (~p sigils etc. used in templates).

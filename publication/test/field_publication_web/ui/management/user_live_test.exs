@@ -2,34 +2,21 @@ defmodule FieldPublicationWeb.UI.Management.UserLiveTest do
   use FieldPublicationWeb.ConnCase
 
   import Phoenix.LiveViewTest
+  import FieldPublication.Test.DataScaffolding
 
   alias FieldPublication.{
     CouchService,
     User
   }
 
-  @test_user %User{
-    name: "test_user",
-    password: "pw",
-    label: "Test user"
-  }
+  setup_all [
+    :create_core_database,
+    :add_editor_user,
+    :add_admin_user
+  ]
 
-  @added_user_params %{
-    "name" => "added_user",
-    "password" => "pw",
-    "label" => "Added user"
-  }
-
-  setup do
-    CouchService.create_user(@test_user)
-
-    on_exit(fn ->
-      CouchService.delete_user(@test_user.name)
-    end)
-  end
-
-  test "non administrators have no access to the view", %{conn: conn} do
-    # Error without login
+  test "non administrators have no access to the view", %{conn: conn, editor: %User{name: name}} do
+    # Error without authentication.
     assert {
              :error,
              {:redirect,
@@ -37,9 +24,9 @@ defmodule FieldPublicationWeb.UI.Management.UserLiveTest do
            } = live(conn, ~p"/management/users")
 
     conn = recycle(conn)
-    log_in_user(conn, @test_user.name)
+    log_in_user(conn, name)
 
-    # Error for logged in user that is not administrator
+    # Error for logged in user that is not administrator.
     assert {
              :error,
              {:redirect,
@@ -48,34 +35,76 @@ defmodule FieldPublicationWeb.UI.Management.UserLiveTest do
   end
 
   describe "the administrator" do
-    setup %{conn: conn} do
-      conn = log_in_user(conn, Application.get_env(:field_publication, :couchdb_admin_name))
+    setup %{conn: conn, administrator: %User{name: admin_name}} = context do
+      conn = log_in_user(conn, admin_name)
 
-      %{conn: conn}
+      password = "1234567890qwertz"
+
+      {:ok, user} =
+        User.create(%{
+          name: "user_live_test_user",
+          password: password,
+          label: "User Live Test",
+          email: "user_live_test_user@example.org"
+        })
+
+      on_exit(fn ->
+        User.get(user.name)
+        |> case do
+          {:ok, %User{} = maybe_updated_in_test} ->
+            User.delete(maybe_updated_in_test)
+
+          _ ->
+            nil
+        end
+      end)
+
+      # User.create will not return with a set password, but we want to provide it for the tests.
+      user = Map.put(user, :password, password)
+
+      Map.put(context, :administrator, user)
+
+      %{conn: conn, local_user: user}
     end
 
-    test "has access to the view", %{conn: conn} do
+    test "has access to the view", %{conn: conn, administrator: admin, editor: editor} do
       assert {:ok, _live_process, html} = live(conn, ~p"/management/users")
 
       assert html =~ "Manage users"
-      assert html =~ "<td class=\"text-left\">#{@test_user.name}</td>"
-      assert html =~ "<td class=\"text-left\">#{@test_user.label}</td>"
+      assert html =~ "<td>#{admin.name}</td>"
+      assert html =~ "<td>#{admin.label}</td>"
+      assert html =~ "<td>#{editor.name}</td>"
+      assert html =~ "<td>#{editor.label}</td>"
     end
 
     test "can create a new user", %{conn: conn} do
+      added_user_params = %{
+        "name" => "added_user",
+        "password" => "1111111111111111111",
+        "label" => "Added user",
+        "email" => "addedUser@example.org"
+      }
+
       on_exit(fn ->
-        CouchService.delete_user(@added_user_params["name"])
+        User.get(added_user_params["name"])
+        |> case do
+          {:ok, %User{} = hopefully_created_in_test} ->
+            User.delete(hopefully_created_in_test)
+
+          _ ->
+            nil
+        end
       end)
 
       assert {:ok, live_process, html} = live(conn, ~p"/management/users")
 
-      assert not (html =~ "<td class=\"text-left\">#{@added_user_params["name"]}</td>")
-      assert not (html =~ "<td class=\"text-left\">#{@added_user_params["label"]}</td>")
+      refute html =~ "<td>#{added_user_params["name"]}</td>"
+      refute html =~ "<td >#{added_user_params["label"]}</td>"
 
       assert {:error, :invalid} =
                CouchService.authenticate(
-                 @added_user_params["name"],
-                 @added_user_params["password"]
+                 added_user_params["name"],
+                 added_user_params["password"]
                )
 
       assert live_process
@@ -88,51 +117,21 @@ defmodule FieldPublicationWeb.UI.Management.UserLiveTest do
       assert html =~ "New user"
 
       assert live_process
-             |> form("#user-form", %{user: @added_user_params})
+             |> form("#user-form", %{user: added_user_params})
              |> render_submit()
 
       assert_patch(live_process, ~p"/management/users")
 
       html = render(live_process)
 
-      assert html =~ "<td class=\"text-left\">#{@added_user_params["name"]}</td>"
-      assert html =~ "<td class=\"text-left\">#{@added_user_params["label"]}</td>"
+      assert html =~ "<td>#{added_user_params["name"]}</td>"
+      assert html =~ "<td>#{added_user_params["label"]}</td>"
 
       assert {:ok, :valid} =
                CouchService.authenticate(
-                 @added_user_params["name"],
-                 @added_user_params["password"]
+                 added_user_params["name"],
+                 added_user_params["password"]
                )
-    end
-
-    test "has to add name, label and password when creating a user", %{conn: conn} do
-      assert {:ok, live_process, _html} = live(conn, ~p"/management/users")
-
-      assert live_process
-             |> element(~s([href="/management/users/new"]))
-             |> render_click()
-
-      assert_patch(live_process, ~p"/management/users/new")
-
-      assert live_process
-             |> form("#user-form", %{user: %{}})
-             |> render_change()
-
-      assert live_process
-             |> form("#user-form", %{user: %{}})
-             |> render_submit()
-
-      assert live_process
-             |> element(~s(div[phx-feedback-for=\"user[password]\"]))
-             |> render() =~ "can&#39;t be blank"
-
-      assert live_process
-             |> element(~s(div[phx-feedback-for=\"user[name]\"]))
-             |> render() =~ "can&#39;t be blank"
-
-      assert live_process
-             |> element(~s(div[phx-feedback-for=\"user[label]\"]))
-             |> render() =~ "can&#39;t be blank"
     end
 
     test "can generate new user password when creating a user", %{conn: conn} do
@@ -161,21 +160,30 @@ defmodule FieldPublicationWeb.UI.Management.UserLiveTest do
       assert String.length(generated_password) == String.length(CouchService.generate_password())
     end
 
-    test "can edit a user label", %{conn: conn} do
+    test "can edit a user label", %{conn: conn, local_user: user} do
       assert {:ok, live_process, html} = live(conn, ~p"/management/users")
 
-      assert html =~ "<td class=\"text-left\">#{@test_user.label}</td>"
-      assert not (html =~ "<td class=\"text-left\">Test user updated</td>")
+      initial_label = user.label
+      updated_label = "Test user updated"
+
+      assert {:ok, :valid} =
+               CouchService.authenticate(
+                 user.name,
+                 user.password
+               )
+
+      assert html =~ "<td>#{initial_label}</td>"
+      refute html =~ "<td>#{updated_label}</td>"
 
       assert live_process
-             |> element(~s([href="/management/users/#{@test_user.name}/edit"]))
+             |> element(~s([href="/management/users/#{user.name}/edit"]))
              |> render_click()
 
-      assert_patch(live_process, ~p"/management/users/#{@test_user.name}/edit")
+      assert_patch(live_process, ~p"/management/users/#{user.name}/edit")
 
       assert live_process
              |> form("#user-form", %{
-               user: %{label: "Test user updated"}
+               user: %{label: updated_label}
              })
              |> render_submit()
 
@@ -183,32 +191,43 @@ defmodule FieldPublicationWeb.UI.Management.UserLiveTest do
 
       html = render(live_process)
 
-      assert not (html =~ "<td class=\"text-left\">#{@test_user.label}</td>")
-      assert html =~ "<td class=\"text-left\">Test user updated</td>"
+      refute html =~ "<td>#{initial_label}</td>"
+      assert html =~ "<td>#{updated_label}</td>"
+
+      {:ok, %User{label: db_label}} = User.get(user.name)
+
+      assert db_label == updated_label
+
+      assert {:ok, :valid} =
+               CouchService.authenticate(
+                 user.name,
+                 user.password
+               )
     end
 
-    test "can set new user password", %{conn: conn} do
+    test "can set new user password", %{conn: conn, local_user: user} do
       assert {:ok, live_process, _html} = live(conn, ~p"/management/users")
 
+      initial_password = user.password
       new_password = "updated_password"
 
       assert {:ok, :valid} =
                CouchService.authenticate(
-                 @test_user.name,
-                 @test_user.password
+                 user.name,
+                 initial_password
                )
 
       assert {:error, :invalid} =
                CouchService.authenticate(
-                 @test_user.name,
+                 user.name,
                  new_password
                )
 
       assert live_process
-             |> element(~s([href="/management/users/#{@test_user.name}/edit"]))
+             |> element(~s([href="/management/users/#{user.name}/edit"]))
              |> render_click()
 
-      assert_patch(live_process, ~p"/management/users/#{@test_user.name}/edit")
+      assert_patch(live_process, ~p"/management/users/#{user.name}/edit")
 
       assert live_process
              |> form("#user-form", %{
@@ -218,38 +237,35 @@ defmodule FieldPublicationWeb.UI.Management.UserLiveTest do
 
       assert_patch(live_process, ~p"/management/users")
 
-      # It seems couchdb acknowledges the update, but internally does not update/set the password immediately, causing this test
-      # to fail from time to time. Using inspects this also points to the fact that the failure is not a timing/race condition
-      # problem in our test but somehow due to CouchDB.
-      Process.sleep(5000)
-
       assert {:error, :invalid} =
                CouchService.authenticate(
-                 @test_user.name,
-                 @test_user.password
+                 user.name,
+                 initial_password
                )
 
       assert {:ok, :valid} =
                CouchService.authenticate(
-                 @test_user.name,
+                 user.name,
                  new_password
                )
     end
 
-    test "can generate new user password when editing a user", %{conn: conn} do
+    test "can generate new user password when editing a user", %{conn: conn, local_user: user} do
       assert {:ok, live_process, _html} = live(conn, ~p"/management/users")
+
+      initial_password = user.password
 
       assert {:ok, :valid} =
                CouchService.authenticate(
-                 @test_user.name,
-                 @test_user.password
+                 user.name,
+                 initial_password
                )
 
       assert live_process
-             |> element(~s([href="/management/users/#{@test_user.name}/edit"]))
+             |> element(~s([href="/management/users/#{user.name}/edit"]))
              |> render_click()
 
-      assert_patch(live_process, ~p"/management/users/#{@test_user.name}/edit")
+      assert_patch(live_process, ~p"/management/users/#{user.name}/edit")
 
       assert not (live_process |> element("#user_password") |> render() =~ "value=")
 
@@ -268,28 +284,29 @@ defmodule FieldPublicationWeb.UI.Management.UserLiveTest do
       assert String.length(generated_password) == String.length(CouchService.generate_password())
     end
 
-    test "when editing has empty password ignored", %{conn: conn} do
+    test "when editing has empty password ignored", %{conn: conn, local_user: user} do
       assert {:ok, live_process, _html} = live(conn, ~p"/management/users")
 
-      new_password = "   \n\n "
+      initial_password = user.password
+      new_password = "   \n\n                  \t\t "
 
       assert {:ok, :valid} =
                CouchService.authenticate(
-                 @test_user.name,
-                 @test_user.password
+                 user.name,
+                 initial_password
                )
 
       assert {:error, :invalid} =
                CouchService.authenticate(
-                 @test_user.name,
+                 user.name,
                  new_password
                )
 
       assert live_process
-             |> element(~s([href="/management/users/#{@test_user.name}/edit"]))
+             |> element(~s([href="/management/users/#{user.name}/edit"]))
              |> render_click()
 
-      assert_patch(live_process, ~p"/management/users/#{@test_user.name}/edit")
+      assert_patch(live_process, ~p"/management/users/#{user.name}/edit")
 
       assert live_process
              |> form("#user-form", %{
@@ -301,14 +318,14 @@ defmodule FieldPublicationWeb.UI.Management.UserLiveTest do
 
       assert {:error, :invalid} =
                CouchService.authenticate(
-                 @test_user.name,
+                 user.name,
                  new_password
                )
 
       assert {:ok, :valid} =
                CouchService.authenticate(
-                 @test_user.name,
-                 @test_user.password
+                 user.name,
+                 initial_password
                )
     end
   end

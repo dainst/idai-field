@@ -70,11 +70,17 @@ defmodule FieldPublicationWeb.UI.Management.Modals.UserFormComponent do
     {:noreply, assign(socket, :form, to_form(changeset))}
   end
 
-  def handle_event("generate_password", _params, %{assigns: %{form: %{params: params}}} = socket) do
+  def handle_event(
+        "generate_password",
+        _params,
+        %{assigns: %{form: %{params: params}, user: user}} = socket
+      ) do
     form =
-      %User{}
+      user
       |> User.changeset(Map.put(params, "password", CouchService.generate_password()))
-      |> to_form()
+      # Use `action: :ignore` to prevent immediate evaluation of email/label values, these might
+      # still be untouched by the user.
+      |> to_form(action: :ignore)
 
     {
       :noreply,

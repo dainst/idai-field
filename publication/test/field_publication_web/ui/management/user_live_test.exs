@@ -282,6 +282,26 @@ defmodule FieldPublicationWeb.UI.Management.UserLiveTest do
       [_all, generated_password] = Regex.run(~r/value=\"(.+)\" /U, html)
 
       assert String.length(generated_password) == String.length(CouchService.generate_password())
+
+      assert live_process
+             |> form("#user-form", %{
+               user: %{password: generated_password}
+             })
+             |> render_submit()
+
+      assert_patch(live_process, ~p"/management/users")
+
+      assert {:error, :invalid} =
+               CouchService.authenticate(
+                 user.name,
+                 initial_password
+               )
+
+      assert {:ok, :valid} =
+               CouchService.authenticate(
+                 user.name,
+                 generated_password
+               )
     end
 
     test "when editing has empty password ignored", %{conn: conn, local_user: user} do

@@ -1,7 +1,22 @@
 defmodule FieldPublicationWeb.Presentation.Document.Project do
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublicationWeb.Components.PublicationMap
+  alias FieldPublication.{
+    EmbeddedSchema.Translation,
+    Publication
+  }
+
+  alias FieldPublication.Publication.{
+    Configuration,
+    Document,
+    DocumentPreview,
+    Search
+  }
+
+  alias FieldPublicationWeb.Components.{
+    LanguageSelection,
+    PublicationMap
+  }
 
   import FieldPublicationWeb.Components.Data.{
     DocumentLink,
@@ -9,22 +24,13 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
     Image
   }
 
-  alias FieldPublication.DatabaseSchema.Publication
-  alias FieldPublication.DatabaseSchema.Translation
-  alias FieldPublication.Publications.Data
-  alias FieldPublication.Publications.Search
-
-  alias FieldPublication.Publications.Data.Document
-
-  alias FieldPublicationWeb.Components.LanguageSelection
-
   def render(assigns) do
     ~H"""
     <div>
-      <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
+      <% depicted_in = Document.get_relation(@doc, "isDepictedIn") %>
       <%= if depicted_in != nil do %>
         <div class="pt-4 pb-4 w-full gap-2 flex flex-row justify-center overflow-x-auto">
-          <%= for %Data.Document{} = doc <- depicted_in.docs do %>
+          <%= for %Document{} = doc <- depicted_in.docs do %>
             <.link
               patch={
                 ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{doc.id}"
@@ -44,26 +50,39 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
 
       <div class="flex flex-col lg:flex-row gap-4">
         <div class="lg:basis-2/3">
-          <section>
-            <% description = Data.get_field(@doc, "description") %>
-            <%= if description do %>
-              <.render_field_data_as_markdown field={description} />
-            <% else %>
-              <div class="italic">No project description available.</div>
-            <% end %>
-          </section>
-
-          <% comments =
-            @publication.comments
+          <% project_descriptions =
+            @publication.project_description
             |> Enum.map(fn %Translation{language: lang, text: text} -> {lang, text} end)
             |> Enum.into(%{}) %>
           <section>
-            <%= if comments != %{} do %>
+            <%= if project_descriptions != %{} do %>
               <.live_component
                 :let={comment}
                 module={LanguageSelection}
-                id="publication_comments"
-                translations={comments}
+                id="publication_project_descriptions"
+                translations={project_descriptions}
+              >
+                <span class="markdown">
+                  {comment
+                  |> MDEx.to_html!()
+                  |> Phoenix.HTML.raw()}
+                </span>
+              </.live_component>
+            <% else %>
+              <div class="italic mt-8">No project description available.</div>
+            <% end %>
+          </section>
+          <% publication_descriptions =
+            @publication.publication_description
+            |> Enum.map(fn %Translation{language: lang, text: text} -> {lang, text} end)
+            |> Enum.into(%{}) %>
+          <section>
+            <%= if publication_descriptions != %{} do %>
+              <.live_component
+                :let={comment}
+                module={LanguageSelection}
+                id="publication_publication_descriptions"
+                translations={publication_descriptions}
               >
                 <span class="markdown">
                   {comment
@@ -78,7 +97,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
         </div>
 
         <div class="lg:basis-1/3">
-          <% institution = Data.get_field(@doc, "institution") %>
+          <% institution = Document.get_field(@doc, "institution") %>
           <%= if institution do %>
             <.labeled_value>
               <:label><.render_field_label field={institution} /></:label>
@@ -86,11 +105,17 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
             </.labeled_value>
           <% end %>
 
-          <% contact_mail = Data.get_field(@doc, "contactMail") %>
-          <% contact_person = Data.get_field(@doc, "contactPerson") %>
+          <% contact_mail = Document.get_field(@doc, "contactMail") %>
+          <% contact_person = Document.get_field(@doc, "contactPerson") %>
           <%= if contact_mail do %>
             <.labeled_value>
-              <:label><.render_field_label field={contact_person} /></:label>
+              <:label>
+                <%= if contact_person do %>
+                  <.render_field_label field={contact_person} />
+                <% else %>
+                  {gettext("contact")}
+                <% end %>
+              </:label>
               <a href={"mailto:#{contact_mail.value}"}>
                 <.icon name="hero-envelope" class="h-6 w-6 mr-1" />
                 <%= if contact_person do %>
@@ -102,7 +127,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
             </.labeled_value>
           <% end %>
 
-          <% supervisor = Data.get_field(@doc, "projectSupervisor") %>
+          <% supervisor = Document.get_field(@doc, "projectSupervisor") %>
           <%= if supervisor do %>
             <.labeled_value>
               <:label><.render_field_label field={supervisor} /></:label>
@@ -110,7 +135,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
             </.labeled_value>
           <% end %>
 
-          <% staff = Data.get_field(@doc, "staff") %>
+          <% staff = Document.get_field(@doc, "staff") %>
           <%= if staff do %>
             <.labeled_value>
               <:label><.render_field_label field={staff} /></:label>
@@ -118,14 +143,14 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
             </.labeled_value>
           <% end %>
 
-          <% bibliographic_references = Data.get_field(@doc, "bibliographicReferences") %>
+          <% bibliographic_references = Document.get_field(@doc, "bibliographicReferences") %>
           <%= if bibliographic_references do %>
             <.labeled_value class="max-h-78 overflow-y-auto">
               <:label><.render_field_label field={bibliographic_references} /></:label>
               <.render_field_data field={bibliographic_references} publication={@publication} />
             </.labeled_value>
           <% end %>
-          <% url = Data.get_field_value(@doc, "projectURI") %>
+          <% url = Document.get_field_value(@doc, "projectURI") %>
           <%= if url do %>
             <.labeled_value>
               <:label>{gettext("further_links")}</:label>
@@ -210,7 +235,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
 
   def update(%{doc: %Document{} = doc, publication: %Publication{} = publication}, socket) do
     top_level_docs =
-      Data.get_document_hierarchy(publication)
+      Publication.get_document_hierarchy(publication)
       |> Stream.filter(fn {_uuid, relations} ->
         # All documents that have no parent, but do have children are considered top level.
         Map.get(relations, "parent") == nil && Map.get(relations, "children") != []
@@ -218,9 +243,11 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
       |> Enum.map(fn {uuid, _values} ->
         uuid
       end)
-      |> Data.get_preview_documents(publication)
+      |> then(fn uuids ->
+        DocumentPreview.list(publication, uuids)
+      end)
 
-    category_hierarchy = Data.get_category_hierarchy(publication)
+    category_hierarchy = Configuration.get_category_hierarchy(publication)
     category_usage = Search.get_category_count(publication)
 
     {

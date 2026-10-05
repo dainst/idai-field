@@ -1,14 +1,12 @@
 defmodule FieldPublicationWeb.Management.SettingsLive do
-  alias FieldPublication.DatabaseSchema.{
-    ApplicationSettings
-  }
+  use FieldPublicationWeb, :live_view
+
+  alias FieldPublication.ApplicationSettings
 
   import FieldPublicationWeb.Components.TranslationInput
 
-  alias FieldPublication.Settings
   alias Ecto.Changeset
   alias Phoenix.HTML
-  use FieldPublicationWeb, :live_view
 
   @impl true
   def render(assigns) do
@@ -40,6 +38,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
       <.translation_input
         field={@setting_form[:imprint]}
         language_options={@imprint_options}
+        markdown?={true}
       >
         <:heading>Imprint</:heading>
         <:no_translations>You currently have no imprint.</:no_translations>
@@ -217,7 +216,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
     changeset =
-      Settings.get()
+      ApplicationSettings.get()
       |> ApplicationSettings.changeset()
 
     imprint_options =
@@ -234,7 +233,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
         [[key: "Please select a language", value: nil]] ++ imprint_options
       )
       |> update_form(changeset)
-      |> assign(:existing_images, Settings.list_images())
+      |> assign(:existing_images, ApplicationSettings.list_images())
       |> assign(:uploaded_files, [])
       |> assign(:page_title, "Settings")
       |> allow_upload(:images, accept: ~w(.jpg .jpeg .svg .webp .png), max_entries: 10)
@@ -259,7 +258,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
 
   def handle_event("save", %{"application_settings" => settings_params}, socket) do
     socket =
-      Settings.update(settings_params)
+      ApplicationSettings.update(settings_params)
       |> case do
         {:ok, _doc} ->
           # Force a redirect to the route we are currently on to reload (this is could
@@ -283,7 +282,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
   def handle_event("upload", _params, socket) do
     uploaded_files =
       consume_uploaded_entries(socket, :images, fn %{path: path}, entry ->
-        Settings.save_image(path, entry.client_name)
+        ApplicationSettings.save_image(path, entry.client_name)
         {:ok, ~p"/custom/images/#{entry.client_name}"}
       end)
 
@@ -291,7 +290,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
       :noreply,
       socket
       |> update(:uploaded_files, &(&1 ++ uploaded_files))
-      |> assign(:existing_images, Settings.list_images())
+      |> assign(:existing_images, ApplicationSettings.list_images())
     }
   end
 
@@ -328,7 +327,7 @@ defmodule FieldPublicationWeb.Management.SettingsLive do
   end
 
   def handle_event("delete", %{"name" => name}, socket) do
-    Settings.delete_image_file(name)
+    ApplicationSettings.delete_image_file(name)
 
     {
       :noreply,

@@ -1,11 +1,10 @@
 defmodule FieldPublicationWeb.ContactAndImprintLive do
   use FieldPublicationWeb, :live_view
 
-  alias FieldPublication.Settings
-
-  alias FieldPublication.DatabaseSchema.{
+  alias FieldPublication.{
     ApplicationSettings,
-    Translation
+    EmbeddedSchema.Translation,
+    User
   }
 
   def render(assigns) do
@@ -62,7 +61,7 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
       </div>
 
       <.link
-        :if={FieldPublication.Users.is_admin?(@current_user)}
+        :if={User.is_admin?(@current_user)}
         class="pl-4 text-sm"
         navigate={~p"/management/settings"}
       >
@@ -76,7 +75,7 @@ defmodule FieldPublicationWeb.ContactAndImprintLive do
     %ApplicationSettings{
       imprint: imprint,
       contact_email: contact_email
-    } = Settings.get()
+    } = ApplicationSettings.get()
 
     socket =
       socket

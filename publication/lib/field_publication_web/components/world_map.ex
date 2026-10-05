@@ -1,7 +1,10 @@
 defmodule FieldPublicationWeb.Components.WorldMap do
   use FieldPublicationWeb, :live_component
 
-  alias FieldPublication.Settings
+  alias FieldPublication.{
+    ApplicationSettings,
+    Publication
+  }
 
   @impl true
   def render(assigns) do
@@ -21,22 +24,13 @@ defmodule FieldPublicationWeb.Components.WorldMap do
   end
 
   @impl true
-  def update(%{id: id, projects: projects} = assigns, socket) do
+  def update(%{id: id, publications: projects} = assigns, socket) do
     assigns = set_defaults(assigns)
 
-    %{color_scheme: %{primary: primary, primary_hover: primary_hover}} = Settings.get()
+    %{color_scheme: %{primary: primary, primary_hover: primary_hover}} = ApplicationSettings.get()
 
     features =
-      projects
-      |> Enum.map(fn doc ->
-        case doc do
-          %{coordinates: coordinates, name: name} ->
-            create_home_marker(coordinates, name)
-
-          _ ->
-            nil
-        end
-      end)
+      Enum.map(projects, &create_home_marker/1)
       |> Enum.reject(fn val -> is_nil(val) end)
 
     socket =
@@ -56,7 +50,13 @@ defmodule FieldPublicationWeb.Components.WorldMap do
     |> Map.put_new(:zoom, 2)
   end
 
-  defp create_home_marker(%{longitude: lon, latitude: lat}, project_identifier) do
+  defp create_home_marker(%Publication{latitude: nil, longitude: nil}), do: nil
+
+  defp create_home_marker(%Publication{
+         project_identifier: project_identifier,
+         latitude: lat,
+         longitude: lon
+       }) do
     %{
       type: "Feature",
       properties: %{

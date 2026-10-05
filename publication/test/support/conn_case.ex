@@ -31,8 +31,8 @@ defmodule FieldPublicationWeb.ConnCase do
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 
-  def log_in_user(conn, user) do
-    token = FieldPublicationWeb.UserAuth.generate_user_session_token(user)
+  def log_in_user(conn, user_name) when is_binary(user_name) do
+    token = FieldPublicationWeb.UserAuth.generate_user_session_token(user_name)
 
     conn
     |> Phoenix.ConnTest.init_test_session(%{})

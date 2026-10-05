@@ -1,44 +1,25 @@
 defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
   use FieldPublicationWeb.ConnCase
 
+  import Phoenix.LiveViewTest
+  import FieldPublication.Test.DataScaffolding
+
   alias FieldPublicationWeb.UserAuth
 
-  alias FieldPublication.{
-    CouchService,
-    Projects
-  }
+  alias FieldPublication.User
 
-  alias FieldPublication.DatabaseSchema.Project
-
-  alias FieldPublication.Test.ProjectSeed
-
-  import Phoenix.LiveViewTest
-  @core_database Application.compile_env(:field_publication, :core_database)
   @cache_name Application.compile_env(:field_publication, :user_tokens_cache_name)
-  @test_project_identifier "test_project_a"
 
-  setup_all %{} do
-    CouchService.put_database(@core_database)
+  setup_all [
+    :create_core_database,
+    :add_editor_user,
+    :add_admin_user
+  ]
 
-    {project, publication} = ProjectSeed.create_full_publication(@test_project_identifier, false)
-
-    on_exit(fn ->
-      Projects.get(@test_project_identifier)
-      |> case do
-        {:ok, %Project{} = project} ->
-          Projects.delete(project)
-
-        _ ->
-          :ok
-      end
-
-      CouchService.delete_database(@core_database)
-    end)
-
-    %{project: project, publication: publication}
-  end
-
-  test "user can log in and out using the interface", %{conn: conn} do
+  test "user can log in and out using the interface", %{
+    conn: conn,
+    editor: %User{name: user_name, password: password}
+  } do
     assert {:ok, live_view_pid, _html} = live(conn, ~p"/")
 
     assert {:error, {:redirect, %{to: path}}} =
@@ -50,14 +31,12 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
 
     assert html =~ "Sign in to account"
 
-    admin_user_name = Application.get_env(:field_publication, :couchdb_admin_name)
-
     assert logged_in_conn =
              live_view_pid
              |> form("#login_form", %{
                user: %{
-                 name: admin_user_name,
-                 password: Application.get_env(:field_publication, :couchdb_admin_password)
+                 name: user_name,
+                 password: password
                }
              })
              |> submit_form(conn)
@@ -69,16 +48,14 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
              live(conn, ~p"/management")
 
     # The new conn object created after submitting has a valid session and thus allows access.
-    assert {:ok, live_view_pid, html} = live(logged_in_conn, ~p"/management")
-
-    assert html =~ "Administration"
+    assert {:ok, live_view_pid, _html} = live(logged_in_conn, ~p"/management")
 
     token =
       logged_in_conn
       |> get_session()
       |> Map.get("user_token")
 
-    assert {:ok, %UserAuth.Token{name: ^admin_user_name}} =
+    assert {:ok, %UserAuth.Token{name: ^user_name}} =
              Cachex.get(@cache_name, token)
 
     assert {:error, {:redirect, %{to: path}}} =
@@ -96,14 +73,17 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
              live(logged_out_conn, ~p"/management")
   end
 
-  test "wrong credentials get reported back to the login interface", %{conn: conn} do
+  test "wrong credentials get reported back to the login interface", %{
+    conn: conn,
+    editor: %User{name: user_name}
+  } do
     assert {:ok, live_view_pid, _html} = live(conn, ~p"/log_in")
 
     assert error_conn =
              live_view_pid
              |> form("#login_form", %{
                user: %{
-                 name: Application.get_env(:field_publication, :couchdb_admin_name),
+                 name: user_name,
                  password: "wrong"
                }
              })
@@ -112,15 +92,18 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
     html_response(error_conn, 302) =~ "Invalid name or password"
   end
 
-  test "user can set remember me cookie", %{conn: conn} do
+  test "user can set remember me cookie", %{
+    conn: conn,
+    editor: %User{name: user_name, password: password}
+  } do
     assert {:ok, live_view_pid, _html} = live(conn, ~p"/log_in")
 
     assert %Plug.Conn{cookies: cookies} =
              live_view_pid
              |> form("#login_form", %{
                user: %{
-                 name: Application.get_env(:field_publication, :couchdb_admin_name),
-                 password: Application.get_env(:field_publication, :couchdb_admin_password)
+                 name: user_name,
+                 password: password
                }
              })
              |> submit_form(conn)
@@ -133,8 +116,8 @@ defmodule FieldPublicationWeb.Presentation.UserSessionLiveTest do
              live_view_pid
              |> form("#login_form", %{
                user: %{
-                 name: Application.get_env(:field_publication, :couchdb_admin_name),
-                 password: Application.get_env(:field_publication, :couchdb_admin_password),
+                 name: user_name,
+                 password: password,
                  remember_me: "true"
                }
              })

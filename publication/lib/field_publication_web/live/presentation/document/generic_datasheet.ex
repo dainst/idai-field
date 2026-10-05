@@ -7,17 +7,16 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
     Image
   }
 
-  alias FieldPublication.DatabaseSchema.Publication
-  alias FieldPublication.Publications.Data
+  alias FieldPublication.Publication
 
-  alias FieldPublicationWeb.Components.DocumentMap
-
-  alias FieldPublication.Publications.Data.{
+  alias FieldPublication.Publication.{
     Document,
     Field,
     FieldGroup,
     RelationGroup
   }
+
+  alias FieldPublicationWeb.Components.DocumentMap
 
   def render(assigns) do
     ~H"""
@@ -27,6 +26,9 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
           <% fields =
             Enum.reject(group.fields, fn %Field{name: name} ->
               name in ["identifier", "category", "geometry"]
+            end)
+            |> Enum.sort_by(fn %Field{input_type: type} ->
+              !(type in ["text"])
             end) %>
           <%= unless fields == [] do %>
             <section>
@@ -35,14 +37,16 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
               </.group_heading>
 
               <div class="grid max-md:grid-cols-1 md:grid-cols-2 gap-1 mt-2">
-                <%= for %Field{} = field <- fields do %>
-                  <.render_field field={field} publication={@publication} />
+                <%= for %Field{input_type: type } = field <- fields do %>
+                  <div class={"#{if type in ["text"], do: "col-span-2"}"}>
+                    <.render_field field={field} publication={@publication} />
+                  </div>
                 <% end %>
               </div>
             </section>
           <% end %>
         <% end %>
-        <% depicted_in = Data.get_relation(@doc, "isDepictedIn") %>
+        <% depicted_in = Document.get_relation(@doc, "isDepictedIn") %>
         <%= if depicted_in do %>
           <section>
             <.group_heading>

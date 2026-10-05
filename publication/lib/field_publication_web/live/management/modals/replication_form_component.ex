@@ -3,13 +3,9 @@ defmodule FieldPublicationWeb.Management.Modals.ReplicationFormComponent do
   use FieldPublicationWeb, :live_component
 
   alias FieldPublication.{
-    Publications,
-    Replication
-  }
-
-  alias FieldPublication.DatabaseSchema.{
     Publication,
-    ReplicationInput
+    Replication,
+    Replication.ReplicationInput
   }
 
   @impl true
@@ -114,7 +110,7 @@ defmodule FieldPublicationWeb.Management.Modals.ReplicationFormComponent do
          current_user: current_user,
          action: :edit
        }) do
-    publication = Publications.get!(project_identifier, draft_date)
+    publication = Publication.get!(project_identifier, draft_date)
 
     ReplicationInput.changeset(%ReplicationInput{}, %{
       source_url: publication.source_url,

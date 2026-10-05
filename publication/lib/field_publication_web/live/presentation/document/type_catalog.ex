@@ -5,7 +5,7 @@ defmodule FieldPublicationWeb.Presentation.Document.TypeCatalog do
     DocumentLink
   }
 
-  alias FieldPublication.Publications.Data.{
+  alias FieldPublication.Publication.{
     Document,
     RelationGroup
   }

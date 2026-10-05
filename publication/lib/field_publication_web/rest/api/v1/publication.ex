@@ -4,15 +4,19 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
 
   import Plug.Conn
 
-  alias OpenApiSpex.Schema
+  alias FieldPublication.{
+    FileService,
+    Publication
+  }
 
-  alias FieldPublication.Publications
-  alias FieldPublication.Publications.Data
-  alias FieldPublication.DatabaseSchema.Publication
+  alias FieldPublication.Publication.{
+    Configuration
+  }
 
-  alias FieldPublication.FileService
+  @publication_not_found_message "Publication not found."
 
   tags(["Field Publication API 1.0"])
+  security [%{}, %{"basic_auth" => []}]
 
   operation(:index,
     summary: "Index of all documents in the given publication.",
@@ -43,13 +47,13 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
         conn,
         %{"project_identifier" => project_identifier, "draft_date" => draft_date} = _param
       ) do
-    Publications.get(project_identifier, draft_date)
+    Publication.get(project_identifier, draft_date)
     |> case do
       {:ok, %Publication{} = publication} ->
-        image_categories = Publications.Data.get_image_categories(publication)
+        image_categories = Configuration.get_image_categories(publication)
 
         list =
-          Data.get_doc_stream_for_all(publication)
+          Publication.get_doc_stream_for_all(publication)
           |> Stream.map(fn %{
                              "resource" =>
                                %{
@@ -117,9 +121,9 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
         %{"project_identifier" => project_identifier, "draft_date" => draft_date, "uuid" => uuid} =
           _params
       ) do
-    publication = Publications.get!(project_identifier, draft_date)
+    publication = Publication.get!(project_identifier, draft_date)
 
-    doc = Data.get_raw_document(uuid, publication)
+    doc = Publication.get_raw_document(uuid, publication)
 
     conn
     |> Plug.Conn.put_resp_header("content-type", "application/json")
@@ -162,17 +166,23 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
         %{"project_identifier" => project_identifier, "draft_date" => draft_date, "uuid" => uuid} =
           _params
       ) do
-    publication = Publications.get!(project_identifier, draft_date)
+    publication = Publication.get!(project_identifier, draft_date)
 
-    doc = Data.get_extended_document(uuid, publication, true)
+    Publication.get_extended_document(uuid, publication, true)
+    |> case do
+      {:ok, doc} ->
+        conn
+        |> Plug.Conn.put_resp_header("content-type", "application/json")
+        |> Plug.Conn.send_resp(200, Jason.encode!(doc))
 
-    conn
-    |> Plug.Conn.put_resp_header("content-type", "application/json")
-    |> Plug.Conn.send_resp(200, Jason.encode!(doc))
+      _error ->
+        Plug.Conn.send_resp(conn, 404, "Not found")
+    end
   end
 
-  operation(:geo_collections,
-    summary: "GeoJSON feature collections for a given publication.",
+  operation(:list_geo_vector_data,
+    summary:
+      "Information concerning the available GeoJSON feature collections for a given publication.",
     parameters: [
       project_identifier: [
         in: :path,
@@ -189,38 +199,168 @@ defmodule FieldPublicationWeb.Api.V1.Publication do
     ],
     responses: [
       ok: {
+        "Information about the publication's default coordinate projection and alternative projections available.",
+        "application/json",
+        nil
+      }
+    ]
+  )
+
+  def list_geo_vector_data(conn, %{
+        "project_identifier" => project_identifier,
+        "draft_date" => draft_date
+      })
+      when is_binary(project_identifier) and is_binary(draft_date) do
+    case Publication.get(project_identifier, draft_date) do
+      {:ok, %Publication{epsg_code: default_code} = publication} ->
+        default_code = if default_code, do: default_code, else: "custom-crs"
+
+        conn
+        |> put_resp_header("content-type", "application/json")
+        |> send_resp(
+          200,
+          Jason.encode!(%{
+            default: default_code,
+            available: list_available_epsg_codes(publication)
+          })
+        )
+
+      _ ->
+        conn
+        |> put_resp_header("content-type", "text/plain")
+        |> send_resp(404, @publication_not_found_message)
+    end
+  end
+
+  operation(:geo_vector_data,
+    summary: "GeoJSON feature collection for a given publication.",
+    parameters: [
+      project_identifier: [
+        in: :path,
+        description: "The project's identifier",
+        type: :string,
+        example: nil
+      ],
+      draft_date: [
+        in: :path,
+        description: "A publication's draft date linked to the specified project",
+        type: :string,
+        example: nil
+      ],
+      epsg: [
+        in: :path,
+        description:
+          "The vector projection the returned features should use as a EPSG code. Can be either `default`, which will return whatever the
+        publication's default projection has been or a number representing the EPSG code.",
+        type: :string,
+        example: nil
+      ]
+    ],
+    responses: [
+      ok: {
         "Project and publication list",
         "application/geo+json",
-        %Schema{
-          type: :array,
-          items: %OpenApiSpex.Reference{
-            "$ref": "https://geojson.org/schema/FeatureCollection.json"
-          }
+        %OpenApiSpex.Reference{
+          "$ref": "https://geojson.org/schema/FeatureCollection.json"
         }
       }
     ]
   )
 
-  def geo_collections(conn, %{
+  def geo_vector_data(conn, %{
         "project_identifier" => project_identifier,
-        "draft_date" => draft_date
-      })
-      when is_binary(project_identifier) and is_binary(draft_date) do
-    path =
-      Publications.get!(project_identifier, draft_date)
-      |> FileService.publication_geometry_path(true)
+        "draft_date" => draft_date,
+        "epsg" => "default"
+      }) do
+    case Publication.get(project_identifier, draft_date) do
+      {:ok, %Publication{epsg_code: default_code} = publication} ->
+        send_geometry(conn, publication, default_code)
 
-    if File.exists?(path) do
-      conn
-      |> Plug.Conn.put_resp_header("content-encoding", "br")
-      |> Plug.Conn.put_resp_header("content-type", "application/geo+json")
-      # TODO: Set public/private based on publication status
-      |> Plug.Conn.put_resp_header("cache-control", "private, max-age=86400, immutable")
-      |> Plug.Conn.send_file(200, path)
-    else
-      conn
-      |> Plug.Conn.put_resp_header("content-type", "application/json")
-      |> Plug.Conn.send_resp(404, JSON.encode!(%{}))
+      {:error, _} ->
+        conn
+        |> put_resp_header("content-type", "text/plain")
+        |> send_resp(404, @publication_not_found_message)
     end
+  end
+
+  def geo_vector_data(conn, %{
+        "project_identifier" => project_identifier,
+        "draft_date" => draft_date,
+        "epsg" => epsg_param
+      }) do
+    with {:ok, publication} <- Publication.get(project_identifier, draft_date),
+         {epsg_code, ""} <- Integer.parse(epsg_param) do
+      send_geometry(conn, publication, epsg_code)
+    else
+      {:error, _} ->
+        conn
+        |> put_resp_header("content-type", "text/plain")
+        |> send_resp(404, @publication_not_found_message)
+
+      _ ->
+        conn
+        |> put_resp_header("content-type", "text/plain")
+        |> send_resp(400, "Invalid ESPG code, expecting integer value.")
+    end
+  end
+
+  defp send_geometry(conn, %Publication{} = publication, epsg_code) do
+    encodings =
+      get_req_header(conn, "accept-encoding")
+      |> Enum.map(&String.split(&1, ","))
+      |> List.flatten()
+      |> Enum.map(&String.trim/1)
+
+    {conn, preferred_compression} =
+      cond do
+        "br" in encodings ->
+          {
+            put_resp_header(conn, "content-encoding", "br"),
+            :br
+          }
+
+        "gzip" in encodings ->
+          {
+            put_resp_header(conn, "content-encoding", "gzip"),
+            :gzip
+          }
+
+        true ->
+          {
+            conn,
+            :none
+          }
+      end
+
+    case FileService.geo_vector_data_path(publication, epsg_code, preferred_compression) do
+      {:ok, path} ->
+        conn
+        |> put_resp_header("content-type", "application/geo+json")
+        |> send_file(200, path)
+
+      _ ->
+        conn
+        |> put_resp_header("content-type", "text/plain")
+        |> send_resp(404, "Feature collection for EPSG code #{epsg_code} not found.")
+    end
+  end
+
+  @epsg_code_regex ~r/vector_geometries_EPSG-(\d+)\.geojson/
+  defp list_available_epsg_codes(%Publication{} = publication) do
+    FileService.geo_data_path(publication)
+    |> File.ls!()
+    |> Stream.filter(fn file_name -> String.ends_with?(file_name, ".geojson") end)
+    |> Stream.map(fn file_name ->
+      Regex.run(@epsg_code_regex, file_name)
+      |> case do
+        [_, code_string] ->
+          {code, ""} = Integer.parse(code_string)
+          code
+
+        _ ->
+          nil
+      end
+    end)
+    |> Enum.reject(fn val -> is_nil(val) end)
   end
 end

@@ -1,5 +1,5 @@
 <div>
-  <% category = Data.get_field_value(@doc, "category") %>
+  <% category = Document.get_field_value(@doc, "category") %>
 
   <div class="flex gap-2 justify-between">
     <.publication_navigation
@@ -9,7 +9,7 @@
       uuid={@uuid}
       identifier={
         if category != "Project",
-          do: Data.get_field_value(@doc, "identifier")
+          do: Document.get_field_value(@doc, "identifier")
       }
     />
   </div>

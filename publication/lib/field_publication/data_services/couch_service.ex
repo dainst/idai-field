@@ -1,5 +1,5 @@
 defmodule FieldPublication.CouchService do
-  alias FieldPublication.DatabaseSchema.User
+  alias FieldPublication.User
 
   @core_database Application.compile_env(:field_publication, :core_database)
 
@@ -90,7 +90,7 @@ defmodule FieldPublication.CouchService do
   @doc """
   Authenticate with credentials.
 
-  Returns {:ok, :valid} if credentials are valid, otherwise `{:error, :invalid}`.
+  Returns `{:ok, :valid}` if credentials are valid, otherwise `{:error, :invalid}`.
 
   __Parameters__
   - `name` the user's name.
@@ -135,21 +135,22 @@ defmodule FieldPublication.CouchService do
     |> Finch.request(FieldPublication.Finch)
   end
 
-  def create_user(%User{name: name, password: password, label: label}) do
-    Finch.build(
-      :put,
-      "#{local_url()}/_users/org.couchdb.user:#{name}",
-      headers(),
-      Jason.encode!(%{
-        name: name,
-        password: password,
-        roles: [],
-        type: "user",
-        label: label
-      })
-    )
-    |> Finch.request(FieldPublication.Finch)
-  end
+  # def create_user(%User{name: name, password: password, label: label, email: email, admin: admin}) do
+  #   Finch.build(
+  #     :put,
+  #     "#{local_url()}/_users/org.couchdb.user:#{name}",
+  #     headers(),
+  #     Jason.encode!(%{
+  #       name: name,
+  #       password: password,
+  #       roles: if(admin, do: ["administrator"], else: []),
+  #       type: "user",
+  #       label: label,
+  #       email: email
+  #     })
+  #   )
+  #   |> Finch.request(FieldPublication.Finch)
+  # end
 
   def delete_user(user_name) do
     Finch.build(

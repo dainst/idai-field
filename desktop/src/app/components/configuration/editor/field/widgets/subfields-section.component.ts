@@ -78,7 +78,7 @@ export class SubfieldsSectionComponent {
 
         return subfield
             ? Condition.generateLabel(
-                subfield.condition,
+                condition,
                 key => this.utilTranslations.getTranslation(key),
                 valueId => this.labels.getValueLabel(subfield.valuelist, valueId)
             ) : '';

@@ -7,9 +7,9 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
     Image
   }
 
-  alias FieldPublication.DatabaseSchema.Publication
+  alias FieldPublication.Publication
 
-  alias FieldPublication.Publications.Data.{
+  alias FieldPublication.Publication.{
     Document,
     Field,
     FieldGroup,

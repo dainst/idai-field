@@ -167,7 +167,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Project do
             <.group_heading>{gettext("Type Catalogs")}</.group_heading>
           <% end %>
           <div class="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-1 mt-4 max-h-96 overflow-y-auto">
-            <%= for doc <- type_catalog_documents do %>
+            <%= for doc <-type_catalog_documents|> Enum.sort_by(& &1.identifier) do %>
               <.document_link image_count={0} doc={doc} />
             <% end %>
           </div>

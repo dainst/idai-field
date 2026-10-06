@@ -20,8 +20,7 @@ export class DeleteModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private menuService: Menus
-    ) {}
+                private menuService: Menus) {}
 
 
     public onKeyDown(event: KeyboardEvent) {

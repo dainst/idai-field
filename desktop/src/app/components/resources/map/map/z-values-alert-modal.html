@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@resources.map.zValuesAlertModal.header">Geometrie speichern?</h5>
+</div>
+
+<div class="modal-body z-values-alert-modal-body">
+    <div class="text-center alert alert-warning"
+         i18n="@@resources.map.zValuesAlertModal.alert">
+        Bitte beachten Sie, dass Höheninformationen (Z-Werte) der Geometrie beim Speichern entfernt werden.
+        Bearbeiten Sie die Geometrie im Ressourceneditor oder über die Importfunktion, um die Z-Werte beizubehalten.
+    </div>
+    <span i18n="@@resources.map.zValuesAlertModal.question">Möchten Sie die Geometrie trotzdem speichern?</span>
+</div>
+
+<div class="modal-footer">
+    <div id="delete-field-button"
+         class="btn btn-success"
+         (click)="confirm()">
+         <span class="mdi mdi-content-save"></span>
+        <span class="button-label" i18n="@@resources.map.zValuesAlertModal.saveGeometry">Geometrie speichern</span>
+    </div>
+    <div id="cancel-field-deletion-button"
+         class="btn btn-secondary"
+         (click)="cancel()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
+</div>

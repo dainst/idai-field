@@ -1,9 +1,9 @@
-import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, NgZone, Output,
-    SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, NgZone, Output, SimpleChanges } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import L from 'leaflet';
 import '@geoman-io/leaflet-geoman-free';
-import { CategoryForm, FieldDocument, FieldGeometry, Labels, PouchdbDatastore,
-    ProjectConfiguration, Document } from 'idai-field-core';
+import { CategoryForm, FieldDocument, FieldGeometry, Labels, PouchdbDatastore, ProjectConfiguration,
+    Document } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { Messages } from '../../../messages/messages';
@@ -15,6 +15,7 @@ import { LayerMapComponent } from './layer-map.component';
 import { LayerImageProvider } from './layers/layer-image-provider';
 import { LayerManager } from './layers/layer-manager';
 import { MenuContext } from '../../../../services/menu-context';
+import { ZValuesAlertModalComponent } from './z-values-alert-modal.component';
 
 
 declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
@@ -70,7 +71,8 @@ export class EditableMapComponent extends LayerMapComponent {
                 datastore: PouchdbDatastore,
                 menuService: Menus,
                 protected zone: NgZone,
-                protected changeDetectorRef: ChangeDetectorRef) {
+                protected changeDetectorRef: ChangeDetectorRef,
+                private modalService: NgbModal) {
 
         super(projectConfiguration, labels, layerManager, layerImageProvider, messages, settingsProvider, zone,
             changeDetectorRef, datastore, menuService);
@@ -187,7 +189,12 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    public finishEditing() {
+    public async finishEditing() {
+
+        const currentGeometry: FieldGeometry = this.documentInEditing.resource.geometry;
+        if (currentGeometry && FieldGeometry.hasZValues(currentGeometry)) {
+            if (!(await this.openZValuesAlertModal())) return;
+        }
 
         let geometry: FieldGeometry|null = null;
 
@@ -206,6 +213,25 @@ export class EditableMapComponent extends LayerMapComponent {
         }
 
         this.onQuitEditing.emit(this.documentInEditing);
+    }
+
+
+    private async openZValuesAlertModal(): Promise<boolean> {
+
+        this.menuService.setContext(MenuContext.GEOMETRY_EDIT_MODAL);
+
+        try {
+            const modalRef: NgbModalRef = this.modalService.open(
+                ZValuesAlertModalComponent, { keyboard: false, animation: false }
+            );
+            
+            await modalRef.result;
+            return true;
+        } catch (_) {
+            return false;
+        } finally {
+            this.menuService.setContext(MenuContext.GEOMETRY_EDIT);
+        }
     }
 
 

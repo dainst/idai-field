@@ -42,7 +42,7 @@ defmodule FieldPublicationWeb.Presentation.Document.TypeCatalog do
         <% end %>
         <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 overflow-y-auto max-h-[200vh]">
           <% sorted_identifiers = @type_list |> Enum.map(& &1.identifier) |> NaturalSort.sort()
-          sorted_indexes = sorted_identifiers |> Enum.with_index() |> IO.inspect() |> Map.new()
+          sorted_indexes = sorted_identifiers |> Enum.with_index() |> Map.new()
 
           sorted_type_list =
             Enum.sort_by(@type_list, fn doc -> Map.get(sorted_indexes, doc.identifier) end) %>

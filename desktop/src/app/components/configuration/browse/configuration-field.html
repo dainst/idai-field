@@ -47,7 +47,7 @@
                     <code>{{field.valuelistFromProjectField}}</code> der Projekteinstellungen.
                 </span>
             </li>
-            <li *ngIf="getRange()" class="list-group-item">
+            <li *ngIf="getRange()?.length" class="list-group-item">
                 <b i18n="@@configuration.relation.targetCategories">Erlaubte Zielkategorien</b>:
                 <div *ngFor="let categoryName of getRange()" class="target-category">
                     <category-icon [category]="categoryName"

@@ -111,8 +111,10 @@ export class ConfigurationFieldComponent implements OnChanges {
         const range: string[] = (this.field as Relation).range;
         
         return range?.filter(categoryName => {
-            const parentCategory = this.clonedProjectConfiguration.getCategory(categoryName).parentCategory;
-            return !parentCategory || !range.includes(parentCategory.name);
+            const category: CategoryForm = this.clonedProjectConfiguration.getCategory(categoryName);
+            return category
+                ? !category.parentCategory || !range.includes(category.parentCategory.name)
+                : false;
         });
     }
 

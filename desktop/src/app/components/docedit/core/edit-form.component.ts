@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { isUndefinedOrEmpty, clone, Map } from 'tsfun';
-import { Condition, Document, Field, Group, Labels, Resource } from 'idai-field-core';
+import { Condition, Document, Field, Group, Labels, ProjectConfiguration, Relation } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { Messages } from '../../messages/messages';
@@ -39,7 +39,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     constructor(private elementRef: ElementRef,
                 private labels: Labels,
-                private messages: Messages) {
+                private messages: Messages,
+                private projectConfiguration: ProjectConfiguration) {
 
         this.languages = Languages.getAvailableLanguages();
     }
@@ -96,7 +97,9 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         return (groupName === 'conflicts' && this.document._conflicts)
             || this.getGroupFields(groupName).filter(field => {
                 return field.editable
-                    && Condition.isFulfilled(field.condition, this.document.resource, this.fieldDefinitions, 'field');
+                    && Condition.isFulfilled(field.condition, this.document.resource, this.fieldDefinitions, 'field')
+                    && (!Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(field.inputType)
+                        || this.projectConfiguration.isRelationUsable(field as Relation));
             }).length > 0;
     }
 

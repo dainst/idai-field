@@ -52,6 +52,7 @@ export class DoceditComponent {
     public maxNumberOfDuplicates: number;
 
     public operationInProgress: 'save'|'duplicate'|'none' = 'none';
+
     private escapeKeyPressed = false;
 
 

@@ -76,7 +76,9 @@ export class EditFormGroup extends ConfigurationInfoProvider implements OnChange
 
         return field !== undefined
             && field.editable === true
-            && Condition.isFulfilled(field.condition, this.document.resource, this.categoryFields, 'field');
+            && Condition.isFulfilled(field.condition, this.document.resource, this.categoryFields, 'field')
+            && (!Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(field.inputType)
+                || this.projectConfiguration.isRelationUsable(field as Relation));
     }
 
 

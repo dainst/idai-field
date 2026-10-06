@@ -286,6 +286,12 @@ export class ProjectConfiguration {
     }
 
 
+    public isRelationUsable(relation: Relation): boolean {
+
+        return relation.range.some(categoryName => this.getCategory(categoryName));
+    }
+
+
     private createCategoriesMap(): Map<CategoryForm> {
 
         return Tree.flatten(this.categoryForms)

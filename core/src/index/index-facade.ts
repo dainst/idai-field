@@ -221,6 +221,7 @@ export class IndexFacade {
         for (let target of document.resource.relations[INSTANCE_OF]) {
             const typeItem = items[target] as TypeResourceIndexItem;
             if (typeItem) {
+                if (!typeItem.instances) typeItem.instances = {};
                 typeItem.instances[document.resource.id] = document.resource.category;
             }
         }

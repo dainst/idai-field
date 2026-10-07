@@ -3,7 +3,7 @@ defmodule FieldRenderHelper do
 
   alias FieldPublication.Publication
   alias FieldPublication.Publication.Field, as: FieldData
-  import FieldPublicationWeb.Components.Data.Field
+  import FieldPublicationWeb.UI.Components.Data.Field
 
   defmodule FieldExample do
     @enforce_keys [:data, :description]

@@ -3,10 +3,10 @@ import { CategoryForm } from '../model/configuration/category-form';
 import { Field } from '../model';
 
 
-export function getFieldsToIndex(categoriesMap: Map<CategoryForm>, categoryName: string): Array<Field> {
+export function getFieldsToIndex(categoryForm: CategoryForm): Array<Field> {
 
-    return !categoriesMap[categoryName]
+    return !categoryForm
         ? []
-        : CategoryForm.getFields(categoriesMap[categoryName])
+        : CategoryForm.getFields(categoryForm)
             .filter(field => field.fulltextIndexed);
 }

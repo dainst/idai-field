@@ -189,10 +189,7 @@ export class IndexFacade {
         ConstraintIndex.put(this.constraintIndex, document, skipRemoval);
         FulltextIndex.put(
             this.fulltextIndex, document,
-            getFieldsToIndex(
-                Named.arrayToMap(Tree.flatten(this.projectConfiguration.getCategories())),
-                document.resource.category
-            ),
+            getFieldsToIndex(this.projectConfiguration.getCategory(document.resource.category)),
             skipRemoval
         );
 

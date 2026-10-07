@@ -742,9 +742,13 @@ Die Einstellung *Feldspezifische Suche erlauben* im Feldeditor bestimmt, ob für
 
 ### Anzeigebedingungen
 
-Über die Einstellung "Bedingung für Anzeige des Feldes" kann die Anzeige des Feldes an ein Bedingung geknüpft werden. Ist eine Bedingung gesetzt, steht das Feld bei der Dateneingabe nur dann zur Verfügung, wenn bei einem anderen Feld der gleichen Ressource ein bestimmter Wert (oder einer von mehreren Werten) gesetzt ist.
+Über die Einstellung "Bedingung für Anzeige des Feldes" kann die Anzeige des Feldes an eine Bedingung geknüpft werden. Ist eine Bedingung gesetzt, steht das Feld bei der Dateneingabe nur dann zur Verfügung, wenn in ein anderes Feld der gleichen Ressource wahlweise ein einzelner bestimmter Wert, einer von mehreren Werten oder ein beliebiger Wert eingetragen ist.
 
-Um eine Bedingung zu setzen, wählen Sie im Dropdown-Feld "Bedingung für die Anzeige des Feldes" zunächst ein anderes Feld der gleichen Kategorie aus. Zur Auswahl stehen dabei Felder der Eingabetypen "Dropdown-Liste", "Dropdown-Liste (Bereich)", "Radiobutton", "Ja / Nein" und "Checkboxen". Die möglichen Werte des gewählten Feldes werden nun angezeigt und können selektiert werden. Das aktuelle Feld wird bei der Dateneingabe nur dann angezeigt, wenn beim als Bedingung gewählten Feld mindestens einer der selektierten Werte gesetzt ist.
+Um eine Bedingung zu setzen, wählen Sie im Dropdown-Feld "Bedingung für die Anzeige des Feldes" zunächst ein anderes Feld der gleichen Kategorie aus. Abhängig vom Eingabetyp des gewählten Feldes stehen nun unterschiedliche Arten von Anzeigebedingungen zur Verfügung:
+
+Die Option "Feld beliebig ausgefüllt" ist für alle Eingabetypen verfügbar. Ist diese Option aktiviert, wird das aktuelle Feld immer dann angezeigt, wenn im als Bedingung gewählten Feld ein beliebiger Wert eingetragen ist.
+
+Wird ein Feld des Eingabetyps "Dropdown-Liste", "Dropdown-Liste (Bereich)", "Radiobutton", "Ja / Nein" oder "Checkboxen" ausgewählt, werden darüber hinaus nun die möglichen Werte des gewählten Feldes angezeigt und können selektiert werden. Sind einer oder mehrere Werte selektiert, wird das aktuelle Feld bei der Dateneingabe nur dann angezeigt, wenn beim als Bedingung gewählten Feld mindestens einer der selektierten Werte gesetzt ist.
 
 Bitte beachten Sie, dass keine Anzeigebedingung für ein Feld gesetzt werden kann, solange es als Pflichtfeld konfiguriert ist.
 

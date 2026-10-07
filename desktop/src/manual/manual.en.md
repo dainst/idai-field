@@ -733,9 +733,13 @@ The setting *Allow field specific search* in the field editor determines whether
 
 ### Display conditions
 
-The setting "Condition for display of field" can be used to define a condition for displaying the field. If a condition is set, the field is only available during data entry if a specific value (or one of several values) is set in another field of the same resource.
+The setting "Condition for display of field" can be used to define a condition for displaying the field. If a condition is set, the field is only available during data entry if another field in the same resource has either a single specific value, one of several values, or any value set.
 
-To set a condition, first select another field from the same category in the dropdown field "Condition for displaying the field". You can choose from fields of the input types "Dropdown list", "Dropdown list (range)", "Radiobutton", "Yes/No" and "Checkboxes". The possible values for the chosen field are now displayed and can be selected. The current field is only displayed during data entry if at least one of the selected values is set in the field used as the condition.
+To set a condition, first select another field from the same category in the dropdown field "Condition for displaying the field". Depending on the input type of the selected field, different types of display conditions are now available:
+
+The option "Any field value" is available for all input types. If this option is enabled, the current field is always displayed whenever any value is entered in the field selected as the condition.
+
+If a field of the input type "Dropdown list", "Dropdown list (range)", "Radiobutton", "Yes/No" or "Checkboxes" is selected, the possible values for the selected field are now also displayed and can be selected. If one or more values are selected, the current field will only be displayed during data entry if at least one of the selected values is set in the field used as the condition.
 
 Please note that no display condition can be set for a field as long as it is configured as a mandatory field.
 

@@ -1,3 +1,7 @@
 .z-values-alert-modal-body {
   user-select: none;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
 }

@@ -35,14 +35,28 @@ export async function createBackup(filePath: string, project: string) {
     PouchDB.plugin(replicationStream.plugin);
     (PouchDB as any).adapter('writableStream', replicationStream.adapters.writableStream);
 
-    let dumpedString: string = '';
-    const memoryStream = new stream.Writable();
-    memoryStream._write = (chunk: any, _: any, done: any) => {
-        dumpedString += removeAttachments(chunk.toString());
+    const tempFilePath: string = filePath + '.tmp';
+    const fileDescriptor: number = fs.openSync(tempFilePath, 'w');
+    
+    const fileStream = new stream.Writable();
+    fileStream._write = (chunk: any, _: any, done: any) => {
+        fs.writeSync(fileDescriptor, removeAttachments(chunk.toString()));
         done();
     };
-    await new PouchDB(project).dump(memoryStream, { attachments: false });
-    fs.writeFileSync(filePath, dumpedString);
+    const completed: Promise<void> = new Promise(resolve => fileStream.on('finish', resolve));
+
+    let error: boolean = false;
+
+    try {
+        await new PouchDB(project).dump(fileStream, { attachments: false });
+        await completed;
+        fs.renameSync(tempFilePath, filePath);
+    } catch {
+        error = true;
+    } finally {
+        fs.closeSync(fileDescriptor);
+        if (error) fs.rmSync(tempFilePath, { force: true });
+    }
 }
 
 

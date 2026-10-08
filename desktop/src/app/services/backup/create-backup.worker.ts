@@ -38,11 +38,24 @@ export async function createBackup(filePath: string, project: string) {
     let dumpedString: string = '';
     const memoryStream = new stream.Writable();
     memoryStream._write = (chunk: any, _: any, done: any) => {
-        dumpedString += chunk.toString().replace(/"data"[\s\S]+?,/g,'\"data\":\"\",');
+        dumpedString += removeAttachments(chunk.toString());
         done();
     };
     await new PouchDB(project).dump(memoryStream, { attachments: false });
     fs.writeFileSync(filePath, dumpedString);
+}
+
+
+function removeAttachments(line: string): string {
+
+    if (!line.includes('"_attachments"')) return line;
+
+    const entry: any = JSON.parse(line);
+    if (!Array.isArray(entry.docs)) return line;
+
+    entry.docs.forEach(document => delete document._attachments);
+
+    return JSON.stringify(entry) + '\n';
 }
 
 

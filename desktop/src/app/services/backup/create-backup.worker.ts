@@ -48,7 +48,7 @@ export async function createBackup(filePath: string, project: string) {
     let error: boolean = false;
 
     try {
-        await new PouchDB(project).dump(fileStream, { attachments: false });
+        await new PouchDB(project).dump(fileStream);
         await completed;
         fs.renameSync(tempFilePath, filePath);
     } catch {

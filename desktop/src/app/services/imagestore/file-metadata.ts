@@ -61,7 +61,7 @@ function getCreator(tags: ExifReader.ExpandedTags): string {
     }
 
     if (tags.iptc && tags.iptc['By-line']) {
-        return tags.iptc['By-line'].description;
+        return getIptcTag(tags, 'By-line').description;
     }
 
     if (tags.xmp && 'creator' in tags.xmp) {
@@ -85,7 +85,9 @@ function getCreationDate(tags: ExifReader.ExpandedTags): Date {
 
     if (tags.iptc && 'Time Created' in tags.iptc && 'Date Created' in tags.iptc) {
         // Combine both iptc tags in order to create valid Date.
-        const parsed = new Date(`${tags.iptc['Date Created'].description}T${tags.iptc['Time Created'].description}`);
+        const parsed = new Date(
+            `${getIptcTag(tags, 'Date Created').description}T${getIptcTag(tags, 'Time Created').description}`
+        );
         if (parsed.toString() !== 'Invalid Date') return parsed;
     }
 
@@ -106,4 +108,12 @@ function getCreationDate(tags: ExifReader.ExpandedTags): Date {
     }
 
     return undefined;
+}
+
+
+function getIptcTag(tags: ExifReader.ExpandedTags, tagName: string) {
+
+    return Array.isArray(tags.iptc[tagName]) && tags.iptc[tagName].length
+        ? tags.iptc[0]
+        : tags.iptc[tagName];
 }

@@ -4823,10 +4823,10 @@
         "label": "4 (can be scratched by knife)"
       },
       "5 (Messerspitze ritzt schwer)": {
-        "label": "5 (can hardly be scratched by knife)"
+        "label": "5 (can heavily be scratched by knife)"
       },
       "3 (Messerspitze ritzt leicht)": {
-        "label": "3 (can easily be scratched by knife)"
+        "label": "3 (can slightly be scratched by knife)"
       },
       "2 (Fingernagel ritzt)": {
         "label": "2 (can be scratched by fingernail)"

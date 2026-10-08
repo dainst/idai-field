@@ -25,7 +25,7 @@ export async function extendMetadataByFileData(existingMetadata: ImageMetadata, 
                                                parseDraughtsmenFromMetadata: boolean): Promise<ImageMetadata> {
 
     const { width, height } = getDimensions(data);
-    const internalMetadata: ExifReader.ExpandedTags = ExifReader.load(data.buffer, { expanded: true });
+    const internalMetadata: ExifReader.ExpandedTags = ExifReader.load(data, { expanded: true });
 
     existingMetadata.width = width;
     existingMetadata.height = height;

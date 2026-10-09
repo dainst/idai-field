@@ -184,6 +184,8 @@ export class ImportValidator extends Validator {
         Validations.assertCorrectnessOfUrls(document, this.projectConfiguration);
         Validations.assertCorrectnessOfDatingValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfDimensionValues(document, this.projectConfiguration);
+        Validations.assertCorrectnessOfWeightValues(document, this.projectConfiguration);
+        Validations.assertCorrectnessOfVolumeValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfLiteratureValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfCompositeValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfOptionalRangeValues(document, this.projectConfiguration);

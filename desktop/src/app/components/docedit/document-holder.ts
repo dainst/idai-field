@@ -149,6 +149,8 @@ export class DocumentHolder {
         Validations.assertCorrectnessOfDatingValues(this.clonedDocument, this.projectConfiguration, this.oldVersion);
         Validations.assertCorrectnessOfDimensionValues(this.clonedDocument, this.projectConfiguration,
             this.oldVersion);
+        Validations.assertCorrectnessOfWeightValues(this.clonedDocument, this.projectConfiguration, this.oldVersion);
+        Validations.assertCorrectnessOfVolumeValues(this.clonedDocument, this.projectConfiguration, this.oldVersion);
         Validations.assertCorrectnessOfLiteratureValues(this.clonedDocument, this.projectConfiguration,
             this.oldVersion);
         Validations.assertWorkflowRelations(this.clonedDocument);

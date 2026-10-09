@@ -222,18 +222,30 @@ defmodule FieldPublication.Publication.Geo do
 
     {_, 0} =
       System.cmd(
-        "gdal",
+        "ogr2ogr",
         [
-          "vector",
-          "reproject",
-          "--input-crs",
+          "-wrapdateline",
+          "-s_srs",
           "EPSG:#{input_epsg}",
-          "--output-crs",
+          "-t_srs",
           "EPSG:#{output_epsg}",
-          "--overwrite",
-          temp_file,
-          output_file
+          "-overwrite",
+          output_file,
+          temp_file
         ],
+        # version for gdal >= 3.13
+        # "gdal",
+        # [
+        #   "vector",
+        #   "reproject",
+        #   "--input-crs",
+        #   "EPSG:#{input_epsg}",
+        #   "--output-crs",
+        #   "EPSG:#{output_epsg}",
+        #   "--overwrite",
+        #   temp_file,
+        #   output_file
+        # ],
         stderr_to_stdout: true
       )
 

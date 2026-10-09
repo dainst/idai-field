@@ -99,7 +99,7 @@
     "currentVersion": "Aktuelle Version:",
     "packageInfo": "Die Field-Desktopanwendung kann auf den folgenden Betriebssystemen eingesetzt werden:",
     "windowsInfo": "Windows 11",
-    "macInfo": "macOS 10.13 und höher",
+    "macInfo": "macOS 13 und höher",
     "linuxInfo": "Linux (Ubuntu 18.04, Fedora 32, Debian 10 und höher)",
     "allVersions": "Alle Versionen...",
     "sourceCode": "Quellcode auf GitHub",

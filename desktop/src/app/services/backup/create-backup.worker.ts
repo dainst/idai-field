@@ -18,6 +18,7 @@ addEventListener('message', async ({ data }) => {
         await createBackup(targetFilePath, project);
     } catch (err) {
         postMessage({ success: false, error: err });
+        return;
     }
 
     postMessage({

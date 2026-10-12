@@ -3,6 +3,15 @@
          class="btn btn-primary btn-square layer-button"
          [class.active]="opened"
          [class.disabled]="disabled || isInEditMode()"
+         ngbTooltip="Kartenhintergründe verwalten"
+         i18n-ngbTooltip="@@resources.map.layers"
+         container="body"
+         placement="left"
+         triggers="manual"
+         #layersButtonTooltip="ngbTooltip"
+         (mouseover)="layersButtonTooltip.open()"
+         (mouseleave)="layersButtonTooltip.close()"
+         (mousedown)="layersButtonTooltip.close()"
          (click)="!disabled && toggle()">
         <span class="mdi mdi-layers mdi-18px"></span>
     </div>

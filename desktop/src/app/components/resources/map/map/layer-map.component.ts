@@ -10,6 +10,7 @@ import { Messages } from '../../../messages/messages';
 import { LayerImageProvider } from './layers/layer-image-provider';
 import { LayerManager, ListDiffResult } from './layers/layer-manager';
 import { MapComponent } from './map.component';
+import { ViewFacade } from '../../view/view-facade';
 
 const fs = window.require('fs');
 
@@ -34,7 +35,8 @@ export class LayerMapComponent extends MapComponent {
     private tileLayer: L.TileLayer;
 
 
-    constructor(projectConfiguration: ProjectConfiguration,
+    constructor(viewFacade: ViewFacade,
+                projectConfiguration: ProjectConfiguration,
                 labels: Labels,
                 private layerManager: LayerManager,
                 private layerImageProvider: LayerImageProvider,
@@ -45,7 +47,7 @@ export class LayerMapComponent extends MapComponent {
                 private datastore: PouchdbDatastore,
                 protected menuService: Menus) {
 
-        super(projectConfiguration, labels, zone);
+        super(viewFacade, projectConfiguration, labels, zone);
 
         this.layerManager.reset();
         this.datastore.changesNotifications().subscribe(document => this.reloadLayersOnChange(document));

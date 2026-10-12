@@ -49,10 +49,10 @@
                     <span i18n="@@widgets.searchBar.categoryFilter">Nach Kategorie filtern:</span>
                 </div>
                 <category-picker [topLevelCategoriesArray]="filterOptions"
-                                    [allCategoriesOptionVisible]="isAllCategoriesOptionVisible()"
-                                    [selectedCategories]="selectedCategories"
-                                    [allowPickingAbstractCategories]="true"
-                                    (onCategoryPicked)="chooseCategoryFilter($event)">
+                                 [allCategoriesOptionVisible]="isAllCategoriesOptionVisible()"
+                                 [selectedCategories]="selectedCategories"
+                                 [allowPickingAbstractCategories]="true"
+                                 (onCategoryPicked)="chooseCategoryFilter($event)">
                 </category-picker>
             </div>
         </ng-template>

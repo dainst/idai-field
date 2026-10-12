@@ -1,5 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, NgZone, Output,
-    SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, NgZone, Output, SimpleChanges } from '@angular/core';
 import L from 'leaflet';
 import '@geoman-io/leaflet-geoman-free';
 import { CategoryForm, FieldDocument, FieldGeometry, Labels, PouchdbDatastore,
@@ -15,6 +14,7 @@ import { LayerMapComponent } from './layer-map.component';
 import { LayerImageProvider } from './layers/layer-image-provider';
 import { LayerManager } from './layers/layer-manager';
 import { MenuContext } from '../../../../services/menu-context';
+import { ViewFacade } from '../../view/view-facade';
 
 
 declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
@@ -61,7 +61,8 @@ export class EditableMapComponent extends LayerMapComponent {
     private editorInitialized: boolean = false;
 
 
-    constructor(projectConfiguration: ProjectConfiguration,
+    constructor(viewFacade: ViewFacade,
+                projectConfiguration: ProjectConfiguration,
                 labels: Labels,
                 layerManager: LayerManager,
                 layerImageProvider: LayerImageProvider,
@@ -72,8 +73,8 @@ export class EditableMapComponent extends LayerMapComponent {
                 protected zone: NgZone,
                 protected changeDetectorRef: ChangeDetectorRef) {
 
-        super(projectConfiguration, labels, layerManager, layerImageProvider, messages, settingsProvider, zone,
-            changeDetectorRef, datastore, menuService);
+        super(viewFacade, projectConfiguration, labels, layerManager, layerImageProvider, messages, settingsProvider,
+            zone, changeDetectorRef, datastore, menuService);
     }
 
 

@@ -77,9 +77,13 @@ export class ViewFacade {
 
     public getActiveLayersIds = () => ResourcesState.getActiveLayersIds(this.resourcesStateManager.get());
 
+    public getMapCategories = () => ResourcesState.getMapCategories(this.resourcesStateManager.get());
+
     public deselect = () => this.documentsManager.deselect();
 
     public setActiveLayersIds = (activeLayersIds: string[]) => this.resourcesStateManager.setActiveLayersIds(activeLayersIds);
+
+    public setMapCategories = (mapCategories: string[]) => this.resourcesStateManager.setMapCategories(mapCategories);
 
     public setMode = (mode: ResourcesViewMode) => this.resourcesStateManager.setMode(mode);
 

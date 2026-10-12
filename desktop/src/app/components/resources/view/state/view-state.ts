@@ -12,6 +12,7 @@ export interface ViewState {
 
     operation: FieldDocument|undefined;
     layerIds?: string[];
+    mapCategories?: string[];
     navigationPath: NavigationPath;
     mode: ResourcesViewMode;
 

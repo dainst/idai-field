@@ -202,6 +202,13 @@ export class ResourcesStateManager {
     }
 
 
+    public setMapCategories(mapCategories: string[]) {
+
+        ResourcesState.setMapCategories(this.resourcesState, mapCategories);
+        this.serialize();
+    }
+
+
     public async moveInto(document: FieldDocument|undefined) {
 
         const navigationPath: NavigationPath = ResourcesState.getNavigationPath(this.resourcesState);
@@ -381,6 +388,7 @@ export class ResourcesStateManager {
         };
 
         if (viewState.layerIds) objectToSerialize.layerIds = viewState.layerIds;
+        if (viewState.mapCategories) objectToSerialize.mapCategories = viewState.mapCategories;
 
         return objectToSerialize;
     }

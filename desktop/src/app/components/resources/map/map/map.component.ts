@@ -5,6 +5,7 @@ import { FieldPolyline } from './field-polyline';
 import { FieldPolygon } from './field-polygon';
 import { FieldMarker } from './field-marker';
 import { MapComponentHelper as Helper } from './map-component-helper';
+import { ViewFacade } from '../../view/view-facade';
 
 
 const DEFAULT_PADDING: number = 10;
@@ -12,7 +13,7 @@ const DEFAULT_PADDING: number = 10;
 
 @Component({
     selector: 'map',
-    template: '<div id="map-container"></div>',
+    templateUrl: './map.html',
     standalone: false
 })
 
@@ -25,12 +26,15 @@ export class MapComponent implements AfterViewInit, OnChanges {
     @Input() selectedDocument: FieldDocument;
     @Input() additionalSelectedDocuments: Array<FieldDocument>;
     @Input() parentDocument: FieldDocument;
+    @Input() topLevelCategories: Array<CategoryForm>;
     @Input() coordinateReferenceSystem: string;
     @Input() paddingLeft: number;
     @Input() update: boolean;
 
     @Output() onSelectDocument: EventEmitter<{ document: FieldDocument|undefined, multiSelect: boolean }>
         = new EventEmitter<{ document: FieldDocument|undefined, multiSelect: boolean }>();
+
+    public categoriesToDisplay: string[];
 
     protected map: any;
     protected polygons: { [resourceId: string]: Array<FieldPolygon> } = {};
@@ -50,7 +54,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
     private canvasRenderer: L.Canvas = L.canvas({ padding: 1 });
 
 
-    constructor(protected projectConfiguration: ProjectConfiguration,
+    constructor(private viewFacade: ViewFacade,
+                protected projectConfiguration: ProjectConfiguration,
                 protected labels: Labels,
                 protected zone: NgZone) {}
 
@@ -65,6 +70,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     public ngOnChanges(changes: SimpleChanges) {
 
+        this.updateCategoriesToDisplay();
+
         this.zone.runOutsideAngular(() => {
             if (!this.map) this.map = this.createMap();
 
@@ -73,6 +80,14 @@ export class MapComponent implements AfterViewInit, OnChanges {
                 if (MapComponent.isUpdateNecessary(changes)) this.updateMap(changes);
             });
         });
+    }
+
+
+    public setCategoriesToDisplay(categoryNames: string[]) {
+
+        this.categoriesToDisplay = categoryNames;
+        this.resetMap();
+        this.viewFacade.setMapCategories(categoryNames);
     }
 
 
@@ -229,7 +244,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         if (this.documents) {
             for (let document of this.documents) {
-                if (document.resource.geometry) this.addGeometryToMap(document);
+                if (document.resource.geometry
+                    && (!this.categoriesToDisplay || this.categoriesToDisplay.includes(document.resource.category))) {
+                        this.addGeometryToMap(document);
+                }
             }
         }
 
@@ -523,6 +541,23 @@ export class MapComponent implements AfterViewInit, OnChanges {
             paddingTopLeft: [DEFAULT_PADDING + this.paddingLeft, DEFAULT_PADDING],
             paddingBottomRight: [DEFAULT_PADDING, DEFAULT_PADDING]
         };
+    }
+
+
+    private updateCategoriesToDisplay() {
+
+        const mapCategories: string[] = this.viewFacade.getMapCategories();
+        if (mapCategories) {
+            this.categoriesToDisplay = mapCategories;
+        } else {
+            this.categoriesToDisplay = this.topLevelCategories.reduce((result, category) => {
+                result.push(category.name);
+                if (category.children) result = result.concat(
+                    category.children.map(childCategory => childCategory.name)
+                );
+                return result;
+            }, []);
+        }
     }
 
     private static isUpdateNecessary(changes: SimpleChanges) {

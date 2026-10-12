@@ -93,6 +93,12 @@ export module ResourcesState {
     }
 
 
+    export function getMapCategories(state: ResourcesState): string[]|undefined {
+
+        return getViewState(state).mapCategories;
+    }
+
+
     export function getMode(state: ResourcesState): ResourcesViewMode {
 
         return getViewState(state).mode;
@@ -161,6 +167,12 @@ export module ResourcesState {
     export function setActiveLayerIds(state: ResourcesState, activeLayersIds: string[]) {
 
         getViewState(state).layerIds = activeLayersIds.slice(0);
+    }
+
+
+    export function setMapCategories(state: ResourcesState, mapCategories: string[]) {
+
+        getViewState(state).mapCategories = mapCategories;
     }
 
 

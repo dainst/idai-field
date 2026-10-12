@@ -1,0 +1,38 @@
+#toggle-categories-button,
+#toggle-categories-menu {
+  position: absolute;
+  z-index: 1008;
+  right: 55px;
+  border: none;
+}
+
+#toggle-categories-button {
+  top: 10px;
+  padding-top: 6px;
+
+  .mdi {
+    position: relative;
+    left: 0.5px;
+    top: 0.5px;
+  }
+
+  &.disabled {
+    opacity: 1;
+  }
+}
+
+#toggle-categories-menu {
+  top: 51px;
+  min-width: 223px;
+  max-width: 500px;
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  border-radius: 0.25rem !important;
+  background-color: #f8f9fa !important;
+  cursor: default !important;
+  user-select: none;
+
+  .card-body {
+    padding: 7px;
+  }
+}

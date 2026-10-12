@@ -63,7 +63,7 @@ defmodule FieldPublication.Application do
     :ok
   end
 
-  @gdal_regex ~r"^GDAL 3\.(\d+)\.\d+ .+"
+  @gdal_regex ~r"^GDAL 3\.(\d+)\.\d+.+"
   defp check_gdal_version() do
     case System.cmd("gdalinfo", ["--version"]) do
       {response, 0} ->
@@ -72,11 +72,14 @@ defmodule FieldPublication.Application do
           [[response, minor_version_string]] ->
             {minor_version, ""} = Integer.parse(minor_version_string)
 
-            if minor_version >= 11 do
+            if minor_version >= 10 do
               {:ok, response}
             else
               {:error, response}
             end
+
+          _other ->
+            {:error, response}
         end
 
       {response, _status_code} ->

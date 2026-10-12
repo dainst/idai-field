@@ -81,7 +81,7 @@ RUN apt-get update -y
 RUN curl -sL https://deb.nodesource.com/setup_24.x | bash
 RUN apt-get install -y nodejs
 
-RUN apt-get install -y libstdc++6 openssl libncurses6 libc6 locales ca-certificates \
+RUN apt-get install -y libstdc++6 openssl libncurses6 libc6 locales ca-certificates gdal-bin \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # Set the locale

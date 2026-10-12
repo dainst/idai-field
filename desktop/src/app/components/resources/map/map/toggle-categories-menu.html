@@ -1,7 +1,8 @@
 <div id="toggle-categories-button"
         class="btn btn-primary btn-square layer-button"
         [class.active]="opened"
-        (click)="toggle()">
+        [class.disabled]="disabled"
+        (click)="!disabled && toggle()">
     <span class="mdi mdi-eye mdi-18px"></span>
 </div>
 <div *ngIf="opened" id="toggle-categories-menu" class="card">

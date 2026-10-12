@@ -1,6 +1,7 @@
 <div id="map-container" (contextmenu)="removeLastVertex()"></div>
 
 <layer-menu [layerGroups]="getLayerGroups()"
+            [disabled]="isEditing"
             (onToggleLayer)="toggleLayer($event)"
             (onFocusLayer)="focusLayer($event)"
             (onAddOrRemoveLayers)="updateLayers(false)"
@@ -9,6 +10,7 @@
 
 <toggle-categories-menu [topLevelCategories]="topLevelCategories"
                         [selectedCategories]="categoriesToDisplay"
+                        [disabled]="isEditing"
                         (onCategoriesToggled)="setCategoriesToDisplay($event)"></toggle-categories-menu>
 
 <div id="map-editor-buttons" *ngIf="isEditing">

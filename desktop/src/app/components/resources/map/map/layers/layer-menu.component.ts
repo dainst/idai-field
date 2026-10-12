@@ -26,6 +26,7 @@ import { ImageToolLauncher } from '../../../../../services/imagestore/image-tool
 export class LayerMenuComponent extends MenuComponent implements OnChanges {
 
     @Input() layerGroups: Array<LayerGroup> = [];
+    @Input() disabled: boolean;
 
     @Output() onToggleLayer = new EventEmitter<ImageDocument>();
     @Output() onFocusLayer = new EventEmitter<ImageDocument>();

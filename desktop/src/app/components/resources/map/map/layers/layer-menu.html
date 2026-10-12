@@ -2,8 +2,8 @@
     <div id="layer-button"
          class="btn btn-primary btn-square layer-button"
          [class.active]="opened"
-         [class.disabled]="isInEditMode()"
-         (click)="toggle()">
+         [class.disabled]="disabled || isInEditMode()"
+         (click)="!disabled && toggle()">
         <span class="mdi mdi-layers mdi-18px"></span>
     </div>
     <div *ngIf="opened" id="layer-menu" class="card">

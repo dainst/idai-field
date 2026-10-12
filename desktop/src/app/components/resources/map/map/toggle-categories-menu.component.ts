@@ -14,10 +14,11 @@ import { Menus } from '../../../../services/menus';
  */
 export class ToggleCategoriesMenuComponent extends MenuComponent {
 
-    @Input() public topLevelCategories: Array<CategoryForm>;
-    @Input() public selectedCategories: string[];
+    @Input() topLevelCategories: Array<CategoryForm>;
+    @Input() selectedCategories: string[];
+    @Input() disabled: boolean;
 
-    @Output() public onCategoriesToggled: EventEmitter<string[]> = new EventEmitter<string[]>;
+    @Output() onCategoriesToggled: EventEmitter<string[]> = new EventEmitter<string[]>;
 
 
     constructor(renderer: Renderer2,

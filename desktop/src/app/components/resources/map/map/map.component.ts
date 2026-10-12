@@ -243,17 +243,20 @@ export class MapComponent implements AfterViewInit, OnChanges {
         this.addParentDocumentGeometryToMap();
 
         if (this.documents) {
-            for (let document of this.documents) {
-                if (document.resource.geometry
-                    && (!this.categoriesToDisplay || this.categoriesToDisplay.includes(document.resource.category))) {
-                        this.addGeometryToMap(document);
-                }
-            }
+            this.documents.filter(document => this.isGeometryDisplayed(document))
+                .forEach(document => this.addGeometryToMap(document));
         }
 
         this.polygonsLayerGroup = L.layerGroup(this.polygonsArray).addTo(this.map);
         this.polylinesLayerGroup = L.layerGroup(this.polylinesArray).addTo(this.map);
         this.markersLayerGroup = L.layerGroup(this.markersArray).addTo(this.map);
+    }
+
+
+    protected isGeometryDisplayed(document: FieldDocument): boolean {
+
+        return document.resource.geometry
+            && (!this.categoriesToDisplay || this.categoriesToDisplay.includes(document.resource.category));
     }
 
 

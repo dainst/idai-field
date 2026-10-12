@@ -817,6 +817,15 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
+    protected isGeometryDisplayed(document: FieldDocument): boolean {
+
+        return document.resource.geometry
+            && (!this.categoriesToDisplay
+                || this.categoriesToDisplay.includes(document.resource.category)
+                || this.documentInEditing?.resource.id === document.resource.id);
+    }
+
+
     private static removeElement(element: any, list: Array<any>) {
 
         for (let listElement of list) {

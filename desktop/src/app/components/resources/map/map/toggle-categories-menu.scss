@@ -34,5 +34,38 @@
 
   .card-body {
     padding: 7px;
+
+    category-picker {
+      display: block;
+      max-height: calc(100vh - 250px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      border-radius: 0.25rem;
+
+      .child-category .category-item {
+        padding-left: 25px;
+      }
+
+      .list-group-item:first-child {
+        border: none !important;
+      }
+
+      .category-item {
+        padding: 5px 10px;
+
+        .category-icon {
+          width: 23px !important;
+          height: 23px !important;
+          font-size: 23px !important;
+          line-height: 23px !important;
+          margin-left: 1px;
+        }
+
+        .category-label {
+          font-size: 14px;
+          margin-left: 32px;
+        }
+      }
+    }
   }
 }

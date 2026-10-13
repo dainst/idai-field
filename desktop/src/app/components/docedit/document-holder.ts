@@ -167,9 +167,9 @@ export class DocumentHolder {
                 = CategoryForm.getFields(category).find(field => field.name === fieldName);
             if (!field) continue;
 
-            if (field.inputType === 'unsignedInt') {
+            if ([Field.InputType.INT, Field.InputType.UNSIGNEDINT].includes(field.inputType)) {
                 this.clonedDocument.resource[fieldName] = parseInt(this.clonedDocument.resource[fieldName]);
-            } else if (field.inputType === 'float' || field.inputType === 'unsignedFloat') {
+            } else if ([Field.InputType.FLOAT, Field.InputType.UNSIGNEDFLOAT].includes(field.inputType)) {
                 this.clonedDocument.resource[fieldName] = parseFloat(this.clonedDocument.resource[fieldName]);
             }
         }

@@ -17,11 +17,9 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
   }
 
   def render(assigns) do
-    # IO.inspect(assigns)
     ~H"""
     <div class="flex flex-row gap-1">
       <div class="basis-1/3">
-        TODO Belongs to Type catalog (link)
         <%= for %FieldGroup{} = group <- @doc.groups do %>
           <% fields =
             Enum.reject(group.fields, fn %Field{name: name} ->
@@ -69,11 +67,50 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
             </div>
           </section>
         <% end %>
-      </div>
+        <div class="grid grid-cols-2 gap-1 mt-2 mb-5">
+          <% parent_type = Document.get_relation(@doc, "liesWithin") %>
+          <%= if parent_type do %>
+            <section>
+              <.group_heading>
+                {pick_default_translation(parent_type.labels)}
+              </.group_heading>
 
+              <div class="grid grid-cols-1 gap-1 mt-2 mb-5">
+                <%= for %Document{} = doc <- parent_type.docs do %>
+                  <.document_link
+                    id={doc.id}
+                    doc={doc}
+                    image_count={10}
+                    image_height={200}
+                  />
+                <% end %>
+              </div>
+            </section>
+          <% end %>
+        </div>
+      </div>
       <div class="basis-2/3">
-        <h1>If there are subtypes make a foldable tree or tabs</h1>
-        <h1>Else display the finds directly</h1>
+        <div class="grid grid-cols-2 gap-1 mt-2 mb-5">
+          <% children_types = Document.get_relation(@doc, "contains") %>
+          <%= if children_types do %>
+            <section>
+              <.group_heading>
+                {pick_default_translation(children_types.labels)} ({Enum.count(children_types.docs)})
+              </.group_heading>
+
+              <div class="grid grid-cols-1 gap-1 mt-2 mb-5">
+                <%= for %Document{} = doc <- children_types.docs do %>
+                  <.document_link
+                    id={doc.id}
+                    doc={doc}
+                    image_count={10}
+                    image_height={200}
+                  />
+                <% end %>
+              </div>
+            </section>
+          <% end %>
+        </div>
 
         <% associated_finds = Document.get_relation(@doc, "hasInstance") %>
         <%= if associated_finds do %>

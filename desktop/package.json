@@ -138,7 +138,7 @@
     "camelcase": "6.3.0",
     "cldr": "8.0.0",
     "compare-versions": "6.1.1",
-    "date-fns": "4.1.0",
+    "date-fns": "4.4.0",
     "date-fns-tz": "3.2.0",
     "detect-port": "2.1.0",
     "electron-log": "5.4.4",

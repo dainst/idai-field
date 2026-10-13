@@ -38,7 +38,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
 
               <div class="grid max-md:grid-cols-1 md:grid-cols-2 gap-1 mt-2">
                 <%= for %Field{input_type: type } = field <- fields do %>
-                  <div class={"#{if type in ["text"], do: "col-span-2"}"}>
+                  <div class={"#{if type in ["text"], do: "md:col-span-2"}"}>
                     <.render_field field={field} publication={@publication} />
                   </div>
                 <% end %>

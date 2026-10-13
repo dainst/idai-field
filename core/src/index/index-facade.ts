@@ -175,7 +175,7 @@ export class IndexFacade {
         const item: IndexItem = this.getIndexItem(document, isWorkflowCategory);
         if (!item || document.resource.category === CONFIGURATION) return;
 
-        item.identifier = document.resource.identifier;
+        IndexItem.update(item, document, isWorkflowCategory);
 
         if (this.projectConfiguration.getTypeCategories().map(to(Named.NAME)).includes(document.resource.category)) {
             IndexFacade.updateTypeItem(item as TypeResourceIndexItem);

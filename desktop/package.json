@@ -130,7 +130,7 @@
     "@ng-select/ng-select": "21.8.2",
     "@popperjs/core": "2.11.8",
     "address": "2.0.3",
-    "archiver": "7.0.1",
+    "archiver": "8.0.0",
     "assert": "2.1.0",
     "axios": "1.20.0",
     "bootstrap": "5.3.8",

@@ -17,4 +17,7 @@ const customRequire = (moduleName) => {
 window.require = customRequire as any;
 
 jest.mock('jimp', () => jest.fn());
-jest.mock('internal-ip', () => jest.fn());
+
+jest.mock('internal-ip', () => ({
+    internalIpV4: jest.fn()
+}));

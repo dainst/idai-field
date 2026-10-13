@@ -150,7 +150,7 @@
     "express-pouchdb": "5.0.1-rc1.0",
     "extract-zip": "2.0.1",
     "gdal3.js": "2.8.1",
-    "geotiff": "3.0.4",
+    "geotiff": "3.0.5",
     "idai-field-core": "^1.6.0",
     "image-size": "2.0.4",
     "internal-ip": "9.0.0",

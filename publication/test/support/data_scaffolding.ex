@@ -67,17 +67,20 @@ defmodule FieldPublication.Test.DataScaffolding do
     Map.put(context, :administrator, user)
   end
 
-  def add_projects_and_empty_publications(%{editor: editor} = context) do
-    {:ok, project_a} =
-      Project.put(%Project{
-        identifier: "test_project_a",
-        editors: [editor.name]
-      })
+  def add_projects(%{editor: editor} = context) do
+    {project_a, project_b} = projects_setup(editor)
 
-    {:ok, project_b} =
-      Project.put(%Project{
-        identifier: "test_project_b"
-      })
+    on_exit(fn ->
+      projects_exit([project_a, project_b])
+    end)
+
+    context
+    |> Map.put(:project_a, project_a)
+    |> Map.put(:project_b, project_b)
+  end
+
+  def add_projects_and_empty_publications(%{editor: editor} = context) do
+    {project_a, project_b} = projects_setup(editor)
 
     {:ok, published_project_a} =
       Publication.create_from_replication_input(%ReplicationInput{
@@ -189,8 +192,7 @@ defmodule FieldPublication.Test.DataScaffolding do
       })
 
     on_exit(fn ->
-      Project.delete(project_a)
-      Project.delete(project_b)
+      projects_exit([project_a, project_b])
     end)
 
     context
@@ -199,5 +201,24 @@ defmodule FieldPublication.Test.DataScaffolding do
     |> Map.put(:published_project_a, published_project_a)
     |> Map.put(:unpublished_project_a, unpublished_project_a)
     |> Map.put(:unpublished_project_b, unpublished_project_b)
+  end
+
+  defp projects_setup(editor) do
+    {:ok, project_a} =
+      Project.put(%Project{
+        identifier: "test_project_a",
+        editors: [editor.name]
+      })
+
+    {:ok, project_b} =
+      Project.put(%Project{
+        identifier: "test_project_b"
+      })
+
+    {project_a, project_b}
+  end
+
+  defp projects_exit(projects) do
+    Enum.each(projects, fn project -> Project.delete(project) end)
   end
 end

@@ -1,60 +1,50 @@
 defmodule FieldPublicationWeb.FieldHubIntegrationTest do
   use FieldPublicationWeb.ConnCase
 
+  import Phoenix.LiveViewTest
+  import FieldPublication.Test.DataScaffolding
+
   @moduledoc """
   This test will actually start a Field Hub instance in the background and go
   through the complete replication and preprocessing steps once.
   """
 
-  @core_database Application.compile_env(:field_publication, :core_database)
-  @test_project_identifier "field_hub_integration_test"
-
   alias FieldPublication.{
-    CouchService,
     EmbeddedSchema.LogEntry,
     FileService,
-    Replication,
-    Processing,
     Project,
-    Publication
+    Publication,
+    User
   }
 
-  import Phoenix.LiveViewTest
+  setup_all [
+    :field_hub,
+    :create_core_database,
+    :add_editor_user,
+    :add_admin_user,
+    :add_projects
+  ]
 
-  setup_all %{} do
+  def field_hub(context) do
     FieldHubHelper.start()
-    CouchService.put_database(@core_database)
-
-    Project.put(%Project{}, %{"identifier" => @test_project_identifier})
-
-    project = Project.get!(@test_project_identifier)
 
     on_exit(fn ->
-      Publication.get(@test_project_identifier, Date.utc_today())
-      |> case do
-        {:ok, publication} ->
-          Replication.stop(publication)
-          Processing.stop(publication)
-          Publication.delete(publication)
-
-        _ ->
-          :ok
-      end
-
-      Project.delete(project)
-      CouchService.delete_database(@core_database)
       FieldHubHelper.stop()
     end)
 
-    %{test_project: project}
+    context
   end
 
   @tag timeout: 1000 * 60 * 5
-  test "can create a new publication through replicating from FieldHub", %{conn: conn} do
-    conn = log_in_user(conn, Application.get_env(:field_publication, :couchdb_admin_name))
+  test "can create a new publication through replicating from FieldHub", %{
+    conn: conn,
+    project_a: %Project{identifier: project_identifier} = _project_a,
+    editor: %User{} = editor
+  } do
+    conn = log_in_user(conn, editor.name)
 
     assert {:ok, live_process, _html} =
-             live(conn, ~p"/management/projects/#{@test_project_identifier}/publication/new")
+             live(conn, ~p"/management/projects/#{project_identifier}/publication/new")
 
     pid = live_process.pid
     :erlang.trace(pid, true, [:receive])
@@ -77,7 +67,7 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
     assert {:ok, live_process, html} = live(conn, publication_path)
 
     assert html =~
-             "Publication <span>draft </span>\n  &#39;#{Date.utc_today()}&#39; for project &#39;#{@test_project_identifier}&#39;"
+             "Publication <span>draft </span>\n  &#39;#{Date.utc_today()}&#39; for project &#39;#{project_identifier}&#39;"
 
     assert_receive(
       {_publication_id, {:replication_stopped}},
@@ -86,10 +76,10 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
 
     %Publication{
       doc_type: "publication",
-      project_identifier: @test_project_identifier,
+      project_identifier: ^project_identifier,
       drafted_by: "couch_admin",
       replication_logs: logs
-    } = Publication.get!(@test_project_identifier, "#{Date.utc_today()}")
+    } = Publication.get!(project_identifier, "#{Date.utc_today()}")
 
     assert %LogEntry{
              # The rest would be something containing a date like: ""Replicating database for publication_test_project_a_<current date> by first replicating the database."
@@ -113,17 +103,17 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
     assert_receive {_publication_id, {:processing_stopped, :web_images}}, 1000 * 20
 
     %{image: image_uuids} =
-      FileService.list_raw_data_files(@test_project_identifier)
+      FileService.list_raw_data_files(project_identifier)
 
     raw_images_count = Enum.count(image_uuids)
 
     web_files_count =
-      @test_project_identifier
+      project_identifier
       |> FileService.list_web_image_files()
       |> Enum.count()
 
     tiles_count =
-      @test_project_identifier
+      project_identifier
       |> FileService.list_tile_image_directories()
       |> Enum.count()
 

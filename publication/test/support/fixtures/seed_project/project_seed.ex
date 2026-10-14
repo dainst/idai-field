@@ -36,7 +36,7 @@ defmodule FieldPublication.Test.ProjectSeed do
         source_user: "remote_field_field_hub_user",
         source_password: "fake",
         project_identifier: project_identifier,
-        drafted_by: "mix seed",
+        drafted_by: Application.get_env(:field_publication, :couchdb_admin_name),
         draft_date: @default_draft_date
       })
 
@@ -94,9 +94,10 @@ defmodule FieldPublication.Test.ProjectSeed do
 
     :ok = Replication.reconstruct_project_configuraton(publication)
 
-    Replication.finalize_metadata(publication)
+    {:ok, publication} = Replication.finalize_metadata(publication)
 
-    Publication.Geo.read_and_set_epsg_code(publication)
+    {:ok, publication} = Publication.Geo.read_and_set_epsg_code(publication)
+    {:ok, publication} = Publication.Geo.read_and_set_coordinate(publication)
     Publication.Geo.generate_feature_collections!(publication)
 
     [{:ok, %Finch.Response{status: 201}}] =

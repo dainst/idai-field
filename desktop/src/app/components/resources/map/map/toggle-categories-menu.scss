@@ -2,19 +2,15 @@
 #toggle-categories-menu {
   position: absolute;
   z-index: 1008;
-  right: 55px;
+  right: 57px;
   border: none;
 }
 
 #toggle-categories-button {
+  width: 38px !important;
+  height: 38px !important;
   top: 10px;
   padding-top: 6px;
-
-  .mdi {
-    position: relative;
-    left: 0.5px;
-    top: 0.5px;
-  }
 
   &.disabled {
     opacity: 1;

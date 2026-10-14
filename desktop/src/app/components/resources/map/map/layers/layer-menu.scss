@@ -11,18 +11,18 @@ $layer-menu-remove-button-color: #c82333;
 #layer-menu {
   position: absolute;
   z-index: 1008;
-  right: 8px;
+  right: 10px;
   border: none;
 }
 
 #layer-button {
+  width: 38px !important;
+  height: 38px !important;
   top: 10px;
   padding-top: 6px;
 
   .mdi {
     position: relative;
-    left: 0.5px;
-    top: 0.5px;
   }
 
   &.disabled {

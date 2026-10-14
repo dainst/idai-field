@@ -37,9 +37,8 @@ export function convertCsvRows(separator: string) {
     return (content: string): Array<Object> => {
 
         const rows: string[][] = getRows(content, separator);
-        if (rows.length < 0) return [];
-
         const headings: string[] = rows.shift() as string[];
+
         assertHeadingsIsntEmptyandDoesntContainEmptyEntries(headings);
         assertHeadingsConsistent(headings);
         assertHeadingsDoNotContainIncompleteArrays(headings);

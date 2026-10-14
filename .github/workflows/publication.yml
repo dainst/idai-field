@@ -10,7 +10,7 @@ on:
       - ".github/workflows/publication.yml"
 jobs:
   Tests:
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash

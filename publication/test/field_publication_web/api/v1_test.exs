@@ -2,62 +2,35 @@ defmodule FieldPublicationWeb.Api.V1Test do
   use FieldPublicationWeb.ConnCase
 
   import OpenApiSpex.TestAssertions
+  import FieldPublication.Test.DataScaffolding
 
   alias FieldPublication.{
-    CouchService,
+    Publication,
     Project,
     User
   }
 
-  alias FieldPublication.Test.ProjectSeed
+  setup_all [
+    :create_core_database,
+    :add_editor_user,
+    :add_admin_user,
+    :add_projects_and_empty_publications
+  ]
 
-  @core_database Application.compile_env(:field_publication, :core_database)
-
-  @test_editor_name "test_editor"
-  @test_editor_password "test_editor_password"
-  @test_project_identifier_a "test_project_a"
-  @test_project_identifier_b "test_project_b"
-  @empty_project_identifier "empty_project_identifier"
-  @unpublished_draft_date "2024-11-23"
-
-  setup_all %{} do
-    CouchService.put_database(@core_database)
-    {project_a, _publication} = ProjectSeed.create_full_publication(@test_project_identifier_a)
-
-    {:ok, user} =
-      User.create(%{
-        name: @test_editor_name,
-        password: @test_editor_password,
-        label: "some user"
-      })
-
-    _publication =
-      ProjectSeed.add_unpublished(@test_project_identifier_a, @unpublished_draft_date)
-
-    {project_b, _publication} =
-      ProjectSeed.create_full_publication(@test_project_identifier_b, false, false)
-
-    {:ok, project_b} = Project.add_user(project_b, user)
-
-    {:ok, empty_project} = Project.put(%Project{}, %{identifier: @empty_project_identifier})
-
-    on_exit(fn ->
-      Enum.each([empty_project, project_a, project_b], &Project.delete/1)
-      User.delete(@test_editor_name)
-      CouchService.delete_database(@core_database)
-    end)
-  end
-
-  test "general index omits projects without any publications", %{conn: conn} do
+  test "general index omits projects without any publications", %{
+    conn: conn,
+    project_c: %Project{identifier: identifier},
+    administrator: %User{name: name, password: password}
+  } do
     json =
       conn
-      |> add_admin_basic_auth()
+      |> add_basic_auth(name, password)
       |> get(~p"/api/v1/")
       |> json_response(200)
 
     assert nil ==
              Enum.find(json, fn %{"project_identifier" => id} ->
-               id == @empty_project_identifier
+               id == identifier
              end)
 
     api_spec = FieldPublicationWeb.Api.spec()
@@ -65,13 +38,19 @@ defmodule FieldPublicationWeb.Api.V1Test do
   end
 
   test "general index produces list of all published publications for anonymous users", %{
-    conn: conn
+    conn: conn,
+    published_project_a: %Publication{
+      project_identifier: project_identifier,
+      draft_date: draft_date
+    }
   } do
+    draft_date_string = Date.to_string(draft_date)
+
     assert json =
              [
                %{
-                 "project_identifier" => "test_project_a",
-                 "publications" => ["2024-06-05"]
+                 "project_identifier" => ^project_identifier,
+                 "publications" => [^draft_date_string]
                }
              ] =
              conn
@@ -82,23 +61,30 @@ defmodule FieldPublicationWeb.Api.V1Test do
     assert_schema(json, "ProjectList", api_spec)
   end
 
-  test "general index produces list of all publications an editor has access to", %{conn: conn} do
-    # User is only editor for test_project_identifier_b, so should not see the draft for
-    # test_project_identifier_a.
+  test "general index produces list of all publications an editor has access to", %{
+    conn: conn,
+    published_project_a: %Publication{
+      project_identifier: project_identifier,
+      draft_date: draft_date_published
+    },
+    unpublished_project_a: %Publication{
+      project_identifier: project_identifier,
+      draft_date: draft_date_unpublished
+    },
+    editor: %User{name: name, password: password}
+  } do
+    draft_date_published_string = Date.to_string(draft_date_published)
+    draft_date_unpublished_string = Date.to_string(draft_date_unpublished)
 
     assert json =
              [
                %{
-                 "project_identifier" => @test_project_identifier_a,
-                 "publications" => ["2024-06-05"]
-               },
-               %{
-                 "project_identifier" => @test_project_identifier_b,
-                 "publications" => ["2024-06-05"]
+                 "project_identifier" => ^project_identifier,
+                 "publications" => [^draft_date_published_string, ^draft_date_unpublished_string]
                }
              ] =
              conn
-             |> add_basic_auth(@test_editor_name, @test_editor_password)
+             |> add_basic_auth(name, password)
              |> get(~p"/api/v1/")
              |> json_response(200)
 
@@ -106,20 +92,42 @@ defmodule FieldPublicationWeb.Api.V1Test do
     assert_schema(json, "ProjectList", api_spec)
   end
 
-  test "general index produces list of all publications for administrator", %{conn: conn} do
+  test "general index produces list of all publications for administrator", %{
+    conn: conn,
+    published_project_a: %Publication{
+      project_identifier: project_identifier_a,
+      draft_date: draft_date_published_a
+    },
+    unpublished_project_a: %Publication{
+      project_identifier: project_identifier_a,
+      draft_date: draft_date_unpublished_a
+    },
+    unpublished_project_b: %Publication{
+      project_identifier: project_identifier_b,
+      draft_date: draft_date_unpublished_b
+    },
+    administrator: %User{name: name, password: password}
+  } do
+    draft_date_published_string_a = Date.to_string(draft_date_published_a)
+    draft_date_unpublished_string_a = Date.to_string(draft_date_unpublished_a)
+    draft_date_unpublished_string_b = Date.to_string(draft_date_unpublished_b)
+
     assert json =
              [
                %{
-                 "project_identifier" => @test_project_identifier_a,
-                 "publications" => ["2024-06-05", @unpublished_draft_date]
+                 "project_identifier" => ^project_identifier_a,
+                 "publications" => [
+                   ^draft_date_published_string_a,
+                   ^draft_date_unpublished_string_a
+                 ]
                },
                %{
-                 "project_identifier" => @test_project_identifier_b,
-                 "publications" => ["2024-06-05"]
+                 "project_identifier" => ^project_identifier_b,
+                 "publications" => [^draft_date_unpublished_string_b]
                }
              ] =
              conn
-             |> add_admin_basic_auth()
+             |> add_basic_auth(name, password)
              |> get(~p"/api/v1/")
              |> json_response(200)
 

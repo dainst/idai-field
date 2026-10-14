@@ -1,95 +1,80 @@
 defmodule FieldPublicationWeb.UI.Management.PublicationLiveTest do
+  use FieldPublicationWeb.ConnCase
+
+  import Phoenix.LiveViewTest
+  import FieldPublication.Test.DataScaffolding
+
   alias FieldPublication.{
-    CouchService,
-    Processing,
     Project,
-    Publication,
     User
   }
 
-  use FieldPublicationWeb.ConnCase
-  import Phoenix.LiveViewTest
+  setup_all [
+    :create_core_database,
+    :add_editor_user,
+    :add_admin_user,
+    :add_projects_and_empty_publications
+  ]
 
-  @core_database Application.compile_env(:field_publication, :core_database)
-  @test_project_identifier "test_project_a"
-  @test_user %User{
-    name: "test_user",
-    password: "pw",
-    label: "Test user"
-  }
-
-  setup_all %{} do
-    FieldHubHelper.start()
-    CouchService.put_database(@core_database)
-    CouchService.create_user(@test_user)
-
-    Project.put(%Project{}, %{"identifier" => @test_project_identifier})
-
-    project = Project.get!(@test_project_identifier)
-
-    on_exit(fn ->
-      Publication.get(@test_project_identifier, Date.utc_today())
-      |> case do
-        {:ok, publication} ->
-          Publication.delete(publication)
-          Processing.stop(publication)
-
-        _ ->
-          :ok
-      end
-
-      Project.delete(project)
-      CouchService.delete_database(@core_database)
-      CouchService.delete_user(@test_user.name)
-      FieldHubHelper.stop()
-    end)
-
-    %{test_project: project}
-  end
-
-  test "only the administrator or editors have access to the input view", %{conn: conn} do
-    # Error without being logged in
+  test "no access to publication creation form without authentication", %{
+    conn: conn,
+    project_b: %Project{identifier: identifier}
+  } do
+    # Error without authentication.
     assert {
              :error,
              {:redirect,
               %{to: _, flash: %{"error" => "You are not allowed to access that page."}}}
-           } = live(conn, ~p"/management/projects/#{@test_project_identifier}/publication/new")
+           } = live(conn, ~p"/management/projects/#{identifier}/publication/new")
+  end
 
-    conn = recycle(conn)
-    log_in_user(conn, @test_user.name)
+  test "no access to publication creation form without authorization", %{
+    conn: conn,
+    editor: %User{name: user_name},
+    project_b: %Project{identifier: identifier, editors: editors}
+  } do
+    log_in_user(conn, user_name)
+
+    refute user_name == Enum.find(editors, fn val -> val == user_name end)
 
     # Error for logged in user that is not defined as project editor
     assert {
              :error,
              {:redirect,
               %{to: _, flash: %{"error" => "You are not allowed to access that page."}}}
-           } = live(conn, ~p"/management/projects/#{@test_project_identifier}/publication/new")
+           } = live(conn, ~p"/management/projects/#{identifier}/publication/new")
   end
 
-  test "editors have access to the input view", %{conn: conn} do
-    @test_project_identifier
-    |> Project.get!()
-    |> Project.put(%{"editors" => [@test_user.name]})
+  test "project editors have access to the publication creation form", %{
+    conn: conn,
+    editor: %User{name: user_name},
+    project_a: %Project{identifier: identifier, editors: editors}
+  } do
+    conn = log_in_user(conn, user_name)
 
-    conn = log_in_user(conn, @test_user.name)
-
-    on_exit(fn ->
-      @test_project_identifier
-      |> Project.get!()
-      |> Project.put(%{"editors" => []})
-    end)
+    assert user_name == Enum.find(editors, fn val -> val == user_name end)
 
     assert {:ok, _live_process, html} =
-             live(conn, ~p"/management/projects/#{@test_project_identifier}/publication/new")
+             live(conn, ~p"/management/projects/#{identifier}/publication/new")
 
     assert html =~ "Create new publication draft"
   end
 
-  test "administrators have access to the input view", %{conn: conn} do
-    conn = log_in_user(conn, Application.get_env(:field_publication, :couchdb_admin_name))
+  test "administrators have always access to the publication creation form", %{
+    conn: conn,
+    administrator: %User{} = admin,
+    project_a: %Project{identifier: identifier_a},
+    project_b: %Project{identifier: identifier_b}
+  } do
+    conn = log_in_user(conn, admin.name)
 
     assert {:ok, _live_process, html} =
-             live(conn, ~p"/management/projects/#{@test_project_identifier}/publication/new")
+             live(conn, ~p"/management/projects/#{identifier_a}/publication/new")
+
+    assert html =~ "Create new publication draft"
+
+    assert {:ok, _live_process, html} =
+             live(conn, ~p"/management/projects/#{identifier_b}/publication/new")
 
     assert html =~ "Create new publication draft"
   end

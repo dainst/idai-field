@@ -37,7 +37,7 @@ export class DoceditLauncher {
             result = (await doceditRef.result).documents[0];
             await this.handleSaveResult(result as FieldDocument);
         } catch (closeReason) {
-            if (closeReason === 'cancel') this.viewFacade.removeNewDocument();
+            if (closeReason === 'cancel' || closeReason === 'discard') this.viewFacade.removeNewDocument();
         }
 
         this.menuService.setContext(menuContext);

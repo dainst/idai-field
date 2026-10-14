@@ -139,7 +139,8 @@ defmodule FieldPublicationWeb.UI.Management.Modals.ReplicationFormComponent do
     Replication.initialize_publication(parameters)
     |> case do
       {:ok, %Publication{} = publication} ->
-        notify_parent({parameters, publication})
+        # Notify live view using the form component.
+        send(self(), {:publication_initialized, {parameters, publication}})
         socket
 
       {:error, msg} when is_binary(msg) ->
@@ -149,6 +150,4 @@ defmodule FieldPublicationWeb.UI.Management.Modals.ReplicationFormComponent do
         assign(socket, :form, to_form(changeset))
     end
   end
-
-  defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 end

@@ -39,9 +39,9 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
   test "can create a new publication through replicating from FieldHub", %{
     conn: conn,
     project_a: %Project{identifier: project_identifier} = _project_a,
-    editor: %User{} = editor
+    editor: %User{name: user_name} = _editor
   } do
-    conn = log_in_user(conn, editor.name)
+    conn = log_in_user(conn, user_name)
 
     assert {:ok, live_process, _html} =
              live(conn, ~p"/management/projects/#{project_identifier}/publication/new")
@@ -77,7 +77,7 @@ defmodule FieldPublicationWeb.FieldHubIntegrationTest do
     %Publication{
       doc_type: "publication",
       project_identifier: ^project_identifier,
-      drafted_by: "couch_admin",
+      drafted_by: ^user_name,
       replication_logs: logs
     } = Publication.get!(project_identifier, "#{Date.utc_today()}")
 

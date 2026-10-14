@@ -13,103 +13,58 @@ defmodule FieldPublication.Test.ProjectSeed do
 
   @default_draft_date Date.from_iso8601!("2024-06-05")
 
-  # def create_full_publication(project_identifier, seed_and_preprocess? \\ false, publish? \\ true) do
-  #   project =
-  #     case Project.get(project_identifier) do
-  #       {:ok, %Project{} = project} ->
-  #         Logger.info("Recreating project '#{project_identifier}'.")
-  #         {:ok, :deleted} = Project.delete(project)
+  def create_full_publication(project_identifier) do
+    case Project.get(project_identifier) do
+      {:ok, %Project{} = project} ->
+        Logger.info("Recreating project '#{project_identifier}'.")
+        {:ok, :deleted} = Project.delete(project)
 
-  #         {:ok, %Project{} = project} = create_project(project_identifier)
-  #         project
+      _ ->
+        Logger.info("Creating project '#{project_identifier}'.")
+    end
 
-  #       _ ->
-  #         Logger.info("Creating project '#{project_identifier}'.")
-  #         {:ok, %Project{} = project} = create_project(project_identifier)
-  #         project
-  #     end
+    {:ok, project} =
+      Project.put(%Project{}, %{
+        "identifier" => project_identifier
+      })
 
-  #   publication =
-  #     create_publication(
-  #       %ReplicationInput{
-  #         delete_existing_publication: true,
-  #         source_url: "http://example.org",
-  #         source_project_identifier: project_identifier,
-  #         source_user: "remote_field_field_hub_user",
-  #         source_password: "fake",
-  #         project_identifier: project_identifier,
-  #         drafted_by: "mix seed",
-  #         draft_date: @default_draft_date
-  #       },
-  #       seed_and_preprocess?,
-  #       seed_and_preprocess?,
-  #       publish?
-  #     )
+    {:ok, %Publication{} = publication} =
+      Publication.create_from_replication_input(%ReplicationInput{
+        delete_existing_publication: true,
+        source_url: "http://example.org",
+        source_project_identifier: project_identifier,
+        source_user: "remote_field_field_hub_user",
+        source_password: "fake",
+        project_identifier: project_identifier,
+        drafted_by: "mix seed",
+        draft_date: @default_draft_date
+      })
 
-  #   {project, publication}
-  # end
+    {:ok, %Publication{} = publication} =
+      Publication.put(publication, %{
+        "publication_date" => publication.draft_date,
+        "publication_description" => [
+          %{
+            "text" =>
+              "This is a publication created by Field Publication's seed.exs. _The images were reduced in size and do not match the database values!_",
+            "language" => "en"
+          },
+          %{
+            "text" =>
+              "Dies ist eine Publikation, die durch Field Publications seed.exs erstellt wurde. _Die Bilder wurden verkleinert und ihre Dimensionen stimmen nicht mehr mit der Datenbank überein!_",
+            "language" => "de"
+          }
+        ],
+        "languages" => ["en", "de"],
+        "replication_finished" => DateTime.utc_now()
+      })
 
-  # def add_unpublished(
-  #       project_identifier,
-  #       draft_date,
-  #       seed_data? \\ false,
-  #       preprocess? \\ false
-  #     ) do
-  #   create_publication(
-  #     %ReplicationInput{
-  #       delete_existing_publication: true,
-  #       source_url: "http://example.org",
-  #       source_project_identifier: project_identifier,
-  #       source_user: "remote_field_field_hub_user",
-  #       source_password: "fake",
-  #       project_identifier: project_identifier,
-  #       drafted_by: "mix seed",
-  #       draft_date: draft_date
-  #     },
-  #     seed_data?,
-  #     preprocess?,
-  #     false
-  #   )
-  # end
+    seed_data(publication)
 
-  # def create_project(identifier) do
-  #   Project.put(%Project{}, %{
-  #     "identifier" => identifier
-  #   })
-  # end
+    {project, publication}
+  end
 
-  # def create_publication(
-  #       %ReplicationInput{project_identifier: project_identifier} = replication_input,
-  #       publish? \\ true
-  #     ) do
-  #   {:ok, %Publication{} = publication} =
-  #     Publication.create_from_replication_input(replication_input)
-
-  #   {:ok, %Publication{} = publication} =
-  #     Publication.put(publication, %{
-  #       "publication_date" => if(publish?, do: publication.draft_date, else: nil),
-  #       "comments" => [
-  #         %{
-  #           "text" =>
-  #             "This is a publication created by Field Publication's seed.exs. _The images were reduced in size and do not match the database values!_",
-  #           "language" => "en"
-  #         },
-  #         %{
-  #           "text" =>
-  #             "Dies ist eine Publikation, die durch Field Publications seed.exs erstellt wurde. _Die Bilder wurden verkleinert und ihre Dimensionen stimmen nicht mehr mit der Datenbank überein!_",
-  #           "language" => "de"
-  #         }
-  #       ],
-  #       "languages" => ["en", "de"],
-  #       "replication_finished" => DateTime.utc_now()
-  #     })
-
-  #   put_data(publication)
-
-  #   publication
-  # end
-
-  def put_data(%Publication{project_identifier: project_identifier} = publication) do
+  def seed_data(%Publication{project_identifier: project_identifier} = publication) do
     seed_image_directory = "test/support/fixtures/seed_project/images/"
 
     [] =

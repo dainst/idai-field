@@ -9,7 +9,7 @@ defmodule FieldHubWeb.DatabaseProxyTest do
     assert %{
              "couchdb" => "Welcome",
              "vendor" => %{"name" => "The Apache Software Foundation"},
-             "version" => "3.3.2"
+             "version" => "3.5.3"
            } = Jason.decode!(conn.resp_body)
   end
 end

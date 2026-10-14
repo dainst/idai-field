@@ -65,3 +65,12 @@
     }
   }
 }
+
+@media(-webkit-device-pixel-ratio: 1) {
+  #toggle-categories-menu {
+    .category-icon .character {
+      position: relative;
+      top: 1px;
+    }
+  }
+}

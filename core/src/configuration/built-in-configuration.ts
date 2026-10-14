@@ -1152,7 +1152,7 @@ export class BuiltInConfiguration {
             domain: ['SpatialReferencePoint', 'SpatialReferenceLine'],
             range: ['Operation', 'Profile', 'Planum', 'Place', 'Level', 'Room', 'RoomWall', 'RoomFloor', 'RoomCeiling',
                 'BuildingPart', 'Opening', 'Roof', 'Stairs', 'Area', 'Damage', 'DesignElement', 'Feature',
-                'FeatureGroup', 'FeatureSegment', 'Find', 'FindCollection', 'Sample'],
+                'FeatureGroup', 'FeatureSegment', 'Find', 'FindCollection', 'Sample', 'Image'],
             editable: true,
             visible: true,
             inputType: 'relation'
@@ -1162,7 +1162,7 @@ export class BuiltInConfiguration {
             inverse: 'isSpatialReferenceElementFor',
             domain: ['Operation', 'Profile', 'Planum', 'Place', 'Level', 'Room', 'RoomWall', 'RoomFloor', 'RoomCeiling',
                 'BuildingPart', 'Opening', 'Roof', 'Stairs', 'Area', 'Damage', 'DesignElement', 'Feature',
-                'FeatureGroup', 'FeatureSegment', 'Find', 'FindCollection', 'Sample'],
+                'FeatureGroup', 'FeatureSegment', 'Find', 'FindCollection', 'Sample', 'Image'],
             range: ['SpatialReferencePoint', 'SpatialReferenceLine'],
             editable: true,
             visible: true,

@@ -319,7 +319,8 @@ export class ProjectConfiguration {
     private filterRegularCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'Process', 'Image', 'Operation'),
+            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'Process', 'Image', 'Operation',
+                'SpatialReferencePoint', 'SpatialReferenceLine'),
             Tree.flatten
         );
     }
@@ -337,7 +338,7 @@ export class ProjectConfiguration {
     private filterOverviewCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            filterTrees('Operation', 'Place'),
+            filterTrees('Operation', 'Place', 'SpatialReferencePoint', 'SpatialReferenceLine'),
             Tree.flatten
         );
     }
@@ -346,7 +347,7 @@ export class ProjectConfiguration {
     private filterConcreteOverviewCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            filterTrees('Operation', 'Place'),
+            filterTrees('Operation', 'Place', 'SpatialReferencePoint', 'SpatialReferenceLine'),
             Tree.flatten,
             remove(Named.onName(is('Operation')))
         ) as any;
@@ -356,9 +357,11 @@ export class ProjectConfiguration {
     private filterOverviewSupercategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            filterTrees('Operation', 'Place'),
+            filterTrees('Operation', 'Place', 'SpatialReferencePoint', 'SpatialReferenceLine'),
             Tree.flatten,
-            filter(Named.onName(includedIn(['Operation', 'Place']))) as any
+            filter(Named.onName(
+                includedIn(['Operation', 'Place', 'SpatialReferencePoint', 'SpatialReferenceLine'])
+            )) as any
         );
     }
 

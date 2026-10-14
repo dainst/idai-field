@@ -50,6 +50,13 @@ export class IndexItem {
     }
 
 
+    public static update(indexItem: IndexItem, document: Document, updateDate: boolean = false) {
+
+        indexItem.identifier = document.resource.identifier;
+        if (updateDate) indexItem.date = this.getDate(document);
+    }
+
+
     private static getDate(document: Document): number|undefined {
 
         if (!document.resource.date) return undefined;

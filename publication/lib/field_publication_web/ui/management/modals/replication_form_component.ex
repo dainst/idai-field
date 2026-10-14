@@ -1,0 +1,154 @@
+defmodule FieldPublicationWeb.UI.Management.Modals.ReplicationFormComponent do
+  alias FieldPublication.Replication
+  use FieldPublicationWeb, :live_component
+
+  alias FieldPublication.{
+    Publication,
+    Replication,
+    Replication.ReplicationInput
+  }
+
+  @impl true
+  def render(assigns) do
+    ~H"""
+    <div>
+      <.document_heading>
+        {@page_title}
+      </.document_heading>
+
+      <.simple_form
+        for={@form}
+        id="replication-form"
+        phx-change="validate"
+        phx-submit="start"
+        phx-target={@myself}
+      >
+        <.group_heading>Connection data</.group_heading>
+
+        <div :if={@initialization_error} class="border-red-800 bg-red-200 p-2 border-2 rounded">
+          {@initialization_error}
+        </div>
+        <.input field={@form[:source_url]} type="url" label="Source URL" />
+        <.input field={@form[:source_project_identifier]} type="text" label="Source project name" />
+        <.input field={@form[:source_user]} type="text" label="Source user name" />
+        <.input field={@form[:source_password]} type="password" label="Source user password" />
+        <.input field={@form[:project_identifier]} type="hidden" />
+        <.input field={@form[:drafted_by]} type="hidden" />
+
+        <.group_heading>Options</.group_heading>
+
+        <.input
+          field={@form[:delete_existing_publication]}
+          type="checkbox"
+          label="Override existing draft"
+        />
+
+        <.input
+          field={@form[:processing]}
+          type="checkbox"
+          label="Start processing once the replication is done"
+        />
+        <:actions>
+          <.button phx-disable-with="Initializing...">Start replication</.button>
+        </:actions>
+      </.simple_form>
+    </div>
+    """
+  end
+
+  @impl true
+  def update(assigns, socket) do
+    {
+      :ok,
+      socket
+      |> assign(:page_title, "Create new publication draft")
+      |> assign(assigns)
+      |> assign(:initialization_error, nil)
+      |> assign(
+        :form,
+        assigns
+        |> create_changeset()
+        |> to_form()
+      )
+    }
+  end
+
+  @impl true
+  def handle_event("validate", %{"replication_input" => replication_params}, socket) do
+    changeset =
+      %ReplicationInput{}
+      |> ReplicationInput.changeset(replication_params)
+      |> Map.put(:action, :validate)
+
+    {
+      :noreply,
+      socket
+      |> assign(:initialization_error, nil)
+      |> assign(:form, to_form(changeset))
+    }
+  end
+
+  def handle_event("start", %{"replication_input" => replication_params}, socket) do
+    socket =
+      replication_params
+      |> ReplicationInput.create()
+      |> case do
+        {:error, changeset} ->
+          socket
+          |> assign(:form, to_form(changeset))
+
+        {:ok, parameters} ->
+          apply_action(parameters, socket)
+      end
+
+    {:noreply, socket}
+  end
+
+  defp create_changeset(%{
+         project_identifier: project_identifier,
+         draft_date: draft_date,
+         current_user: current_user,
+         action: :edit
+       }) do
+    publication = Publication.get!(project_identifier, draft_date)
+
+    ReplicationInput.changeset(%ReplicationInput{}, %{
+      source_url: publication.source_url,
+      source_project_identifier: publication.source_project_identifier,
+      source_user: publication.source_project_identifier,
+      project_identifier: publication.project_identifier,
+      drafted_by: current_user
+    })
+  end
+
+  defp create_changeset(%{
+         project_identifier: project_identifier,
+         current_user: current_user,
+         action: :new
+       }) do
+    ReplicationInput.changeset(%ReplicationInput{}, %{
+      source_project_identifier: project_identifier,
+      source_user: project_identifier,
+      project_identifier: project_identifier,
+      drafted_by: current_user,
+      comments: []
+    })
+  end
+
+  defp apply_action(%ReplicationInput{} = parameters, %{assigns: %{action: :new}} = socket) do
+    Replication.initialize_publication(parameters)
+    |> case do
+      {:ok, %Publication{} = publication} ->
+        notify_parent({parameters, publication})
+        socket
+
+      {:error, msg} when is_binary(msg) ->
+        assign(socket, :initialization_error, msg)
+
+      {:error, changeset} ->
+        assign(socket, :form, to_form(changeset))
+    end
+  end
+
+  defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+end

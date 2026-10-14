@@ -4,6 +4,7 @@
 
 @import './toggle-categories-menu';
 @import './layers/layer-menu';
+@import './z-values-alert-modal';
 
 #map-container {
   z-index: 1008;

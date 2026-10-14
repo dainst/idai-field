@@ -13,7 +13,7 @@ import { CategoryForm } from '../model/configuration/category-form';
 import { BaseField, Field, Subfield } from '../model/configuration/field';
 import { Constraints } from '../model/datastore/query';
 import { Named } from './named';
-import { Hierarchy, Labels } from '../services';
+import { Labels } from '../services';
 import { I18N } from './i18n';
 import { Composite, Condition } from '../model';
 import { StringUtils } from './string-utils';
@@ -90,8 +90,8 @@ export module FieldsViewUtil {
                     entry,
                     field,
                     timezone,
-                    timeSuffix,
                     locale,
+                    timeSuffix,
                     getTranslation,
                     formatDecimal,
                     labels

@@ -48,8 +48,19 @@ addEventListener('message', ({ data }) => {
 async function start() {
 
     backupsInfoSerializer = new BackupsInfoSerializer(settings.backupsInfoFilePath, fs);
+    removeTempFiles();
     createWorkers();
     await run();
+}
+
+
+function removeTempFiles() {
+
+    if (!fs.existsSync(settings.backupDirectoryPath)) return;
+
+    fs.readdirSync(settings.backupDirectoryPath)
+        .filter(fileName => fileName.endsWith('.jsonl.tmp'))
+        .forEach(fileName => fs.rmSync(settings.backupDirectoryPath + '/' + fileName, { force: true }));
 }
 
 

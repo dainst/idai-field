@@ -181,7 +181,7 @@ export module Assertions {
 
         const forms = Named.mapToNamedArray(libraryForms).concat(Named.mapToNamedArray(customForms)) as Array<Named>;
         for (let form of forms) {
-            if (!(form as any)['valuelists']) return;
+            if (!(form as any)['valuelists']) continue;
             for (let fieldName of Object.keys((form as any)['valuelists'])) {
                 if (commonFields[fieldName] && commonFields[fieldName].valuelistFromProjectField) {
                     throw [

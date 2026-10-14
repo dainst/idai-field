@@ -30,5 +30,7 @@ services:
     environment:
       - "COUCHDB_USER=couch_admin" # see dev.exs
       - "COUCHDB_PASSWORD=couch_admin_password" # see dev.exs
+    volumes:
+      - ./config/couchdb_dev.ini:/opt/couchdb/etc/local.d/couchdb_dev.ini
     extra_hosts:
       - "host.docker.internal:host-gateway"

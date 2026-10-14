@@ -1,0 +1,176 @@
+defmodule FieldPublicationWeb.UI.DocumentLiveTest do
+  use FieldPublicationWeb.ConnCase
+
+  alias FieldPublication.{
+    CouchService,
+    Project,
+    Publication
+  }
+
+  alias FieldPublication.Publication.Document
+  alias FieldPublication.Test.ProjectSeed
+
+  import Phoenix.LiveViewTest
+  @core_database Application.compile_env(:field_publication, :core_database)
+  @test_project_identifier "test_project_a"
+  @uuid "9579212f-6342-49bd-900f-e13fd70f6a80"
+
+  setup_all %{} do
+    CouchService.put_database(@core_database)
+
+    {project, publication} = ProjectSeed.create_full_publication(@test_project_identifier, true)
+
+    on_exit(fn ->
+      Project.get(@test_project_identifier)
+      |> case do
+        {:ok, %Project{} = project} ->
+          Project.delete(project)
+
+        _ ->
+          :ok
+      end
+
+      CouchService.delete_database(@core_database)
+    end)
+
+    %{project: project, publication: publication}
+  end
+
+  test "the project document is rendered", %{
+    conn: conn,
+    publication: publication
+  } do
+    assert {:ok, _live_view_pid, html} =
+             live(conn, ~p"/projects/#{publication.project_identifier}/#{publication.draft_date}")
+
+    {:ok, doc} = Publication.get_extended_document("project", publication)
+    short_description = Document.get_field_value(doc, "shortName") |> Map.get("en")
+
+    assert html =~ short_description
+    assert html =~ "Institution"
+    assert html =~ "Supervisor"
+
+    # Project description text
+    assert html =~
+             "This example project serves as a point of entry for people new to the application."
+
+    # Publication comment text
+    assert html =~ "This is a publication created by Field Publication&#39;s seed.exs."
+  end
+
+  test "image document gets rendered", %{
+    conn: conn,
+    publication: publication
+  } do
+    assert {:ok, _live_view_pid, html} =
+             live(
+               conn,
+               ~p"/projects/#{publication.project_identifier}/#{publication.draft_date}/9579212f-6342-49bd-900f-e13fd70f6a80"
+             )
+
+    assert html =~ "Depicts"
+    assert html =~ "3888"
+    assert html =~ "5184"
+  end
+
+  test "generic document gets rendered", %{
+    conn: conn,
+    publication: publication
+  } do
+    assert {:ok, _live_view_pid, html} =
+             live(
+               conn,
+               ~p"/projects/#{publication.project_identifier}/#{publication.draft_date}/1b5885eb-2082-477c-936a-e1ecb6d051f3"
+             )
+
+    assert html =~ "TTP-A-112043"
+    assert html =~ "Core"
+    assert html =~ "Inventory"
+    # map focus only
+    refute html =~ "Hierarchy"
+    # map focus only, see below
+    refute html =~ "Testopolis Settlement"
+  end
+
+  test "generic document map focus gets rendered", %{
+    conn: conn,
+    publication: publication
+  } do
+    assert {:ok, _live_view_pid, html} =
+             live(
+               conn,
+               ~p"/projects/#{publication.project_identifier}/#{publication.draft_date}/1b5885eb-2082-477c-936a-e1ecb6d051f3/map/hierarchy"
+             )
+
+    assert html =~ "TTP-A-112043"
+    assert html =~ "Testopolis Settlement"
+  end
+
+  test "changing the UI language changes labels on document page", %{
+    conn: conn,
+    publication: publication
+  } do
+    path =
+      ~p"/projects/#{publication.project_identifier}/#{publication.draft_date}/1b5885eb-2082-477c-936a-e1ecb6d051f3"
+
+    assert {:ok, live_view, html} =
+             live(
+               conn,
+               path
+             )
+
+    assert html =~ "Core"
+    refute html =~ "Stammdaten"
+
+    conn =
+      live_view
+      |> form("#locale_form", %{locale: "de", return_to: path})
+      |> submit_form(conn)
+
+    assert {:ok, _live_view, html} =
+             live(
+               conn,
+               path
+             )
+
+    refute html =~ "Core"
+    assert html =~ "Stammdaten"
+  end
+
+  test "trying to access unknown publication returns 404", %{conn: conn, publication: publication} do
+    # Unknown project
+    assert get(
+             conn,
+             ~p"/projects/does_not_exist/#{publication.draft_date}/#{@uuid}"
+           )
+           |> response(404)
+
+    # Not a date
+    assert get(
+             conn,
+             ~p"/projects/#{publication.project_identifier}/not_a_date/#{@uuid}"
+           )
+           |> response(404)
+
+    # Unknown date
+    assert get(
+             conn,
+             ~p"/projects/#{publication.project_identifier}/2000-01-01/#{@uuid}"
+           )
+           |> response(404)
+  end
+
+  test "trying an unknown uuid will raise corresponding error", %{
+    conn: conn,
+    publication: publication
+  } do
+    assert_raise FieldPublicationWeb.Presentation.DocumentLive.UnknownPublicationDocumentError,
+                 "No document with id `not_existing` for publication of project `#{publication.project_identifier}` on #{publication.draft_date}.",
+                 fn ->
+                   live(
+                     conn,
+                     ~p"/projects/#{publication.project_identifier}/#{publication.draft_date}/not_existing"
+                   )
+                 end
+  end
+end

@@ -63,10 +63,12 @@ export class ResourcesMapComponent {
 
     public isPopoverMenuOpened = () => this.resourcesComponent.popoverMenuOpened;
 
-    public isEditingGeometry = () => this.menuService.getContext() === MenuContext.GEOMETRY_EDIT;
+    public isEditingGeometry = () => [MenuContext.GEOMETRY_EDIT, MenuContext.GEOMETRY_EDIT_MODAL]
+        .includes(this.menuService.getContext());
 
     public isEditing = (menuContext = this.menuService.getContext()) =>
-        [MenuContext.GEOMETRY_EDIT, MenuContext.MAP_LAYERS_EDIT].includes(menuContext);
+        [MenuContext.GEOMETRY_EDIT, MenuContext.GEOMETRY_EDIT_MODAL, MenuContext.MAP_LAYERS_EDIT]
+            .includes(menuContext);
 
     public isModalOpened = () => [MenuContext.MODAL, MenuContext.BLOCKING_MODAL, MenuContext.IMAGE_TOOL_MODAL,
         MenuContext.DOCEDIT].includes(this.menuService.getContext());

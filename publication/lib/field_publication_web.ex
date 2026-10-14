@@ -41,7 +41,7 @@ defmodule FieldPublicationWeb do
     quote do
       use Phoenix.Controller,
         formats: [:html, :json],
-        layouts: [html: FieldPublicationWeb.Layouts]
+        layouts: [html: FieldPublicationWeb.UI.Layouts]
 
       import Plug.Conn
       use Gettext, backend: FieldPublicationWeb.Translate
@@ -53,7 +53,7 @@ defmodule FieldPublicationWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {FieldPublicationWeb.Layouts, :app}
+        layout: {FieldPublicationWeb.UI.Layouts, :app}
 
       on_mount(FieldPublicationWeb.Translate)
       unquote(html_helpers())
@@ -86,7 +86,7 @@ defmodule FieldPublicationWeb do
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
-      import FieldPublicationWeb.CoreComponents
+      import FieldPublicationWeb.UI.CoreComponents
       import FieldPublicationWeb.Translate
 
       use Gettext, backend: FieldPublicationWeb.Translate

@@ -12,6 +12,7 @@ defmodule FieldPublication.Test.DataScaffolding do
   # alias FieldPublication.Test.ProjectSeed
 
   @core_database Application.compile_env(:field_publication, :core_database)
+  @couch_admin_name Application.compile_env(:field_publication, :couchdb_admin_name)
 
   def create_core_database(context) do
     CouchService.put_database(@core_database)
@@ -24,7 +25,7 @@ defmodule FieldPublication.Test.DataScaffolding do
   end
 
   def add_editor_user(context) do
-    password = "pw"
+    password = "1234567890asdfgh"
 
     {:ok, user} =
       User.create(%{
@@ -45,7 +46,7 @@ defmodule FieldPublication.Test.DataScaffolding do
   end
 
   def add_admin_user(context) do
-    password = "pw"
+    password = "1234567890qwertz"
 
     {:ok, user} =
       User.create(%{
@@ -86,7 +87,7 @@ defmodule FieldPublication.Test.DataScaffolding do
         source_user: "remote_field_field_hub_user",
         source_password: "fake",
         project_identifier: project_a.identifier,
-        drafted_by: "mix seed",
+        drafted_by: @couch_admin_name,
         draft_date: Date.from_iso8601!("2026-09-28")
       })
 
@@ -123,7 +124,7 @@ defmodule FieldPublication.Test.DataScaffolding do
         source_user: "remote_field_field_hub_user",
         source_password: "fake",
         project_identifier: project_a.identifier,
-        drafted_by: "mix seed",
+        drafted_by: @couch_admin_name,
         draft_date: Date.from_iso8601!("2026-09-29")
       })
 
@@ -159,7 +160,7 @@ defmodule FieldPublication.Test.DataScaffolding do
         source_user: "remote_field_field_hub_user",
         source_password: "fake",
         project_identifier: project_b.identifier,
-        drafted_by: "mix seed",
+        drafted_by: @couch_admin_name,
         draft_date: Date.from_iso8601!("2026-09-29")
       })
 

@@ -1,4 +1,3 @@
-import { internalIpV4 } from 'internal-ip';
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { clone, equal, flatten } from 'tsfun';
@@ -18,8 +17,8 @@ import { Backup } from '../../services/backup/model/backup';
 import { getExistingBackups } from '../../services/backup/auto-backup/get-existing-backups';
 import { BackupsMap } from '../../services/backup/model/backups-map';
 import { getFileSizeLabel } from '../../util/get-file-size-label';
+import { getIpAddress } from '../../services/get-ip-address';
 
-const address = window.require('address');
 const remote = window.require('@electron/remote');
 
 
@@ -81,7 +80,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
         this.isLinux = remote.getGlobal('os') === 'Linux';
         this.settings = this.settingsProvider.getSettings();
         this.originalKeepBackupSettings = clone(this.settings.keepBackups);
-        this.ipAddress = await internalIpV4() ?? address.ip();
+        this.ipAddress = await getIpAddress();
     }
 
 

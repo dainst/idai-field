@@ -31,6 +31,14 @@ export module FieldGeometry {
         }
     }
 
+    
+    export function hasZValues(geometry: FieldGeometry): boolean {
+
+        if (!isArray(geometry.coordinates)) return false;
+
+        return getDeepestCoordinate(geometry.coordinates)?.length === 3; 
+    }
+
 
     function closeMultiPolygonRings(coordinates: number[][][][]) {
 
@@ -56,5 +64,11 @@ export module FieldGeometry {
                 pathCoordinates.push(firstCoordinate.slice());
             }
         }
+    }
+
+    
+    function getDeepestCoordinate(coordinates: Array<any>) {
+
+        return Array.isArray(coordinates[0]) ? getDeepestCoordinate(coordinates[0]) : coordinates;
     }
 }

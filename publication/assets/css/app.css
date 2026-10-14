@@ -5,16 +5,6 @@
 
 /* This file is for your main application CSS */
 
-@font-face {
-    font-family: "Cargan";
-    src:
-        local("Cargan-Light"),
-        url(/fonts/Cargan-Light.woff2) format("woff2"),
-        url(/fonts/Cargan-Light.woff) format("woff");
-    font-weight: 300;
-    font-style: normal;
-}
-
 :root {
     --main-navbar-height: 50px;
     --background: #ffffff;
@@ -33,7 +23,7 @@
     ^---- until here.
     */
     --font-body: "Open Sans", sans-serif;
-    --font-headings: "Cargan", serif;
+    --font-headings:  "Open Sans", serif;
 
     @media (width >= 64rem) {
         --ol-full-height: calc(100vh - var(--main-navbar-height) - 220px);

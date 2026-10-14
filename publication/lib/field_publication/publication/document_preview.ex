@@ -46,10 +46,12 @@ defmodule FieldPublication.Publication.DocumentPreview do
   end
 
   def create(%Document{} = doc) do
+    geometry = if doc.geometry, do: :omitted, else: nil
+
     %__MODULE__{}
     |> changeset(%{
       uuid: doc.id,
-      preview: %{doc | groups: [], relations: [], geometry: []}
+      preview: %{doc | groups: [], relations: [], geometry: geometry}
     })
     |> apply_action(:create)
   end

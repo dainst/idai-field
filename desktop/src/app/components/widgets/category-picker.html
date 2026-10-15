@@ -24,13 +24,13 @@
           (cdkDragEnded)="dragging = false">
         <li class="list-group-item popover-item parent-category"
             [ngClass]="{
-                'selected-category': selectedCategories?.indexOf(parentCategory.name) > -1,
+                'selected-category': selectedCategories?.includes(parentCategory.name),
                 'abstract-category': parentCategory.isAbstract,
                 'custom-category': highlightCustomCategories && isCustomCategory(parentCategory)
             }">
             <span *ngIf="showVisibilityButtons" class="mdi visibility-button"
-                [class.mdi-eye]="selectedCategories?.indexOf(parentCategory.name) > -1"
-                [class.mdi-eye-off]="!selectedCategories || selectedCategories.indexOf(parentCategory.name) === -1"
+                [class.mdi-eye]="selectedCategories?.includes(parentCategory.name)"
+                [class.mdi-eye-off]="!selectedCategories?.includes(parentCategory.name)"
                 ngbTooltip="Kategorie ein-/ausblenden"
                 i18n-ngbTooltip="@@widgets.categoryPicker.showOrHideCategory"
                 placement="left"
@@ -84,14 +84,14 @@
                 (cdkDragEnded)="dragging = false"
                 class="list-group-item popover-item child-category"
                 [ngClass]="{
-                    'selected-category': selectedCategories && selectedCategories.indexOf(childCategory.name) > -1,
+                    'selected-category': selectedCategories?.includes(childCategory.name),
                     'abstract-category': childCategory.isAbstract,
                     'parent-selected': isParentSelected(childCategory),
                     'custom-category': highlightCustomCategories && isCustomCategory(childCategory)
                 }">
                 <span *ngIf="showVisibilityButtons" class="mdi visibility-button"
-                    [class.mdi-eye]="selectedCategories?.indexOf(childCategory.name) > -1"
-                    [class.mdi-eye-off]="!selectedCategories || selectedCategories.indexOf(childCategory.name) === -1"
+                    [class.mdi-eye]="selectedCategories?.includes(childCategory.name)"
+                    [class.mdi-eye-off]="!selectedCategories.includes(childCategory.name)"
                     ngbTooltip="Kategorie ein-/ausblenden"
                     i18n-ngbTooltip="@@widgets.categoryPicker.showOrHideCategory"
                     placement="left"

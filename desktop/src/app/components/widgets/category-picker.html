@@ -5,7 +5,7 @@
     (cdkDropListDropped)="onDrop($event)">
     <li *ngIf="allCategoriesOptionVisible" id="choose-category-option-all"
         class="list-group-item popover-item"
-        (click)="!showVisibilityButtons && pickCategory(undefined)"
+        (click)="pickCategory(undefined)"
         [ngClass]="{ 'selected-category': !selectedCategories || selectedCategories.length === 0 }">
         <span *ngIf="showVisibilityButtons" class="mdi visibility-button"
             [class.mdi-eye]="isFullySelected()"
@@ -18,8 +18,7 @@
             #visibilityButtonTooltip="ngbTooltip"
             (mouseover)="visibilityButtonTooltip.open()"
             (mouseleave)="visibilityButtonTooltip.close()"
-            (mousedown)="visibilityButtonTooltip.close()"
-            (click)="pickCategory(undefined)">
+            (mousedown)="visibilityButtonTooltip.close()">
         </span>
         <i class="all-categories-label category-item" i18n="@@widgets.categoryPicker.allCategories">Alle Kategorien</i>
     </li>
@@ -49,7 +48,7 @@
             </span>
             <div id="choose-category-option-{{getCategoryId(parentCategory)}}"
                 class="category-item" [class.short-category-item]="isCreateButtonVisible(parentCategory)"
-                (click)="!showVisibilityButtons && pickCategory(parentCategory)"
+                (click)="pickCategory(parentCategory)"
                 (dblclick)="onEditCategory.emit(parentCategory)"
                 (contextmenu)="openContextMenu($event, parentCategory)">
                 <span *ngIf="allowChangingOrder" class="mdi mdi-drag" cdkDragHandle></span>
@@ -115,7 +114,7 @@
                 </span>
                 <div id="choose-category-option-{{getCategoryId(childCategory)}}"
                     class="category-item"
-                    (click)="!showVisibilityButtons && pickCategory(childCategory)"
+                    (click)="pickCategory(childCategory)"
                     (dblclick)="onEditCategory.emit(childCategory)"
                     (contextmenu)="openContextMenu($event, childCategory)">
                     <span *ngIf="allowChangingOrder" class="mdi mdi-drag" cdkDragHandle></span>

@@ -529,7 +529,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'identifier': sampleDataLabels[locale]['surveyUnitShort'] + '1-'
                 + sampleDataLabels[locale]['stoneShort'] + '1',
             'shortDescription': getI18nString('stone'),
-            'category': 'SurveyUnit',
+            'category': 'Stone',
             'relations': {
                 'isRecordedIn': ['sa1'],
                 'liesWithin': ['syu1']

@@ -10,6 +10,10 @@
         <span *ngIf="showVisibilityButtons" class="mdi visibility-button"
             [class.mdi-eye]="isFullySelected()"
             [class.mdi-eye-off]="!isFullySelected()"
+            ngbTooltip="Alle Kategorien ein-/ausblenden"
+            i18n-ngbTooltip="@@widgets.categoryPicker.showOrHideAllCategories"
+            placement="left"
+            container="body"
             (click)="pickCategory(undefined)">
         </span>
         <i class="all-categories-label category-item" i18n="@@widgets.categoryPicker.allCategories">Alle Kategorien</i>
@@ -27,6 +31,10 @@
             <span *ngIf="showVisibilityButtons" class="mdi visibility-button"
                 [class.mdi-eye]="selectedCategories?.indexOf(parentCategory.name) > -1"
                 [class.mdi-eye-off]="!selectedCategories || selectedCategories.indexOf(parentCategory.name) === -1"
+                ngbTooltip="Kategorie ein-/ausblenden"
+                i18n-ngbTooltip="@@widgets.categoryPicker.showOrHideCategory"
+                placement="left"
+                container="body"
                 (click)="pickCategory(parentCategory)">
             </span>
             <div id="choose-category-option-{{getCategoryId(parentCategory)}}"
@@ -84,6 +92,10 @@
                 <span *ngIf="showVisibilityButtons" class="mdi visibility-button"
                     [class.mdi-eye]="selectedCategories?.indexOf(childCategory.name) > -1"
                     [class.mdi-eye-off]="!selectedCategories || selectedCategories.indexOf(childCategory.name) === -1"
+                    ngbTooltip="Kategorie ein-/ausblenden"
+                    i18n-ngbTooltip="@@widgets.categoryPicker.showOrHideCategory"
+                    placement="left"
+                    container="body"
                     (click)="pickCategory(childCategory)">
                 </span>
                 <div id="choose-category-option-{{getCategoryId(childCategory)}}"

@@ -75,6 +75,11 @@
                                     ngbTooltip="Kartenhintergrund ein-/ausblenden"
                                     i18n-ngbTooltip="@@resources.map.layerMenu.showOrHideLayer"
                                     placement="bottom" container="body"
+                                    triggers="manual"
+                                    #toggleLayerButtonTooltip="ngbTooltip"
+                                    (mouseover)="toggleLayerButtonTooltip.open()"
+                                    (mouseleave)="toggleLayerButtonTooltip.close()"
+                                    (mousedown)="toggleLayerButtonTooltip.close()"
                                     (click)="toggleLayer(layer)">
                                 </span>
                                 <span *ngIf="isActiveLayer(layer)"
@@ -82,6 +87,11 @@
                                     ngbTooltip="Kartenhintergrund fokussieren"
                                     i18n-ngbTooltip="@@resources.map.layerMenu.focusLayer"
                                     placement="bottom" container="body"
+                                    triggers="manual"
+                                    #focusLayerButtonTooltip="ngbTooltip"
+                                    (mouseover)="focusLayerButtonTooltip.open()"
+                                    (mouseleave)="focusLayerButtonTooltip.close()"
+                                    (mousedown)="focusLayerButtonTooltip.close()"
                                     (click)="focusLayer(layer)">
                                 </span>
                                 <span *ngIf="!isActiveLayer(layer)"
@@ -106,6 +116,10 @@
                                     ngbTooltip="Als Standard-Kartenhintergrund festlegen"
                                     i18n-ngbTooltip="@@resources.map.layerMenu.setAsDefaultMapLayer"
                                     placement="left" container="body"
+                                    #defaultLayerButtonTooltip="ngbTooltip"
+                                    (mouseover)="defaultLayerButtonTooltip.open()"
+                                    (mouseleave)="defaultLayerButtonTooltip.close()"
+                                    (mousedown)="defaultLayerButtonTooltip.close()"
                                     (click)="toggleDefaultLayer(layer)">
                                 </span>
                                 <span *ngIf="isInEditing(layerGroup)"
@@ -114,6 +128,10 @@
                                     ngbTooltip="Kartenhintergrund entfernen"
                                     i18n-ngbTooltip="@@resources.map.layerMenu.removeLayer"
                                     placement="left" container="body"
+                                    #removeLayerButtonTooltip="ngbTooltip"
+                                    (mouseover)="removeLayerButtonTooltip.open()"
+                                    (mouseleave)="removeLayerButtonTooltip.close()"
+                                    (mousedown)="removeLayerButtonTooltip.close()"
                                     (click)="removeLayer(layer)">
                                 </span>
                             </div>

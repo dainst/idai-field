@@ -14,6 +14,11 @@
             i18n-ngbTooltip="@@widgets.categoryPicker.showOrHideAllCategories"
             placement="left"
             container="body"
+            triggers="manual"
+            #visibilityButtonTooltip="ngbTooltip"
+            (mouseover)="visibilityButtonTooltip.open()"
+            (mouseleave)="visibilityButtonTooltip.close()"
+            (mousedown)="visibilityButtonTooltip.close()"
             (click)="pickCategory(undefined)">
         </span>
         <i class="all-categories-label category-item" i18n="@@widgets.categoryPicker.allCategories">Alle Kategorien</i>
@@ -35,6 +40,11 @@
                 i18n-ngbTooltip="@@widgets.categoryPicker.showOrHideCategory"
                 placement="left"
                 container="body"
+                triggers="manual"
+                #visibilityButtonTooltip="ngbTooltip"
+                (mouseover)="visibilityButtonTooltip.open()"
+                (mouseleave)="visibilityButtonTooltip.close()"
+                (mousedown)="visibilityButtonTooltip.close()"
                 (click)="pickCategory(parentCategory)">
             </span>
             <div id="choose-category-option-{{getCategoryId(parentCategory)}}"
@@ -96,6 +106,11 @@
                     i18n-ngbTooltip="@@widgets.categoryPicker.showOrHideCategory"
                     placement="left"
                     container="body"
+                    triggers="manual"
+                    #visibilityButtonTooltip="ngbTooltip"
+                    (mouseover)="visibilityButtonTooltip.open()"
+                    (mouseleave)="visibilityButtonTooltip.close()"
+                    (mousedown)="visibilityButtonTooltip.close()"
                     (click)="pickCategory(childCategory)">
                 </span>
                 <div id="choose-category-option-{{getCategoryId(childCategory)}}"

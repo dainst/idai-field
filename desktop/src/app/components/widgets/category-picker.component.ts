@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { is, Predicate, to } from 'tsfun';
+import { is, Predicate, to, sameset } from 'tsfun';
 import { CategoryForm, Labels, ProjectConfiguration } from 'idai-field-core';
 import { ConfigurationContextMenu } from '../configuration/context-menu/configuration-context-menu';
 import { ConfigurationIndex } from '../../services/configuration/index/configuration-index';
@@ -22,7 +22,7 @@ export type OrderChange = {
 /**
  * @author Thomas Kleinke
  */
-export class CategoryPickerComponent {
+export class CategoryPickerComponent implements OnChanges {
 
     @Input() topLevelCategoriesArray: Array<CategoryForm>;
     @Input() selectedCategories: string[];
@@ -41,6 +41,8 @@ export class CategoryPickerComponent {
     @Output() onOrderChanged: EventEmitter<OrderChange> = new EventEmitter<OrderChange>();
     @Output() onEditCategory: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
 
+    private categoryNames: string[];
+
 
     constructor(private labels: Labels,
                 private configurationIndex: ConfigurationIndex) {}
@@ -50,7 +52,17 @@ export class CategoryPickerComponent {
 
     public hasCustomFields = (category: CategoryForm): boolean => CategoryForm.hasCustomFields(category);
 
-    public openContextMenu = (event: MouseEvent, category: CategoryForm) => this.contextMenu?.open(event, category)
+    public openContextMenu = (event: MouseEvent, category: CategoryForm) => this.contextMenu?.open(event, category);
+
+    public isFullySelected = () => sameset(this.selectedCategories, this.categoryNames);
+
+
+    ngOnChanges(changes: SimpleChanges) {
+
+        if (changes['topLevelCategoriesArray']) {
+            this.categoryNames = CategoryForm.getNamesOfCategoriesAndSubcategories(this.topLevelCategoriesArray);
+        }
+    }
 
 
     public isCreateButtonVisible(category: CategoryForm): boolean {

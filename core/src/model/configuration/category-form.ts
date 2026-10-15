@@ -126,6 +126,14 @@ export namespace CategoryForm {
     }
 
 
+    export function getNamesOfCategoriesAndSubcategories(categories: Array<CategoryForm>): string[] {
+
+        return categories.reduce((result, category) => {
+            return result.concat(CategoryForm.getNamesOfCategoryAndSubcategories(category));
+        }, []);
+    }
+
+
     export function getTextColorForCategory(category: CategoryForm): string {
 
         return CategoryForm.isBrightColor(getColor(category)) ? '#000000' : '#ffffff';

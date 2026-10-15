@@ -38,6 +38,19 @@
       overflow-x: hidden;
       border-radius: 0.25rem;
 
+      #choose-category-option-all {
+        min-height: 38px;
+        height: 38px;
+
+        .all-categories-label {
+          font-size: 14px;
+        }
+
+        .visibility-button {
+          top: 0.5px;
+        }
+      }
+
       .child-category .category-item {
         padding-left: 25px;
       }

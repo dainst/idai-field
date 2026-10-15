@@ -1,4 +1,5 @@
 import { Renderer2, Component, Input, EventEmitter, Output } from '@angular/core';
+import { sameset } from 'tsfun';
 import { CategoryForm } from 'idai-field-core'
 import { MenuComponent } from '../../../widgets/menu.component';
 import { Menus } from '../../../../services/menus';
@@ -30,7 +31,19 @@ export class ToggleCategoriesMenuComponent extends MenuComponent {
 
     public toggleCategory(category: CategoryForm) {
 
-         const categoryNames: string[] = [category.name].concat(
+        if (category) {
+            this.toggleSingleCategory(category);
+        } else {
+            this.toggleAllCategories();
+        }
+
+        this.onCategoriesToggled.emit(this.selectedCategories);
+    }
+
+
+    private toggleSingleCategory(category: CategoryForm) {
+
+        const categoryNames: string[] = [category.name].concat(
             category.children ? category.children.map(childCategory => childCategory.name) : []
         );
 
@@ -42,7 +55,15 @@ export class ToggleCategoriesMenuComponent extends MenuComponent {
         } else {
             this.selectedCategories = (this.selectedCategories ?? []).concat(categoryNames);
         }
+    }
 
-        this.onCategoriesToggled.emit(this.selectedCategories);
+
+    private toggleAllCategories() {
+
+        const categoryNames: string[] = CategoryForm.getNamesOfCategoriesAndSubcategories(this.topLevelCategories);
+
+        this.selectedCategories = sameset(this.selectedCategories, categoryNames)
+            ? []
+            : categoryNames;
     }
 }

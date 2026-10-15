@@ -549,19 +549,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     private updateCategoriesToDisplay() {
 
-        const mapCategories: string[] = this.viewFacade.getMapCategories();
-        if (mapCategories) {
-            this.categoriesToDisplay = mapCategories;
-        } else {
-            this.categoriesToDisplay = this.topLevelCategories.reduce((result, category) => {
-                result.push(category.name);
-                if (category.children) result = result.concat(
-                    category.children.map(childCategory => childCategory.name)
-                );
-                return result;
-            }, []);
-        }
+        this.categoriesToDisplay = this.viewFacade.getMapCategories()
+            ?? CategoryForm.getNamesOfCategoriesAndSubcategories(this.topLevelCategories);
     }
+
 
     private static isUpdateNecessary(changes: SimpleChanges) {
 

@@ -5,8 +5,13 @@
     (cdkDropListDropped)="onDrop($event)">
     <li *ngIf="allCategoriesOptionVisible" id="choose-category-option-all"
         class="list-group-item popover-item"
-        (click)="pickCategory(undefined)"
+        (click)="!showVisibilityButtons && pickCategory(undefined)"
         [ngClass]="{ 'selected-category': !selectedCategories || selectedCategories.length === 0 }">
+        <span *ngIf="showVisibilityButtons" class="mdi visibility-button"
+            [class.mdi-eye]="isFullySelected()"
+            [class.mdi-eye-off]="!isFullySelected()"
+            (click)="pickCategory(undefined)">
+        </span>
         <i class="all-categories-label category-item" i18n="@@widgets.categoryPicker.allCategories">Alle Kategorien</i>
     </li>
     <span *ngFor="let parentCategory of topLevelCategoriesArray"

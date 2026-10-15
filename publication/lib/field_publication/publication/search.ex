@@ -598,7 +598,7 @@ defmodule FieldPublication.Publication.Search do
         geometry: geo,
         parent_geometry: parent_geo,
         root_geometry: root_geo,
-        preview: List.first(DocumentPreview.list(publication, [res["id"]])),
+        preview: DocumentPreview.get!(publication, res["id"]),
         #  full_doc: full_doc,
         combined_text_content:
           text_fields

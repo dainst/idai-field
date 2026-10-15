@@ -206,7 +206,7 @@ defmodule FieldPublication.CouchService do
   @doc """
   Get a specific document
 
-  Returns `{:ok, Finch.Response.t()}` or `{:error, Exception.t()}` for the deletion attempt. See the https://docs.couchdb.org for possible responses.
+  Returns `{:ok, Finch.Response.t()}` or `{:error, Exception.t()}` for the retrieval attempt. See the https://docs.couchdb.org for possible responses.
 
   __Parameters__
   - `doc_id`, the document's id.

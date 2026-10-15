@@ -133,7 +133,7 @@ defmodule FieldPublicationWeb.Presentation.Document.TypeCatalog do
         relation_name in ["contains"]
       end
     )
-    |> List.first()
+    |> List.first(%{})
     |> Map.get(:docs, [])
     |> sort_type_list(sort_order)
   end

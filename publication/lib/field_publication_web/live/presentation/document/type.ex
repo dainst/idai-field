@@ -67,6 +67,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
             </div>
           </section>
         <% end %>
+
         <div class="grid grid-cols-2 gap-1 mt-2 mb-5">
           <% parent_type = Document.get_relation(@doc, "liesWithin") %>
           <%= if parent_type do %>
@@ -74,7 +75,6 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
               <.group_heading>
                 {pick_default_translation(parent_type.labels)}
               </.group_heading>
-
               <div class="grid grid-cols-1 gap-1 mt-2 mb-5">
                 <%= for %Document{} = doc <- parent_type.docs do %>
                   <.document_link
@@ -89,36 +89,18 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
           <% end %>
         </div>
       </div>
-      <div class="basis-2/3">
-        <div class="grid grid-cols-2 gap-1 mt-2 mb-5">
-          <% children_types = Document.get_relation(@doc, "contains") %>
-          <%= if children_types do %>
-            <section>
-              <.group_heading>
-                {pick_default_translation(children_types.labels)} ({Enum.count(children_types.docs)})
-              </.group_heading>
 
-              <div class="grid grid-cols-1 gap-1 mt-2 mb-5">
-                <%= for %Document{} = doc <- children_types.docs do %>
-                  <.document_link
-                    id={doc.id}
-                    doc={doc}
-                    image_count={10}
-                    image_height={200}
-                  />
-                <% end %>
-              </div>
-            </section>
-          <% end %>
-        </div>
-
+      <div class="gap-4 basis-2/3">
         <% associated_finds = Document.get_relation(@doc, "hasInstance") %>
+        <% total_associated_finds =
+          Enum.count(FieldPublication.Publication.get_all_associated_finds(@doc.id, @publication)) %>
+        <% directly_associated_finds_number = 0 %>
         <%= if associated_finds do %>
+          <% directly_associated_finds_number = Enum.count(associated_finds.docs) %>
           <section>
             <.group_heading>
-              {pick_default_translation(associated_finds.labels)} ({Enum.count(associated_finds.docs)})
+              Directly associated finds {# pick_default_translation(associated_finds.labels)} ({directly_associated_finds_number}/{total_associated_finds})
             </.group_heading>
-
             <div class="grid grid-cols-3 gap-1 mt-2 mb-5">
               <%= for %Document{} = doc <- associated_finds.docs do %>
                 <.document_link
@@ -131,6 +113,41 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
             </div>
           </section>
         <% end %>
+
+        <div class="grid grid-cols-2 gap-1 mt-2 mb-5">
+          <% children_types = Document.get_relation(@doc, "contains") %>
+          <%= if children_types do %>
+            <section>
+              <.group_heading>
+                Associated finds in nested types ({total_associated_finds -
+                  FieldPublication.Publication.count_directly_associated_finds(@doc)} /{total_associated_finds})
+              </.group_heading>
+              <div class="grid grid-cols-1 gap-1 mt-2 mb-5">
+                <%= for %Document{} = doc <- children_types.docs do %>
+                  <% childrens_accumulated_finds =
+                    FieldPublication.Publication.get_all_associated_finds(doc.id, @publication) %>
+                  <.document_link
+                    id={doc.id}
+                    doc={doc}
+                    image_count={10}
+                    image_height={50}
+                  />
+
+                  <%= for %Document{} = find_doc <- childrens_accumulated_finds do %>
+                    <div class="ml-4">
+                      <.document_link
+                        id={find_doc.id}
+                        doc={find_doc}
+                        image_count={10}
+                        image_height={50}
+                      />
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </section>
+          <% end %>
+        </div>
       </div>
     </div>
     """

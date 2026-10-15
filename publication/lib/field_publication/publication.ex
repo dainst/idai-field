@@ -13,7 +13,8 @@ defmodule FieldPublication.Publication do
 
   alias FieldPublication.Publication.{
     Configuration,
-    Search
+    Search,
+    Document
   }
 
   alias FieldPublication.DatabaseSchema.{
@@ -848,5 +849,101 @@ defmodule FieldPublication.Publication do
       id,
       {id, msg}
     )
+  end
+
+  def generate_classification_lookup(%__MODULE__{database: database} = publication) do
+    relevant_document_categories =
+      [
+        "Type",
+        "TypeCatalog"
+      ] ++
+        Configuration.get_child_categories(publication, "Type") ++
+        Configuration.get_child_categories(publication, "TypeCatalog")
+
+    relevant_documents =
+      CouchService.get_document_stream(
+        %{
+          selector: %{
+            "resource.category": %{
+              "$in": relevant_document_categories
+            }
+          }
+        },
+        database
+      )
+      |> Stream.map(fn doc ->
+        parent =
+          get_in(doc, ["resource", "relations", "liesWithin"])
+          |> case do
+            nil ->
+              nil
+
+            [single_parent] ->
+              single_parent
+          end
+
+        directly_associated =
+          get_in(doc, ["resource", "relations", "hasInstance"])
+          |> case do
+            nil ->
+              []
+
+            list_of_finds ->
+              list_of_finds
+          end
+
+        {doc["_id"], %{parent: parent, associated_finds: directly_associated}}
+      end)
+      |> Enum.into(%{})
+
+    updated_relevant_documents =
+      Enum.map(relevant_documents, fn {uuid, info} ->
+        children =
+          Enum.filter(relevant_documents, fn {_child_uuid, %{parent: parent}} ->
+            uuid == parent
+          end)
+
+        children_uuids = Enum.map(children, fn {child_uuid, _child_meta} -> child_uuid end)
+
+        {uuid, Map.put(info, :children, children_uuids)}
+      end)
+      |> Enum.into(%{})
+
+    content = Jason.encode!(updated_relevant_documents)
+    File.write("classification_lookup.json", content)
+
+    updated_relevant_documents
+  end
+
+  def get_all_associated_finds(uuid, %__MODULE__{} = publication) do
+    lookup = generate_classification_lookup(publication)
+
+    uuids = accumulate_all_associated_finds(uuid, lookup)
+
+    FieldPublication.Publication.DocumentPreview.list(publication, uuids)
+  end
+
+  def accumulate_all_associated_finds(uuid, classification_lookup) do
+    Map.get(classification_lookup, uuid)
+    |> case do
+      %{associated_finds: af, children: []} ->
+        af
+
+      %{associated_finds: af, children: list_of_children} ->
+        Enum.concat(
+          af,
+          Enum.map(list_of_children, fn child_uuid ->
+            accumulate_all_associated_finds(child_uuid, classification_lookup)
+          end)
+          |> List.flatten()
+        )
+    end
+  end
+
+  def count_directly_associated_finds(doc) do
+    case Document.get_relation(doc, "hasInstance") do
+      %{docs: docs} when is_list(docs) -> Enum.count(docs)
+      _ -> 0
+    end
   end
 end

@@ -3,6 +3,7 @@ import { sameset } from 'tsfun';
 import { CategoryForm } from 'idai-field-core'
 import { MenuComponent } from '../../../widgets/menu.component';
 import { Menus } from '../../../../services/menus';
+import { ViewFacade } from '../../view/view-facade';
 
 
 @Component({
@@ -23,9 +24,12 @@ export class ToggleCategoriesMenuComponent extends MenuComponent {
 
 
     constructor(renderer: Renderer2,
-                menuService: Menus) {
+                menuService: Menus,
+                viewFacade: ViewFacade) {
 
         super(renderer, menuService, 'toggle-categories-button', 'toggle-categories-menu');
+
+        viewFacade.navigationPathNotifications().subscribe(() => this.close());
     }
 
 

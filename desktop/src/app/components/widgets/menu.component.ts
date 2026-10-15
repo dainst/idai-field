@@ -67,6 +67,6 @@ export abstract class MenuComponent {
 
     protected isClosable(): boolean {
 
-        return this.menuService.getContext() !== MenuContext.MODAL;
+        return this.opened && this.menuService.getContext() !== MenuContext.MODAL;
     }
 }

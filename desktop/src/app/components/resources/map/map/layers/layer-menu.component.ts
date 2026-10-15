@@ -11,6 +11,7 @@ import { ImagePickerComponent } from '../../../../docedit/widgets/image-picker.c
 import { LayerUtility } from './layer-utility';
 import { Loading } from '../../../../widgets/loading';
 import { ImageToolLauncher } from '../../../../../services/imagestore/image-tool-launcher';
+import { ViewFacade } from '../../../view/view-facade';
 
 
 @Component({
@@ -47,9 +48,12 @@ export class LayerMenuComponent extends MenuComponent implements OnChanges {
                 private labels: Labels,
                 private imageToolLauncher: ImageToolLauncher,
                 renderer: Renderer2,
-                menuService: Menus) {
+                menuService: Menus,
+                viewFacade: ViewFacade) {
 
         super(renderer, menuService, 'layer-button', 'layer-menu');
+
+        viewFacade.navigationPathNotifications().subscribe(() => this.close());
     }
 
 

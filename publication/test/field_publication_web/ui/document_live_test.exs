@@ -123,25 +123,25 @@ defmodule FieldPublicationWeb.UI.DocumentLiveTest do
   } do
     uuid = "9579212f-6342-49bd-900f-e13fd70f6a80"
     # Unknown project
-    assert get(
-             conn,
-             ~p"/projects/does_not_exist/#{publication.draft_date}/#{uuid}"
-           )
-           |> response(404)
+    assert {:error, {:redirect, %{to: "/"}}} =
+             live(
+               conn,
+               ~p"/projects/does_not_exist/#{publication.draft_date}/#{uuid}"
+             )
 
     # Not a date
-    assert get(
-             conn,
-             ~p"/projects/#{publication.project_identifier}/not_a_date/#{uuid}"
-           )
-           |> response(404)
+    assert {:error, {:redirect, %{to: "/"}}} =
+             live(
+               conn,
+               ~p"/projects/does_not_exist/#{publication.draft_date}/#{uuid}"
+             )
 
     # Unknown date
-    assert get(
-             conn,
-             ~p"/projects/#{publication.project_identifier}/2000-01-01/#{uuid}"
-           )
-           |> response(404)
+    assert {:error, {:redirect, %{to: "/"}}} =
+             live(
+               conn,
+               ~p"/projects/does_not_exist/#{publication.draft_date}/#{uuid}"
+             )
   end
 
   test "trying an unknown uuid will raise corresponding error", %{

@@ -15,6 +15,33 @@ category-picker {
         }
       }
     }
+
+    &:not(.with-visibility-buttons) {
+      .list-group-item {
+        &.custom-category {
+          background-color: $custom-highlight-color;
+
+          .category-item:hover,
+          &.selected-category .category-item {
+            background-color: color.adjust($custom-highlight-color, $lightness: -5%) !important;
+          }
+        }
+
+        .category-item:hover,
+        &.selected-category .category-item,
+        .add-subcategory-button:hover {
+          background-color: $list-item-hover-color !important;
+        }
+
+        &.parent-selected.selected-category .category-item:hover {
+          background-color: color.adjust($list-item-hover-color, $lightness: -5%) !important;
+        }
+
+        &:not(.custom-category):hover {
+          background-color: #fff;
+        }
+      }
+    }
   }
 
   .list-group-item {
@@ -23,35 +50,22 @@ category-picker {
     transition: background-color .5s ease;
     padding: 0;
 
+    .visibility-button {
+      position: relative;
+      top: 3.5px;
+      float: left;
+
+      &.mdi-eye {
+        color: #657faa;
+      }
+    }
+
     &.child-category {
       border: none !important;
 
       .category-item {
         padding-left: 40px;
       }
-    }
-
-    &.custom-category {
-      background-color: $custom-highlight-color;
-
-      .category-item:hover,
-      &.selected-category .category-item {
-        background-color: color.adjust($custom-highlight-color, $lightness: -5%) !important;
-      }
-    }
-
-    .category-item:hover,
-    &.selected-category .category-item,
-    .add-subcategory-button:hover {
-      background-color: $list-item-hover-color !important;
-    }
-
-    &.parent-selected.selected-category .category-item:hover {
-      background-color: color.adjust($list-item-hover-color, $lightness: -5%) !important;
-    }
-
-    &:not(.custom-category):hover {
-      background-color: #fff;
     }
   }
 

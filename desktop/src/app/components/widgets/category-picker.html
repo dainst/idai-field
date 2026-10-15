@@ -1,5 +1,6 @@
 <ul class="category-picker list-group"
     [class.dragging]="dragging"
+    [class.with-visibility-buttons]="showVisibilityButtons"
     cdkDropList [cdkDropListDisabled]="!allowChangingOrder"
     (cdkDropListDropped)="onDrop($event)">
     <li *ngIf="allCategoriesOptionVisible" id="choose-category-option-all"
@@ -14,13 +15,18 @@
           (cdkDragEnded)="dragging = false">
         <li class="list-group-item popover-item parent-category"
             [ngClass]="{
-                'selected-category': selectedCategories && selectedCategories.indexOf(parentCategory.name) > -1,
+                'selected-category': selectedCategories?.indexOf(parentCategory.name) > -1,
                 'abstract-category': parentCategory.isAbstract,
                 'custom-category': highlightCustomCategories && isCustomCategory(parentCategory)
             }">
+            <span *ngIf="showVisibilityButtons" class="mdi visibility-button"
+                [class.mdi-eye]="selectedCategories?.indexOf(parentCategory.name) > -1"
+                [class.mdi-eye-off]="!selectedCategories || selectedCategories.indexOf(parentCategory.name) === -1"
+                (click)="pickCategory(parentCategory)">
+            </span>
             <div id="choose-category-option-{{getCategoryId(parentCategory)}}"
                 class="category-item" [class.short-category-item]="isCreateButtonVisible(parentCategory)"
-                (click)="pickCategory(parentCategory)"
+                (click)="!showVisibilityButtons && pickCategory(parentCategory)"
                 (dblclick)="onEditCategory.emit(parentCategory)"
                 (contextmenu)="openContextMenu($event, parentCategory)">
                 <span *ngIf="allowChangingOrder" class="mdi mdi-drag" cdkDragHandle></span>
@@ -70,9 +76,14 @@
                     'parent-selected': isParentSelected(childCategory),
                     'custom-category': highlightCustomCategories && isCustomCategory(childCategory)
                 }">
+                <span *ngIf="showVisibilityButtons" class="mdi visibility-button"
+                    [class.mdi-eye]="selectedCategories?.indexOf(childCategory.name) > -1"
+                    [class.mdi-eye-off]="!selectedCategories || selectedCategories.indexOf(childCategory.name) === -1"
+                    (click)="pickCategory(childCategory)">
+                </span>
                 <div id="choose-category-option-{{getCategoryId(childCategory)}}"
                     class="category-item"
-                    (click)="pickCategory(childCategory)"
+                    (click)="!showVisibilityButtons && pickCategory(childCategory)"
                     (dblclick)="onEditCategory.emit(childCategory)"
                     (contextmenu)="openContextMenu($event, childCategory)">
                     <span *ngIf="allowChangingOrder" class="mdi mdi-drag" cdkDragHandle></span>

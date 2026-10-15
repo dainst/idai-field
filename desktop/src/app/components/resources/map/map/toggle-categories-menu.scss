@@ -29,7 +29,7 @@
   user-select: none;
 
   .card-body {
-    padding: 7px;
+    padding: 7px 7px 7px 12px;
 
     category-picker {
       display: block;
@@ -40,6 +40,10 @@
 
       .child-category .category-item {
         padding-left: 25px;
+      }
+
+      .list-group-item {
+        background-color: #f8f9fa;
       }
 
       .list-group-item:first-child {

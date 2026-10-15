@@ -30,6 +30,7 @@ export class CategoryPickerComponent {
     @Input() allowPickingAbstractCategories: boolean = false;
     @Input() highlightCustomCategories: boolean = false;
     @Input() showCreateButtons: boolean = false;
+    @Input() showVisibilityButtons: boolean = false;
     @Input() allowChangingOrder: boolean = false;
     @Input() dragging: boolean = false;
     @Input() contextMenu: ConfigurationContextMenu;
@@ -66,7 +67,7 @@ export class CategoryPickerComponent {
 
     public pickCategory(category: CategoryForm) {
 
-        if (category && category.isAbstract && !this.allowPickingAbstractCategories) return;
+        if (category?.isAbstract && !this.allowPickingAbstractCategories) return;
 
         this.onCategoryPicked.emit(category);
     }

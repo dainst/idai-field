@@ -172,7 +172,7 @@ defmodule FieldPublicationWeb.Router do
     #   path: "/api/spec",
     #   title: "API Specification · Field Publication"
 
-    get("/api_doc", FieldPublicationWeb.UI.ApiDocControllerController, :show)
+    get("/api_doc", FieldPublicationWeb.UI.ApiDocumentationController, :show)
     get("/select_locale", FieldPublicationWeb.UI.LanguageController, :selection)
     delete("/log_out", FieldPublicationWeb.UI.UserSessionController, :delete)
 

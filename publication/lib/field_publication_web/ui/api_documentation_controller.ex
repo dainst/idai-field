@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.UI.ApiDocControllerController do
+defmodule FieldPublicationWeb.UI.ApiDocumentationController do
   use FieldPublicationWeb, :controller
 
   def show(conn, _params) do

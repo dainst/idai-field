@@ -106,6 +106,7 @@ defmodule FieldPublication.Test.DataScaffolding do
       publications_setup(project_a, project_b)
 
     FieldPublication.Test.ProjectSeed.seed_data(published_project_a)
+    FieldPublication.Test.ProjectSeed.seed_data(unpublished_project_a)
 
     on_exit(fn ->
       projects_exit([project_a, project_b, project_c])

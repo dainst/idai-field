@@ -35,7 +35,7 @@
   "menu.tools.images": "Gestion des images",
   "menu.tools.types": "Gestion des types",
   "menu.tools.inventory": "Inventaire",
-  "menu.tools.matrix": "",
+  "menu.tools.matrix": "Matrice",
   "menu.tools.import": "Importer",
   "menu.tools.export": "Exporter",
   "menu.configuration.projectLanguages": "Sélectionner les langues du projet...",
@@ -51,5 +51,6 @@
   "menu.window": "Fenêtre",
   "menu.window.minimize": "Réduire",
   "menu.help": "Aide",
-  "info.close": "Fermer"
+  "info.close": "Fermer",
+  "menu.tools.workflow": "Workflow"
 }

@@ -15,6 +15,12 @@
     },
     "hasChildren": {
       "label": "Ressources subordonnées"
+    },
+    "isSubjectOf": {
+      "label": "Objet de"
+    },
+    "isResultOf": {
+      "label": "Résultat de"
     }
   },
   "categories": {
@@ -37,6 +43,9 @@
         },
         "width": {
           "label": "Largeur"
+        },
+        "originalFilename": {
+          "label": "Nom d'origine du fichier"
         }
       }
     }
@@ -113,6 +122,9 @@
     },
     "isStoragePlaceOf": {
       "label": "Est le lieu de conservation de"
+    },
+    "isAbuttedBy": {
+      "label": "contigu à"
     }
   }
 }

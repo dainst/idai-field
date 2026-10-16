@@ -64,7 +64,7 @@ import { ProcessStateComponent } from './workflow/state/process-state.component'
 import { ProcessListComponent } from './workflow/process-list.component';
 import { WorkflowOverviewComponent } from './workflow/workflow-overview.component';
 import { TypeScannerModalComponent } from './actions/scan-resource/type-scanner-modal.component';
-import { ToggleCategoriesMenuComponent } from './map/map/toggle-categories-menu.component';
+import { GeometriesMenuComponent } from './map/map/geometries-menu.component';
 import { ZValuesAlertModalComponent } from './map/map/z-values-alert-modal.component';
 
 
@@ -94,7 +94,7 @@ const remote = window.require('@electron/remote');
         GridItemComponent,
         GridItemIconComponent,
         LayerMenuComponent,
-        ToggleCategoriesMenuComponent,
+        GeometriesMenuComponent,
         ListComponent,
         RowComponent,
         PlusButtonComponent,

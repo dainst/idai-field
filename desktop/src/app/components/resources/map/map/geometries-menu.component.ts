@@ -7,14 +7,14 @@ import { ViewFacade } from '../../view/view-facade';
 
 
 @Component({
-    selector: 'toggle-categories-menu',
-    templateUrl: './toggle-categories-menu.html',
+    selector: 'geometries-menu',
+    templateUrl: './geometries-menu.html',
     standalone: false
 })
 /**
  * @author Thomas Kleinke
  */
-export class ToggleCategoriesMenuComponent extends MenuComponent {
+export class GeometriesMenuComponent extends MenuComponent {
 
     @Input() topLevelCategories: Array<CategoryForm>;
     @Input() selectedCategories: string[];
@@ -28,7 +28,7 @@ export class ToggleCategoriesMenuComponent extends MenuComponent {
                 menuService: Menus,
                 viewFacade: ViewFacade) {
 
-        super(renderer, menuService, 'toggle-categories-button', 'toggle-categories-menu');
+        super(renderer, menuService, 'geometries-button', 'geometries-menu');
 
         viewFacade.navigationPathNotifications().subscribe(() => this.close());
     }

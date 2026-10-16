@@ -6,7 +6,7 @@
             (onChangeLayersOrder)="updatePaneZIndices()"
             (onImagesDownloaded)="updateLayerImages()"></layer-menu>
 
-<toggle-categories-menu [topLevelCategories]="topLevelCategories"
-                        [selectedCategories]="categoriesToDisplay"
-                        (onCategoriesToggled)="setCategoriesToDisplay($event)"
-                        (onCategoriesFocused)="focusCategories($event)"></toggle-categories-menu>
+<geometries-menu [topLevelCategories]="topLevelCategories"
+                 [selectedCategories]="categoriesToDisplay"
+                 (onCategoriesToggled)="setCategoriesToDisplay($event)"
+                 (onCategoriesFocused)="focusCategories($event)"></geometries-menu>

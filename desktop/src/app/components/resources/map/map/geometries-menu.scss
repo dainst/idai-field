@@ -1,12 +1,12 @@
-#toggle-categories-button,
-#toggle-categories-menu {
+#geometries-button,
+#geometries-menu {
   position: absolute;
   z-index: 1008;
   right: 57px;
   border: none;
 }
 
-#toggle-categories-button {
+#geometries-button {
   width: 38px !important;
   height: 38px !important;
   top: 10px;
@@ -17,7 +17,7 @@
   }
 }
 
-#toggle-categories-menu {
+#geometries-menu {
   top: 51px;
   min-width: 223px;
   max-width: 500px;
@@ -80,7 +80,7 @@
 }
 
 @media(-webkit-device-pixel-ratio: 1) {
-  #toggle-categories-menu {
+  #geometries-menu {
     .category-icon .character {
       position: relative;
       top: 1px;

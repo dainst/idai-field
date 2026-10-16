@@ -1,20 +1,20 @@
-<div id="toggle-categories-button"
+<div id="geometries-button"
         class="btn btn-primary btn-square layer-button"
         ngbTooltip="Geometrien ein-/ausblenden"
-        i18n-ngbTooltip="@@resources.map.toggleCategories"
+        i18n-ngbTooltip="@@resources.map.geometries"
         container="body"
         placement="left"
         triggers="manual"
-        #toggleCategoriesButtonTooltip="ngbTooltip"
-        (mouseover)="toggleCategoriesButtonTooltip.open()"
-        (mouseleave)="toggleCategoriesButtonTooltip.close()"
-        (mousedown)="toggleCategoriesButtonTooltip.close()"
+        #geometriesButtonTooltip="ngbTooltip"
+        (mouseover)="geometriesButtonTooltip.open()"
+        (mouseleave)="geometriesButtonTooltip.close()"
+        (mousedown)="geometriesButtonTooltip.close()"
         [class.active]="opened"
         [class.disabled]="disabled"
         (click)="!disabled && toggle()">
     <span class="mdi mdi-map-marker-multiple mdi-18px"></span>
 </div>
-<div *ngIf="opened" id="toggle-categories-menu" class="card">
+<div *ngIf="opened" id="geometries-menu" class="card">
     <div class="card-body">
         <category-picker [topLevelCategoriesArray]="topLevelCategories"
                          [selectedCategories]="selectedCategories"

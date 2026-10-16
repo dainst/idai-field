@@ -8,11 +8,11 @@
             (onChangeLayersOrder)="updatePaneZIndices()"
             (onImagesDownloaded)="updateLayerImages()"></layer-menu>
 
-<toggle-categories-menu [topLevelCategories]="topLevelCategories"
-                        [selectedCategories]="categoriesToDisplay"
-                        [disabled]="isEditing"
-                        (onCategoriesToggled)="setCategoriesToDisplay($event)"
-                        (onCategoriesFocused)="focusCategories($event)"></toggle-categories-menu>
+<geometries-menu [topLevelCategories]="topLevelCategories"
+                 [selectedCategories]="categoriesToDisplay"
+                 [disabled]="isEditing"
+                 (onCategoriesToggled)="setCategoriesToDisplay($event)"
+                 (onCategoriesFocused)="focusCategories($event)"></geometries-menu>
 
 <div id="map-editor-buttons" *ngIf="isEditing">
     <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates-x" class="badge bg-secondary">

@@ -515,9 +515,9 @@
           <context context-type="linenumber">199</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.format.info" datatype="html">
-        <source>Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> importiert werden. </source>
-        <target state="needs-translation">Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> importiert werden. </target>
+      <trans-unit id="import.format.info" datatype="html" xml:space="preserve">
+        <source>Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> importiert werden. </source>
+        <target state="translated">Formats de fichiers pris en charge : <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb"/> Les formats d'image peuvent être gérés dans la <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;&gt;"/>Gestion des images<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.component.ts</context>
           <context context-type="linenumber">237</context>
@@ -531,9 +531,9 @@
           <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.defaultOption.info" datatype="html">
+      <trans-unit id="import.defaultOption.info" datatype="html" xml:space="preserve">
         <source>Datensätze, deren Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>) bereits vergeben ist, werden ignoriert. </source>
-        <target state="needs-translation">Datensätze, deren Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>) bereits vergeben ist, werden ignoriert. </target>
+        <target state="translated">Les enregistrements dont l'identifiant (champ <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/ em&gt;"/>) est déjà utilisé sont ignorés. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">88</context>
@@ -563,49 +563,49 @@
           <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.mergeOption.native.info" datatype="html">
+      <trans-unit id="import.mergeOption.native.info" datatype="html" xml:space="preserve">
         <source>Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="needs-translation">Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </target>
+        <target state="translated">Si cette option est activée, les enregistrements existants sont complétés par les données du fichier d'importation. Les champs de l'enregistrement d'importation remplacent les champs du même nom dans l'enregistrement existant. Les géométries de l'enregistrement d'importation remplacent celles de l'enregistrement existant. Les champs présents dans l'enregistrement existant qui ne figurent pas dans l'enregistrement d'importation restent inchangés. La catégorie ne peut pas être modifiée. L'affectation des enregistrements s'effectue par identifiant (champ <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Les enregistrements du fichier d'importation qui ne peuvent pas être affectés sont ignorés. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">135</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.mergeOption.csv.info" datatype="html">
+      <trans-unit id="import.mergeOption.csv.info" datatype="html" xml:space="preserve">
         <source>Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="needs-translation">Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </target>
+        <target state="translated">Si cette option est activée, les enregistrements existants sont complétés par les données du fichier d'importation. Les champs de l'enregistrement d'importation remplacent les champs du même nom dans l'enregistrement existant. Les champs présents dans l'enregistrement existant qui ne figurent pas dans l'enregistrement d'importation restent inchangés. La catégorie ne peut pas être modifiée. L'affectation des enregistrements s'effectue par identifiant (colonne <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Les enregistrements du fichier d'importation qui ne peuvent pas être attribués sont ignorés. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.mergeOption.permitDeletions" datatype="html">
+      <trans-unit id="import.mergeOption.permitDeletions" datatype="html" xml:space="preserve">
         <source>Löschen erlauben</source>
-        <target state="needs-translation">Löschen erlauben</target>
+        <target state="translated">Autoriser la suppression</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">121</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
+      <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html" xml:space="preserve">
         <source>Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> zugewiesen ist. Nicht aufgeführte Felder und Relationen bleiben unverändert. </source>
-        <target state="needs-translation">Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> zugewiesen ist. Nicht aufgeführte Felder und Relationen bleiben unverändert. </target>
+        <target state="translated">Si cette option est activée, il est possible non seulement de modifier, mais aussi de supprimer des champs et des relations. Sont supprimés tous les champs et toutes les relations pour lesquels la valeur <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> est attribuée. Les champs et relations non mentionnés restent inchangés. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">137</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.mergeOption.deletionsInfo.csv" datatype="html">
+      <trans-unit id="import.mergeOption.deletionsInfo.csv" datatype="html" xml:space="preserve">
         <source>Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben unverändert.</source>
-        <target state="needs-translation">Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben unverändert.</target>
+        <target state="translated">Si cette option est activée, il est possible non seulement de modifier, mais aussi de supprimer des champs et des relations. Tous les champs et relations pour lesquels le champ correspondant est vide dans le fichier d'importation sont supprimés. Les champs et relations qui ne figurent pas en tant que colonnes dans le tableau CSV restent inchangés.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">141</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.format.importCategorySelect" datatype="html">
+      <trans-unit id="import.format.importCategorySelect" datatype="html" xml:space="preserve">
         <source>Kategorie</source>
-        <target state="needs-translation">Kategorie</target>
+        <target state="translated">Catégorie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-upload-metadata-modal.html</context>
           <context context-type="linenumber">34</context>
@@ -615,33 +615,33 @@
           <context context-type="linenumber">163</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.selectCategory" datatype="html">
+      <trans-unit id="import.selectCategory" datatype="html" xml:space="preserve">
         <source>Kategorie auswählen</source>
-        <target state="needs-translation">Kategorie auswählen</target>
+        <target state="translated">Sélectionner la catégorie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">176</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.assignToOperation.label" datatype="html">
+      <trans-unit id="import.assignToOperation.label" datatype="html" xml:space="preserve">
         <source>Daten einer Maßnahme zuordnen</source>
-        <target state="needs-translation">Daten einer Maßnahme zuordnen</target>
+        <target state="translated">Attribuer les données à une opération</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
+      <trans-unit id="import.assignToOperation.noAssignment" datatype="html" xml:space="preserve">
         <source>Keine Zuordnung</source>
-        <target state="needs-translation">Keine Zuordnung</target>
+        <target state="translated">Pas d'attribution</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">202</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.csv.separator" datatype="html">
+      <trans-unit id="import.csv.separator" datatype="html" xml:space="preserve">
         <source>Feldtrennzeichen</source>
-        <target state="needs-translation">Feldtrennzeichen</target>
+        <target state="translated">Séparateur de champs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">380</context>
@@ -651,33 +651,33 @@
           <context context-type="linenumber">214</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.geojson.info" datatype="html">
+      <trans-unit id="import.geojson.info" datatype="html" xml:space="preserve">
         <source>Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="needs-translation">Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </target>
+        <target state="translated">Lors de l'importation GeoJSON, aucune nouvelle ressource n'est créée ; des géométries sont simplement ajoutées aux ressources existantes. Veuillez noter que les géométries déjà présentes seront écrasées lors de cette opération. L'affectation des enregistrements s'effectue via l'identifiant (champ <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/ em&gt;"/> dans l’objet <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Les enregistrements du fichier d'importation qui ne peuvent pas être mappés sont ignorés. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">232</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.shapefile.info" datatype="html">
+      <trans-unit id="import.shapefile.info" datatype="html" xml:space="preserve">
         <source>Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="needs-translation">Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </target>
+        <target state="translated">Lors de l'importation d'un fichier Shapefile, aucune nouvelle ressource n'est créée ; des géométries sont simplement ajoutées aux ressources existantes. Veuillez noter que les géométries déjà présentes seront écrasées lors de cette opération. L' affectation des enregistrements s'effectue via l'identifiant (champ <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>). Les enregistrements du fichier Shapefile qui ne peuvent pas être attribués sont ignorés. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">232</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.nonImportedResources" datatype="html">
+      <trans-unit id="import.nonImportedResources" datatype="html" xml:space="preserve">
         <source>Nicht importierte Ressourcen</source>
-        <target state="needs-translation">Nicht importierte Ressourcen</target>
+        <target state="translated">Ressources non importées</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">217</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="buttons.back" datatype="html">
+      <trans-unit id="buttons.back" datatype="html" xml:space="preserve">
         <source>Zurück</source>
-        <target state="needs-translation">Zurück</target>
+        <target state="translated">Retour</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">164</context>
@@ -691,71 +691,71 @@
           <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.invalidFields.resource" datatype="html">
+      <trans-unit id="export.invalidFields.resource" datatype="html" xml:space="preserve">
         <source>(Ressource <x id="INTERPOLATION" equiv-text="{{invalidField.identifier}}"/>)</source>
-        <target state="needs-translation">(Ressource <x id="INTERPOLATION" equiv-text="{{invalidField.identifier}}"/>)</target>
+        <target state="translated">(Ressource <x id="INTERPOLATION" equiv-text="{{invalidField.identifier}}"/>)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.importExportProcessModal.exportInfo" datatype="html">
+      <trans-unit id="widgets.importExportProcessModal.exportInfo" datatype="html" xml:space="preserve">
         <source>Daten werden exportiert...</source>
-        <target state="needs-translation">Daten werden exportiert...</target>
+        <target state="translated">Exportation des données en cours...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export-modal.component.ts</context>
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.startExport" datatype="html">
+      <trans-unit id="export.startExport" datatype="html" xml:space="preserve">
         <source>Export starten</source>
-        <target state="needs-translation">Export starten</target>
+        <target state="translated">Démarrer l'exportation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.operationSelect.label" datatype="html">
+      <trans-unit id="export.operationSelect.label" datatype="html" xml:space="preserve">
         <source>Kontext</source>
-        <target state="needs-translation">Kontext</target>
+        <target state="translated">Contexte</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">255</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.operationSelect.all" datatype="html">
+      <trans-unit id="export.operationSelect.all" datatype="html" xml:space="preserve">
         <source>Keine Einschränkung</source>
-        <target state="needs-translation">Keine Einschränkung</target>
+        <target state="translated">Aucune restriction</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">288</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.catalogSelect.label" datatype="html">
+      <trans-unit id="export.catalogSelect.label" datatype="html" xml:space="preserve">
         <source>Katalog</source>
-        <target state="needs-translation">Katalog</target>
+        <target state="translated">Catalogue</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">320</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.format.categorySelect" datatype="html">
+      <trans-unit id="export.format.categorySelect" datatype="html" xml:space="preserve">
         <source>Kategorie</source>
-        <target state="needs-translation">Kategorie</target>
+        <target state="translated">Catégorie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">346</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.combineHierarchicalRelations" datatype="html">
+      <trans-unit id="export.combineHierarchicalRelations" datatype="html" xml:space="preserve">
         <source>Hierarchische Relationen zusammenfassen (empfohlen)</source>
-        <target state="needs-translation">Hierarchische Relationen zusammenfassen (empfohlen)</target>
+        <target state="translated">Regrouper les relations hiérarchiques (recommandé)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">409</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.format" datatype="html">
+      <trans-unit id="export.format" datatype="html" xml:space="preserve">
         <source>Format</source>
         <target state="needs-translation">Format</target>
         <context-group purpose="location">
@@ -763,7 +763,7 @@
           <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.formats.geojson" datatype="html">
+      <trans-unit id="export.formats.geojson" datatype="html" xml:space="preserve">
         <source>GeoJSON</source>
         <target state="needs-translation">GeoJSON</target>
         <context-group purpose="location">
@@ -771,7 +771,7 @@
           <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.formats.shapefile" datatype="html">
+      <trans-unit id="export.formats.shapefile" datatype="html" xml:space="preserve">
         <source>Shapefile</source>
         <target state="needs-translation">Shapefile</target>
         <context-group purpose="location">
@@ -779,23 +779,23 @@
           <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.formats.catalog" datatype="html">
+      <trans-unit id="export.formats.catalog" datatype="html" xml:space="preserve">
         <source>Katalog</source>
-        <target state="needs-translation">Katalog</target>
+        <target state="translated">Catalogue</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.combineHierarchicalRelations.info" datatype="html">
+      <trans-unit id="export.combineHierarchicalRelations.info" datatype="html" xml:space="preserve">
         <source>Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option sollte im Normalfall aktiviert bleiben. </source>
-        <target state="needs-translation">Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>isChildOf<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option sollte im Normalfall aktiviert bleiben. </target>
+        <target state="translated">Lorsque cette option est activée, les relations hiérarchiques sont regroupées sous la relation simplifiée &lt;x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&amp;lt;i&amp;gt;"/ &gt;isChildOf&lt;x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&amp;lt;/i&amp;gt;"/&gt;, qui désigne respectivement la ressource immédiatement supérieure. Cette option doit normalement rester activée. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">409</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.formats.csv" datatype="html">
+      <trans-unit id="export.formats.csv" datatype="html" xml:space="preserve">
         <source>CSV</source>
         <target state="needs-translation">CSV</target>
         <context-group purpose="location">
@@ -803,89 +803,89 @@
           <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.csvimportmode.complete" datatype="html">
+      <trans-unit id="export.csvimportmode.complete" datatype="html" xml:space="preserve">
         <source>Komplett</source>
-        <target state="needs-translation">Komplett</target>
+        <target state="translated">Complet</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">198</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.csvimportmode.schema" datatype="html">
+      <trans-unit id="export.csvimportmode.schema" datatype="html" xml:space="preserve">
         <source>Nur Schema</source>
-        <target state="needs-translation">Nur Schema</target>
+        <target state="translated">Schéma uniquement</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.component.ts</context>
           <context context-type="linenumber">228</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.csv.noResources" datatype="html">
+      <trans-unit id="export.csv.noResources" datatype="html" xml:space="preserve">
         <source>Keine Ressourcen gefunden.</source>
-        <target state="needs-translation">Keine Ressourcen gefunden.</target>
+        <target state="translated">Aucune ressource trouvée.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.csv.noCatalogs" datatype="html">
+      <trans-unit id="export.csv.noCatalogs" datatype="html" xml:space="preserve">
         <source>Keine Kataloge gefunden.</source>
-        <target state="needs-translation">Keine Kataloge gefunden.</target>
+        <target state="translated">Aucun catalogue trouvé.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.geojson.info" datatype="html">
+      <trans-unit id="export.geojson.info" datatype="html" xml:space="preserve">
         <source>Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
-        <target state="needs-translation">Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </target>
+        <target state="translated">Les géométries et les champs <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> identifiants<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier) sont exportés, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>description succincte<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortDescription) et <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Catégorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) des ressources concernées. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">154</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.invalidFields.heading" datatype="html">
+      <trans-unit id="export.invalidFields.heading" datatype="html" xml:space="preserve">
         <source>Nicht exportierte Felder:</source>
-        <target state="needs-translation">Nicht exportierte Felder:</target>
+        <target state="translated">Champs non exportés :</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.shapefile.info" datatype="html">
+      <trans-unit id="export.shapefile.info" datatype="html" xml:space="preserve">
         <source>Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </source>
-        <target state="needs-translation">Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) der jeweiligen Ressourcen. </target>
+        <target state="translated">Les géométries et les champs <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/> identifiants<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (identifier) sont exportés, <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>description succincte<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (shortdesc) et <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Catégorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/> (category) des ressources concernées. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/export/export.html</context>
           <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.creation.modal.info" datatype="html">
+      <trans-unit id="backup.creation.modal.info" datatype="html" xml:space="preserve">
         <source>Datenbank wird gesichert.</source>
-        <target state="needs-translation">Datenbank wird gesichert.</target>
+        <target state="translated">Sauvegarde de la base de données en cours ...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation-modal.component.ts</context>
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.creation.createBackup" datatype="html">
+      <trans-unit id="backup.creation.createBackup" datatype="html" xml:space="preserve">
         <source>Backup erstellen</source>
-        <target state="needs-translation">Backup erstellen</target>
+        <target state="translated">Créer une sauvegarde</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation.component.ts</context>
           <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.creation.info" datatype="html">
-        <source>Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angezeigten Pfad und sollten separat gesichert werden. </source>
-        <target state="needs-translation">Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angezeigten Pfad und sollten separat gesichert werden. </target>
+      <trans-unit id="backup.creation.info" datatype="html" xml:space="preserve">
+        <source>Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> angezeigten Pfad und sollten separat gesichert werden. </source>
+        <target state="translated">Crée une sauvegarde du projet actuellement ouvert. Des sauvegardes régulières renforcent la sécurité des données et permettent, en cas de perte de données, de restaurer la base de données à partir de la dernière sauvegarde intermédiaire. <x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Veuillez noter que les fichiers image originaux ne sont pas inclus dans la sauvegarde. Celles-ci se trouvent dans le chemin d'accès affiché sous <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>Paramètres<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/> et doivent être sauvegardées séparément. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-creation.component.ts</context>
           <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.loading.modal.info" datatype="html">
+      <trans-unit id="backup.loading.modal.info" datatype="html" xml:space="preserve">
         <source>Datenbank wird eingelesen.</source>
-        <target state="needs-translation">Datenbank wird eingelesen.</target>
+        <target state="translated">Chargement de la base de données ...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading-modal.component.ts</context>
           <context context-type="linenumber">15</context>
@@ -899,33 +899,33 @@
           <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.loading.info.1" datatype="html">
+      <trans-unit id="backup.loading.info.1" datatype="html" xml:space="preserve">
         <source>Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie die Kennung eines Zielprojekts ein. Die Kennung des Zielprojekts darf nicht mit derjenigen des aktuell geöffneten Projekts übereinstimmen.</source>
-        <target state="needs-translation">Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie die Kennung eines Zielprojekts ein. Die Kennung des Zielprojekts darf nicht mit derjenigen des aktuell geöffneten Projekts übereinstimmen.</target>
+        <target state="translated">Saisissez ici le chemin d'accès complet d'un fichier de sauvegarde ainsi que l'identifiant d'un projet de destination. L'identifiant du projet de destination ne doit pas être le même que celui du projet actuellement ouvert.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.loading.info.3" datatype="html">
+      <trans-unit id="backup.loading.info.3" datatype="html" xml:space="preserve">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit der angegebenen Kennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </source>
-        <target state="needs-translation"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit der angegebenen Kennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
+        <target state="translated">&lt;x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;b&amp;gt;"/&gt;Attention :&lt;x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;/b&amp;gt;"/ &gt; Lors de l'importation d'un fichier de sauvegarde, toute base de données cible existante portant l'identifiant spécifié &lt;x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;b&amp;gt;"/&gt;sera entièrement écrasée&lt;x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;/ b&amp;gt;"/&gt;. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">158</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.loading.path" datatype="html">
+      <trans-unit id="backup.loading.path" datatype="html" xml:space="preserve">
         <source>Pfad</source>
-        <target state="needs-translation">Pfad</target>
+        <target state="translated">Chemin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
           <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="project.identifier" datatype="html">
+      <trans-unit id="project.identifier" datatype="html" xml:space="preserve">
         <source>Projektkennung</source>
-        <target state="needs-translation">Projektkennung</target>
+        <target state="translated">Identifiant du projet</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
           <context context-type="linenumber">68</context>
@@ -935,25 +935,25 @@
           <context context-type="linenumber">120</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.selectForm" datatype="html">
+      <trans-unit id="configuration.selectForm" datatype="html" xml:space="preserve">
         <source>Formular auswählen</source>
-        <target state="needs-translation">Formular auswählen</target>
+        <target state="translated">Sélectionner un formulaire</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
           <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.addCategory" datatype="html">
+      <trans-unit id="configuration.addCategory" datatype="html" xml:space="preserve">
         <source>Kategorie hinzufügen</source>
-        <target state="needs-translation">Kategorie hinzufügen</target>
+        <target state="translated">Ajouter une catégorie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
           <context context-type="linenumber">180</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.addField" datatype="html">
+      <trans-unit id="configuration.addField" datatype="html" xml:space="preserve">
         <source>Feld hinzufügen</source>
-        <target state="needs-translation">Feld hinzufügen</target>
+        <target state="translated">Ajouter un champ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/add-field-modal.component.ts</context>
           <context context-type="linenumber">42</context>
@@ -963,25 +963,25 @@
           <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.selectField" datatype="html">
+      <trans-unit id="configuration.selectField" datatype="html" xml:space="preserve">
         <source>Feld auswählen</source>
-        <target state="needs-translation">Feld auswählen</target>
+        <target state="translated">Sélectionner un champ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/add-field-modal.component.ts</context>
           <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.newField" datatype="html">
+      <trans-unit id="configuration.newField" datatype="html" xml:space="preserve">
         <source>Neues Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyField.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
-        <target state="needs-translation">Neues Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyField.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</target>
+        <target state="translated">Nouveau champ &lt;x id="START_TAG_CODE" ctype="x-code" equiv-text="&amp;lt;code&amp;gt;"/&gt;&lt;x id="INTERPOLATION" equiv-text="{{emptyField.name}}"/ &gt;&lt;x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&amp;lt;/code&amp;gt;"/&gt;</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/field-listing.component.ts</context>
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.addGroup" datatype="html">
+      <trans-unit id="configuration.addGroup" datatype="html" xml:space="preserve">
         <source>Gruppe hinzufügen</source>
-        <target state="needs-translation">Gruppe hinzufügen</target>
+        <target state="translated">Ajouter un groupe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/group/add-group-modal.component.ts</context>
           <context context-type="linenumber">42</context>
@@ -991,25 +991,25 @@
           <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.selectGroup" datatype="html">
+      <trans-unit id="configuration.selectGroup" datatype="html" xml:space="preserve">
         <source>Gruppe auswählen</source>
-        <target state="needs-translation">Gruppe auswählen</target>
+        <target state="translated">Sélectionner un groupe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/group/add-group-modal.component.ts</context>
           <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.newGroup" datatype="html">
+      <trans-unit id="configuration.newGroup" datatype="html" xml:space="preserve">
         <source>Neue Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyGroup.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
-        <target state="needs-translation">Neue Gruppe <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyGroup.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</target>
+        <target state="translated">Nouveau groupe &lt;x id="START_TAG_CODE" ctype="x-code" equiv-text="&amp;lt;code&amp;gt;"/&gt;&lt;x id="INTERPOLATION" equiv-text="{{emptyGroup.name}}"/ &gt;&lt;x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&amp;lt;/code&amp;gt;"/&gt;</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/group/group-listing.component.ts</context>
           <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.selectValuelist" datatype="html">
+      <trans-unit id="configuration.selectValuelist" datatype="html" xml:space="preserve">
         <source>Werteliste auswählen</source>
-        <target state="needs-translation">Werteliste auswählen</target>
+        <target state="translated">Sélectionner la liste des valeurs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/add-valuelist-modal.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -1019,73 +1019,73 @@
           <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.extendValuelist" datatype="html">
+      <trans-unit id="configuration.extendValuelist" datatype="html" xml:space="preserve">
         <source>Werteliste erweitern</source>
-        <target state="needs-translation">Werteliste erweitern</target>
+        <target state="translated">Étendre la liste des valeurs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.component.ts</context>
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.extendValuelistInfo" datatype="html">
-        <source>Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </source>
-        <target state="needs-translation">Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelistToExtend.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/>. </target>
+      <trans-unit id="configuration.extendValuelistInfo" datatype="html" xml:space="preserve">
+        <source>Bitte wählen Sie einen Bezeichner für Ihre Erweiterung der Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text=".id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text=".     &lt;/spa"/>. </source>
+        <target state="translated">Veuillez choisir un identifiant pour votre extension de la liste de valeurs &lt;x id="START_TAG_CODE" ctype="x-code" equiv-text="&amp;lt;code&amp;gt;"/&gt;&lt;x id="INTERPOLATION" equiv-text=".id}}"/ &gt;&lt;x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text=". &amp;lt;/spa"/&gt;. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.component.ts</context>
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.createExtendingValuelist" datatype="html">
+      <trans-unit id="configuration.createExtendingValuelist" datatype="html" xml:space="preserve">
         <source>Erweiterung erstellen</source>
-        <target state="needs-translation">Erweiterung erstellen</target>
+        <target state="translated">Créer une extension</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/extend-valuelist-modal.html</context>
           <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.manageValuelists" datatype="html">
+      <trans-unit id="configuration.manageValuelists" datatype="html" xml:space="preserve">
         <source>Wertelisten verwalten</source>
-        <target state="needs-translation">Wertelisten verwalten</target>
+        <target state="translated">Gérer les listes de valeurs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/manage-valuelists-modal.component.ts</context>
           <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.newValuelist" datatype="html">
+      <trans-unit id="configuration.newValuelist" datatype="html" xml:space="preserve">
         <source>Neue Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyValuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
-        <target state="needs-translation">Neue Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyValuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</target>
+        <target state="translated">Nouvelle liste de valeurs &lt;x id="START_TAG_CODE" ctype="x-code" equiv-text="&amp;lt;code&amp;gt;"/&gt;&lt;x id="INTERPOLATION" equiv-text="{{emptyValuelist.id}}"/ &gt;&lt;x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&amp;lt;/code&amp;gt;"/&gt;</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-listing.component.ts</context>
           <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.valuelistExtensionTooltip" datatype="html">
+      <trans-unit id="configuration.valuelistExtensionTooltip" datatype="html" xml:space="preserve">
         <source>Diese Werteliste stellt eine Erweiterung einer bestehenden Werteliste dar.</source>
-        <target state="needs-translation">Diese Werteliste stellt eine Erweiterung einer bestehenden Werteliste dar.</target>
+        <target state="translated">Cette liste de valeurs constitue une extension d'une liste de valeurs existante.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
           <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.valuesHeading" datatype="html">
+      <trans-unit id="configuration.valuesHeading" datatype="html" xml:space="preserve">
         <source>Werte:</source>
-        <target state="needs-translation">Werte:</target>
+        <target state="translated">Valeurs :</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
           <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.seletedForm" datatype="html">
+      <trans-unit id="configuration.seletedForm" datatype="html" xml:space="preserve">
         <source>Ausgewähltes Formular</source>
-        <target state="needs-translation">Ausgewähltes Formular</target>
+        <target state="translated">Formulaire sélectionné</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-category.component.ts</context>
           <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.field.inputType" datatype="html">
+      <trans-unit id="configuration.field.inputType" datatype="html" xml:space="preserve">
         <source>Eingabetyp</source>
-        <target state="needs-translation">Eingabetyp</target>
+        <target state="translated">Type de saisie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/field/field-preview.component.ts</context>
           <context context-type="linenumber">33</context>
@@ -1099,9 +1099,9 @@
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.addSupercategory" datatype="html">
+      <trans-unit id="configuration.addSupercategory" datatype="html" xml:space="preserve">
         <source>Oberkategorie hinzufügen</source>
-        <target state="needs-translation">Oberkategorie hinzufügen</target>
+        <target state="translated">Ajouter une catégorie supérieure</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
           <context context-type="linenumber">102</context>
@@ -1111,9 +1111,9 @@
           <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.addSubcategory" datatype="html">
+      <trans-unit id="configuration.addSubcategory" datatype="html" xml:space="preserve">
         <source>Unterkategorie hinzufügen</source>
-        <target state="needs-translation">Unterkategorie hinzufügen</target>
+        <target state="translated">Ajouter une sous-catégorie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
           <context context-type="linenumber">127</context>
@@ -1123,57 +1123,57 @@
           <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.createSpecificField" datatype="html">
-        <source>Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </source>
-        <target state="needs-translation">Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </target>
+      <trans-unit id="configuration.createSpecificField" datatype="html" xml:space="preserve">
+        <source>Feld <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/cod"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="erstellen"/> erstellen </source>
+        <target state="translated">Créer champs <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{field.name}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.component.ts</context>
           <context context-type="linenumber">176</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.showField" datatype="html">
+      <trans-unit id="configuration.showField" datatype="html" xml:space="preserve">
         <source>Feld anzeigen</source>
-        <target state="needs-translation">Feld anzeigen</target>
+        <target state="translated">Afficher le champ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.allowMultiLanguage" datatype="html">
+      <trans-unit id="configuration.allowMultiLanguage" datatype="html" xml:space="preserve">
         <source>Eingabe in mehreren Sprachen erlauben</source>
-        <target state="needs-translation">Eingabe in mehreren Sprachen erlauben</target>
+        <target state="translated">Autoriser la saisie en plusieurs langues</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/i18n-switch.component.ts</context>
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.subfields" datatype="html">
+      <trans-unit id="configuration.subfields" datatype="html" xml:space="preserve">
         <source>Unterfelder</source>
-        <target state="needs-translation">Unterfelder</target>
+        <target state="translated">sous-champs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/subfields-section.component.ts</context>
           <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.subfields.condition" datatype="html">
+      <trans-unit id="configuration.subfields.condition" datatype="html" xml:space="preserve">
         <source>Bedingung:</source>
-        <target state="needs-translation">Bedingung:</target>
+        <target state="translated">Condition :</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/subfields-section.component.ts</context>
           <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.subfields.condition.none" datatype="html">
+      <trans-unit id="configuration.subfields.condition.none" datatype="html" xml:space="preserve">
         <source>Keine</source>
-        <target state="needs-translation">Keine</target>
+        <target state="translated">Aucune</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/widgets/subfields-section.component.ts</context>
           <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.valuelist" datatype="html">
+      <trans-unit id="configuration.valuelist" datatype="html" xml:space="preserve">
         <source>Werteliste</source>
-        <target state="needs-translation">Werteliste</target>
+        <target state="translated">Liste de valeurs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
           <context context-type="linenumber">59</context>
@@ -1183,9 +1183,9 @@
           <context context-type="linenumber">107</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.valuelistForDimensionSubfield" datatype="html">
+      <trans-unit id="configuration.valuelistForDimensionSubfield" datatype="html" xml:space="preserve">
         <source>Werteliste (Unterfeld "Gemessen an")</source>
-        <target state="needs-translation">Werteliste (Unterfeld "Gemessen an")</target>
+        <target state="translated">Liste de valeurs (sous-champ "Mesuré par rapport à")</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
           <context context-type="linenumber">81</context>
@@ -8729,9 +8729,9 @@
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="import.csv.info" datatype="html">
+      <trans-unit id="import.csv.info" datatype="html" xml:space="preserve">
         <source>Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe den Bezeichnern der Felder entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> eine Schemadatei generiert werden. </source>
-        <target state="needs-translation">Alle in der CSV-Datei definierten Ressourcen müssen der gleichen Kategorie angehören. Bitte beachten Sie, dass die Spaltenköpfe den Bezeichnern der Felder entsprechen müssen, die für die jeweilige Kategorie konfiguriert wurden. Als Vorlage kann im <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../export&quot;&gt;"/>Export-Menü<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> eine Schemadatei generiert werden. </target>
+        <target state="translated">Toutes les ressources définies dans le fichier CSV doivent appartenir à la même catégorie. Veuillez noter que les en-têtes de colonnes doivent correspondre aux identifiants des champs configurés pour la catégorie concernée. Vous pouvez utiliser comme modèle le menu <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../ export&quot;&gt;"/>menu d'exportation<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">73,65</context>
@@ -9017,9 +9017,9 @@
           <context context-type="linenumber">733</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.mandatoryField" datatype="html">
+      <trans-unit id="configuration.mandatoryField" datatype="html" xml:space="preserve">
         <source>Pflichtfeld</source>
-        <target state="needs-translation">Pflichtfeld</target>
+        <target state="translated">Champ obligatoire</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">24</context>
@@ -9029,9 +9029,9 @@
           <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.field.condition" datatype="html">
+      <trans-unit id="configuration.field.condition" datatype="html" xml:space="preserve">
         <source>Bedingung</source>
-        <target state="needs-translation">Bedingung</target>
+        <target state="translated">Condition</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/browse/configuration-field.html</context>
           <context context-type="linenumber">31</context>
@@ -10165,9 +10165,9 @@
           <context context-type="linenumber">951</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.valuelistForWeightSubfield" datatype="html">
+      <trans-unit id="configuration.valuelistForWeightSubfield" datatype="html" xml:space="preserve">
         <source>Werteliste (Unterfeld "Messgerät")</source>
-        <target state="needs-translation">Werteliste (Unterfeld "Messgerät")</target>
+        <target state="translated">Liste des valeurs (sous-champ "Appareil de mesure")</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.html</context>
           <context context-type="linenumber">138,140</context>
@@ -10621,9 +10621,9 @@
           <context context-type="linenumber">1172</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.loading.confirm.question" datatype="html">
+      <trans-unit id="backup.loading.confirm.question" datatype="html" xml:space="preserve">
         <source>Möchten Sie das Backup wirklich einlesen?</source>
-        <target state="needs-translation">Möchten Sie das Backup wirklich einlesen?</target>
+        <target state="translated">Voulez-vous vraiment restaurer cette sauvegarde ?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
           <context context-type="linenumber">18,20</context>
@@ -10637,17 +10637,17 @@
           <context context-type="linenumber">2,4</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.loading.confirm.existingProject" datatype="html">
+      <trans-unit id="backup.loading.confirm.existingProject" datatype="html" xml:space="preserve">
         <source>Das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> existiert bereits und wird beim Einlesen des Backups überschrieben. </source>
-        <target state="needs-translation">Das Projekt <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> existiert bereits und wird beim Einlesen des Backups überschrieben. </target>
+        <target state="translated">Le projet &lt;x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;b&amp;gt;"/&gt;&lt;x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/ &gt;&lt;x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;/b&amp;gt;"/&gt; existe déjà et sera écrasé lors de la restauration de la sauvegarde. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
           <context context-type="linenumber">9,11</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.loading.confirm.unsimilarProjectIdentifier" datatype="html">
+      <trans-unit id="backup.loading.confirm.unsimilarProjectIdentifier" datatype="html" xml:space="preserve">
         <source>Die von Ihnen gewählte Projektkennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> unterscheidet sich stark von der Kennung des Originalprojekts <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{originalProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </source>
-        <target state="needs-translation">Die von Ihnen gewählte Projektkennung <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> unterscheidet sich stark von der Kennung des Originalprojekts <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION_1" equiv-text="{{originalProjectIdentifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </target>
+        <target state="translated">L'identifiant de projet que vous avez choisi &lt;x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;b&amp;gt;"/&gt;&lt;x id="INTERPOLATION" equiv-text="{{newProjectIdentifier}}"/ &gt;&lt;x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;/b&amp;gt;"/&gt; diffère considérablement de l'identifiant du projet d'origine &lt;x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;b&amp;gt;"/ &gt;&lt;x id="INTERPOLATION_1" equiv-text="{{originalProjectIdentifier}}"/&gt;&lt;x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;lt;/b&amp;gt;"/&gt;. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/confirm-backup-loading-modal.html</context>
           <context context-type="linenumber">13,16</context>

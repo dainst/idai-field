@@ -19,9 +19,10 @@
         <category-picker [topLevelCategoriesArray]="topLevelCategories"
                          [selectedCategories]="selectedCategories"
                          [allowPickingAbstractCategories]="true"
-                         [showVisibilityButtons]="true"
+                         [showMapButtons]="true"
                          [allCategoriesOptionVisible]="true"
-                         (onCategoryPicked)="toggleCategory($event)">
+                         (onCategoryPicked)="toggleCategory($event)"
+                         (onCategoryFocused)="focusCategory($event)">
         </category-picker>
     </div>
 </div>

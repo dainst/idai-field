@@ -21,6 +21,7 @@ export class ToggleCategoriesMenuComponent extends MenuComponent {
     @Input() disabled: boolean;
 
     @Output() onCategoriesToggled: EventEmitter<string[]> = new EventEmitter<string[]>;
+    @Output() onCategoriesFocused: EventEmitter<string[]> = new EventEmitter<string[]>;
 
 
     constructor(renderer: Renderer2,
@@ -42,6 +43,16 @@ export class ToggleCategoriesMenuComponent extends MenuComponent {
         }
 
         this.onCategoriesToggled.emit(this.selectedCategories);
+    }
+
+
+    public focusCategory(category: CategoryForm) {
+
+        const categoriesToFocus: string[] = category
+            ? CategoryForm.getNamesOfCategoryAndSubcategories(category)
+            : CategoryForm.getNamesOfCategoriesAndSubcategories(this.topLevelCategories);
+
+        this.onCategoriesFocused.emit(categoriesToFocus);
     }
 
 

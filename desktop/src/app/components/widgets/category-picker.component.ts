@@ -30,13 +30,14 @@ export class CategoryPickerComponent implements OnChanges {
     @Input() allowPickingAbstractCategories: boolean = false;
     @Input() highlightCustomCategories: boolean = false;
     @Input() showCreateButtons: boolean = false;
-    @Input() showVisibilityButtons: boolean = false;
+    @Input() showMapButtons: boolean = false;
     @Input() allowChangingOrder: boolean = false;
     @Input() dragging: boolean = false;
     @Input() contextMenu: ConfigurationContextMenu;
     @Input() customProjectConfiguration: ProjectConfiguration;
 
     @Output() onCategoryPicked: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
+    @Output() onCategoryFocused: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
     @Output() onCreateSubcategory: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
     @Output() onOrderChanged: EventEmitter<OrderChange> = new EventEmitter<OrderChange>();
     @Output() onEditCategory: EventEmitter<CategoryForm> = new EventEmitter<CategoryForm>();
@@ -82,6 +83,12 @@ export class CategoryPickerComponent implements OnChanges {
         if (category?.isAbstract && !this.allowPickingAbstractCategories) return;
 
         this.onCategoryPicked.emit(category);
+    }
+
+
+    public focusCategory(category: CategoryForm) {
+
+        this.onCategoryFocused.emit(category);
     }
 
 

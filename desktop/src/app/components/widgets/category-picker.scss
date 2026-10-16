@@ -50,18 +50,28 @@ category-picker {
     transition: background-color .5s ease;
     padding: 0;
 
-    .visibility-button {
+    .visibility-button,
+    .focus-button {
       position: relative;
       top: 3.5px;
       float: left;
 
-      &.mdi-eye {
+      &.mdi-eye,
+      &.mdi-image-filter-center-focus {
         color: #657faa;
       }
 
       &.mdi-eye-off {
         color: grey;
       }
+
+      &.inactive {
+        opacity: 0;
+      }
+    }
+
+    .visibility-button {
+      margin-right: 5px;
     }
 
     &.child-category {
@@ -70,6 +80,13 @@ category-picker {
       .category-item {
         padding-left: 40px;
       }
+    }
+  }
+
+  #choose-category-option-all {
+    .visibility-button,
+    .focus-button {
+      top: 0.5px;
     }
   }
 

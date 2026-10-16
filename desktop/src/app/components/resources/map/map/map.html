@@ -2,4 +2,5 @@
 
 <toggle-categories-menu [topLevelCategories]="topLevelCategories"
                         [selectedCategories]="categoriesToDisplay"
-                        (onCategoriesToggled)="setCategoriesToDisplay($event)"></toggle-categories-menu>
+                        (onCategoriesToggled)="setCategoriesToDisplay($event)"
+                        (onCategoriesFocused)="focusCategories($event)"></toggle-categories-menu>

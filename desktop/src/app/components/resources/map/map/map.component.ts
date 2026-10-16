@@ -90,6 +90,16 @@ export class MapComponent implements AfterViewInit, OnChanges {
         this.viewFacade.setMapCategories(categoryNames);
     }
 
+    
+    public focusCategories(categoryNames: string[]) {
+
+        const documents: Array<FieldDocument> = this.documents.filter(document => {
+            return categoryNames.includes(document.resource.category);
+        });
+
+        this.focusDocuments(documents);
+    }
+
 
     protected createMap(): L.Map {
 
@@ -182,7 +192,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     protected setView(): Promise<any> {
 
         if (Helper.hasGeometries(this.getSelection())) {
-            this.focusSelection();
+            this.focusDocuments(this.getSelection());
         } else if (this.bounds.length > 1) {
             this.map.fitBounds(L.latLngBounds(this.bounds), this.getFitViewOptions());
         } else if (this.bounds.length == 1) {
@@ -417,13 +427,13 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
-    private focusSelection() {
+    private focusDocuments(documents: Array<FieldDocument>) {
 
-        const panOptions = { animate: true, easeLinearity: 0.3 };
-        const selection = this.getSelection().filter(Helper.getGeometry);
+        const panOptions: L.PanOptions = { animate: true, easeLinearity: 0.3 };
 
-        const bounds = Helper.addToBounds(
-            this.markers, this.polygons, this.polylines, selection);
+        const bounds: Array<L.LatLng> = Helper.addToBounds(
+            this.markers, this.polygons, this.polylines, documents.filter(Helper.getGeometry)
+        );
 
         if (bounds.length === 1) {
             this.map.panTo(bounds[0], panOptions);

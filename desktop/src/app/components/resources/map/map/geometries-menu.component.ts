@@ -1,6 +1,6 @@
 import { Renderer2, Component, Input, EventEmitter, Output } from '@angular/core';
-import { sameset } from 'tsfun';
-import { CategoryForm } from 'idai-field-core'
+import { sameset, to, subsetOf } from 'tsfun';
+import { CategoryForm, Named } from 'idai-field-core'
 import { MenuComponent } from '../../../widgets/menu.component';
 import { Menus } from '../../../../services/menus';
 import { ViewFacade } from '../../view/view-facade';
@@ -69,6 +69,13 @@ export class GeometriesMenuComponent extends MenuComponent {
             });
         } else {
             this.selectedCategories = (this.selectedCategories ?? []).concat(categoryNames);
+
+            for (let topLevelCategory of this.topLevelCategories) {
+                if (topLevelCategory.isAbstract && !this.selectedCategories.includes(topLevelCategory.name)
+                        && subsetOf(this.selectedCategories, topLevelCategory.children.map(to(Named.NAME)))) {
+                    this.selectedCategories.push(topLevelCategory.name);
+                }
+            }
         }
     }
 

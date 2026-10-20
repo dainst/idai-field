@@ -73,7 +73,7 @@ describe('ChangesStream', () => {
             }]
         };
 
-        projectConfiguration = jasmine.createSpyObj(['MockProjectConfiguration'],
+        projectConfiguration = jasmine.createSpyObj('MockProjectConfiguration',
             ['getCategory', 'getRegularCategories', 'getCategoryWithSubcategories']);
         projectConfiguration.getCategory.and.returnValue(category);
         projectConfiguration.getRegularCategories.and.returnValue([]);
@@ -89,24 +89,22 @@ describe('ChangesStream', () => {
     });
 
 
-    it('should put to index facade and reassign to cache', async done => {
+    it('should put to index facade and reassign to cache', async () => {
 
         await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalledWith(doc);
         expect(documentCache.reassign).toHaveBeenCalledWith(doc);
-        done();
     });
 
 
-    it('detect that it is remote change', async done => {
+    it('detect that it is remote change', async () => {
 
         await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalledWith(doc);
-        done();
     });
 
 
-    it('detect that it is local change', async done => {
+    it('detect that it is local change', async () => {
 
         doc.modified[0] = {
             user: 'localuser', // same user
@@ -115,11 +113,10 @@ describe('ChangesStream', () => {
 
         await onChange(doc);
         expect(indexFacade.put).not.toHaveBeenCalled();
-        done();
     });
 
 
-    it('detect remote change for conflicted document', async done => {
+    it('detect remote change for conflicted document', async () => {
 
         const rev2 = {
             resource: {
@@ -144,11 +141,10 @@ describe('ChangesStream', () => {
 
         await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalledWith(doc);
-        done();
     });
 
 
-    it('always treat changes to conflicted documents as remote changes', async done => {
+    it('always treat changes to conflicted documents as remote changes', async () => {
 
         const rev2 = {
             resource: {
@@ -173,11 +169,10 @@ describe('ChangesStream', () => {
 
         await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalled();
-        done();
     });
 
 
-    it('update non-unique identifier warnings', async done => {
+    it('update non-unique identifier warnings', async () => {
 
         let doc2: Document = {
             resource: {
@@ -219,7 +214,5 @@ describe('ChangesStream', () => {
         await onChange(doc2);
         expect(doc.warnings).toBeUndefined();
         expect(doc2.warnings).toBeUndefined();
-
-        done();
     });
 });

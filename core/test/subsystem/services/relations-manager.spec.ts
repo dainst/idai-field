@@ -10,14 +10,13 @@ describe('subsystem/relations-manager', () => {
     let helpers;
 
 
-    beforeEach(async done => {
+    beforeEach(async () => {
         app = await createCoreApp();
         helpers = await createHelpers(app);
-        done();
     });
 
 
-    it('update', async done => {
+    it('update', async () => {
 
         let t1 = doc('', 'identifiert1', 'Feature', 't1') as FieldDocument;
         let t2 = doc('', 'identifiert2', 'Feature', 't2') as FieldDocument;
@@ -39,12 +38,10 @@ describe('subsystem/relations-manager', () => {
         expect(t1.resource.relations.isAfter).toBeUndefined();
 
         expect(t2old.resource.relations.isBefore).toEqual(['t1']);
-
-        done();
     });
 
 
-    it('skip image deletion', async done => {
+    it('skip image deletion', async () => {
 
         const tc1 = doc('', 'identifiertc1', 'TypeCatalog', 'tc1') as FieldDocument;
         const t1 = doc('', 'identifiert1', 'Type', 't1') as FieldDocument;
@@ -68,8 +65,6 @@ describe('subsystem/relations-manager', () => {
         expect(documents[0].resource.relations.depicts).toBeUndefined();
         expect(documents[1].resource.relations.depicts).toBeUndefined();
         await helpers.expectDocuments('i1', 'i2');
-
-        done();
     });
 
 
@@ -107,7 +102,7 @@ describe('subsystem/relations-manager', () => {
     }
 
 
-    it('remove, beginning with Feature', async done => {
+    it('remove, beginning with Feature', async () => {
 
         const [_, d2] = await createTestResourcesForRemoveTests();
 
@@ -115,11 +110,10 @@ describe('subsystem/relations-manager', () => {
         await app.relationsManager.remove(d2, { descendants: true });
 
         await helpers.expectDocuments('id1', 'id5', 'id6', 'id7');
-        done();
     });
 
 
-    it('remove, beginning with Trench', async done => {
+    it('remove, beginning with Trench', async () => {
 
         const [d1, _] = await createTestResourcesForRemoveTests();
 
@@ -127,11 +121,10 @@ describe('subsystem/relations-manager', () => {
         await app.relationsManager.remove(d1, { descendants: true });
 
         await helpers.expectDocuments('id5', 'id6');
-        done();
     });
 
 
-    it('remove, beginning with Trench - keep a descendant', async done => {
+    it('remove, beginning with Trench - keep a descendant', async () => {
 
         const [d1, _, d3] = await createTestResourcesForRemoveTests();
 
@@ -139,6 +132,5 @@ describe('subsystem/relations-manager', () => {
         await app.relationsManager.remove(d1, { descendants: true, descendantsToKeep: [d3] });
 
         await helpers.expectDocuments('id3', 'id5', 'id6');
-        done();
     });
 });

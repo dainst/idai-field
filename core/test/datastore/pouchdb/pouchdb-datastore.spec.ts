@@ -38,7 +38,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('create: create an id', async done => {
+    it('create: create an id', async () => {
 
         try {
             const result = await datastore.create(doc('sd1'), 'u');
@@ -46,11 +46,10 @@ describe('PouchdbDatastore', () => {
         } catch (e) {
             fail(e);
         }
-        done();
     });
 
 
-    it('create: should create a document and take the existing resource.id', async done => {
+    it('create: should create a document and take the existing resource.id', async () => {
 
         let called = false;
         pouchdbProxy.get.and.callFake(async doc => {
@@ -81,11 +80,10 @@ describe('PouchdbDatastore', () => {
         } catch (e) {
             fail(e);
         }
-        done();
     });
 
 
-    it('create: should not create a document with the resource.id of an already existing doc', async done => {
+    it('create: should not create a document with the resource.id of an already existing doc', async () => {
 
         const docToCreate1: Document = doc('sd1');
         docToCreate1.resource.id = 'a1';
@@ -99,11 +97,10 @@ describe('PouchdbDatastore', () => {
         } catch (expected) {
             expect(expected[0]).toEqual(DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS);
         }
-        done();
     });
 
 
-    it('create: create dates', async done => {
+    it('create: create dates', async () => {
 
         const newDoc = doc('sd1');
         delete newDoc.created;
@@ -113,11 +110,10 @@ describe('PouchdbDatastore', () => {
         expect(result.created.date instanceof Date).toBeTruthy();
         expect(Array.isArray(result.modified)).toBeTruthy();
         expect(result.modified.length).toBe(0);
-        done();
     });
 
 
-    it('bulkCreate: create ids', async done => {
+    it('bulkCreate: create ids', async () => {
 
         try {
             const result = await datastore.bulkCreate(
@@ -128,11 +124,10 @@ describe('PouchdbDatastore', () => {
         } catch (e) {
             fail(e);
         }
-        done();
     });
 
 
-    it('bulkCreate: should not create a document with the resource.id of an already existing doc', async done => {
+    it('bulkCreate: should not create a document with the resource.id of an already existing doc', async () => {
 
         const docToCreate1: Document = doc('sd1');
         docToCreate1.resource.id = 'a1';
@@ -146,21 +141,19 @@ describe('PouchdbDatastore', () => {
         } catch (expected) {
             expect(expected[0]).toEqual(DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS);
         }
-        done();
     });
 
 
-    it('update: should update an existing document with no identifier conflict', async done => {
+    it('update: should update an existing document with no identifier conflict', async () => {
 
         let doc2 = doc('id2');
         await datastore.create(doc('id1'), 'u');
         doc2 = await datastore.create(doc2, 'u');
         await datastore.update(doc2, 'u');
-        done();
     });
 
 
-    it('update: should not update if resource id not present', async done => {
+    it('update: should not update if resource id not present', async () => {
 
         try {
             await datastore.update(doc('sd1'), 'u');
@@ -168,11 +161,10 @@ describe('PouchdbDatastore', () => {
         } catch (expected) {
             expect(expected[0]).toBe(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
         }
-        done();
     });
 
 
-    it('update: should not update if created not present', async done => {
+    it('update: should not update if created not present', async () => {
 
         const newDoc = doc('sd1');
         newDoc.resource.id = '1';
@@ -184,11 +176,10 @@ describe('PouchdbDatastore', () => {
         } catch (expected) {
             expect(expected[0]).toBe(DatastoreErrors.INVALID_DOCUMENT);
         }
-        done();
     });
 
 
-    it('update: should not update if not existent', async done => {
+    it('update: should not update if not existent', async () => {
 
         pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
 
@@ -198,11 +189,10 @@ describe('PouchdbDatastore', () => {
         } catch (expectedErr) {
             expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_NOT_FOUND);
         }
-        done();
     });
 
 
-    it('update: should squash old revisions', async done => {
+    it('update: should squash old revisions', async () => {
 
         const newDoc = doc('sd1');
         newDoc.resource.id = '1';
@@ -217,12 +207,10 @@ describe('PouchdbDatastore', () => {
         } catch (e) {
             fail(e);
         }
-
-        done();
     });
 
 
-    it('update: should merge modified dates of squash revisions', async done => {
+    it('update: should merge modified dates of squash revisions', async () => {
 
         const newDoc = doc('sd1');
         newDoc.resource.id = '1';
@@ -254,11 +242,10 @@ describe('PouchdbDatastore', () => {
         expect(result.modified.length).toBe(2);
         expect(result.modified[0].user).toEqual('u2');
         expect(result.modified[1].user).toEqual('u3');
-        done();
     });
 
 
-    it('update: add modified date', async done => {
+    it('update: add modified date', async () => {
 
         const newDoc = doc('id2');
         newDoc.resource.id = '1';
@@ -281,11 +268,10 @@ describe('PouchdbDatastore', () => {
         expect(result.modified.length).toBe(1);
         expect(result.modified[0].user).toEqual('u');
         expect(result.modified[0].date instanceof Date).toBeTruthy();
-        done();
     });
 
 
-    it('bulkUpdate: should not update if resource id not present', async done => {
+    it('bulkUpdate: should not update if resource id not present', async () => {
 
         try {
             await datastore.bulkUpdate([doc('sd1')], 'u');
@@ -293,11 +279,10 @@ describe('PouchdbDatastore', () => {
         } catch (expected) {
             expect(expected[0]).toBe(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
         }
-        done();
     });
 
 
-    it('get: should get if existent', async done => {
+    it('get: should get if existent', async () => {
 
         pouchdbProxy.get.and.callFake(async resourceId => {
             return {resource: {
@@ -312,11 +297,10 @@ describe('PouchdbDatastore', () => {
         } catch (e) {
             fail(e);
         }
-        done();
     });
 
 
-    it('get: should reject with keyOfM in when trying to get a non existing document', async done => {
+    it('get: should reject with keyOfM in when trying to get a non existing document', async () => {
 
         pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
 
@@ -326,19 +310,17 @@ describe('PouchdbDatastore', () => {
         } catch (expected) {
             expect(expected[0]).toEqual(DatastoreErrors.DOCUMENT_NOT_FOUND);
         }
-        done();
     });
 
 
-    it('remove: should remove if existent', async (done) => {
+    it('remove: should remove if existent', async () => {
 
         await datastore.remove(doc('sd1', 'identifier1', 'Find', 'id1'));
         expect(pouchdbProxy.remove).toHaveBeenCalled();
-        done();
     });
 
 
-    it('remove: should throw when no resource id', async done => {
+    it('remove: should throw when no resource id', async () => {
 
         try {
             await datastore.remove(doc('sd2'));
@@ -346,11 +328,10 @@ describe('PouchdbDatastore', () => {
         } catch (expected) {
             expect(expected[0]).toEqual(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
         }
-        done();
     });
 
 
-    it('remove: should throw when trying to remove and not existent', async done => {
+    it('remove: should throw when trying to remove and not existent', async () => {
 
         pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
 
@@ -362,11 +343,10 @@ describe('PouchdbDatastore', () => {
         } catch (expected) {
             expect(expected[0]).toEqual(DatastoreErrors.DOCUMENT_NOT_FOUND);
         }
-        done();
     });
 
 
-    it('remove: remove all conflicting revisions', async done => {
+    it('remove: remove all conflicting revisions', async () => {
 
         const document = doc('shortDescription1', 'identifier1', 'Find', 'id1');
         document['_conflicts'] = ['revision1', 'revision2'];
@@ -377,6 +357,5 @@ describe('PouchdbDatastore', () => {
         expect(pouchdbProxy.remove).toHaveBeenCalledWith(document);
         expect(pouchdbProxy.remove).toHaveBeenCalledWith('id1', 'revision1');
         expect(pouchdbProxy.remove).toHaveBeenCalledWith('id1', 'revision2');
-        done();
     });
 });

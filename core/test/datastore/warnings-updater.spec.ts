@@ -185,7 +185,7 @@ describe('WarningsUpdater', () => {
     });
 
     
-    it('set non-unique field warnings', async done => {
+    it('set non-unique field warnings', async () => {
 
         const documents = [
             createDocument('1'),
@@ -208,12 +208,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'nonUniqueIdentifier:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
-
-        done();
     });
 
 
-    it('remove non-unique field warnings', async done => {
+    it('remove non-unique field warnings', async () => {
 
         const documents = [
             createDocument('1'),
@@ -241,12 +239,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'nonUniqueIdentifier:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
-
-        done();
     });
 
 
-    it('set resource limit warnings', async done => {
+    it('set resource limit warnings', async () => {
 
         const categoryDefinition = {
             name: 'Category',
@@ -276,12 +272,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'resourceLimitExceeded:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
-
-        done();
     });
 
 
-    it('remove resource limit warnings', async done => {
+    it('remove resource limit warnings', async () => {
 
         const categoryDefinition = {
             name: 'Category',
@@ -316,12 +310,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'resourceLimitExceeded:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
-
-        done();
     });
 
 
-    it('set resource limit warnings for limit in parent category', async done => {
+    it('set resource limit warnings for limit in parent category', async () => {
 
         const parentCategoryDefinition = {
             name: 'ParentCategory',
@@ -356,12 +348,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'resourceLimitExceeded:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
-
-        done();
     });
 
 
-    it('remove resource limit warnings for limit in parent category', async done => {
+    it('remove resource limit warnings for limit in parent category', async () => {
 
         const parentCategoryDefinition = {
             name: 'ParentCategory',
@@ -401,12 +391,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'resourceLimitExceeded:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
-
-        done();
     });
 
 
-    it('set missing relation target warnings', async done => {
+    it('set missing relation target warnings', async () => {
 
         const documents = [
             createDocument('1'),
@@ -433,12 +421,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargets:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
-
-        done();
     });
 
 
-    it('remove missing relation target warnings', async done => {
+    it('remove missing relation target warnings', async () => {
 
         const documents = [
             createDocument('1'),
@@ -466,12 +452,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargets:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
-
-        done();
     });
 
 
-    it('remove missing relation target warnings in linking resources', async done => {
+    it('remove missing relation target warnings in linking resources', async () => {
 
         const documents = [
             createDocument('1'),
@@ -504,12 +488,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'missingRelationTargets:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'missingRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
-
-        done();
     });
 
 
-    it('set invalid relation target warnings', async done => {
+    it('set invalid relation target warnings', async () => {
 
         const documents = [
             createDocument('1'),
@@ -539,12 +521,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidRelationTargets:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
-
-        done();
     });
 
 
-    it('remove invalid relation target warnings', async done => {
+    it('remove invalid relation target warnings', async () => {
 
         const documents = [
             createDocument('1'),
@@ -576,12 +556,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidRelationTargets:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'invalidRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
-
-        done();
     });
 
 
-    it('remove invalid relation target warnings in linking resources', async done => {
+    it('remove invalid relation target warnings in linking resources', async () => {
 
         const documents = [
             createDocument('1'),
@@ -616,12 +594,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'invalidRelationTargets:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'invalidRelationTargetIds:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
-
-        done();
     });
 
 
-    it('set invalid parent warnings', async done => {
+    it('set invalid parent warnings', async () => {
 
         const documents = [
             createDocument('1'),
@@ -658,12 +634,10 @@ describe('WarningsUpdater', () => {
         expect(documents[0].warnings?.missingOrInvalidParent).toBe(true);
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingOrInvalidParent:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
-
-        done();
     });
 
 
-    it('set invalid parent warnings for invalid ancestors', async done => {
+    it('set invalid parent warnings for invalid ancestors', async () => {
 
         const documents = [
             createDocument('1'),
@@ -709,12 +683,10 @@ describe('WarningsUpdater', () => {
         expect(documents[0].warnings?.missingOrInvalidParent).toBe(true);
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingOrInvalidParent:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
-
-        done();
     });
 
 
-    it('set invalid parent warnings for circular relations', async done => {
+    it('set invalid parent warnings for circular relations', async () => {
 
         const documents = [
             createDocument('1'),
@@ -757,12 +729,10 @@ describe('WarningsUpdater', () => {
         expect(documents[0].warnings?.missingOrInvalidParent).toBe(true);
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingOrInvalidParent:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
-
-        done();
     });
 
 
-    it('remove invalid parent warnings', async done => {
+    it('remove invalid parent warnings', async () => {
 
         const documents = [
             createDocument('1'),
@@ -800,12 +770,10 @@ describe('WarningsUpdater', () => {
         expect(documents[0].warnings).toBeUndefined();
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'missingOrInvalidParent:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[0], 'warnings:exist');
-
-        done();
     });
 
 
-    it('remove invalid parent warnings for descendants', async done => {
+    it('remove invalid parent warnings for descendants', async () => {
 
         const documents = [
             createDocument('1'),
@@ -881,12 +849,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[4], 'warnings:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[5], 'missingOrInvalidParent:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[5], 'warnings:exist');
-
-        done();
     });
 
 
-    it('set outlier warnings', async done => {
+    it('set outlier warnings', async () => {
 
         const categoryDefinition = {
             name: 'Category',
@@ -1008,12 +974,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outliers:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
-
-        done();
     });
 
 
-    it('do not set outlier warnings for unselectable values from project field', async done => {
+    it('do not set outlier warnings for unselectable values from project field', async () => {
 
         const categoryDefinition = {
             name: 'Category',
@@ -1053,11 +1017,10 @@ describe('WarningsUpdater', () => {
         );
 
         expect(documents[1].warnings).toBeUndefined();
-        done();
     });
 
 
-    it('remove outlier warnings', async done => {
+    it('remove outlier warnings', async () => {
 
         const categoryDefinition = {
             name: 'Category',
@@ -1167,12 +1130,10 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outliers:exist');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).toHaveBeenCalledWith(documents[1], 'warnings:exist');
-
-        done();
     });
 
 
-    it('remove outlier warnings for valuelists from project field after updating project document', async done => {
+    it('remove outlier warnings for valuelists from project field after updating project document', async () => {
 
         const categoryDefinition = {
             name: 'Category',
@@ -1256,7 +1217,5 @@ describe('WarningsUpdater', () => {
         expect(mockIndexFacade.putToSingleIndex).not.toHaveBeenCalledWith(documents[3], 'outliers:exist');
         expect(mockIndexFacade.putToSingleIndex).not.toHaveBeenCalledWith(documents[3], 'outlierValues:contain');
         expect(mockIndexFacade.putToSingleIndex).not.toHaveBeenCalledWith(documents[3], 'warnings:exist');
-
-        done();
     });
 });

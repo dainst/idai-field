@@ -70,7 +70,7 @@ describe('Datastore', () => {
 
     // get
 
-    it('should add missing fields on get, bypassing cache', async done => {
+    it('should add missing fields on get, bypassing cache', async () => {
 
         mockdb.fetch.and.returnValue(Promise.resolve({
             resource: {
@@ -82,13 +82,12 @@ describe('Datastore', () => {
 
         const document = await datastore.get('1'); // fetch from mockdb
         verifyIsDocument(document);
-        done();
     });
 
 
     // get multiple
 
-    it('should add missing fields on getMultiple, bypassing cache', async done => {
+    it('should add missing fields on getMultiple, bypassing cache', async () => {
 
         mockdb.bulkFetch.and.returnValue(Promise.resolve([
             {
@@ -110,11 +109,10 @@ describe('Datastore', () => {
         expect(documents.length).toBe(2);
         verifyIsDocument(documents[0]);
         verifyIsDocument(documents[1]);
-        done();
     });
 
 
-    it('should retain order when fetching documents from both cache and datastore on getMultiple', async done => {
+    it('should retain order when fetching documents from both cache and datastore on getMultiple', async () => {
 
         mockdb.fetch.and.returnValue(Promise.resolve({
             resource: {
@@ -147,13 +145,12 @@ describe('Datastore', () => {
         expect(documents[0].resource.id).toEqual('1');
         expect(documents[1].resource.id).toEqual('2');
         expect(documents[2].resource.id).toEqual('3');
-        done();
     });
 
 
     // getRevision
 
-    it('should add missing fields on getRevision (bypassing cache)', async done => {
+    it('should add missing fields on getRevision (bypassing cache)', async () => {
 
         mockdb.fetchRevision.and.returnValue(Promise.resolve({
             resource: {
@@ -165,13 +162,12 @@ describe('Datastore', () => {
 
         const document = await datastore.getRevision('1', '1'); // fetch from mockdb
         verifyIsDocument(document);
-        done();
     });
 
 
     // find
 
-    it('should add missing fields on find, bypassing cache', async done => {
+    it('should add missing fields on find, bypassing cache', async () => {
 
         mockIndexFacade.find.and.returnValue(['1']);
         mockdb.bulkFetch.and.returnValue(Promise.resolve([
@@ -187,11 +183,10 @@ describe('Datastore', () => {
         const documents = (await datastore.find({})).documents; // fetch from mockdb
         expect(documents.length).toBe(1);
         verifyIsDocument(documents[0]);
-        done();
     });
 
 
-    it('should add missing fields on find', async done => {
+    it('should add missing fields on find', async () => {
 
         await datastore.create({
             resource: { // trigger caching of document
@@ -205,11 +200,10 @@ describe('Datastore', () => {
         const documents = (await datastore.find({})).documents; // fetch from cache
         expect(documents.length).toBe(1);
         verifyIsDocument(documents[0]);
-        done();
     });
 
 
-    it('should limit the number of documents returned on find', async done => {
+    it('should limit the number of documents returned on find', async () => {
 
         await datastore.create({ resource: { id: '1', category: 'Find', relations: {} } } as any);
         await datastore.create({ resource: { id: '2', category: 'Find', relations: {} } } as any);
@@ -220,11 +214,10 @@ describe('Datastore', () => {
         expect(documents.length).toBe(1);
         expect(totalCount).toBe(2);
         verifyIsDocument(documents[0]);
-        done();
     });
 
 
-    it('limit the number of documents and use an offset', async done => {
+    it('limit the number of documents and use an offset', async () => {
 
         await datastore.create({ resource: { id: '1', category: 'Find', relations: {} } } as any);
         await datastore.create({ resource: { id: '2', category: 'Find', relations: {} } } as any);
@@ -238,11 +231,10 @@ describe('Datastore', () => {
         verifyIsDocument(documents[0]);
 
         expect(documents[0].resource.id).toBe('1');
-        done();
     });
 
 
-    it('offset excludes everything', async done => {
+    it('offset excludes everything', async () => {
 
         await datastore.create({ resource: { id: '1', category: 'Find', relations: {} } } as any);
         await datastore.create({ resource: { id: '2', category: 'Find', relations: {} } } as any);
@@ -257,11 +249,10 @@ describe('Datastore', () => {
         const { documents, totalCount } = await datastore.find({ offset: 3 });
         expect(documents.length).toBe(0);
         expect(totalCount).toBe(3);
-        done();
     });
 
 
-    it('cant find one and only document', async done => {
+    it('cant find one and only document', async () => {
 
         mockIndexFacade.find.and.returnValue(['1']);
         mockdb.bulkFetch.and.returnValue(Promise.resolve([]));
@@ -269,11 +260,10 @@ describe('Datastore', () => {
         const { documents, totalCount } = await datastore.find({});
         expect(documents.length).toBe(0);
         expect(totalCount).toBe(0);
-        done();
     });
 
 
-    it('cant find second document', async done => {
+    it('cant find second document', async () => {
 
         mockIndexFacade.find.and.returnValue(['1', '2']);
 
@@ -296,13 +286,12 @@ describe('Datastore', () => {
         const { documents, totalCount } = await datastore.find({});
         expect(documents.length).toBe(1);
         expect(totalCount).toBe(1);
-        done();
     });
 
 
     // find ids
 
-    it('should return only ids', async done => {
+    it('should return only ids', async () => {
 
         await datastore.create({ resource: { id: '1', category: 'Find', relations: {} } } as any);
         await datastore.create({ resource: { id: '2', category: 'Find', relations: {} } } as any);
@@ -313,14 +302,12 @@ describe('Datastore', () => {
         expect(result.ids.length).toBe(2);
         expect(result.totalCount).toBe(2);
         expect(result['documents']).toBe(undefined);
-
-        done();
     });
 
 
     // update
 
-    it('should add missing fields on update', async done => {
+    it('should add missing fields on update', async () => {
 
         await datastore.update({ resource: { // trigger caching of document
             id: '1',
@@ -329,11 +316,10 @@ describe('Datastore', () => {
         } } as any);
         const document = await datastore.get('1'); // fetch from cache
         verifyIsDocument(document);
-        done();
     });
 
 
-    it('should add missing fields on update with reassign', async done => {
+    it('should add missing fields on update with reassign', async () => {
 
         await datastore.update({ resource: { // trigger caching of document
             id: '1',
@@ -350,13 +336,12 @@ describe('Datastore', () => {
         const document = await datastore.get('1'); // fetch from cache
         expect(document.resource['val']).toEqual('b');
         verifyIsDocument(document);
-        done();
     });
 
 
     // create
 
-    it('should add missing fields on create', async done => {
+    it('should add missing fields on create', async () => {
 
         await datastore.create({ resource: { // trigger caching of document
             id: '1',
@@ -366,11 +351,10 @@ describe('Datastore', () => {
 
         const document = await datastore.get('1'); // fetch from cache
         verifyIsDocument(document);
-        done();
     });
 
 
-    it('should return the cached instance on create', async done => {
+    it('should return the cached instance on create', async () => {
 
         let document1 = doc('sd1', 'identifier1');
 
@@ -389,11 +373,10 @@ describe('Datastore', () => {
         } catch (error) {
             fail(error);
         }
-        done();
     });
 
 
-    it('should return cached instance on update', async done => {
+    it('should return cached instance on update', async () => {
 
         let document1 = doc('sd1', 'identifier1');
         let document2;
@@ -408,6 +391,5 @@ describe('Datastore', () => {
         expect((result.documents[0]).resource['identifier']).toBe('identifier_');
         document2.resource['shortDescription'] = 's4';
         expect((result.documents[0]).resource['shortDescription']).toBe('s4');
-        done();
     });
 });

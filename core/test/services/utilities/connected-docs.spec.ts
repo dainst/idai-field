@@ -94,7 +94,7 @@ describe('ConnectedDocs', () => {
     });
 
 
-    it('should save the related document', async done => {
+    it('should save the related document', async () => {
 
         doc.resource.relations['BelongsTo'] = ['2'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
@@ -103,11 +103,10 @@ describe('ConnectedDocs', () => {
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, undefined);
         expect(relatedDoc.resource.relations['Contains'][0]).toBe('1');
-        done();
     });
 
 
-    it('should save an object with a one way relation', async done => {
+    it('should save an object with a one way relation', async () => {
 
         doc.resource.relations['isRecordedIn'] = ['2'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
@@ -115,11 +114,10 @@ describe('ConnectedDocs', () => {
         await ConnectedDocs.updateForUpdate(mockDatastore, relationNames, inverseRelationsMap, doc, [doc]);
 
         expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc, undefined);
-        done();
     });
 
 
-    it('delete a relation which was present in old version', async done => {
+    it('delete a relation which was present in old version', async () => {
 
         const oldVersion = { 'resource' : {
                 'id' :'1', 'identifier': 'ob1',
@@ -138,11 +136,10 @@ describe('ConnectedDocs', () => {
 
         expect(doc.resource.relations['BelongsTo']).toBe(undefined);
         expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
-        done();
     });
 
 
-    it('should add two relations of the same category', async done => {
+    it('should add two relations of the same category', async () => {
 
         doc.resource.relations['BelongsTo'] = ['2', '3'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
@@ -151,11 +148,10 @@ describe('ConnectedDocs', () => {
 
         expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, undefined);
         expect(anotherRelatedDoc['resource']['relations']['Contains'][0]).toBe('1');
-        done();
     });
 
 
-    it('remove: should remove a document', async done => {
+    it('remove: should remove a document', async () => {
 
         doc.resource.relations['BelongsTo']=['2'];
         relatedDoc.resource.relations['Contains']=['1'];
@@ -164,11 +160,10 @@ describe('ConnectedDocs', () => {
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, undefined);
         expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
-        done();
     });
 
 
-    it('remove: where a connected document does not exist anymore', async done => {
+    it('remove: where a connected document does not exist anymore', async () => {
 
         doc.resource.relations['BelongsTo']=['nonexistent'];
 
@@ -176,22 +171,20 @@ describe('ConnectedDocs', () => {
         await ConnectedDocs.updateForRemove(mockDatastore, relationNames, inverseRelationsMap, doc);
 
         expect(mockDatastore.update).not.toHaveBeenCalled();
-        done();
     });
 
 
-    it('remove: should remove a document with a one way relation', async done => {
+    it('remove: should remove a document with a one way relation', async () => {
 
         doc.resource.relations['isRecordedIn'] = ['2'];
 
         await ConnectedDocs.updateForRemove(mockDatastore, relationNames, inverseRelationsMap, doc);
 
         expect(mockDatastore.update).not.toHaveBeenCalled();
-        done();
     });
 
 
-    it('remove: delete isPresentIn relation pointing to deleted document', async done => {
+    it('remove: delete isPresentIn relation pointing to deleted document', async () => {
 
         relatedDoc.resource.relations['isPresentIn'] = ['1'];
         mockDatastore.findIds.and.returnValue({ ids: ['2'] });
@@ -200,6 +193,5 @@ describe('ConnectedDocs', () => {
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, undefined);
         expect(relatedDoc.resource.relations['isPresentIn']).toBe(undefined);
-        done();
     });
 });

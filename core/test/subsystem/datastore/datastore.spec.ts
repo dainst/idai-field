@@ -14,7 +14,7 @@ describe('subsystem/datastore', () => {
     let trench0;
    
     
-    beforeEach(async done => {
+    beforeEach(async () => {
 
         try {
             app = await createCoreApp();
@@ -22,20 +22,18 @@ describe('subsystem/datastore', () => {
         } catch (err) {
             console.error(err);
         }
-        done();
     });
 
 
-    it('create document', async done => {
+    it('create document', async () => {
 
         await app.datastore.create(doc1('abc', 'Abc', 'Trench'));
 
         await helpers.expectDocuments('abc');
-        done();
     });
 
 
-    it('do not throw and return everything with all categories', async done => {
+    it('do not throw and return everything with all categories', async () => {
 
         image0 = doc('Image', 'Image', 'Image', 'image0');
         trench0 = doc('Trench', 'Trench', 'Trench', 'trench0');
@@ -49,11 +47,10 @@ describe('subsystem/datastore', () => {
         } catch (err) {
             fail(err);
         }
-        done();
     });
 
 
-    it('return everything when called without categories', async done => {
+    it('return everything when called without categories', async () => {
 
         image0 = doc('Image', 'Image', 'Image', 'image0');
         trench0 = doc('Trench', 'Trench', 'Trench', 'trench0');
@@ -67,11 +64,10 @@ describe('subsystem/datastore', () => {
         } catch (err) {
             fail(err);
         }
-        done();
     });
 
 
-    it('sort documents in different sort modes', async done => {
+    it('sort documents in different sort modes', async () => {
 
         const doc1 = doc('sd1', 'A-B-100', 'Find', '1');
         const doc2 = doc('sd2', 'B-100', 'Find', '2');
@@ -102,11 +98,10 @@ describe('subsystem/datastore', () => {
 
         expect(documents2[0].resource.id).toBe('2');
         expect(documents2[1].resource.id).toBe('1');
-        done();
     });
 
 
-    it('use isChildOf constraint', async done => {
+    it('use isChildOf constraint', async () => {
 
         await helpers.createDocuments([
             ['id1', 'Trench', ['id2']],
@@ -117,11 +112,10 @@ describe('subsystem/datastore', () => {
         const result = await app.datastore.find({ 
             constraints: { 'isChildOf:contain': { value: ['id1'], searchRecursively: true }}});
         expect(result.ids).toEqual(['id2', 'id3']);
-        done();
     });
 
 
-    it('do not return documents without valid parent resource in find result', async done => {
+    it('do not return documents without valid parent resource in find result', async () => {
 
         let document1 = doc('sd1', 'Trench', 'Trench', 'id1');
         let document2 = doc('sd2', '1', 'Find', 'id2');
@@ -139,12 +133,10 @@ describe('subsystem/datastore', () => {
         
         expect(result.documents.length).toBe(1);
         expect(result.documents[0].resource.id).toBe('id2');
-
-        done();
     });
 
 
-    it('return documents without valid parent resource in find result if datastore option is enabled', async done => {
+    it('return documents without valid parent resource in find result if datastore option is enabled', async () => {
 
         let document1 = doc('sd1', 'Trench', 'Trench', 'id1');
         let document2 = doc('sd2', '1', 'Find', 'id2');
@@ -166,12 +158,10 @@ describe('subsystem/datastore', () => {
         expect(result.documents.length).toBe(2);
         expect(result.documents[0].resource.id).toBe('id2');
         expect(result.documents[1].resource.id).toBe('id3');
-
-        done();
     });
 
 
-    it('update non-unique identifier warnings', async done => {
+    it('update non-unique identifier warnings', async () => {
 
         let document1 = doc('sd1', 'Trench', 'Trench', 'id1');
         let document2 = doc('sd2', '1', 'Find', 'id2');
@@ -193,12 +183,10 @@ describe('subsystem/datastore', () => {
         
         expect(document2.warnings).toBeUndefined();
         expect(document3.warnings).toBeUndefined();
-
-        done();
     });
 
 
-    it('update missing relation target warnings', async done => {
+    it('update missing relation target warnings', async () => {
 
         let document1 = doc('sd1', 'Trench', 'Trench', 'id1');
         let document2 = doc('sd2', '1', 'Feature', 'id2');
@@ -219,12 +207,10 @@ describe('subsystem/datastore', () => {
 
         expect(document2.warnings).toBeUndefined();
         expect(document3.warnings).toBeUndefined();
-
-        done();
     });
 
 
-    it('update missing parent warnings', async done => {
+    it('update missing parent warnings', async () => {
 
         let document1 = doc('sd1', 'Trench', 'Trench', 'id1');
         let document2 = doc('sd2', 'Feature', 'Feature', 'id2');
@@ -235,7 +221,5 @@ describe('subsystem/datastore', () => {
 
         await app.datastore.create(document1);
         expect(document2.warnings).toBeUndefined();
-
-        done();
     });
 });

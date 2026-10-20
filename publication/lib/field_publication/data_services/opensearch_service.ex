@@ -45,6 +45,9 @@ defmodule FieldPublication.OpenSearchService do
   def set_alias(index_name, alias_name) when is_binary(index_name) and is_binary(alias_name) do
     Logger.info("Setting alias '#{alias_name}' for '#{index_name}'.")
 
+    get_indices_behind_alias(alias_name)
+    |> Enum.map(&remove_alias(&1, alias_name))
+
     Finch.build(
       :post,
       "#{base_url()}/_aliases",

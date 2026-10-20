@@ -22,6 +22,11 @@ defmodule FieldPublication.Publication.Search do
   """
 
   @data_report_key "publications_search"
+  @system_wide_search_index_prefix Application.compile_env(
+                                     :field_publication,
+                                     :system_wide_search_index_prefix,
+                                     ""
+                                   )
 
   def report_key(), do: @data_report_key
 
@@ -188,7 +193,7 @@ defmodule FieldPublication.Publication.Search do
           |> Project.get!()
           |> get_alias()
 
-        OpenSearchService.set_alias(index_name, project_alias)
+        OpenSearchService.remove_alias(index_name, project_alias)
 
         {:ok, project_alias}
     end
@@ -228,12 +233,12 @@ defmodule FieldPublication.Publication.Search do
   end
 
   def get_alias(%Project{_id: id}) do
-    OpenSearchService.encode_chars(id)
+    "#{@system_wide_search_index_prefix}#{OpenSearchService.encode_chars(id)}"
   end
 
   def get_doc_count(%Publication{} = publication) do
     publication
-    |> get_search_alias()
+    |> get_alias()
     |> OpenSearchService.get_doc_count()
   end
 
@@ -250,7 +255,7 @@ defmodule FieldPublication.Publication.Search do
       }
     }
 
-    index = get_search_alias(pub)
+    index = get_alias(pub)
 
     OpenSearchService.run_query(index, payload)
     |> case do
@@ -270,9 +275,9 @@ defmodule FieldPublication.Publication.Search do
   def search(q, filter, geometry_filter, from \\ 0, size \\ 100, publication \\ nil) do
     index =
       if publication == nil do
-        "project*"
+        "#{@system_wide_search_index_prefix}project*"
       else
-        get_search_alias(publication)
+        get_alias(publication)
       end
 
     q =
@@ -1247,17 +1252,9 @@ defmodule FieldPublication.Publication.Search do
   def get_keyword_multi_inputs(), do: ["checkboxes", "dropdownRange"]
   def get_text_inputs(), do: ["input", "text"]
 
-  def get_search_alias(%Publication{_id: id}) do
-    OpenSearchService.encode_chars(id)
-  end
-
-  def get_search_alias(%Project{_id: id}) do
-    OpenSearchService.encode_chars(id)
-  end
-
   def get_currently_aliased_publication(%Project{} = project) do
     project
-    |> get_search_alias()
+    |> get_alias()
     |> OpenSearchService.get_indices_behind_alias()
     |> case do
       [] ->

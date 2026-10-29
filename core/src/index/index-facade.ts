@@ -5,7 +5,6 @@ import { Document } from '../model/document/document';
 import { Query } from '../model/datastore/query';
 import { Resource } from '../model/document/resource';
 import { ProjectConfiguration } from '../services';
-import { Tree } from '../tools/forest';
 import { Named } from '../tools/named';
 import { ObserverUtil } from '../tools/observer-util';
 import { ConstraintIndex } from './constraint-index';

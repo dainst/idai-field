@@ -46,8 +46,8 @@ describe('Datastore', () => {
         mockdb = jasmine.createSpyObj('mockdb',
             ['create', 'update', 'fetch', 'bulkFetch', 'fetchRevision']);
         mockdb.create.and.callFake(function(document) {
-                return Promise.resolve(document);
-            });
+            return Promise.resolve(document);
+        });
         mockdb.update.and.callFake(function(document) {
             // working with the current assumption that the inner pouchdbdatastore datastore returns the same instance
             document.resource.id = '1';

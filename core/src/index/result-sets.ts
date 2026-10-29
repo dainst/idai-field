@@ -22,8 +22,7 @@ export module ResultSets {
 
     export function isEmpty<T>(resultSets: ResultSets<T>): boolean {
 
-        return resultSets.addSets.length === 0 &&
-            resultSets.subtractSets.length === 0;
+        return resultSets.addSets.length === 0;
     }
 
 

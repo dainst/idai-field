@@ -1046,6 +1046,10 @@ export class BuiltInConfiguration {
                     {
                         name: Groups.PROPERTIES,
                         fields: ['height', 'width', 'originalFilename']
+                    },
+                    {
+                        name: Groups.POSITION,
+                        fields: [Relation.Position.HAS_SPATIAL_REFERENCE_ELEMENT]
                     }
                 ]
             }

@@ -2173,6 +2173,15 @@
       },
       "Weihinschrift": {
         "label": "dedicatory inscription"
+      },
+      "Private Ausstattung": {
+        "label": "private equipment"
+      },
+      "Sakrale Ausstattung": {
+        "label": "sacred equipment"
+      },
+      "Öffentliche Ausstattung": {
+        "label": "public furnishings"
       }
     }
   },
@@ -2434,6 +2443,9 @@
       },
       "Reibstein": {
         "label": "rubber stone"
+      },
+      "Einsatzkopf": {
+        "label": "insert head"
       }
     }
   },
@@ -4325,6 +4337,9 @@
       },
       "Sima": {
         "label": "sima"
+      },
+      "Schrankenplatte": {
+        "label": "screen slab"
       }
     }
   },
@@ -4632,6 +4647,12 @@
       },
       "Schwarzglanzton Ware": {
         "label": "black-glazed ware"
+      },
+      "Firnisware": {
+        "label": "Color-coated ware"
+      },
+      "Hand": {
+        "label": "hand"
       }
     }
   },
@@ -5406,6 +5427,9 @@
       },
       "Transparentpapier": {
         "label": "transparency paper"
+      },
+      "Lichtpause": {
+        "label": "reprographic print"
       }
     }
   },
@@ -5930,6 +5954,9 @@
       },
       "Scan": {
         "label": "scan"
+      },
+      "Messbild": {
+        "label": "photogrammetric image"
       }
     }
   },
@@ -5946,6 +5973,9 @@
       },
       "Ziehtechnik": {
         "label": "drawing technique"
+      },
+      "Getrieben": {
+        "label": "hammered"
       }
     }
   },
@@ -5984,6 +6014,16 @@
       },
       "Ziegelgemauert": {
         "label": "brick-built"
+      }
+    }
+  },
+  "Architecture-mark-default": {
+    "values": {
+      "A": {
+        "label": "A"
+      },
+      "AC": {
+        "label": "AC"
       }
     }
   }

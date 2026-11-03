@@ -16,6 +16,18 @@
 
     <loading-icon [class.with-main-document]="mainDocument"></loading-icon>
 
+    <div *ngIf="!isLoading() && !hasConfiguredCategories()"
+         class="col-8 text-center alert alert-warning grid-list-warning">
+        <em *ngIf="isInTypesManagement()" i18n="@@resources.gridList.useTypeManagement">
+            Fügen Sie die Kategorien "Typ" und "Typenkatalog" zur Projektkonfiguration hinzu, um die Typenverwaltung
+            zu verwenden.
+        </em>
+        <em *ngIf="isInInventoryManagement()" i18n="@@resources.gridList.useInventoryManagement">
+            Fügen Sie die Kategorie "Aufbewahrungsort" zur Projektkonfiguration hinzu, um die Inventarisierung zu
+            verwenden.
+        </em>
+    </div>
+
     <div *ngIf="!isLoading()" id="grid-elements-container">
         <div *ngIf="linkedDocuments.length > 0"
              class="grid-section-label first-grid-section-label"

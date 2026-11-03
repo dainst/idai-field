@@ -1,9 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { filter, flatten, flow, Map, map, set, take, pipe, to } from 'tsfun';
-import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus,
-    Resource, ProjectConfiguration, ImageVariant, Hierarchy, Comparator, makeLookup,
-    CategoryForm, Named } from 'idai-field-core';
+import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus, Resource, ProjectConfiguration,
+    ImageVariant, Hierarchy, Comparator, makeLookup, CategoryForm, Named } from 'idai-field-core';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 import { NavigationPath } from '../view/state/navigation-path';
 import { ViewFacade } from '../view/view-facade';
@@ -101,6 +100,8 @@ export class GridListComponent extends BaseList implements OnChanges, OnDestroy 
     public isInTypesManagement = () => this.viewFacade.isInTypesManagement();
 
     public isInInventoryManagement = () => this.viewFacade.isInInventoryManagement();
+
+    public hasConfiguredCategories = () => this.resourcesComponent.filterOptions?.length;
 
 
     async ngOnChanges(changes: SimpleChanges) {

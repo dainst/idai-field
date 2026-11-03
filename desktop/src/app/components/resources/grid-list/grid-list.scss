@@ -29,6 +29,12 @@ grid-list {
       }
     }
 
+    .grid-list-warning {
+      position: absolute;
+      padding: 10px;
+      margin: 35vh 16.6vw 0;
+    }
+
     #grid-elements-container {
       height: 100%;
       display: flex;

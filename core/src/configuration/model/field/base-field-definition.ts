@@ -18,6 +18,7 @@ export interface BaseFieldDefinition {
     subfields?: Array<BaseSubfieldDefinition>;
     dateConfiguration?: DateConfiguration;
     geometryTypes?: Array<FieldGeometryType>;
+    editableOnMap?: boolean;
 }
 
 

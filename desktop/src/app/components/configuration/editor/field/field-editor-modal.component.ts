@@ -65,6 +65,8 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isMandatory = () => this.getClonedFieldDefinition()?.mandatory ?? this.field.required;
 
+    public isEditableOnMap = () => this.getClonedFieldDefinition()?.editableOnMap ?? this.field.editableOnMap;
+
     public isMandatoryOptionVisible = () => this.field.editable;
 
     public isMandatoryOptionEnabled = () => !this.field.required
@@ -257,6 +259,17 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     }
 
 
+    public toggleEditableOnMap() {
+
+        const clonedFieldDefinition: CustomFieldDefinition = this.getClonedFieldDefinition();
+        if (!this.isEditableOnMap()) {
+            delete clonedFieldDefinition.editableOnMap;
+        } else {
+            clonedFieldDefinition.editableOnMap = false;
+        }
+    }
+
+
     public toggleHidden() {
 
         const customFormDefinition: CustomFormDefinition = this.getClonedFormDefinition();
@@ -415,6 +428,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         return this.new
             || this.getCustomFieldDefinition()?.inputType !== this.getClonedFieldDefinition()?.inputType
             || this.getCustomFieldDefinition()?.mandatory !== this.getClonedFieldDefinition()?.mandatory
+            || this.getCustomFieldDefinition()?.editableOnMap !== this.getClonedFieldDefinition()?.editableOnMap
             || !equal(this.getCustomFormDefinition().hidden)(this.getClonedFormDefinition().hidden)
             || this.isValuelistChanged()
             || this.isConstraintIndexedChanged()

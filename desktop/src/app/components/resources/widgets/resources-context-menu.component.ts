@@ -84,23 +84,29 @@ export class ResourcesContextMenuComponent {
 
         if (this.isReadonly()) return false;
 
+        const category: CategoryForm = this.projectConfiguration.getCategory(
+            this.contextMenu.documents[0].resource.category
+        );
+
         return this.contextMenu.documents.length === 1
             && this.projectConfiguration.isGeometryCategory(
                 this.contextMenu.documents[0].resource.category)
-            && (!geometryType || CategoryForm.isAllowedGeometryType(
-                this.projectConfiguration.getCategory(this.contextMenu.documents[0].resource.category),
-                geometryType
-            )) && !this.contextMenu.documents[0].resource.geometry;
+            && CategoryForm.isGeometryEditableOnMap(category)
+            && (!geometryType || CategoryForm.isAllowedGeometryType(category,geometryType))
+            && !this.contextMenu.documents[0].resource.geometry;
     }
 
 
     public isEditGeometryOptionAvailable(): boolean {
 
         if (this.isReadonly()) return false;
+
         return this.contextMenu.documents.length === 1
             && this.projectConfiguration.isGeometryCategory(
                 this.contextMenu.documents[0].resource.category)
-            && this.contextMenu.documents[0].resource.geometry !== undefined;
+            && CategoryForm.isGeometryEditableOnMap(this.projectConfiguration.getCategory(
+                this.contextMenu.documents[0].resource.category
+            )) && this.contextMenu.documents[0].resource.geometry !== undefined;
     }
 
 

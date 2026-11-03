@@ -183,6 +183,14 @@ export namespace CategoryForm {
     }
 
 
+    export function isGeometryEditableOnMap(category: CategoryForm): boolean {
+
+        const field: Field = CategoryForm.getFields(category).find(field => field.name === FieldResource.GEOMETRY);
+
+        return field?.editableOnMap;
+    }
+
+
     export function isBrightColor(color: Color): boolean {
 
         color = color.substring(1); // strip #

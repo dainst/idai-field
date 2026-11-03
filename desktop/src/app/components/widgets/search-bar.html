@@ -1,4 +1,4 @@
-<form id="search-bar">
+<form *ngIf="filterOptions?.length" id="search-bar">
     <div class="input-group">
         <input #searchInput
                [(ngModel)]="q"

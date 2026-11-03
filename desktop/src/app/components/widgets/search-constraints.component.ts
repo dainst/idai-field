@@ -369,8 +369,10 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private async updateFields() {
 
-        const categoryFields = this.category
-            ? clone(CategoryForm.getFields(this.projectConfiguration.getCategory(this.category)))
+        const category: CategoryForm = this.projectConfiguration.getCategory(this.category);
+
+        const categoryFields = category
+            ? clone(CategoryForm.getFields(category))
             : [];
 
         const fields: Array<Field> = this.defaultFields

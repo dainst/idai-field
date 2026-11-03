@@ -906,25 +906,25 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="config.inputType.checkboxes" datatype="html">
+      <trans-unit id="config.inputType.checkboxes" datatype="html" xml:space="preserve">
         <source>Checkboxen</source>
-        <target state="translated">Caixas de verificação</target>
+        <target state="needs-translation">Caixas de verificação</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="config.inputType.dating" datatype="html">
+      <trans-unit id="config.inputType.dating" datatype="html" xml:space="preserve">
         <source>Datierungsangabe</source>
-        <target state="translated">Identificação da datação</target>
+        <target state="translated">Datation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="config.inputType.date" datatype="html">
+      <trans-unit id="config.inputType.date" datatype="html" xml:space="preserve">
         <source>Datum</source>
-        <target state="translated">Data</target>
+        <target state="translated">Date</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -3693,9 +3693,9 @@
           <context context-type="linenumber">179</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="ngb.progressbar.value" datatype="html">
+      <trans-unit id="ngb.progressbar.value" datatype="html" xml:space="preserve">
         <source><x id="INTERPOLATION" equiv-text="eturn this._max"/></source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="eturn this._max"/></target>
+        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="eturn this._max"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/progressbar/progressbar.ts</context>
           <context context-type="linenumber">28</context>

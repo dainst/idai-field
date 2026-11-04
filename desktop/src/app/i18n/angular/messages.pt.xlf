@@ -916,7 +916,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.dating" datatype="html" xml:space="preserve">
         <source>Datierungsangabe</source>
-        <target state="translated">Datation</target>
+        <target state="translated">Identificação da datação</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -924,7 +924,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.date" datatype="html" xml:space="preserve">
         <source>Datum</source>
-        <target state="translated">Date</target>
+        <target state="translated">Data</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>

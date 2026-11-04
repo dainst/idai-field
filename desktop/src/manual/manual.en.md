@@ -776,7 +776,17 @@ Here you can specify whether a single date or a date range should be entered in 
 
 ### Configuration of geometry fields
 
-The form of each category for which geometries can be created always contains a field of the input type "Geometry". In the field editor, you can select the allowed geometry types for this field. When creating geometries for resources of the corresponding category, only the selected geometry types are available for selection. By default, all geometry types are allowed.
+The form of each category for which geometries can be created always contains a field of the input type "Geometry". In the field editor, additional options are available for this field to restrict editing on the map and to select the allowed geometry types.
+
+
+### Allow editing on map
+
+This option allows you to specify whether the geometry can be created and edited manually on the map. The option is enabled by default. If it is disabled, geometry data can only be added or edited via the resource editor or by import.
+
+
+### Allowed geometry types
+
+Here you can select one or more geometry types. When creating geometries for resources of the corresponding category, only the selected geometry types are available for selection. By default, all geometry types are allowed.
 
 Field Desktop supports the following geometry types:
 

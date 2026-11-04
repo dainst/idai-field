@@ -7877,49 +7877,49 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.searchBar.constraints.isStoragePlaceOf" datatype="html">
+      <trans-unit id="resources.searchBar.constraints.isStoragePlaceOf" datatype="html" xml:space="preserve">
         <source>Verknüpfte Objekte</source>
-        <target state="needs-translation">Verknüpfte Objekte</target>
+        <target state="translated">Objets associés</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.searchBar.constraints.isStoredIn" datatype="html">
+      <trans-unit id="resources.searchBar.constraints.isStoredIn" datatype="html" xml:space="preserve">
         <source>Verknüpfter Aufbewahrungsort</source>
-        <target state="needs-translation">Verknüpfter Aufbewahrungsort</target>
+        <target state="translated">Emplacement associé</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="settings.languageInfo.it" datatype="html">
+      <trans-unit id="settings.languageInfo.it" datatype="html" xml:space="preserve">
         <source>Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an: idai.field-italiano@dainst.de</source>
-        <target state="needs-translation">Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an: idai.field-italiano@dainst.de</target>
+        <target state="translated">La traduction en italien est fournie par le DAI de Rome. Pour toute question ou remarque concernant la traduction, veuillez vous adresser à : idai.field-italiano@dainst.de</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="settings.languageInfo.tr" datatype="html">
+      <trans-unit id="settings.languageInfo.tr" datatype="html" xml:space="preserve">
         <source>Bei Fragen und Anmerkungen zur türkischen Übersetzung wenden Sie sich bitte an: idai.field-turkce@dainst.de</source>
-        <target state="needs-translation">Bei Fragen und Anmerkungen zur türkischen Übersetzung wenden Sie sich bitte an: idai.field-turkce@dainst.de</target>
+        <target state="translated">Pour toute question ou remarque concernant la traduction en turc, veuillez contacter : idai.field-turkce@dainst.de</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="settings.languageInfo.uk" datatype="html">
+      <trans-unit id="settings.languageInfo.uk" datatype="html" xml:space="preserve">
         <source>Bei Fragen und Anmerkungen zur ukrainischen Übersetzung wenden Sie sich bitte an: idai.field-ukrayinska@dainst.de</source>
-        <target state="needs-translation">Bei Fragen und Anmerkungen zur ukrainischen Übersetzung wenden Sie sich bitte an: idai.field-ukrayinska@dainst.de</target>
+        <target state="translated">Pour toute question ou remarque concernant la traduction en ukrainien, veuillez contacter : idai.field-ukrayinska@dainst.de</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.documentPicker.project" datatype="html">
+      <trans-unit id="widgets.documentPicker.project" datatype="html" xml:space="preserve">
         <source>Projekt</source>
-        <target state="needs-translation">Projekt</target>
+        <target state="translated">Projet</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/document-picker.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -7929,9 +7929,9 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="buttons.cancel" datatype="html">
+      <trans-unit id="buttons.cancel" datatype="html" xml:space="preserve">
         <source>Abbrechen</source>
-        <target state="needs-translation">Abbrechen</target>
+        <target state="translated">Annuler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
           <context context-type="linenumber">43</context>
@@ -8121,9 +8121,9 @@
           <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.swapForm" datatype="html">
+      <trans-unit id="configuration.swapForm" datatype="html" xml:space="preserve">
         <source>Formular wechseln</source>
-        <target state="needs-translation">Formular wechseln</target>
+        <target state="translated">Changer de formulaire</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/add-category-form-modal.component.ts</context>
           <context context-type="linenumber">78</context>
@@ -8133,41 +8133,41 @@
           <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.newCategory" datatype="html">
+      <trans-unit id="configuration.newCategory" datatype="html" xml:space="preserve">
         <source>Neue Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
-        <target state="needs-translation">Neue Kategorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</target>
+        <target state="translated">Créer nouvelle catégorie <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{emptyForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/category-listing.component.ts</context>
           <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.swapCategoryForm.header" datatype="html">
+      <trans-unit id="configuration.swapCategoryForm.header" datatype="html" xml:space="preserve">
         <source>Formular wechseln?</source>
-        <target state="needs-translation">Formular wechseln?</target>
+        <target state="translated">Changer de formulaire ?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.component.ts</context>
           <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.swapCategoryForm.body" datatype="html">
-        <source>Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> ersetzen? </source>
-        <target state="needs-translation">Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> ersetzen? </target>
+      <trans-unit id="configuration.swapCategoryForm.body" datatype="html" xml:space="preserve">
+        <source>Möchten Sie das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="ryId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> wirklich durch das Formular <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION_1" equiv-text="}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="ersetzen?"/> ersetzen? </source>
+        <target state="translated">Souhaitez-vous vraiment remplacer le formulaire &lt;x id="START_TAG_CODE" ctype="x-code" equiv-text="&amp;lt;code&amp;gt;"/&gt;&lt;x id="INTERPOLATION" equiv-text="{{currentForm.libraryId}}"/ &gt;&lt;x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&amp;lt;/code&amp;gt;"/&gt; par le formulaire &lt;x id="START_TAG_CODE" ctype="x-code" equiv-text="&amp;lt;code&amp;gt;"/ &gt;&lt;x id="INTERPOLATION_1" equiv-text="{{newForm.libraryId}}"/&gt;&lt;x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&amp;lt;/code&amp;gt;"/&gt; ? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.component.ts</context>
           <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.swapCategoryForm.confirmInfo" datatype="html">
+      <trans-unit id="configuration.swapCategoryForm.confirmInfo" datatype="html" xml:space="preserve">
         <source>Bitte geben Sie den Bezeichner des ausgewählten Formulars ein, um den Wechsel zu bestätigen.</source>
-        <target state="needs-translation">Bitte geben Sie den Bezeichner des ausgewählten Formulars ein, um den Wechsel zu bestätigen.</target>
+        <target state="translated">Veuillez saisir l'identifiant du formulaire sélectionné pour confirmer la modification.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="buttons.save" datatype="html">
+      <trans-unit id="buttons.save" datatype="html" xml:space="preserve">
         <source>Speichern</source>
-        <target state="needs-translation">Speichern</target>
+        <target state="translated">Sauvegarder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">70</context>
@@ -8193,17 +8193,17 @@
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.conflicts.differingForms" datatype="html">
+      <trans-unit id="configuration.conflicts.differingForms" datatype="html" xml:space="preserve">
         <source>Formulare</source>
-        <target state="needs-translation">Formulare</target>
+        <target state="translated">Formulaire</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.conflicts.edited" datatype="html">
+      <trans-unit id="configuration.conflicts.edited" datatype="html" xml:space="preserve">
         <source>(editiert)</source>
-        <target state="needs-translation">(editiert)</target>
+        <target state="translated">(modifié)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">148</context>
@@ -8229,9 +8229,9 @@
           <context context-type="linenumber">252</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.conflicts.new" datatype="html">
+      <trans-unit id="configuration.conflicts.new" datatype="html" xml:space="preserve">
         <source>(neu)</source>
-        <target state="needs-translation">(neu)</target>
+        <target state="translated">(nouveau)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">174</context>
@@ -8257,9 +8257,9 @@
           <context context-type="linenumber">252</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.conflicts.notSet" datatype="html">
+      <trans-unit id="configuration.conflicts.notSet" datatype="html" xml:space="preserve">
         <source>(nicht gesetzt)</source>
-        <target state="needs-translation">(nicht gesetzt)</target>
+        <target state="translated">(non défini)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">210</context>
@@ -8285,143 +8285,143 @@
           <context context-type="linenumber">252</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.conflicts.differingLanguages" datatype="html">
+      <trans-unit id="configuration.conflicts.differingLanguages" datatype="html" xml:space="preserve">
         <source>Texte / Übersetzungen</source>
-        <target state="needs-translation">Texte / Übersetzungen</target>
+        <target state="translated">Libellé / Traductions</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">252</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.conflicts.differingValuelists" datatype="html">
+      <trans-unit id="configuration.conflicts.differingValuelists" datatype="html" xml:space="preserve">
         <source>Wertelisten</source>
-        <target state="needs-translation">Wertelisten</target>
+        <target state="translated">Liste de valeurs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">252</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.conflicts.differingCategoriesOrder" datatype="html">
+      <trans-unit id="configuration.conflicts.differingCategoriesOrder" datatype="html" xml:space="preserve">
         <source>Reihenfolge der Kategorien</source>
-        <target state="needs-translation">Reihenfolge der Kategorien</target>
+        <target state="translated">Ordre des catégories</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/conflicts/configuration-conflicts-modal.component.ts</context>
           <context context-type="linenumber">252</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="buttons.discardChanges" datatype="html">
+      <trans-unit id="buttons.discardChanges" datatype="html" xml:space="preserve">
         <source>Änderungen verwerfen</source>
-        <target state="needs-translation">Änderungen verwerfen</target>
+        <target state="translated">Ignorer modifications</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/edit-save-dialog.component.ts</context>
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.duplicateModal.header.createMultipleInstances" datatype="html">
+      <trans-unit id="docedit.duplicateModal.header.createMultipleInstances" datatype="html" xml:space="preserve">
         <source>Ressource mehrfach erstellen</source>
-        <target state="needs-translation">Ressource mehrfach erstellen</target>
+        <target state="translated">Créer multiples instances</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
           <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.duplicateModal.header.duplicate" datatype="html">
+      <trans-unit id="docedit.duplicateModal.header.duplicate" datatype="html" xml:space="preserve">
         <source>Ressource vervielfältigen</source>
-        <target state="needs-translation">Ressource vervielfältigen</target>
+        <target state="translated">Dupliquer ressource</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
           <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.duplicateModal.info.createMultipleTimes" datatype="html">
+      <trans-unit id="docedit.duplicateModal.info.createMultipleTimes" datatype="html" xml:space="preserve">
         <source>Wie viele Ressourcen möchten Sie anlegen?</source>
-        <target state="needs-translation">Wie viele Ressourcen möchten Sie anlegen?</target>
+        <target state="translated">Combien de ressources souhaitez-vous créer ?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
           <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.duplicateModal.info.duplicate" datatype="html">
+      <trans-unit id="docedit.duplicateModal.info.duplicate" datatype="html" xml:space="preserve">
         <source>Wie viele Kopien der Ressource möchten Sie anlegen?</source>
-        <target state="needs-translation">Wie viele Kopien der Ressource möchten Sie anlegen?</target>
+        <target state="translated">Combien de copies de cette ressource souhaitez-vous créer ?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
           <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="buttons.createResources" datatype="html">
+      <trans-unit id="buttons.createResources" datatype="html" xml:space="preserve">
         <source>Ressourcen erstellen</source>
-        <target state="needs-translation">Ressourcen erstellen</target>
+        <target state="translated">Créer ressources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
           <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="buttons.saveResources" datatype="html">
+      <trans-unit id="buttons.saveResources" datatype="html" xml:space="preserve">
         <source>Ressourcen speichern</source>
-        <target state="needs-translation">Ressourcen speichern</target>
+        <target state="translated">Sauvergarder resources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/dialog/duplicate-modal.component.ts</context>
           <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="buttons.duplicate" datatype="html">
+      <trans-unit id="buttons.duplicate" datatype="html" xml:space="preserve">
         <source>Vervielfältigen</source>
-        <target state="needs-translation">Vervielfältigen</target>
+        <target state="translated">Dupliquer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.header.create" datatype="html">
+      <trans-unit id="docedit.header.create" datatype="html" xml:space="preserve">
         <source><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen </target>
+        <target state="translated">Créer <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> . </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
           <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.header.edit" datatype="html">
+      <trans-unit id="docedit.header.edit" datatype="html" xml:space="preserve">
         <source><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> bearbeiten </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> bearbeiten </target>
+        <target state="translated">Modifier <x id="INTERPOLATION" equiv-text="{{getCategoryLabel()}}"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="buttons.createMultipleInstances" datatype="html">
+      <trans-unit id="buttons.createMultipleInstances" datatype="html" xml:space="preserve">
         <source>Mehrfach erstellen</source>
-        <target state="needs-translation">Mehrfach erstellen</target>
+        <target state="translated">Créer multiples instances</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.loadingInfo.save" datatype="html">
+      <trans-unit id="docedit.loadingInfo.save" datatype="html" xml:space="preserve">
         <source>Ressource wird gespeichert...</source>
-        <target state="needs-translation">Ressource wird gespeichert...</target>
+        <target state="translated">Ressource en cours d'enregistrement...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
+      <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html" xml:space="preserve">
         <source>Ressourcen werden erstellt...</source>
-        <target state="needs-translation">Ressourcen werden erstellt...</target>
+        <target state="translated">Création des ressources en cours...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
+      <trans-unit id="docedit.loadingInfo.duplicate" datatype="html" xml:space="preserve">
         <source>Ressource wird vervielfältigt...</source>
-        <target state="needs-translation">Ressource wird vervielfältigt...</target>
+        <target state="translated">duplication de ressource en cours...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="buttons.ok" datatype="html">
+      <trans-unit id="buttons.ok" datatype="html" xml:space="preserve">
         <source>OK</source>
         <target state="needs-translation">OK</target>
         <context-group purpose="location">
@@ -8529,201 +8529,201 @@
           <context context-type="linenumber">206</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.swapCategoryForm.warning.changes.parent" datatype="html">
+      <trans-unit id="configuration.swapCategoryForm.warning.changes.parent" datatype="html" xml:space="preserve">
         <source>Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular sowie untergeordneten Formularen vorgenommen haben, beim Wechseln des Formulars verloren gehen.</source>
-        <target state="needs-translation">Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular sowie untergeordneten Formularen vorgenommen haben, beim Wechseln des Formulars verloren gehen.</target>
+        <target state="translated">Veuillez noter que toutes les modifications que vous avez apportées à ce formulaire ainsi qu'aux formulaires subordonnés seront perdues si vous changez de formulaire.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.swapCategoryForm.warning.changes.child" datatype="html">
+      <trans-unit id="configuration.swapCategoryForm.warning.changes.child" datatype="html" xml:space="preserve">
         <source>Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular vorgenommen haben, beim Wechseln des Formulars verloren gehen.</source>
-        <target state="needs-translation">Bitte beachten Sie, dass alle Änderungen, die Sie an diesem Formular vorgenommen haben, beim Wechseln des Formulars verloren gehen.</target>
+        <target state="translated">Veuillez noter que toutes les modifications que vous avez apportées à ce formulaire seront perdues si vous changez de formulaire.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/swap-category-form-modal.html</context>
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.valuelistDescription" datatype="html">
+      <trans-unit id="configuration.valuelistDescription" datatype="html" xml:space="preserve">
         <source>Beschreibung der Werteliste</source>
-        <target state="needs-translation">Beschreibung der Werteliste</target>
+        <target state="translated">Description de la liste des valeurs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.sortValues" datatype="html">
+      <trans-unit id="configuration.sortValues" datatype="html" xml:space="preserve">
         <source>Automatische Sortierung</source>
-        <target state="needs-translation">Automatische Sortierung</target>
+        <target state="translated">Tri automatique</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.createSpecificValuelist" datatype="html">
-        <source>Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </source>
-        <target state="needs-translation">Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </target>
+      <trans-unit id="configuration.createSpecificValuelist" datatype="html" xml:space="preserve">
+        <source>Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="erstellen"/> erstellen </source>
+        <target state="translated">Créer liste de valeurs <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">170</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.editSpecificValuelist" datatype="html">
-        <source>Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten </source>
-        <target state="needs-translation">Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten </target>
+      <trans-unit id="configuration.editSpecificValuelist" datatype="html" xml:space="preserve">
+        <source>Werteliste <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="&lt;/c"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="bearbeiten"/> bearbeiten </source>
+        <target state="translated">Modifier liste de valeurs <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valuelist.id}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/valuelist-editor-modal.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.editValuelistInfo" datatype="html">
+      <trans-unit id="configuration.editValuelistInfo" datatype="html" xml:space="preserve">
         <source>Bitte beachten Sie, dass vorgenommene Änderungen nach Klick auf den OK-Button für sämtliche Felder angewendet werden, die diese Werteliste benutzen.</source>
-        <target state="needs-translation">Bitte beachten Sie, dass vorgenommene Änderungen nach Klick auf den OK-Button für sämtliche Felder angewendet werden, die diese Werteliste benutzen.</target>
+        <target state="translated">Veuillez noter qu'une fois que vous aurez cliqué sur le bouton OK, les modifications apportées s'appliqueront à tous les champs utilisant cette liste de valeurs.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/valuelist-editor-modal.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="buttons.close" datatype="html">
+      <trans-unit id="buttons.close" datatype="html" xml:space="preserve">
         <source>Schließen</source>
-        <target state="needs-translation">Schließen</target>
+        <target state="translated">Fermer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/languages/language-picker-modal.component.ts</context>
           <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.languagesList.noLanguagesSelected" datatype="html">
+      <trans-unit id="widgets.languagesList.noLanguagesSelected" datatype="html" xml:space="preserve">
         <source>Keine Sprachen ausgewählt</source>
-        <target state="needs-translation">Keine Sprachen ausgewählt</target>
+        <target state="translated">Aucune langue sélectionnée</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/languages/languages-list.component.ts</context>
           <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.moveModal.header.move.multiple" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </source>
-        <target state="needs-translation"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </target>
+      <trans-unit id="resources.moveModal.header.move.multiple" datatype="html" xml:space="preserve">
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="{{documents.length}} Ressourcen&lt;/b&gt; verschieben?     &lt;/h5&gt;     &lt;h5 *ngIf=&quot;documents.length === 1 &amp;&amp; hasVa"/><x id="INTERPOLATION"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </source>
+        <target state="translated">Déplacer <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> ressources<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.component.ts</context>
           <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.moveModal.header.move.single" datatype="html">
-        <source>Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </source>
-        <target state="needs-translation">Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> verschieben? </target>
+      <trans-unit id="resources.moveModal.header.move.single" datatype="html" xml:space="preserve">
+        <source>Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="rce.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="verschieben?"/> verschieben? </source>
+        <target state="translated">Déplacer ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
           <context context-type="linenumber">20,8</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.moveModal.header.setNewParent" datatype="html">
+      <trans-unit id="resources.moveModal.header.setNewParent" datatype="html" xml:space="preserve">
         <source>Übergeordnete Ressource neu setzen</source>
-        <target state="needs-translation">Übergeordnete Ressource neu setzen</target>
+        <target state="translated">Définir nouvelle ressource supérieure</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/move-modal/move-modal.html</context>
           <context context-type="linenumber">22,28</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.qrCodeScanner.header" datatype="html">
+      <trans-unit id="widgets.qrCodeScanner.header" datatype="html" xml:space="preserve">
         <source>QR-Code scannen</source>
-        <target state="needs-translation">QR-Code scannen</target>
+        <target state="translated">Scanner le QR-Code</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">53,66</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.qrCodeScanner.cameraNotFound" datatype="html">
+      <trans-unit id="widgets.qrCodeScanner.cameraNotFound" datatype="html" xml:space="preserve">
         <source>Es konnte keine Kamera gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über eine Kamera verfügt und die notwendigen Berechtigungen erteilt sind.</source>
-        <target state="needs-translation">Es konnte keine Kamera gefunden werden. Bitte prüfen Sie, ob Ihr Gerät über eine Kamera verfügt und die notwendigen Berechtigungen erteilt sind.</target>
+        <target state="translated">Aucune caméra n'a pu être détectée. Veuillez vérifier si votre appareil dispose d'une caméra et si les autorisations nécessaires ont été accordées.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">123,149</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.qrCodeScanner.selectCamera" datatype="html">
+      <trans-unit id="widgets.qrCodeScanner.selectCamera" datatype="html" xml:space="preserve">
         <source>Kamera auswählen:</source>
-        <target state="needs-translation">Kamera auswählen:</target>
+        <target state="translated">Sélectionner une caméra :</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/qr-code-scanner-modal.component.ts</context>
           <context context-type="linenumber">149</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageUpload.uploadModal.info.single" datatype="html">
+      <trans-unit id="imageUpload.uploadModal.info.single" datatype="html" xml:space="preserve">
         <source>Bild wird eingelesen...</source>
-        <target state="needs-translation">Bild wird eingelesen...</target>
+        <target state="translated">Chargement de l'image...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/upload-modal.component.ts</context>
           <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageUpload.uploadModal.info.multiple" datatype="html">
+      <trans-unit id="imageUpload.uploadModal.info.multiple" datatype="html" xml:space="preserve">
         <source><x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Bilder eingelesen... </source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Bilder eingelesen... </target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Images importées... </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/upload-modal.component.ts</context>
           <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="image.originalNotFoundWarning" datatype="html">
+      <trans-unit id="image.originalNotFoundWarning" datatype="html" xml:space="preserve">
         <source>Die Original-Version des Bildes befindet sich nicht im Bilderverzeichnis.</source>
-        <target state="needs-translation">Die Original-Version des Bildes befindet sich nicht im Bilderverzeichnis.</target>
+        <target state="translated">La version originale de l'image ne se trouve pas dans le dossier d'images.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.component.ts</context>
           <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageView.images" datatype="html">
+      <trans-unit id="imageView.images" datatype="html" xml:space="preserve">
         <source>Bilder</source>
-        <target state="needs-translation">Bilder</target>
+        <target state="translated">Images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
           <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageView.linkedImages" datatype="html">
-        <source>Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> verknüpfte Bilder </source>
-        <target state="needs-translation">Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> verknüpfte Bilder </target>
+      <trans-unit id="imageView.linkedImages" datatype="html" xml:space="preserve">
+        <source>Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="urce.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="verknüpf"/> verknüpfte Bilder </source>
+        <target state="translated">Images associées à <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
           <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html">
+      <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html" xml:space="preserve">
         <source>Zu verknüpfende Ressource wählen:</source>
-        <target state="needs-translation">Zu verknüpfende Ressource wählen:</target>
+        <target state="translated">Sélectionnez la ressource à associer :</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/link-modal.component.ts</context>
           <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageOverview.removeLinkModal.info" datatype="html">
+      <trans-unit id="imageOverview.removeLinkModal.info" datatype="html" xml:space="preserve">
         <source>Bei den ausgewählten Bildern werden sämtliche Verknüpfungen zu anderen Ressourcen entfernt.</source>
-        <target state="needs-translation">Bei den ausgewählten Bildern werden sämtliche Verknüpfungen zu anderen Ressourcen entfernt.</target>
+        <target state="translated">Tous les liens vers d'autres ressources sont supprimés des images sélectionnées.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/remove-link-modal.component.ts</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageOverview.removeLinkModal.removeLinks" datatype="html">
+      <trans-unit id="imageOverview.removeLinkModal.removeLinks" datatype="html" xml:space="preserve">
         <source>Verknüpfungen löschen</source>
-        <target state="needs-translation">Verknüpfungen löschen</target>
+        <target state="translated">Supprimer les liens</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/remove-link-modal.component.ts</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageOverview.taskbar.deleteModal.question.multiple" datatype="html">
+      <trans-unit id="imageOverview.taskbar.deleteModal.question.multiple" datatype="html" xml:space="preserve">
         <source>Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen? </source>
-        <target state="needs-translation">Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen? </target>
+        <target state="translated">Souhaitez-vous vraiment supprimer les <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> images sélectionnées ? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageOverview.taskbar.deleteModal.question.single" datatype="html">
+      <trans-unit id="imageOverview.taskbar.deleteModal.question.single" datatype="html" xml:space="preserve">
         <source>Möchten Sie das markierte Bild wirklich löschen?</source>
-        <target state="needs-translation">Möchten Sie das markierte Bild wirklich löschen?</target>
+        <target state="translated">Voulez-vous vraiment supprimer l'image sélectionnée ?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
           <context context-type="linenumber">15</context>
@@ -9921,33 +9921,33 @@
           <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.quittingModal.info" datatype="html">
+      <trans-unit id="widgets.quittingModal.info" datatype="html" xml:space="preserve">
         <source>Field Desktop wird beendet...</source>
-        <target state="needs-translation">Field Desktop wird beendet...</target>
+        <target state="translated">Field Desktop est en cours de fermeture...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/quitting-modal.html</context>
           <context context-type="linenumber">5,7</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.relations.automaticallyFilled" datatype="html">
+      <trans-unit id="docedit.relations.automaticallyFilled" datatype="html" xml:space="preserve">
         <source>Dieses Feld wird automatisch ausgefüllt.</source>
-        <target state="needs-translation">Dieses Feld wird automatisch ausgefüllt.</target>
+        <target state="translated">Ce champ est rempli automatiquement.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/relation-picker/relation-picker-group.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="image.export" datatype="html">
+      <trans-unit id="image.export" datatype="html" xml:space="preserve">
         <source>Bild exportieren</source>
-        <target state="needs-translation">Bild exportieren</target>
+        <target state="translated">Exporter image</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/viewer/image-viewer.html</context>
           <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="images.download.tooltip.single" datatype="html">
+      <trans-unit id="images.download.tooltip.single" datatype="html" xml:space="preserve">
         <source>Originalbild herunterladen</source>
-        <target state="needs-translation">Originalbild herunterladen</target>
+        <target state="translated">Télécharger l'image originale</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/image-overview-taskbar.component.ts</context>
           <context context-type="linenumber">134</context>
@@ -10281,33 +10281,33 @@
           <context context-type="linenumber">42,44</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="referencesInfo.references" datatype="html">
+      <trans-unit id="referencesInfo.references" datatype="html" xml:space="preserve">
         <source>Verweise:</source>
-        <target state="needs-translation">Verweise:</target>
+        <target state="translated">Références :</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/references-info.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="referencesInfo.generalReferences" datatype="html">
+      <trans-unit id="referencesInfo.generalReferences" datatype="html" xml:space="preserve">
         <source>Allgemeine Verweise:</source>
-        <target state="needs-translation">Allgemeine Verweise:</target>
+        <target state="translated">Références générales :</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/references-info.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="referencesInfo.semanticReferences" datatype="html">
+      <trans-unit id="referencesInfo.semanticReferences" datatype="html" xml:space="preserve">
         <source>Semantische Verweise:</source>
-        <target state="needs-translation">Semantische Verweise:</target>
+        <target state="translated">Références sémantiques :</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/references-info.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.quittingModal.backupInfo" datatype="html">
+      <trans-unit id="widgets.quittingModal.backupInfo" datatype="html" xml:space="preserve">
         <source>Bitte warten Sie, bis die Erstellung von Backup-Dateien abgeschlossen wurde.</source>
-        <target state="needs-translation">Bitte warten Sie, bis die Erstellung von Backup-Dateien abgeschlossen wurde.</target>
+        <target state="translated">Veuillez patienter jusqu'à ce que la création des fichiers de sauvegarde soit terminée.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/quitting-modal.html</context>
           <context context-type="linenumber">8,10</context>

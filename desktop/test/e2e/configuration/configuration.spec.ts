@@ -1471,6 +1471,32 @@ test.describe('configuration', () => {
     });
 
 
+    test('prevent creating geometry on map', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickSelectGroup('position');
+        await ConfigurationPage.clickOpenContextMenuForField('geometry');
+        await ConfigurationPage.clickContextMenuEditOption();
+        
+        await EditConfigurationPage.clickToggleEditableOnMapSlider();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        await ResourcesPage.clickSelectCategory('Place');
+        await DoceditPage.typeInInputField('identifier', 'P1');
+        await DoceditPage.clickSaveDocument();
+        
+        await ResourcesPage.clickOpenContextMenu('P1');
+
+        await waitForExist(await ResourcesPage.getContextMenu());
+        await waitForNotExist(await ResourcesPage.getCreateGeometryContextMenuOption('point'));
+        await waitForNotExist(await ResourcesPage.getCreateGeometryContextMenuOption('polyline'));
+        await waitForNotExist(await ResourcesPage.getCreateGeometryContextMenuOption('polygon'));
+    });
+
+
     test('disable geometry type', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Place');

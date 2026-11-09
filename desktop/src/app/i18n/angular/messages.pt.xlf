@@ -908,7 +908,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.checkboxes" datatype="html" xml:space="preserve">
         <source>Checkboxen</source>
-        <target state="needs-translation">Caixas de verificação</target>
+        <target state="translated">Caixas de seleção</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/configuration.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -2106,9 +2106,9 @@
           <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageView.georeferenceView.tooltips.exportGeoreferenceData" datatype="html">
+      <trans-unit id="imageView.georeferenceView.tooltips.exportGeoreferenceData" datatype="html" xml:space="preserve">
         <source>Georeferenzdaten als World-File exportieren</source>
-        <target state="translated">Exportar dados de georreferenciação com ficheiro WORLD</target>
+        <target state="translated">Exportar dados de georreferenciação com ficheiro world</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
           <context context-type="linenumber">119</context>
@@ -2122,9 +2122,9 @@
           <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="imageView.georeferenceView.tooltips.loadWorldfile" datatype="html">
-        <source>Worldfile laden</source>
-        <target state="translated">Carregar ficheiro WORLD</target>
+      <trans-unit id="imageView.georeferenceView.tooltips.loadWorldfile" datatype="html" xml:space="preserve">
+        <source>World-File laden</source>
+        <target state="translated">Carregar ficheiro world</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/georeference-view.component.ts</context>
           <context context-type="linenumber">119</context>
@@ -3695,7 +3695,7 @@
       </trans-unit>
       <trans-unit id="ngb.progressbar.value" datatype="html" xml:space="preserve">
         <source><x id="INTERPOLATION" equiv-text="eturn this._max"/></source>
-        <target state="needs-translation"><x id="INTERPOLATION" equiv-text="eturn this._max"/></target>
+        <target state="translated"><x id="INTERPOLATION" equiv-text="barConfig);  pu"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/progressbar/progressbar.ts</context>
           <context context-type="linenumber">28</context>
@@ -6669,9 +6669,9 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.invalidFileFormat" datatype="html">
+      <trans-unit id="messages.import.error.invalidFileFormat" datatype="html" xml:space="preserve">
         <source>Die ausgewählte Datei kann nicht importiert werden. Gültige Dateiendungen sind: [0]</source>
-        <target state="translated">Ao importar ocorreu um erro: O JSON não é válido. O aviso de erro original é: [0]</target>
+        <target state="translated">O ficheiro seleccionado não pode ser importado. Extensões de ficheiro válidas são: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

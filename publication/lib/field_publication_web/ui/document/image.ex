@@ -23,26 +23,10 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
     <div class="flex flex-col-reverse lg:flex-row">
       <div class="basis-full lg:basis-1/3">
         <%= for %FieldGroup{} = group <- @doc.groups do %>
-          <% fields =
-            Enum.reject(group.fields, fn %Field{name: name} ->
-              name in ["identifier", "category", "geometry"]
-            end) %>
-          <%= unless fields == [] do %>
-            <section class="flex flex-col gap-1">
-              <.group_heading>
-                {pick_default_translation(group.labels)}
-              </.group_heading>
-
-              <%= for %Field{} = field <- fields do %>
-                <.render_field field={field} publication={@publication} />
-              <% end %>
-            </section>
-          <% end %>
+          <.render_field_group group={group} publication={@publication} />
         <% end %>
         <%= for %RelationGroup{} = relation_group <- @doc.relations do %>
-          <.group_heading>
-            {pick_default_translation(relation_group.labels)} ({Enum.count(relation_group.docs)})
-          </.group_heading>
+          <.relation_heading relation={relation_group} />
           <.grouped_document_links docs={relation_group.docs} image_count={0} />
         <% end %>
         <.group_heading>

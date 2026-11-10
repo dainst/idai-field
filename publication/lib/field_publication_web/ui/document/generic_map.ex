@@ -83,26 +83,6 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
 
   defp render_action(:map_datasheet, assigns) do
     ~H"""
-    <%= for %FieldGroup{} = group <- @doc.groups do %>
-      <% fields =
-        Enum.reject(group.fields, fn %Field{name: name} ->
-          name in ["identifier", "category", "geometry"]
-        end) %>
-      <%= unless fields == [] do %>
-        <section>
-          <.group_heading>
-            {pick_default_translation(group.labels)}
-          </.group_heading>
-
-          <div class="grid grid-cols-1 gap-1 mt-2">
-            <%= for %Field{} = field <- fields do %>
-              <.render_field field={field} publication={@publication} />
-            <% end %>
-          </div>
-        </section>
-      <% end %>
-    <% end %>
-
     <% depicted_in = Document.get_relation(@doc, "isDepictedIn") %>
     <%= if depicted_in do %>
       <section>
@@ -125,6 +105,10 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
           <% end %>
         </div>
       </section>
+    <% end %>
+
+    <%= for %FieldGroup{} = group <- @doc.groups do %>
+      <.render_field_group group={group} publication={@publication} />
     <% end %>
     """
   end

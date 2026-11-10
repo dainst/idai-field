@@ -7,6 +7,7 @@ defmodule FieldPublicationWeb.UI.Components.Data.Field do
 
   alias FieldPublication.Publication.{
     Field,
+    FieldGroup,
     Search
   }
 
@@ -16,9 +17,52 @@ defmodule FieldPublicationWeb.UI.Components.Data.Field do
     input_type in (Search.get_keyword_inputs() ++ Search.get_keyword_multi_inputs())
   end
 
+  def relation_heading(assigns) do
+    ~H"""
+    <.group_heading>
+      {pick_default_translation(@relation.labels)}
+      <span class="text-black/40 font-bold">{Enum.count(@relation.docs)}</span>
+    </.group_heading>
+    """
+  end
+
+  attr(:group, FieldGroup, required: true)
+  attr(:publication, Publication, required: true)
+  attr(:ignore, :list, default: ["identifier", "category", "geometry"])
+
+  def render_field_group(assigns) do
+    ~H"""
+    <% fields = Enum.reject(@group.fields, fn field -> field.name in @ignore end) %>
+    <section :if={fields != []}>
+      <.group_heading>
+        {pick_default_translation(@group.labels)}
+      </.group_heading>
+
+      <table class="w-full table-fixed">
+        <%= for %Field{input_type: type } = field <- fields do %>
+          <.render_field field={field} publication={@publication} />
+        <% end %>
+      </table>
+    </section>
+    """
+  end
+
   attr(:publication, Publication, required: true)
   attr(:field, Field)
   attr(:hide_language_selection?, :boolean, default: false)
+
+  def render_field(assigns) do
+    ~H"""
+    <tr class="even:bg-panel">
+      <td>
+        <.render_field_label field={@field} />
+      </td>
+      <td>
+        <.render_field_data field={@field} publication={@publication} />
+      </td>
+    </tr>
+    """
+  end
 
   def render_field(assigns) do
     ~H"""

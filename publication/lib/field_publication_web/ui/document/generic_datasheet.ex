@@ -22,43 +22,17 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
     ~H"""
     <div class="flex flex-col lg:flex-row">
       <div class="lg:basis-2/3">
-        <%= for %FieldGroup{} = group <- @doc.groups do %>
-          <% fields =
-            Enum.reject(group.fields, fn %Field{name: name} ->
-              name in ["identifier", "category", "geometry"]
-            end)
-            |> Enum.sort_by(fn %Field{input_type: type} ->
-              !(type in ["text"])
-            end) %>
-          <%= unless fields == [] do %>
-            <section>
-              <.group_heading>
-                {pick_default_translation(group.labels)}
-              </.group_heading>
-
-              <div class="grid max-md:grid-cols-1 md:grid-cols-2 gap-1 mt-2">
-                <%= for %Field{input_type: type } = field <- fields do %>
-                  <div class={"#{if type in ["text"], do: "md:col-span-2"}"}>
-                    <.render_field field={field} publication={@publication} />
-                  </div>
-                <% end %>
-              </div>
-            </section>
-          <% end %>
-        <% end %>
         <% depicted_in = Document.get_relation(@doc, "isDepictedIn") %>
         <%= if depicted_in do %>
           <section>
-            <.group_heading>
-              {pick_default_translation(depicted_in.labels)} ({Enum.count(depicted_in.docs)})
-            </.group_heading>
+            <.relation_heading relation={depicted_in} />
             <div class="flex flex-wrap gap-1 mt-2 mb-5">
               <%= for %Document{} = doc <- depicted_in.docs do %>
                 <.link navigate={
                   ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{doc.id}"
                 }>
                   <.img_element
-                    class="border-1 h-full border-primary hover:border-primary-hover object-contain p-2 bg-panel"
+                    class="h-full object-contain p-2 bg-primary/20 hover:bg-primary/80"
                     size="^!250,250"
                     project={@publication.project_identifier}
                     uuid={doc.id}
@@ -68,6 +42,9 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
               <% end %>
             </div>
           </section>
+        <% end %>
+        <%= for %FieldGroup{} = group <- @doc.groups do %>
+          <.render_field_group group={group} publication={@publication} />
         <% end %>
         <section>
           <.group_heading>
@@ -106,9 +83,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
       fn %RelationGroup{name: relation_name} -> relation_name in ["isDepictedIn", "hasDefaultMapLayer", "hasMapLayer"] end
       )  do %>
           <section>
-            <.group_heading>
-              {pick_default_translation(other_relation.labels)} ({Enum.count(other_relation.docs)})
-            </.group_heading>
+            <.relation_heading relation={other_relation} />
             <div class="overflow-auto overscroll-contain max-h-[400px]">
               <.grouped_document_links
                 docs={other_relation.docs}
@@ -121,7 +96,7 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericDatasheet do
         <% end %>
         <div class="lg:mb-4">
           <.group_heading>
-            Geometry <span class="text-xs">({@geometry_type})</span>
+            Geometry <span class="text-black/40 text-sm font-bold">{@geometry_type}</span>
             <.link patch={
               ~p"/projects/#{@publication.project_identifier}/#{@publication.draft_date}/#{@doc.id}/map"
             }>

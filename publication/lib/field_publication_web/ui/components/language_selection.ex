@@ -3,36 +3,35 @@ defmodule FieldPublicationWeb.UI.Components.LanguageSelection do
 
   def render(assigns) do
     ~H"""
-    <div class={"#{padding()} relative"}>
-      <div class="absolute bg-white z-50 hidden flex-col gap-0.5" id={"#{@id}_dropdown"}>
+    <div class="flex mt-0.5 mb-0.5">
+      <button
+        class="w-6 h-6 text-center font-mono rounded-full cursor-pointer text-xs bg-primary text-primary-inverse hover-primary-inverse-hover hover:bg-primary-hover"
+        phx-click={JS.toggle(to: "##{@id}_dropdown", display: "flex")}
+      >
+        <span id={"#{@id}_selected_value"}>
+          {@selected}
+        </span>
+      </button>
+      <div
+        class="flex font-mono hidden gap-0.5"
+        id={"#{@id}_dropdown"}
+      >
         <%= for language_key <- @language_keys do %>
           <button
-            class={"text-left #{if language_key == @selected, do: "bg-primary/20" } cursor-pointer border text-xs p-1 text-primary hover:text-primary-hover"}
+            :if={language_key != @selected}
+            class="w-6 h-6 text-center font-mono rounded-full cursor-pointer text-xs border border-primary text-primary hover:text-primary-hover hover:border-primary-hover"
             phx-click={
               JS.push("select", value: %{new: language_key}, target: @myself)
               |> JS.hide(to: "##{@id}_dropdown")
             }
           >
-            <span
-              id={"#{@id}_selection_#{language_key}"}
-              phx-hook="DisplayLanguage"
-              lang={language_key}
-            >
+            <span id={"#{@id}_selection_#{language_key}"}>
               {language_key}
             </span>
           </button>
         <% end %>
       </div>
-      <button
-        :if={!@hide_selection?}
-        class="p-1 cursor-pointer border text-xs text-primary hover:text-primary-hover float-left mr-1"
-        phx-click={JS.toggle(to: "##{@id}_dropdown", display: "flex")}
-      >
-        <span id={"#{@id}_selected_value"} phx-hook="DisplayLanguage" lang={@selected}>
-          {@selected}
-        </span>
-      </button>
-      <span>
+      <span class="ml-2">
         {render_slot(@inner_block, @translations[@selected])}
       </span>
     </div>

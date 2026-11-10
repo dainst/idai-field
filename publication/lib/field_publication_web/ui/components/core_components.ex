@@ -857,7 +857,6 @@ defmodule FieldPublicationWeb.UI.CoreComponents do
         :let={option}
         id="project_selection"
         label="Selected project: "
-        z="z-20"
         selected_option={@current_publication.project_identifier}
         other_options={
           Enum.filter(@projects, fn identifier ->
@@ -936,7 +935,7 @@ defmodule FieldPublicationWeb.UI.CoreComponents do
   attr :id, :string, required: true
   attr :label, :string, default: "Select: "
   attr :selected_option, :string, required: true
-  attr :z, :string, default: "z-10"
+
   attr :other_options, :list, default: []
 
   defp selection_dropdown(assigns) do
@@ -959,7 +958,7 @@ defmodule FieldPublicationWeb.UI.CoreComponents do
       </div>
       <div
         id={"#{@id}_options"}
-        class={"#{@id}_selection hidden w-full lg:w-fit #{@z} bg-panel absolute flex flex-col"}
+        class={"#{@id}_selection hidden w-full lg:w-fit z-200 bg-panel absolute flex flex-col"}
       >
         <%= for option <- @other_options do %>
           <div class="p-2">{render_slot(@inner_block, option)}</div>

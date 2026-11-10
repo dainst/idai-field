@@ -5,6 +5,46 @@ defmodule FieldPublicationWeb.UI.Components.Data.DocumentLink do
 
   import FieldPublicationWeb.UI.Components.Data.Image
 
+  attr(:docs, :list, required: true)
+  attr(:image_count, :integer, default: 0)
+  attr(:image_height, :integer, default: 64)
+  attr(:geometry_indicator, :boolean, default: false)
+  attr(:live_action, :atom, default: nil)
+  attr(:hover_target, :string, default: nil)
+  attr(:publication_search?, :boolean, default: true)
+
+  def grouped_document_links(assigns) do
+    ~H"""
+    <%= for {_category, docs} <- Enum.group_by(
+        @docs, fn %Document{} = doc ->
+        doc.category.name
+        end) do %>
+      <section>
+        <% first_id = List.first(docs) |> Map.get(:id) %>
+        <% last_id = List.last(docs) |> Map.get(:id) %>
+        <%= for {doc, index} <- Enum.with_index(docs) do %>
+          <.document_link
+            doc={doc}
+            is_grouped?={true}
+            image_count={@image_count}
+            image_height={@image_height}
+            geometry_indicator={@geometry_indicator}
+            live_action={@live_action}
+            hover_target={@hover_target}
+            publication_search?={@publication_search?}
+            is_first?={doc.id == first_id}
+            is_last?={doc.id == last_id}
+          />
+        <% end %>
+      </section>
+    <% end %>
+    """
+  end
+
+  @doc """
+  Renders the link to a publication document
+  """
+
   attr(:id, :string, default: nil)
   attr(:doc, Document, required: true)
   attr(:image_count, :integer, default: 0)
@@ -13,30 +53,20 @@ defmodule FieldPublicationWeb.UI.Components.Data.DocumentLink do
   attr(:live_action, :atom, default: nil)
   attr(:hover_target, :string, default: nil)
   attr(:publication_search?, :boolean, default: true)
+  attr(:is_grouped?, :boolean, default: false)
+  attr(:is_first?, :boolean, default: false)
+  attr(:is_last?, :boolean, default: false)
 
   def document_link(assigns) do
     ~H"""
     <% id = if @id, do: @id, else: "#{@doc.id}_link" %>
-    <.maybe_map_hover_event id={"#{id}_map_hover"} doc={@doc} target_id={@hover_target}>
-      <div class="bg-white flex rounded mb-0.5 h-full" id={id}>
+    <div class={"relative group #{if @is_grouped? && !@is_first?, do: "mt-0.5", else: "mt-4"}"}>
+      <div
+        class={"flex #{if @is_last? || !@is_grouped?, do: "rounded-bl"}"}
+        style={"background-color: #{desaturate_category_color(@doc.category.color)};"}
+      >
         <.link
-          navigate={
-            if @publication_search? do
-              ~p"/projects/search/#{@doc.project_identifier}/#{@doc.publication_draft_date}?#{%{filters: %{"category" => @doc.category.name}}}"
-            else
-              ~p"/search?#{%{filters: %{"category" => @doc.category.name}}}"
-            end
-          }
-          class="rounded-tl pl-2 rounded-bl suppress-link-styling"
-          style={"background-color: #{desaturate_category_color(@doc.category.color)}; border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
-        >
-          <div class="h-full bg-white/70 hover:bg-white/40  pl-2 pr-2 pt-3 pb-3 font-thin hover:text-black text-gray-800">
-            {pick_default_translation(@doc.category.labels)}
-          </div>
-        </.link>
-        <.link
-          class="grow overflow-hidden text-ellipsis p-3 rounded-tr rounded-br hover:bg-(--primary-color)/10 suppress-link-styling"
-          style={"border-color: #{desaturate_category_color(@doc.category.color)}; border-width: 1px 1px 1px 0px;"}
+          class="ml-3 bg-white/95 hover:bg-white/80 grow overflow-hidden text-ellipsis p-3 suppress-link-styling"
           navigate={
             construct_doc_link(
               @doc.project_identifier,
@@ -46,46 +76,61 @@ defmodule FieldPublicationWeb.UI.Components.Data.DocumentLink do
             )
           }
         >
-          <div class="text-slate-600 flex flex-col lg:flex-row">
-            <div>{@doc.identifier}</div>
-            <div class="lg:ml-2">
-              <small>
-                <%= if @doc.description != %{} do %>
-                  {pick_default_translation(@doc.description)}
+          <.maybe_map_hover_event id={"#{id}_map_hover"} doc={@doc} target_id={@hover_target}>
+            <div>
+              {@doc.identifier}
+              <.icon
+                :if={@geometry_indicator and @doc.geometry != nil}
+                name="hero-map"
+                class="mb-1"
+              />
+            </div>
+            <div class="text-sm font-thin flex">
+              <%= if @doc.description != %{} do %>
+                {pick_default_translation(@doc.description)}
+              <% end %>
+            </div>
+            <div>
+              <% uuids = Enum.take(@doc.image_uuids, @image_count) %>
+              <div id={"#{id}-images"} class="flex items-center overflow-x-auto">
+                <%= for uuid <- uuids do %>
+                  <.img_element
+                    size={"^,#{@image_height}"}
+                    class="p-1 inline"
+                    project={@doc.project_identifier}
+                    uuid={uuid}
+                    alt={"An image depicting '#{@doc.identifier}'"}
+                  />
                 <% end %>
-                <.icon
-                  :if={@geometry_indicator and @doc.geometry != nil}
-                  name="hero-map"
-                  class="mb-1"
-                />
-              </small>
+              </div>
             </div>
-          </div>
-          <div>
-            <% uuids = Enum.take(@doc.image_uuids, @image_count) %>
-            <div id={"#{id}-images"} class="flex items-center overflow-x-auto">
-              <%= for uuid <- uuids do %>
-                <.img_element
-                  size={"^,#{@image_height}"}
-                  class="p-1 inline"
-                  project={@doc.project_identifier}
-                  uuid={uuid}
-                  alt={"An image depicting '#{@doc.identifier}'"}
-                />
-              <% end %>
-              <%= if uuids== [] and @image_count > 0 do %>
-                <small class="text-black">no images</small>
-              <% end %>
-            </div>
-          </div>
+          </.maybe_map_hover_event>
         </.link>
       </div>
-    </.maybe_map_hover_event>
+      <.link
+        navigate={
+          if @publication_search? do
+            ~p"/projects/search/#{@doc.project_identifier}/#{@doc.publication_draft_date}?#{%{filters: %{"category" => @doc.category.name}}}"
+          else
+            ~p"/search?#{%{filters: %{"category" => @doc.category.name}}}"
+          end
+        }
+        class={"#{if !@is_first? && @is_grouped?, do: "hidden group-hover:block"} w-full -top-3 z-100 absolute suppress-link-styling rounded-tr  rounded-tl"}
+        style={"background-color: #{desaturate_category_color(@doc.category.color)};"}
+      >
+        <div
+          style={ "color: #{desaturate_category_color(@doc.category.color)};"}
+          class="ml-3 font-bold text-sm pl-2 bg-white/80 hover:bg-white/70"
+        >
+          {pick_default_translation(@doc.category.labels)}
+        </div>
+      </.link>
+    </div>
     """
   end
 
-  def desaturate_category_color(color) do
-    "hsl(from  #{color} h calc(s * 0.5) l)"
+  def desaturate_category_color(color, alpha \\ 1) do
+    "hsl(from  #{color} h calc(s * 0.5) l / #{alpha})"
   end
 
   defp construct_doc_link(project_identifier, draft_date, uuid, live_action) do

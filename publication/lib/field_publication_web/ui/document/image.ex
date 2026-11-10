@@ -43,11 +43,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Image do
           <.group_heading>
             {pick_default_translation(relation_group.labels)} ({Enum.count(relation_group.docs)})
           </.group_heading>
-          <section>
-            <%= for %Document{} = doc <- relation_group.docs do %>
-              <.document_link doc={doc} image_count={0} />
-            <% end %>
-          </section>
+          <.grouped_document_links docs={relation_group.docs} image_count={0} />
         <% end %>
         <.group_heading>
           Data formats

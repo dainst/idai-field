@@ -133,16 +133,13 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
     ~H"""
     <div class="flex flex-col gap-1">
       <div class="ancestor-list">
-        <%= for ancestor_doc <- @hierarchy.ancestors do %>
-          <.document_link
-            id={"ancestor-#{ancestor_doc.id}"}
-            doc={ancestor_doc}
-            image_count={10}
-            geometry_indicator={true}
-            hover_target="generic_doc_map_detail"
-            live_action={:map_hierarchy}
-          />
-        <% end %>
+        <.grouped_document_links
+          docs={@hierarchy.ancestors}
+          image_count={10}
+          geometry_indicator={true}
+          hover_target="generic_doc_map_detail"
+          live_action={:map_hierarchy}
+        />
       </div>
       <div class="ancestor-list hidden justify-self-center text-center">
         <.icon name="hero-ellipsis-vertical" />
@@ -174,16 +171,13 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
         </div>
       <% end %>
       <div class="sibling-list">
-        <%= for doc <- @hierarchy.siblings do %>
-          <.document_link
-            id={"self-#{doc.id}"}
-            doc={doc}
-            image_count={10}
-            geometry_indicator={true}
-            hover_target="generic_doc_map_detail"
-            live_action={:map_hierarchy}
-          />
-        <% end %>
+        <.grouped_document_links
+          docs={@hierarchy.siblings}
+          image_count={10}
+          geometry_indicator={true}
+          hover_target="generic_doc_map_detail"
+          live_action={:map_hierarchy}
+        />
       </div>
       <div class="sibling-list hidden justify-self-center text-center">
         <.icon name="hero-ellipsis-vertical" />
@@ -199,16 +193,13 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
         <.icon name="hero-ellipsis-vertical" />
       </div>
       <div class="children-list">
-        <%= for doc <- @hierarchy.children do %>
-          <.document_link
-            id={"child-#{doc.id}"}
-            doc={doc}
-            image_count={10}
-            geometry_indicator={true}
-            hover_target="generic_doc_map_detail"
-            live_action={:map_hierarchy}
-          />
-        <% end %>
+        <.grouped_document_links
+          docs={@hierarchy.children}
+          image_count={10}
+          geometry_indicator={true}
+          hover_target="generic_doc_map_detail"
+          live_action={:map_hierarchy}
+        />
       </div>
     </div>
     """
@@ -221,16 +212,13 @@ defmodule FieldPublicationWeb.Presentation.Document.GenericMap do
         <.group_heading>
           {pick_default_translation(labels)} ({Enum.count(related_docs)})
         </.group_heading>
-        <%= for doc <- related_docs do %>
-          <.document_link
-            id={"#{name}-#{doc.id}"}
-            doc={doc}
-            image_count={10}
-            geometry_indicator={true}
-            hover_target="generic_doc_map_detail"
-            live_action={:map_context}
-          />
-        <% end %>
+        <.grouped_document_links
+          docs={related_docs}
+          image_count={10}
+          geometry_indicator={true}
+          hover_target="generic_doc_map_detail"
+          live_action={:map_context}
+        />
       </section>
     <% end %>
     """

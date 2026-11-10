@@ -78,6 +78,7 @@ defmodule FieldPublicationWeb.UI.DocumentLive do
               "No document with id `#{Map.get(parameters, "uuid")}` for publication of project `#{publication.project_identifier}` on #{publication.draft_date}."
 
         {:ok, %Document{id: uuid} = document} ->
+          IO.inspect(document)
           project_map_layers = Publication.get_project_map_layers(publication)
           image_categories = Configuration.get_image_categories(publication)
 

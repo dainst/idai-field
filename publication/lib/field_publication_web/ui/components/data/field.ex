@@ -38,7 +38,7 @@ defmodule FieldPublicationWeb.UI.Components.Data.Field do
         {pick_default_translation(@group.labels)}
       </.group_heading>
 
-      <table class="w-full table-fixed">
+      <table class="w-full table-fixed shadow-sm">
         <%= for %Field{input_type: type } = field <- fields do %>
           <.render_field field={field} publication={@publication} />
         <% end %>
@@ -53,11 +53,11 @@ defmodule FieldPublicationWeb.UI.Components.Data.Field do
 
   def render_field(assigns) do
     ~H"""
-    <tr class="even:bg-panel">
+    <tr class="odd:bg-panel">
       <td>
         <.render_field_label field={@field} />
       </td>
-      <td>
+      <td class="font-bold">
         <.render_field_data field={@field} publication={@publication} />
       </td>
     </tr>
@@ -83,7 +83,13 @@ defmodule FieldPublicationWeb.UI.Components.Data.Field do
     # just doing {gettext("#{@field.value})} would make it impossible for Gettext
     # to extract the key.
     ~H"""
-    {if @field.value == true, do: gettext("true"), else: gettext("false")}
+    <span>
+      <%= if @field.value do %>
+        <.icon name="hero-check-circle" /> {gettext("true")}
+      <% else %>
+        <.icon name="hero-x-circle" /> {gettext("false")}
+      <% end %>
+    </span>
     """
   end
 

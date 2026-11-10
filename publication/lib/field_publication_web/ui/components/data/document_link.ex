@@ -56,16 +56,17 @@ defmodule FieldPublicationWeb.UI.Components.Data.DocumentLink do
   attr(:is_grouped?, :boolean, default: false)
   attr(:is_first?, :boolean, default: false)
   attr(:is_last?, :boolean, default: false)
+  attr(:no_link?, :boolean, default: false)
 
   def document_link(assigns) do
     ~H"""
-    <% id = if @id, do: @id, else: "#{@doc.id}_link" %>
     <div class={"relative group #{if @is_grouped? && !@is_first?, do: "mt-0.5", else: "mt-4"}"}>
       <div
         class={"flex #{if @is_last? || !@is_grouped?, do: "rounded-bl"}"}
         style={"background-color: #{desaturate_category_color(@doc.category.color)};"}
       >
         <.link
+          :if={!@no_link?}
           class="ml-3 bg-white/95 hover:bg-white/80 grow overflow-hidden text-ellipsis p-3 suppress-link-styling"
           navigate={
             construct_doc_link(
@@ -76,36 +77,28 @@ defmodule FieldPublicationWeb.UI.Components.Data.DocumentLink do
             )
           }
         >
-          <.maybe_map_hover_event id={"#{id}_map_hover"} doc={@doc} target_id={@hover_target}>
-            <div>
-              {@doc.identifier}
-              <.icon
-                :if={@geometry_indicator and @doc.geometry != nil}
-                name="hero-map"
-                class="mb-1"
-              />
-            </div>
-            <div class="text-sm font-thin flex">
-              <%= if @doc.description != %{} do %>
-                {pick_default_translation(@doc.description)}
-              <% end %>
-            </div>
-            <div>
-              <% uuids = Enum.take(@doc.image_uuids, @image_count) %>
-              <div id={"#{id}-images"} class="flex items-center overflow-x-auto">
-                <%= for uuid <- uuids do %>
-                  <.img_element
-                    size={"^,#{@image_height}"}
-                    class="p-1 inline"
-                    project={@doc.project_identifier}
-                    uuid={uuid}
-                    alt={"An image depicting '#{@doc.identifier}'"}
-                  />
-                <% end %>
-              </div>
-            </div>
-          </.maybe_map_hover_event>
+          <.render_info
+            id={@id}
+            doc={@doc}
+            geometry_indicator={@geometry_indicator}
+            hover_target={@hover_target}
+            image_height={@image_height}
+            image_count={@image_count}
+          />
         </.link>
+        <span
+          :if={@no_link?}
+          class="ml-3 bg-white/95 grow overflow-hidden text-ellipsis p-3"
+        >
+          <.render_info
+            id={@id}
+            doc={@doc}
+            hover_target={@hover_target}
+            image_height={@image_height}
+            geometry_indicator={@geometry_indicator}
+            image_count={@image_count}
+          />
+        </span>
       </div>
       <.link
         navigate={
@@ -126,6 +119,41 @@ defmodule FieldPublicationWeb.UI.Components.Data.DocumentLink do
         </div>
       </.link>
     </div>
+    """
+  end
+
+  def render_info(assigns) do
+    ~H"""
+    <% id = if @id, do: @id, else: "#{@doc.id}_link" %>
+    <.maybe_map_hover_event id={"#{id}_map_hover"} doc={@doc} target_id={@hover_target}>
+      <div>
+        {@doc.identifier}
+        <.icon
+          :if={@geometry_indicator and @doc.geometry != nil}
+          name="hero-map"
+          class="mb-1"
+        />
+      </div>
+      <div class="text-sm font-thin flex">
+        <%= if @doc.description != %{} do %>
+          {pick_default_translation(@doc.description)}
+        <% end %>
+      </div>
+      <div>
+        <% uuids = Enum.take(@doc.image_uuids, @image_count) %>
+        <div id={"#{id}-images"} class="flex items-center overflow-x-auto">
+          <%= for uuid <- uuids do %>
+            <.img_element
+              size={"^,#{@image_height}"}
+              class="p-1 inline"
+              project={@doc.project_identifier}
+              uuid={uuid}
+              alt={"An image depicting '#{@doc.identifier}'"}
+            />
+          <% end %>
+        </div>
+      </div>
+    </.maybe_map_hover_event>
     """
   end
 

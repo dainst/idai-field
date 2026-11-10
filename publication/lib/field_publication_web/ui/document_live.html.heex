@@ -15,7 +15,7 @@
   </div>
 
   <.document_heading :if={category != "Project"}>
-    <.document_link doc={@doc} />
+    <.document_link doc={@doc} no_link?={true} />
   </.document_heading>
 
   <%= cond do %>

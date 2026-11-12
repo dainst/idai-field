@@ -3,37 +3,35 @@ defmodule FieldPublicationWeb.UI.Components.LanguageSelection do
 
   def render(assigns) do
     ~H"""
-    <div class="flex mt-0.5 mb-0.5">
+    <div class="flex flex-row gap-1">
       <button
-        class="w-6 h-6 text-center font-mono rounded-full cursor-pointer text-xs bg-primary text-primary-inverse hover-primary-inverse-hover hover:bg-primary-hover"
+        id={"#{@id}_selected_value"}
+        class="mt-0.5 mb-0.5 min-w-6 h-6 block text-center font-mono rounded-full cursor-pointer text-xs bg-primary text-primary-inverse hover-primary-inverse-hover hover:bg-primary-hover"
         phx-click={JS.toggle(to: "##{@id}_dropdown", display: "flex")}
       >
-        <span id={"#{@id}_selected_value"}>
-          {@selected}
-        </span>
+        {@selected}
       </button>
       <div
-        class="flex font-mono hidden gap-0.5"
+        class="flex hidden gap-0.5"
         id={"#{@id}_dropdown"}
       >
         <%= for language_key <- @language_keys do %>
           <button
             :if={language_key != @selected}
-            class="w-6 h-6 text-center font-mono rounded-full cursor-pointer text-xs border border-primary text-primary hover:text-primary-hover hover:border-primary-hover"
+            id={"#{@id}_selection_#{language_key}"}
+            class="mt-0.5 mb-0.5 min-w-6 h-6 block text-center font-mono rounded-full cursor-pointer text-xs border border-primary text-primary hover:text-primary-hover hover:border-primary-hover"
             phx-click={
               JS.push("select", value: %{new: language_key}, target: @myself)
               |> JS.hide(to: "##{@id}_dropdown")
             }
           >
-            <span id={"#{@id}_selection_#{language_key}"}>
-              {language_key}
-            </span>
+            {language_key}
           </button>
         <% end %>
       </div>
-      <span class="ml-2">
+      <div>
         {render_slot(@inner_block, @translations[@selected])}
-      </span>
+      </div>
     </div>
     """
   end

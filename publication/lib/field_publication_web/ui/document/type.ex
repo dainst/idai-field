@@ -1,13 +1,11 @@
 defmodule FieldPublicationWeb.Presentation.Document.Type do
   use FieldPublicationWeb, :live_component
 
-  import FieldPublicationWeb.Components.Data.{
+  import FieldPublicationWeb.UI.Components.Data.{
     DocumentLink,
     Field,
     Image
   }
-
-  alias Hex.API.ShortURL
 
   alias FieldPublication.Publication.{
     Document,

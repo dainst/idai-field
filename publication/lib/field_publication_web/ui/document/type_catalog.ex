@@ -13,7 +13,7 @@ defmodule FieldPublicationWeb.Presentation.Document.TypeCatalog do
   def render(assigns) do
     ~H"""
     <div>
-      <div class="p-1 bg-panel">
+      <div class="p-1">
         <%= if @total_type_number > 4 do %>
           <form class="p-2">
             <div class="inline-block">

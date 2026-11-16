@@ -130,17 +130,13 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
                     image_count={10}
                     image_height={50}
                   />
-
-                  <%= for %Document{} = find_doc <- childrens_accumulated_finds do %>
-                    <div class="ml-4">
-                      <.document_link
-                        id={find_doc.id}
-                        doc={find_doc}
-                        image_count={10}
-                        image_height={50}
-                      />
-                    </div>
-                  <% end %>
+                  <div class="ml-4">
+                    <.grouped_document_links
+                      docs={childrens_accumulated_finds}
+                      image_count={10}
+                      image_height={50}
+                    />
+                  </div>
                 <% end %>
               </div>
             </section>

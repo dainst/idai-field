@@ -108,16 +108,15 @@ describe('RelationsManager', () => {
     });
 
 
-    it('should save the base object', async done => {
+    it('should save the base object', async () => {
 
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
         await persistenceManager.update(doc);
         expect(mockDatastore.update).toHaveBeenCalledWith(doc, undefined);
-        done();
     });
 
 
-    it('delete a relation which was present in conflicting revision', async done => {
+    it('delete a relation which was present in conflicting revision', async () => {
 
         const squashVersion = { 'resource' : {
                 'id' :'1', 'identifier': 'ob1',
@@ -141,11 +140,10 @@ describe('RelationsManager', () => {
 
         expect(doc.resource.relations['BelongsTo']).toBe(undefined);
         expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
-        done();
     });
 
 
-    it('should save the related document for a new document', async done => {
+    it('should save the related document for a new document', async () => {
 
         doc.resource.relations['BelongsTo'] = ['2'];
         const clonedDoc = Document.clone(doc);
@@ -157,11 +155,10 @@ describe('RelationsManager', () => {
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc,  undefined);
         expect(relatedDoc.resource.relations['Contains'][0]).toBe('1'); // the '1' comes from clonedDoc.resource.id
-        done();
     });
 
 
-    it('remove: should remove an operation, another related resource gets relation updated', async done => {
+    it('remove: should remove an operation, another related resource gets relation updated', async () => {
 
         relatedDoc.resource.relations['isRecordedIn'] = ['1'];
         relatedDoc.resource.relations['Contains'] = ['3'];
@@ -174,11 +171,10 @@ describe('RelationsManager', () => {
         expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, undefined);
         expect(mockDatastore.remove).not.toHaveBeenCalledWith(anotherRelatedDoc);
         expect(anotherRelatedDoc.resource.relations['BelongsTo']).toBeUndefined();
-        done();
     });
 
 
-    it('remove: should remove an operation, with two dependent resources', async done => {
+    it('remove: should remove an operation, with two dependent resources', async () => {
 
         relatedDoc.resource.relations['isRecordedIn'] = ['1'];
         relatedDoc.resource.relations['Contains'] = ['3'];
@@ -203,11 +199,10 @@ describe('RelationsManager', () => {
         expect(mockDatastore.remove).toHaveBeenCalledWith(relatedDoc);
         expect(mockDatastore.remove).toHaveBeenCalledWith(anotherRelatedDoc);
         expect(mockDatastore.remove).toHaveBeenCalledWith(doc);
-        done();
     });
 
 
-    it('resource move: should correct lies within relations when resource moved to other operation', async done => {
+    it('resource move: should correct lies within relations when resource moved to other operation', async () => {
 
         doc.resource.relations['isRecordedIn'] = ['t2'];
         relatedDoc.resource.relations = { liesWithin: ['1'], isRecordedIn: ['t1'] };
@@ -237,11 +232,10 @@ describe('RelationsManager', () => {
         expect(checked1 && checked2 && checked3).toBe(true);
         expect(relatedDoc.resource.relations.isRecordedIn[0]).toEqual('t1'); // originals untouched
         expect(anotherRelatedDoc.resource.relations.isRecordedIn[0]).toEqual('t1');
-        done();
     });
 
 
-    it('resource move: only (!) correct lies within relations when resource moved to other (!) operation', async done => {
+    it('resource move: only (!) correct lies within relations when resource moved to other (!) operation', async () => {
 
         doc.resource.relations['isRecordedIn'] = ['t1'];
         relatedDoc.resource.relations = { liesWithin: ['1'], isRecordedIn: ['t1'] };
@@ -252,12 +246,10 @@ describe('RelationsManager', () => {
         mockDatastore.update.and.callFake((doc: any, u: string) => Promise.resolve(doc));
         await persistenceManager.update(doc);
         expect(mockDatastore.update).toHaveBeenCalledTimes(1);
-
-        done();
     });
 
 
-    it('resource move: filter docs without isRecordedIn', async done => {
+    it('resource move: filter docs without isRecordedIn', async () => {
 
         doc.resource.relations['isRecordedIn'] = ['t1'];
         relatedDoc.resource.relations = { liesWithin: ['1'], isRecordedIn: ['t2'] };
@@ -268,7 +260,5 @@ describe('RelationsManager', () => {
         mockDatastore.update.and.callFake((doc: any, u: string) => Promise.resolve(doc));
         await persistenceManager.update(doc);
         expect(mockDatastore.update).toHaveBeenCalledTimes(2);
-
-        done();
     });
 });

@@ -45,6 +45,12 @@ export class EditConfigurationPage {
     }
 
 
+    public static clickToggleEditableOnMapSlider() {
+
+        return click('#toggle-editable-on-map-slider');
+    }
+
+
     public static clickToggleMultiLanguageSlider() {
 
         return click('#toggle-multi-language-slider');

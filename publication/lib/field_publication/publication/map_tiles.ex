@@ -5,14 +5,10 @@ defmodule FieldPublication.Processing.MapTiles do
   }
 
   alias FieldPublication.{
+    EmbeddedSchema.LogEntry,
     FileService,
-    Publication
-  }
-
-  alias FieldPublication.Publication.DataIssues
-
-  alias FieldPublication.DatabaseSchema.{
-    LogEntry
+    Publication,
+    Publication.DataIssues
   }
 
   @tile_size 256

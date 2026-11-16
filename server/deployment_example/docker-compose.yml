@@ -1,6 +1,6 @@
 services:
   couchdb:
-    image: couchdb:3.3.2
+    image: couchdb:3.5.3
     container_name: field-hub-db
     environment:
       - COUCHDB_USER=${COUCHDB_ADMIN_NAME}
@@ -27,4 +27,3 @@ services:
     volumes:
       - ${FILE_DIRECTORY}:/files
 #    restart: always # uncomment when running on server
-

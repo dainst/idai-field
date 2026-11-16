@@ -1,6 +1,4 @@
 defmodule FieldPublication.CouchService do
-  alias FieldPublication.DatabaseSchema.User
-
   @core_database Application.compile_env(:field_publication, :core_database)
 
   require Logger
@@ -90,7 +88,7 @@ defmodule FieldPublication.CouchService do
   @doc """
   Authenticate with credentials.
 
-  Returns {:ok, :valid} if credentials are valid, otherwise `{:error, :invalid}`.
+  Returns `{:ok, :valid}` if credentials are valid, otherwise `{:error, :invalid}`.
 
   __Parameters__
   - `name` the user's name.
@@ -133,84 +131,6 @@ defmodule FieldPublication.CouchService do
       headers()
     )
     |> Finch.request(FieldPublication.Finch)
-  end
-
-  def create_user(%User{name: name, password: password, label: label}) do
-    Finch.build(
-      :put,
-      "#{local_url()}/_users/org.couchdb.user:#{name}",
-      headers(),
-      Jason.encode!(%{
-        name: name,
-        password: password,
-        roles: [],
-        type: "user",
-        label: label
-      })
-    )
-    |> Finch.request(FieldPublication.Finch)
-  end
-
-  def delete_user(user_name) do
-    Finch.build(
-      :get,
-      "#{local_url()}/_users/org.couchdb.user:#{user_name}",
-      headers()
-    )
-    |> Finch.request(FieldPublication.Finch)
-    |> case do
-      {:ok, %{status: 200, body: body}} ->
-        %{"_rev" => rev} =
-          body
-          |> Jason.decode!()
-
-        Finch.build(
-          :delete,
-          "#{local_url()}/_users/org.couchdb.user:#{user_name}",
-          headers() ++ [{"If-Match", rev}]
-        )
-        |> Finch.request(FieldPublication.Finch)
-
-      {:ok, %{status: 404}} = response ->
-        # User was not found
-        response
-    end
-  end
-
-  def update_user(%User{} = user) do
-    response =
-      Finch.build(
-        :get,
-        "#{local_url()}/_users/org.couchdb.user:#{user.name}",
-        headers()
-      )
-      |> Finch.request(FieldPublication.Finch)
-
-    case response do
-      {:ok, %{status: 200, body: body}} ->
-        doc =
-          body
-          |> Jason.decode!()
-          |> Map.put("label", user.label)
-
-        doc =
-          if user.password != nil and String.trim(user.password) != "" do
-            Map.put(doc, "password", user.password)
-          else
-            doc
-          end
-
-        Finch.build(
-          :put,
-          "#{local_url()}/_users/org.couchdb.user:#{user.name}",
-          headers() ++ [{"If-Match", doc["_rev"]}],
-          Jason.encode!(doc)
-        )
-        |> Finch.request(FieldPublication.Finch)
-
-      {:ok, %{status: 404}} = res ->
-        res
-    end
   end
 
   def get_database(name) do
@@ -286,7 +206,7 @@ defmodule FieldPublication.CouchService do
   @doc """
   Get a specific document
 
-  Returns `{:ok, Finch.Response.t()}` or `{:error, Exception.t()}` for the deletion attempt. See the https://docs.couchdb.org for possible responses.
+  Returns `{:ok, Finch.Response.t()}` or `{:error, Exception.t()}` for the retrieval attempt. See the https://docs.couchdb.org for possible responses.
 
   __Parameters__
   - `doc_id`, the document's id.

@@ -3,22 +3,20 @@ defmodule FieldPublication.Processing do
 
   alias Phoenix.PubSub
 
-  alias FieldPublication.Publication
+  alias FieldPublication.EmbeddedSchema.LogEntry
 
   alias FieldPublication.Processing.{
     WebImage,
     MapTiles
   }
 
+  alias FieldPublication.Publication
+
   alias FieldPublication.Publication.{
     DocumentPreview,
     DataIssues,
     Geo,
     Search
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    LogEntry
   }
 
   require Logger
@@ -236,7 +234,7 @@ defmodule FieldPublication.Processing do
           # Module that implements the actual processing.
           Search,
           # Function within that module to start the processing.
-          :index_documents,
+          :index_documents!,
           # Parameters for that function.
           [publication]
         )
@@ -296,7 +294,7 @@ defmodule FieldPublication.Processing do
           # Module that implements the actual processing.
           Geo,
           # Function within that module to start the processing.
-          :generate_feature_collections,
+          :generate_feature_collections!,
           # Parameters for that function.
           [publication]
         )

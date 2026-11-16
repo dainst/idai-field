@@ -23,12 +23,14 @@ services:
       - 9600:9600 # Performance Analyzer
 
   couchdb:
-    image: couchdb:3.5.2
+    image: couchdb:3.5.3
     container_name: "field_publication_couchdb"
     ports:
       - "5985:5984"
     environment:
       - "COUCHDB_USER=couch_admin" # see dev.exs
       - "COUCHDB_PASSWORD=couch_admin_password" # see dev.exs
+    volumes:
+      - ./config/couchdb_dev.ini:/opt/couchdb/etc/local.d/couchdb_dev.ini
     extra_hosts:
       - "host.docker.internal:host-gateway"

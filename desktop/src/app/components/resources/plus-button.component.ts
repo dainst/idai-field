@@ -141,7 +141,8 @@ export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.preselectedGeometryType) {
             this.startDocumentCreation();
-        } else if (!this.isGeometryCategory(this.selectedCategory.name)) {
+        } else if (!this.isGeometryCategory(this.selectedCategory.name)
+                || !CategoryForm.isGeometryEditableOnMap(this.selectedCategory)) {
             this.startDocumentCreation('none');
         }
     }

@@ -202,7 +202,7 @@ export module Validations {
             document,
             projectConfiguration,
             Field.InputType.WEIGHT,
-            ValidationErrors.INVALID_DIMENSION_VALUES,
+            ValidationErrors.INVALID_WEIGHT_VALUES,
             (dimension: any, _: Field, options?: any) =>
                 Measurement.isMeasurement(dimension)
                     && Measurement.isValid(dimension, Field.InputType.WEIGHT, options),
@@ -219,7 +219,7 @@ export module Validations {
             document,
             projectConfiguration,
             Field.InputType.VOLUME,
-            ValidationErrors.INVALID_DIMENSION_VALUES,
+            ValidationErrors.INVALID_VOLUME_VALUES,
             (dimension: any, _: Field, options?: any) =>
                 Measurement.isMeasurement(dimension)
                     && Measurement.isValid(dimension, Field.InputType.VOLUME, options),

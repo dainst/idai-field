@@ -4,11 +4,10 @@ defmodule FieldPublication.Publication.DataIssues do
   import Ecto.Changeset
 
   alias FieldPublication.{
+    EmbeddedSchema.LogEntry,
     CouchService,
     Publication
   }
-
-  alias FieldPublication.DatabaseSchema.LogEntry
 
   @doc_type "issue"
   @primary_key false

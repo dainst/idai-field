@@ -1,6 +1,5 @@
 import { FileSyncPreference } from 'idai-field-core';
-
-const address = window.require('address');
+import { getIpAddress } from '../get-ip-address';
 
 
 export interface SyncTarget {
@@ -15,12 +14,12 @@ export interface SyncTarget {
 
 export module SyncTarget {
 
-    export function getAddress(syncTarget: SyncTarget) {
+    export async function getAddress(syncTarget: SyncTarget) {
 
         if (!syncTarget) return undefined;
 
         // Prevent trying to synchronize with own database
-        return syncTarget.address.trim().replace('http://', '').replace(':3000', '') === address.ip()
+        return syncTarget.address.trim().replace('http://', '').replace(':3000', '') === await getIpAddress()
             ? '.'
             : syncTarget.address;
     }

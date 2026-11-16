@@ -29,7 +29,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         const settings = this.settingsProvider.getSettings();
 
         const syncTarget = settings.syncTargets[project];
-        const address = SyncTarget.getAddress(syncTarget);
+        const address = await SyncTarget.getAddress(syncTarget);
         const password = syncTarget.password;
 
         const params = type ? { type } : {};
@@ -67,7 +67,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         const settings = this.settingsProvider.getSettings();
 
         const syncTarget = settings.syncTargets[project];
-        const address = SyncTarget.getAddress(syncTarget);
+        const address = await SyncTarget.getAddress(syncTarget);
         const password = syncTarget.password;
 
         await axios({
@@ -94,7 +94,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         const syncTarget: SyncTarget = settings.syncTargets[project];
         if (!syncTarget?.address || !syncTarget?.password || !syncTarget.isSyncActive) return {};
 
-        const url: string = SyncTarget.getAddress(syncTarget);
+        const url: string = await SyncTarget.getAddress(syncTarget);
         const password: string = syncTarget.password;
 
         return this.runFileInfoQuery(url, password, project, types);
@@ -135,7 +135,7 @@ export class RemoteImageStore implements RemoteImageStoreInterface {
         const settings = this.settingsProvider.getSettings();
 
         const syncTarget = settings.syncTargets[project];
-        const url = SyncTarget.getAddress(syncTarget);
+        const url = await SyncTarget.getAddress(syncTarget);
         const password = syncTarget.password;
 
         return this.runDataQuery(url, password, project, uuid, type);

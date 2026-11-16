@@ -68,4 +68,43 @@ describe('FieldGeometry', () => {
 
         expect(geometry.coordinates).toEqual([[[-7.0, -5.0], [-6.0, -5.0], [7.0, -7.0], [-7.0, -5.0]]]);
     });
+
+
+    it('determine if a geometry has z values', () => {
+
+        const geometry: FieldGeometry = {
+            type: 'MultiPolygon',
+            coordinates: [
+                [[[-7.0, -5.0, 2.0], [-6.0, -5.0, 3.0], [7.0, -7.0, 2.5]]],
+                [[[7.0, 5.0, 1.5], [6.0, 5.0, 2.5], [-7.0, 7.0, 1.0]]]
+            ]
+        };
+
+        const geometry2: FieldGeometry = {
+            type: 'Point',
+            coordinates: [
+                [1.0, -2.0, 3.5]
+            ]
+        };
+
+        const geometry3: FieldGeometry = {
+            type: 'MultiPolygon',
+            coordinates: [
+                [[[-7.0, -5.0], [-6.0, -5.0], [7.0, -7.0]]],
+                [[[7.0, 5.0], [6.0, 5.0], [-7.0, 7.0]]]
+            ]
+        };
+
+        const geometry4: FieldGeometry = {
+            type: 'Point',
+            coordinates: [
+                [1.0, -2.0]
+            ]
+        };
+
+        expect(FieldGeometry.hasZValues(geometry)).toBe(true);
+        expect(FieldGeometry.hasZValues(geometry2)).toBe(true);
+        expect(FieldGeometry.hasZValues(geometry3)).toBe(false);
+        expect(FieldGeometry.hasZValues(geometry4)).toBe(false);
+    });
 });

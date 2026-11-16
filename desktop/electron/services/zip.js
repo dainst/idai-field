@@ -1,6 +1,6 @@
 const electron = require('electron');
 const extract = require('extract-zip');
-const archiver = require('archiver');
+const { ZipArchive } = require('archiver');
 const fs = require('original-fs');
 
 
@@ -53,7 +53,7 @@ function createCatalogZip(outputFilePath, filePath, fileName, imageDirPath, imag
 
 function createArchive(outputFilePath, resolve, reject) {
 
-    const archive = archiver('zip');
+    const archive = new ZipArchive();
     archive.on('error', err => reject(err));
 
     const output = fs.createWriteStream(outputFilePath);

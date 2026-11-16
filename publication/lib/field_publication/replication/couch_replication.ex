@@ -5,11 +5,8 @@ defmodule FieldPublication.Replication.CouchReplication do
   alias FieldPublication.{
     CouchService,
     Replication,
+    Replication.ReplicationInput,
     Publication
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    ReplicationInput
   }
 
   def start(

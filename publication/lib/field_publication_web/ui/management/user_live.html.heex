@@ -1,0 +1,72 @@
+<.back navigate={~p"/management"}>{gettext("Back to management")}</.back>
+<.document_heading>Manage users</.document_heading>
+
+<p class="font-semibold">{gettext("Actions")}</p>
+
+<ul>
+  <li>
+    <.link patch={~p"/management/users/new"}>
+      {gettext("Add user")}
+    </.link>
+  </li>
+</ul>
+
+<%= if @users != [] do %>
+  <table class="w-full mt-8">
+    <thead>
+      <tr class="text-left">
+        <th>{gettext("User name")}</th>
+        <th>{gettext("Full name")}</th>
+        <th>{gettext("Email")}</th>
+        <th>{gettext("Administrator")}</th>
+        <th>{gettext("Actions")}</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y border-t">
+      <%= for %User{name: name, label: label, email: email, admin?: admin?} <- @users do %>
+        <tr class="group hover:bg-slate-50">
+          <td>{name}</td>
+          <td>{label}</td>
+          <td>{email}</td>
+          <td><.icon :if={admin?} name="hero-check" /></td>
+          <td>
+            <div class="space-x-4">
+              <span>
+                <.link patch={~p"/management/users/#{name}/edit"}>
+                  {gettext("Edit")}
+                </.link>
+              </span>
+              <span>
+                <.link
+                  phx-click={
+                    JS.push("delete", value: %{name: name})
+                    |> hide("##{name}")
+                  }
+                  data-confirm="Are you sure?"
+                >
+                  {gettext("Delete")}
+                </.link>
+              </span>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="user-modal"
+  show
+  on_cancel={JS.patch(~p"/management/users")}
+>
+  <.live_component
+    module={UserFormComponent}
+    id="user-form"
+    title={@page_title}
+    action={@live_action}
+    user={@user || nil}
+    patch={~p"/management/users"}
+  />
+</.modal>

@@ -1,7 +1,7 @@
 export type MenuContext = 'default'|'docedit'|'modal'|'blockingModal'|'projects'|'configuration'|'geometryEdit'
-    |'mapLayersEdit'|'georeferenceEdit'|'imagePickerModal'|'configurationEdit'|'configurationValuelistEdit'
-    |'configurationSubfieldEdit'|'configurationModal'|'configurationManagement'|'warnings'|'qrCodeEditor'
-    |'qrCodeScanner'|'printSettingsModal'|'workflowEditor'|'imageToolModal';
+    |'geometryEditModal'|'mapLayersEdit'|'georeferenceEdit'|'imagePickerModal'|'configurationEdit'
+    |'configurationValuelistEdit'|'configurationSubfieldEdit'|'configurationModal'|'configurationManagement'
+    |'warnings'|'qrCodeEditor'|'qrCodeScanner'|'printSettingsModal'|'workflowEditor'|'imageToolModal';
 
     
 /**
@@ -15,6 +15,7 @@ export module MenuContext {
     export const BLOCKING_MODAL = 'blockingModal';
     export const CONFIGURATION = 'configuration';
     export const GEOMETRY_EDIT = 'geometryEdit';
+    export const GEOMETRY_EDIT_MODAL = 'geometryEditModal';
     export const MAP_LAYERS_EDIT = 'mapLayersEdit';
     export const GEOREFERENCE_EDIT = 'georeferenceEdit';
     export const IMAGE_PICKER_MODAL = 'imagePickerModal';

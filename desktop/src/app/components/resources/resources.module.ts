@@ -64,6 +64,7 @@ import { ProcessStateComponent } from './workflow/state/process-state.component'
 import { ProcessListComponent } from './workflow/process-list.component';
 import { WorkflowOverviewComponent } from './workflow/workflow-overview.component';
 import { TypeScannerModalComponent } from './actions/scan-resource/type-scanner-modal.component';
+import { ZValuesAlertModalComponent } from './map/map/z-values-alert-modal.component';
 
 
 const remote = window.require('@electron/remote');
@@ -119,7 +120,8 @@ const remote = window.require('@electron/remote');
         LinkProcessModalComponent,
         ProcessStateComponent,
         DeleteProcessModalComponent,
-        ProcessListComponent
+        ProcessListComponent,
+        ZValuesAlertModalComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

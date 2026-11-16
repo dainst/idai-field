@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../services/menus';
@@ -17,9 +17,9 @@ import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
 import { AngularUtility } from '../../angular/angular-utility';
 import { getFileSizeLabel } from '../../util/get-file-size-label';
 import { Settings } from '../../services/settings/settings';
+import { getIpAddress } from '../../services/get-ip-address';
 
 const PouchDB = window.require('pouchdb-browser');
-const address = window.require('address');
 
 const CREDENTIALS_TIMER_INTERVAL: number = 500;
 
@@ -36,7 +36,7 @@ const CREDENTIALS_TIMER_INTERVAL: number = 500;
  * @author Thomas Kleinke
  * @author Simon Hohl
  */
-export class DownloadProjectComponent {
+export class DownloadProjectComponent implements OnInit {
 
     public url: string = '';
     public projectIdentifier: string = '';
@@ -52,6 +52,7 @@ export class DownloadProjectComponent {
     private fileDownloadPromises: Array<Promise<void>> = [];
     private credentialsTimer: ReturnType<typeof setTimeout>;
     private getFileSizesStart: Date;
+    private ipAddress: string = '';
 
 
     constructor(private messages: Messages,
@@ -68,6 +69,12 @@ export class DownloadProjectComponent {
 
     
     public checkCredentialsCompleteness = () => this.getUrl() && this.getProjectIdentifier() && this.getPassword();
+
+
+    async ngOnInit() {
+
+        this.ipAddress = await getIpAddress();
+    }
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -375,7 +382,7 @@ export class DownloadProjectComponent {
         const url: string = this.url?.trim();
 
         // Prevent trying to download project from own database
-        return url.replace('http://', '').replace(':3000', '') === address.ip()
+        return url.replace('http://', '').replace(':3000', '') === this.ipAddress
             ? '.'
             : url;
     }

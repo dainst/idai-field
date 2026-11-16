@@ -288,7 +288,7 @@ export class Datastore {
         const clonedQuery: Query = clone(query);
         if (!options.includeResourcesWithoutValidParent) {
             if (!clonedQuery.constraints) clonedQuery.constraints = {};
-            clonedQuery.constraints['missingOrInvalidParent:exist'] = 'UNKNOWN';
+            clonedQuery.constraints['missingOrInvalidParent:exist'] = { value: 'KNOWN', subtract: true };
         }
 
         const { ids } = this.findIds(clonedQuery);

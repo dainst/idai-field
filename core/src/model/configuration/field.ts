@@ -42,6 +42,7 @@ export interface Field extends BaseField {
     subfields?: Array<Subfield>;                // For input type "composite"
     constraintName?: string;                    // For input type "derivedRelation"
     geometryTypes?: Array<FieldGeometryType>;   // For input type "geometry"
+    editableOnMap?: boolean;                    // For input type "geoemtry"
 }
 
 

@@ -4,6 +4,7 @@ defmodule FieldPublication.Publication.DocumentPreview do
   import Ecto.Changeset
 
   alias FieldPublication.{
+    EmbeddedSchema.LogEntry,
     CouchService,
     Publication
   }
@@ -13,8 +14,6 @@ defmodule FieldPublication.Publication.DocumentPreview do
     Document,
     DataIssues
   }
-
-  alias FieldPublication.DatabaseSchema.LogEntry
 
   require Logger
 
@@ -47,10 +46,12 @@ defmodule FieldPublication.Publication.DocumentPreview do
   end
 
   def create(%Document{} = doc) do
+    geometry = if doc.geometry, do: :omitted, else: nil
+
     %__MODULE__{}
     |> changeset(%{
       uuid: doc.id,
-      preview: %{doc | groups: [], relations: [], geometry: []}
+      preview: %{doc | groups: [], relations: [], geometry: geometry}
     })
     |> apply_action(:create)
   end
@@ -92,6 +93,29 @@ defmodule FieldPublication.Publication.DocumentPreview do
       _ ->
         []
     end
+  end
+
+  def get(%Publication{meta_database: db_name}, uuid) when is_binary(uuid) do
+    uuid
+    |> id()
+    |> CouchService.get_document(db_name)
+    |> case do
+      {:ok, %{status: 200, body: body}} ->
+        {:ok,
+         body
+         |> Jason.decode!()
+         |> Map.get("preview")
+         |> Document.from_map()}
+
+      _ ->
+        {:error, :found}
+    end
+  end
+
+  def get!(%Publication{} = pub, uuid) when is_binary(uuid) do
+    {:ok, doc} = get(pub, uuid)
+
+    doc
   end
 
   def recreate_previews(%Publication{} = publication) do

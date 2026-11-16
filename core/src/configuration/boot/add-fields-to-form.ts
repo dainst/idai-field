@@ -158,6 +158,8 @@ function applyFieldChanges(field: TransientFieldDefinition, changedField: Custom
         field.geometryTypes = changedField.geometryTypes;
     }
 
+    field.editableOnMap = changedField.editableOnMap === false ? false : true;
+
     if (changedField.range) {
         field.range = changedField.range;
     }

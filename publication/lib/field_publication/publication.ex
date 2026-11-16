@@ -8,22 +8,19 @@ defmodule FieldPublication.Publication do
   alias FieldPublication.{
     CouchService,
     FileService,
-    Project
+    Project,
+    Replication.ReplicationInput
+  }
+
+  alias FieldPublication.EmbeddedSchema.{
+    Translation,
+    LogEntry
   }
 
   alias FieldPublication.Publication.{
     Configuration,
     Search,
     Document
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    Translation,
-    LogEntry
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    ReplicationInput
   }
 
   require Logger
@@ -49,6 +46,8 @@ defmodule FieldPublication.Publication do
     field(:database, :string)
     field(:meta_database, :string)
     field(:languages, {:array, :string}, default: [])
+    field(:latitude, :float)
+    field(:longitude, :float)
     field(:contact, :string)
     field(:epsg_code, :integer)
     # Version is currently not used, the default is saved. The idea is to maybe
@@ -56,7 +55,9 @@ defmodule FieldPublication.Publication do
     # a new major version. These then could get communicated differently through
     # the web UI.
     field(:version, Ecto.Enum, values: [:major, :revision], default: :major)
-    embeds_many(:comments, Translation, on_replace: :delete)
+    embeds_many(:project_label, Translation, on_replace: :delete)
+    embeds_many(:project_description, Translation, on_replace: :delete)
+    embeds_many(:publication_description, Translation, on_replace: :delete)
     embeds_many(:replication_logs, LogEntry, on_replace: :delete)
   end
 
@@ -74,16 +75,28 @@ defmodule FieldPublication.Publication do
       :configuration_doc,
       :database,
       :languages,
+      :latitude,
+      :longitude,
       :version,
       :contact,
       :epsg_code
     ])
-    |> cast_embed(:comments,
-      sort_param: :comments_sort,
-      drop_param: :comments_drop
+    |> cast_embed(:project_description,
+      sort_param: :project_description_sort,
+      drop_param: :project_description_drop
     )
+    |> Translation.language_unique_constraint(:project_description)
+    |> cast_embed(:project_label,
+      sort_param: :project_label_sort,
+      drop_param: :project_label_drop
+    )
+    |> Translation.language_unique_constraint(:project_label)
+    |> cast_embed(:publication_description,
+      sort_param: :publication_description_sort,
+      drop_param: :publication_description_drop
+    )
+    |> Translation.language_unique_constraint(:publication_description)
     |> cast_embed(:replication_logs)
-    |> Translation.language_unique_constraint(:comments)
     |> validate_required([
       :project_identifier,
       :source_url,
@@ -102,26 +115,6 @@ defmodule FieldPublication.Publication do
     @doc_type
   end
 
-  def set_metadatabase_name(changeset) do
-    id = get_field(changeset, :_id)
-
-    db_name = "meta%2F#{id}"
-
-    create_meta_database(db_name)
-    |> case do
-      {:ok, _db_name} ->
-        put_change(changeset, :meta_database, db_name)
-
-      error ->
-        Logger.error(inspect(error))
-        add_error(changeset, :meta_database, "Unable to create metadatabase for #{id}.")
-    end
-  end
-
-  def id(project_identifier, draft_date) do
-    Enum.join([@doc_type, project_identifier, draft_date], "_")
-  end
-
   defp ensure_project_exists(changeset) do
     project_identifier = get_field(changeset, :project_identifier)
 
@@ -136,6 +129,26 @@ defmodule FieldPublication.Publication do
           :project_identifier,
           "Project #{project_identifier} document not found."
         )
+    end
+  end
+
+  def id(project_identifier, draft_date) do
+    Enum.join([@doc_type, project_identifier, draft_date], "_")
+  end
+
+  def set_metadatabase_name(changeset) do
+    id = get_field(changeset, :_id)
+
+    db_name = "meta%2F#{id}"
+
+    create_meta_database(db_name)
+    |> case do
+      {:ok, _db_name} ->
+        put_change(changeset, :meta_database, db_name)
+
+      error ->
+        Logger.error(inspect(error))
+        add_error(changeset, :meta_database, "Unable to create metadatabase for #{id}.")
     end
   end
 
@@ -471,13 +484,18 @@ defmodule FieldPublication.Publication do
 
     with {:ok, publication} <- apply_action(changeset, :create),
          {:ok, %{status: 201}} <- CouchService.put_document(doc_id, publication) do
-      {:ok, %__MODULE__{} = updated_publication} =
+      {:ok, %__MODULE__{replication_finished: replication_finished} = updated_publication} =
         CouchService.get_document(doc_id)
         |> then(fn {:ok, %{status: 200, body: body}} ->
           %__MODULE__{}
           |> changeset(Jason.decode!(body))
           |> apply_action(:create)
         end)
+
+      if replication_finished do
+        # Only align raw data after the initial replication is done completely.
+        align_raw_data(updated_publication)
+      end
 
       broadcast(updated_publication)
 
@@ -522,6 +540,37 @@ defmodule FieldPublication.Publication do
            :database_exists,
            "A publication database '#{get_field(changeset, :database)}' already exists."
          )}
+    end
+  end
+
+  defp align_raw_data(%__MODULE__{
+         database: database,
+         project_label: project_label,
+         project_description: project_description
+       }) do
+    with {:ok, %{status: 200, body: body}} <- CouchService.get_document("project", database),
+         raw_doc <- JSON.decode!(body) do
+      short_name =
+        Enum.map(project_label, fn %Translation{language: language, text: text} ->
+          {language, text}
+        end)
+        |> Enum.into(%{})
+
+      description =
+        Enum.map(project_description, fn %Translation{language: language, text: text} ->
+          {language, text}
+        end)
+        |> Enum.into(%{})
+
+      updated_raw_doc =
+        raw_doc
+        |> put_in(["resource", "shortName"], short_name)
+        |> put_in(["resource", "description"], description)
+
+      CouchService.put_document(updated_raw_doc["_id"], updated_raw_doc, database)
+    else
+      _ ->
+        {:error, :not_found}
     end
   end
 

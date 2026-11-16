@@ -1,5 +1,6 @@
 {
   "files.watcherExclude": {
     "**/node_modules/*/**": true
-  }
+  },
+  "js/ts.tsdk.path": "desktop/node_modules/typescript/lib"
 }

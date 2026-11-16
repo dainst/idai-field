@@ -11,8 +11,7 @@ import { ResultSets } from './result-sets';
  *
  * Runtime info: Skips the fulltime query if query is empty and constraint search delivered results
  */
-export function performQuery(query: Query,
-                             constraintIndex: ConstraintIndex,
+export function performQuery(query: Query, constraintIndex: ConstraintIndex,
                              fulltextIndex: FulltextIndex): Array<Resource.Id> {
 
     let resultSets = performConstraints(
@@ -29,8 +28,7 @@ export function performQuery(query: Query,
 }
 
 
-function performFulltext(fulltextIndex: FulltextIndex,
-                         query: Query,
+function performFulltext(fulltextIndex: FulltextIndex, query: Query,
                          resultSets: ResultSets<Resource.Id>): ResultSets<Resource.Id> {
 
     const q = !query.q || query.q.trim() === '' ? '*' : query.q;

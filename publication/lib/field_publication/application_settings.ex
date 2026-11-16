@@ -46,7 +46,7 @@ defmodule FieldPublication.ApplicationSettings do
 
   import Ecto.Changeset
 
-  alias FieldPublication.DatabaseSchema.Translation
+  alias FieldPublication.EmbeddedSchema.Translation
 
   @doc_type "application_settings"
   @primary_key false

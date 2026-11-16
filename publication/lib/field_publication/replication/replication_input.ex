@@ -1,4 +1,4 @@
-defmodule FieldPublication.DatabaseSchema.ReplicationInput do
+defmodule FieldPublication.Replication.ReplicationInput do
   use Ecto.Schema
   import Ecto.Changeset
 

@@ -2,20 +2,17 @@ defmodule FieldPublication.Replication do
   use GenServer
 
   alias FieldPublication.{
+    EmbeddedSchema.LogEntry,
     CouchService,
-    Replication.CouchReplication,
-    Replication.FileReplication,
     Processing,
-    Publication
+    Publication,
+    Publication.Geo
   }
 
-  alias FieldPublication.Publication.{
-    Geo
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    ReplicationInput,
-    LogEntry
+  alias FieldPublication.Replication.{
+    CouchReplication,
+    FileReplication,
+    ReplicationInput
   }
 
   require Logger
@@ -163,45 +160,12 @@ defmodule FieldPublication.Replication do
 
           reconstruct_project_configuraton(publication)
 
-          languages =
-            CouchService.get_document("configuration", publication.database)
-            |> case do
-              {:ok, %{status: 200, body: body}} ->
-                body
-                |> Jason.decode!()
-                |> Map.get("resource", %{})
-                |> Map.get("projectLanguages", [])
-
-              _ ->
-                # Projects created before Field Desktop 3 do not have a
-                # configuration document.
-                []
-            end
-
-          contact =
-            CouchService.get_document("project", publication.database)
-            |> case do
-              {:ok, %{status: 200, body: body}} ->
-                body
-                |> Jason.decode!()
-                |> Map.get("resource", %{})
-                |> Map.get("contactMail", nil)
-
-              _ ->
-                nil
-            end
-
           {:ok, publication} = Geo.read_and_set_epsg_code(publication)
+          {:ok, publication} = Geo.read_and_set_coordinate(publication)
 
-          persisted_log(publication, :info, "Draft creation finished.")
+          {:ok, publication} = persisted_log(publication, :info, "Draft creation finished.")
 
-          {:ok, %Publication{} = final_publication} =
-            Publication.get!(publication.project_identifier, publication.draft_date)
-            |> Publication.put(%{
-              "contact" => contact,
-              "replication_finished" => DateTime.utc_now(),
-              "languages" => languages
-            })
+          {:ok, final_publication} = finalize_metadata(publication)
 
           {:ok, {:draft_created, final_publication}}
         end)
@@ -343,6 +307,64 @@ defmodule FieldPublication.Replication do
       )
 
     :ok
+  end
+
+  def finalize_metadata(%Publication{} = publication) do
+    languages =
+      CouchService.get_document("configuration", publication.database)
+      |> case do
+        {:ok, %{status: 200, body: body}} ->
+          body
+          |> Jason.decode!()
+          |> Map.get("resource", %{})
+          |> Map.get("projectLanguages", [])
+
+        _ ->
+          # Projects created before Field Desktop 3 do not have a
+          # configuration document.
+          []
+      end
+
+    {:ok, %{status: 200, body: body}} = CouchService.get_document("project", publication.database)
+
+    project_doc = Jason.decode!(body)
+
+    contact = get_in(project_doc, ["resource", "contactMail"])
+
+    description =
+      get_in(project_doc, ["resource", "description"])
+      |> case do
+        val when is_map(val) ->
+          Enum.map(val, fn {key, value} -> %{language: key, text: value} end)
+
+        val when is_binary(val) ->
+          [%{language: "en", text: val}]
+
+        _ ->
+          []
+      end
+
+    label =
+      get_in(project_doc, ["resource", "shortName"])
+      |> case do
+        val when is_map(val) ->
+          Enum.map(val, fn {key, value} -> %{language: key, text: value} end)
+
+        val when is_binary(val) ->
+          [%{language: "en", text: val}]
+
+        _ ->
+          [%{language: "en", text: get_in(project_doc, ["resource", "identifier"])}]
+      end
+
+    publication
+    |> Publication.put(%{
+      contact: contact,
+      replication_finished: DateTime.utc_now(),
+      languages: languages,
+      project_label: label,
+      project_description: description
+    })
   end
 
   defp cleanup(ref, running_replications) do

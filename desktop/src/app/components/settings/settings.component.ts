@@ -17,8 +17,8 @@ import { Backup } from '../../services/backup/model/backup';
 import { getExistingBackups } from '../../services/backup/auto-backup/get-existing-backups';
 import { BackupsMap } from '../../services/backup/model/backups-map';
 import { getFileSizeLabel } from '../../util/get-file-size-label';
+import { getIpAddress } from '../../services/get-ip-address';
 
-const address = window.require('address');
 const remote = window.require('@electron/remote');
 
 
@@ -41,7 +41,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
 
     public settings: Settings;
     public originalKeepBackupSettings: KeepBackupsSettings;
-    public ipAddress: string = address.ip();
+    public ipAddress: string;
     public saving: boolean = false;
     public advancedSettingsCollapsed: boolean = true;
     public isLinux: boolean;
@@ -75,11 +75,12 @@ export class SettingsComponent implements OnInit, AfterViewChecked {
     public hasMonthlyBackups = () => this.settings.keepBackups.monthly > 0;
 
 
-    ngOnInit() {
+    async ngOnInit() {
 
         this.isLinux = remote.getGlobal('os') === 'Linux';
         this.settings = this.settingsProvider.getSettings();
         this.originalKeepBackupSettings = clone(this.settings.keepBackups);
+        this.ipAddress = await getIpAddress();
     }
 
 

@@ -40,17 +40,17 @@ describe('Assertions', () => {
         };
        
         const customForms: Map<CustomFormDefinition> = {
-                C: { fields: {} }
+            C: { fields: {} }
         };
 
         try {
-                Assertions.performAssertions(builtInCategories, {}, libraryForms, commonFields, {}, customForms);
-                fail();
+            Assertions.performAssertions(builtInCategories, {}, libraryForms, commonFields, {}, customForms);
+            fail();
         } catch (expected) {
-                expect(expected).toEqual([
-                    ConfigurationErrors.COMMON_FIELD_VALUELIST_FROM_PROJECTDOC_NOT_TO_BE_OVERWRITTEN,
-                    'C:default', 'aCommon'
-                ]);
+            expect(expected).toEqual([
+                ConfigurationErrors.COMMON_FIELD_VALUELIST_FROM_PROJECTDOC_NOT_TO_BE_OVERWRITTEN,
+                'C:default', 'aCommon'
+            ]);
         }
    });
 

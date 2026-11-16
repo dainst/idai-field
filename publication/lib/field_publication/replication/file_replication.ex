@@ -2,11 +2,8 @@ defmodule FieldPublication.Replication.FileReplication do
   alias FieldPublication.{
     FileService,
     Replication,
+    Replication.ReplicationInput,
     Publication
-  }
-
-  alias FieldPublication.DatabaseSchema.{
-    ReplicationInput
   }
 
   @field_hub_to_publication_file_mapping Application.compile_env(

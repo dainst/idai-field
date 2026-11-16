@@ -81,7 +81,7 @@ export class BaseList extends ContextMenuProvider implements AfterViewChecked {
 
     public isPlusButtonShown(): boolean {
 
-        return this.menuService.getContext() !== MenuContext.GEOMETRY_EDIT
+        return ![MenuContext.GEOMETRY_EDIT, MenuContext.GEOMETRY_EDIT_MODAL].includes(this.menuService.getContext())
             && this.viewFacade.isReady()
             && !this.loading.isLoading();
     }

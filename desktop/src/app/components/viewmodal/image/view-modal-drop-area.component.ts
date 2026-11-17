@@ -2,11 +2,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { DropAreaComponent } from '../../image/grid/drop-area.component';
 import { ImageUploader } from '../../image/upload/image-uploader';
 import { Messages } from '../../messages/messages';
+import { AppState } from '../../../services/app-state';
 
 
 @Component({
     selector: 'view-modal-drop-area',
-    templateUrl: './view-modal-drop-area.html'
+    templateUrl: './view-modal-drop-area.html',
+    standalone: false
 })
 export class ViewModalDropAreaComponent extends DropAreaComponent {
 
@@ -14,8 +16,9 @@ export class ViewModalDropAreaComponent extends DropAreaComponent {
 
 
     public constructor(imageUploader: ImageUploader,
-                       messages: Messages) {
+                       messages: Messages,
+                       appState: AppState) {
 
-        super(imageUploader, messages);
+        super(imageUploader, messages, appState);
     }
 }

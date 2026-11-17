@@ -4,7 +4,8 @@ import { Loading } from './loading';
 
 @Component({
     selector: 'loading-icon',
-    templateUrl: './loading-icon.html'
+    templateUrl: './loading-icon.html',
+    standalone: false
 })
 
 /**
@@ -12,8 +13,9 @@ import { Loading } from './loading';
  * @author Daniel de Oliveira
  */
 export class LoadingIconComponent {
-
-    constructor(public loading: Loading) {}
-
+    
     @Input() context: string;
+
+    
+    constructor(public loading: Loading) {}
 }

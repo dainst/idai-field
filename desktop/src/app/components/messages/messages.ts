@@ -42,7 +42,9 @@ export class Messages {
      */
     public add(msgWithParams: MsgWithParams) {
 
-        if (msgWithParams.length == 0) {
+        if (!Array.isArray(msgWithParams)) {
+            return this.addUnknownError(msgWithParams);
+        } else if (!msgWithParams.length) {
             return this.addUnknownError('No message template found for key: "undefined"');
         }
 

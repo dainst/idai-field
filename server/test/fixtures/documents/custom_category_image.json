@@ -7,7 +7,14 @@
         "height": 1067,
         "relations": {},
         "id": "25c6f27b-7078-449b-80c1-d765fedbfdb2",
-        "type": "Test:SpecialPhoto"
+        "type": "Test:SpecialPhoto",
+        "imageRights": {
+            "de": "Simon Hohl",
+            "en": "Simon Hohl"
+        },
+        "draughtsmen": [
+            "Fabian Riebschläger"
+        ]
     },
     "created": {
         "user": "anonymous",

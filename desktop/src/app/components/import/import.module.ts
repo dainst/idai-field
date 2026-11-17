@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ImportComponent } from './import.component';
-import { UploadModalComponent } from './upload-modal.component';
 import { ImportState } from './import-state';
 
 
@@ -14,17 +13,13 @@ import { ImportState } from './import-state';
         RouterModule,
     ],
     declarations: [
-        ImportComponent,
-        UploadModalComponent,
+        ImportComponent
     ],
     providers: [
         ImportState
     ],
     exports: [
         ImportComponent
-    ],
-    entryComponents: [
-        UploadModalComponent
     ]
 })
 

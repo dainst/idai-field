@@ -1,10 +1,10 @@
 import { clone } from 'tsfun';
 import { Component, Renderer2 } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Datastore, Field, ProjectConfiguration, Labels } from 'idai-field-core';
-import { ImageOverviewFacade } from '../../../../components/image/overview/view/imageoverview-facade';
+import { ImageOverviewFacade } from '../view/image-overview-facade';
 import { SearchConstraintsComponent } from '../../../widgets/search-constraints.component';
 import { ImageOverviewSearchBarComponent } from './image-overview-search-bar.component';
+import { Menus } from '../../../../services/menus';
 
 
 @Component({
@@ -12,7 +12,8 @@ import { ImageOverviewSearchBarComponent } from './image-overview-search-bar.com
     templateUrl: '../../../widgets/search-constraints.html',
     host: {
         '(document:click)': 'handleClick($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -32,21 +33,18 @@ export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsCo
                 projectConfiguration: ProjectConfiguration,
                 datastore: Datastore,
                 renderer: Renderer2,
-                i18n: I18n,
                 private imageOverviewFacade: ImageOverviewFacade,
+                menuService: Menus,
                 labels: Labels) {
 
-        super(imageOverviewSearchBarComponent, projectConfiguration, datastore, renderer, labels, i18n);
+        super(imageOverviewSearchBarComponent, projectConfiguration, datastore, renderer, menuService, labels);
     }
 
 
     public getFieldLabel(field: Field): string {
 
         return field.name === 'depicts'
-            ? this.i18n({
-                id: 'imageOverview.searchBar.constraints.linkedResources',
-                value: 'Verknüpfte Ressourcen'
-            })
+            ? $localize `:@@imageOverview.searchBar.constraints.linkedResources:Verknüpfte Ressourcen`
             : super.getFieldLabel(field);
     }
 

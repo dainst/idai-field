@@ -1,6 +1,5 @@
 import { waitForNotExist, click, waitForExist, getLocator, typeIn, getValue, getText, clearText,
-    selectSearchableSelectOption, selectOption } from '../app';
-import { NavbarPage } from '../navbar.page';
+    selectSearchableSelectOption, pressKey, closeAllMessages } from '../app';
 
 
 /**
@@ -29,7 +28,7 @@ export class DoceditPage {
     }
 
 
-     public static async clickCloseEdit(action?: 'discard'|'cancel'|'save') {
+    public static async clickCloseEdit(action?: 'discard'|'cancel'|'save') {
 
         await waitForExist('#document-edit-button-goto-view');
         await click('#document-edit-button-goto-view');
@@ -70,6 +69,12 @@ export class DoceditPage {
     }
 
 
+    public static clickGotoStratigraphyTab() {
+
+        return click('#edit-form-goto-stratigraphy');
+    }
+
+
     public static clickGotoPositionTab() {
 
         return click('#edit-form-goto-position');
@@ -99,7 +104,7 @@ export class DoceditPage {
         await waitForExist('#document-edit-button-save-document');
         await click('#document-edit-button-save-document');
                     
-        if (clickMsgAway) await NavbarPage.clickCloseAllMessages();
+        if (clickMsgAway) await closeAllMessages();
         if (waitForModalToClose) await waitForNotExist('#document-edit-wrapper');
     }
 
@@ -183,6 +188,16 @@ export class DoceditPage {
     }
 
 
+    public static async clickToggleSelectable(fieldName: string, valueIndex: number) {
+
+        const field = await this.getField(fieldName);
+        await waitForExist(field);
+
+        const element = await (await field.locator('.selectable-toggle')).nth(valueIndex);
+        return click(element);
+    }
+
+
     public static async clickDeleteMultiInputEntry(fieldName: string, entryIndex: number) {
 
         const field = await this.getField(fieldName);
@@ -193,32 +208,13 @@ export class DoceditPage {
     }
 
 
-    public static async clickCreateNewDimensionButton(fieldName: string) {
+    public static async clickCreateNewObjectArrayEntryButton(fieldName: string) {
 
         const field = await this.getField(fieldName);
         await waitForExist(field);
 
-        const element = await field.locator('.create-new-dimension-button');
+        const element = await field.locator('.create-entry-button');
         return click(element);
-    }
-
-
-    public static async clickSaveDimensionButton(fieldName: string) {
-
-        const field = await this.getField(fieldName);
-        await waitForExist(field);
-
-        const element = await field.locator('.save-dimension-button');
-        return click(element);
-    }
-
-
-    public static async clickDimensionMeasurementPositionOption(fieldName: string, optionValue: string) {
-
-        return selectOption(
-            (await this.getField(fieldName)).locator('.measurement-position-select'),
-            optionValue
-        );
     }
 
 
@@ -275,7 +271,7 @@ export class DoceditPage {
 
     public static async getIdentifierInputFieldValue() {
 
-        const element = (await getLocator('form-field-identifier input')).nth(0);
+        const element = (await getLocator('identifier-input input')).nth(0);
         return getValue(element);
     }
 
@@ -311,6 +307,12 @@ export class DoceditPage {
     public static async getCheckboxes(fieldName: string) {
 
         return (await this.getField(fieldName)).locator('.checkbox');
+    }
+
+
+    public static async getCheckedCheckboxes(fieldName: string) {
+
+        return (await this.getField(fieldName)).locator('.checkbox input:checked');
     }
 
 
@@ -389,9 +391,18 @@ export class DoceditPage {
     }
 
 
-    public static async typeInDimensionInputValue(fieldName: string, text: string) {
+    public static async typeInTextField(fieldName: string, text: string) {
 
-        return typeIn((await this.getField(fieldName)).locator('.value-input'), text);
+        return typeIn((await this.getField(fieldName)).locator('textarea'), text);
+    }
+
+
+    public static async typeInDateInputField(fieldName: string, date: string) {
+
+        const element = (await this.getField(fieldName)).locator('input');
+
+        await typeIn(element, date);
+        return pressKey(element, 'Enter');
     }
 
 

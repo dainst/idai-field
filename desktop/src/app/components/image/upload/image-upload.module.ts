@@ -16,10 +16,6 @@ import { WidgetsModule } from '../../widgets/widgets.module';
         UploadModalComponent,
         ImageUploadMetadataModalComponent
     ],
-    entryComponents: [
-        UploadModalComponent,
-        ImageUploadMetadataModalComponent
-    ],
     providers: [
         ImageUploader,
         UploadStatus

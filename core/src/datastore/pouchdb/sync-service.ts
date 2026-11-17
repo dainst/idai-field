@@ -3,8 +3,6 @@ import { ObserverUtil } from '../../tools/observer-util';
 import { PouchdbDatastore } from './pouchdb-datastore';
 import { SyncStatus } from '../sync-status';
 
-type ReplicationHandle = PouchDB.Replication.ReplicationEventEmitter<unknown, unknown, unknown>;
-
 
 /**
  * @author Thomas Kleinke
@@ -19,8 +17,8 @@ export class SyncService {
     private currentSyncTimeout: any;
     private checkDatabaseExistence: (url: string) => Promise<boolean>;
 
-    private sync: ReplicationHandle = null;
-    private replication: ReplicationHandle = null;
+    private sync: any = null;
+    private replication: any = null;
 
     private syncStatusSubscription: Subscription = null;
     private statusObservers: Array<Observer<SyncStatus>> = [];
@@ -56,10 +54,7 @@ export class SyncService {
             return;
         }
 
-        this.stopSync();
-
         const url: string = SyncService.generateUrl(target, project, password);
-
         const db = await this.pouchdbDatastore.createEmptyDb(project, destroyExisting); // may throw, if not empty
 
         this.replication = db.replicate.from(
@@ -82,7 +77,6 @@ export class SyncService {
                         this.pouchdbDatastore.destroyDb(project);
                         obs.error('canceled');
                     }
-                    this.startSync();
                 })
                 .on('denied', (err: any) => {
                     this.handleReplicationError(obs, err, project);
@@ -99,7 +93,6 @@ export class SyncService {
         // it's ok to remove db, because we know it was a new one
         this.pouchdbDatastore.destroyDb(project);
         this.replication = undefined;
-        this.startSync();
         observer.error(error);
     }
 
@@ -113,7 +106,8 @@ export class SyncService {
     }
 
 
-    public async startSync(setConnectingStatus: boolean = true, filter?: (doc: any) => boolean): Promise<boolean> {
+    public async startSync(startSequence?: string|number, setConnectingStatus: boolean = true,
+                           filter?: (doc: any) => boolean): Promise<boolean> {
 
         if (!this.syncTarget || !this.project) return false;
 
@@ -133,7 +127,7 @@ export class SyncService {
             return false;
         }
         
-        const syncStatusObserver: Observable<SyncStatus> = await this.setupSync(url, filter);
+        const syncStatusObserver: Observable<SyncStatus> = await this.setupSync(url, startSequence, filter);
         this.syncStatusSubscription = syncStatusObserver.subscribe(
             status => this.setStatus(status),
             err => {
@@ -143,7 +137,7 @@ export class SyncService {
                 }
                 this.cancelSync();
                 this.setStatus(syncStatus);
-                this.currentSyncTimeout = setTimeout(() => this.startSync(false), 5000); // retry
+                this.currentSyncTimeout = setTimeout(() => this.startSync(startSequence, false), 5000); // retry
             }
         );
 
@@ -165,21 +159,31 @@ export class SyncService {
     }
 
 
-    private setupSync(url: string, filter?: (doc: any) => boolean): Observable<SyncStatus> {
+    private async setupSync(url: string, remoteStartSequence?: string|number,
+                  filter?: (doc: any) => boolean): Promise<Observable<SyncStatus>> {
 
         console.log('Start syncing', url);
 
-        this.sync = this.pouchdbDatastore.getDb().sync(
-            url,
-            {
-                live: true,
-                retry: false,
-                batch_size: 50,
-                batches_limit: 1,
-                timeout: 600000,
-                filter
+        const options: any = {
+            live: true,
+            retry: false,
+            batch_size: 50,
+            batches_limit: 1,
+            timeout: 600000,
+            filter
+        };
+
+        if (remoteStartSequence) {
+            const localStartSequence: string|number = (await this.pouchdbDatastore.getDb().info()).update_seq;
+            options.pull = {
+                since: remoteStartSequence
+            };
+            options.push = {
+                since: localStartSequence
             }
-        );
+        }
+
+        this.sync = this.pouchdbDatastore.getDb().sync(url, options);
 
         return Observable.create((obs: Observer<SyncStatus>) => {
             this.sync.on('change', (info: any) => obs.next(SyncService.getStatusFromInfo(info)))

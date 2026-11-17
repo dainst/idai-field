@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
+import { Observable, Observer } from 'rxjs';
 import { isString } from 'tsfun';
 import { AppConfigurator, ConfigReader, ConfigurationDocument, getConfigurationName, ImageStore, ImageSyncService,
-    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template, Document, I18N,
-    validateUrl } from 'idai-field-core';
+    Name, PouchdbDatastore, ProjectConfiguration, SyncService, Template, Document, I18N, validateUrl,
+    ObserverUtil } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
-import { ExpressServer } from '../express-server';
+import { ExpressServer } from '../express-server/express-server';
 import { Settings } from './settings';
 import { SyncTarget } from './sync-target';
 import { SettingsProvider } from './settings-provider';
 import { SettingsErrors } from './settings-errors';
 
-const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
+const ipcRenderer = window.require('electron')?.ipcRenderer;
+const remote = window.require('@electron/remote');
+const PouchDB = window.require('pouchdb-browser');
 
 
 type validationMode = 'settings'|'synchronization'|'none';
@@ -35,6 +36,9 @@ type validationMode = 'settings'|'synchronization'|'none';
  */
 export class SettingsService {
 
+    private changesObservers: Array<Observer<void>> = [];
+
+
     constructor(private imagestore: ImageStore,
                 private pouchdbDatastore: PouchdbDatastore,
                 private expressServer: ExpressServer,
@@ -46,8 +50,10 @@ export class SettingsService {
                 private configReader: ConfigReader) {}
 
 
-    public async bootProjectDb(selectedProject: string,
-                               projectDocument?: Document,
+    public changesNotifications = (): Observable<void> => ObserverUtil.register(this.changesObservers);
+
+
+    public async bootProjectDb(selectedProject: string, projectDocument?: Document,
                                destroyBeforeCreate: boolean = false): Promise<void> {
 
         try {
@@ -103,6 +109,8 @@ export class SettingsService {
 
         await this.settingsProvider.setSettingsAndSerialize(settings);
 
+        ObserverUtil.notify(this.changesObservers, null);
+
         return settings;
     }
 
@@ -150,13 +158,20 @@ export class SettingsService {
         if (!SettingsService.isSynchronizationAllowed(settings.selectedProject)) return;
 
         this.synchronizationService.init(
-            SyncTarget.getAddress(syncTarget),
+            await SyncTarget.getAddress(syncTarget),
             settings.selectedProject,
             syncTarget?.password,
             SettingsService.checkDatabaseExistence
         );
 
-        if (await this.synchronizationService.startSync()) {
+        const startSequence: number|string = syncTarget?.startSequence;
+        if (startSequence) {
+            // The start sequence is only used for the first synchronization after downloading a project database
+            delete syncTarget.startSequence;
+            this.settingsProvider.setSettingsAndSerialize(settings);
+        }
+
+        if (await this.synchronizationService.startSync(startSequence)) {
             for (const preferences of syncTarget.fileSyncPreferences) {
                 this.imageSyncService.startSync(preferences);
             }
@@ -166,15 +181,10 @@ export class SettingsService {
 
     public async addProject(project: Name, syncTarget?: SyncTarget) {
 
-        if (!syncTarget) {
-            await this.settingsProvider.addProjectAndSerialize(project);
-            return;
-        } else {
-            const settings = this.settingsProvider.getSettings();
-            settings.syncTargets[project] = syncTarget;
-            settings.dbs = [project].concat(settings.dbs);
-            await this.settingsProvider.setSettingsAndSerialize(settings);
-        }
+        const settings = this.settingsProvider.getSettings();
+        if (syncTarget) settings.syncTargets[project] = syncTarget;
+        settings.dbs = [project].concat(settings.dbs);
+        await this.settingsProvider.setSettingsAndSerialize(settings);
     }
 
 

@@ -1,4 +1,4 @@
-import { Dating, Dimension, Resource, CategoryForm } from 'idai-field-core';
+import { Dating, Measurement, Resource, CategoryForm, DateConfiguration } from 'idai-field-core';
 import { ParserErrors } from '../../../../../src/app/components/import/parser/parser-errors';
 import CSV_NOT_A_BOOLEAN = ParserErrors.CSV_NOT_A_BOOLEAN;
 import { convertFields } from '../../../../../src/app/components/import/parser/convert-fields';
@@ -10,7 +10,7 @@ import { convertFields } from '../../../../../src/app/components/import/parser/c
  */
 describe('convertFields', () => {
 
-    it('input type boolean', () => {
+    test('input type boolean', () => {
 
         const category = {
             name: 'Category',
@@ -23,15 +23,19 @@ describe('convertFields', () => {
             }]}],
         } as CategoryForm;
 
-        const result = convertFields(category)
+        let result = convertFields(category)
             ({ Bool1: 'true', Bool2: 'false', relations: {} } as unknown as Resource);
+        expect(result['Bool1']).toBe(true);
+        expect(result['Bool2']).toBe(false);
 
+        result = convertFields(category)
+            ({ Bool1: 'TRUE', Bool2: 'FALSE', relations: {} } as unknown as Resource);
         expect(result['Bool1']).toBe(true);
         expect(result['Bool2']).toBe(false);
     });
 
 
-    it('input type dating', () => {
+    test('input type dating', () => {
 
         const category = {
             name: 'Category',
@@ -55,6 +59,7 @@ describe('convertFields', () => {
         } as unknown as Resource);
 
         const dating: Dating = resource.dating[0];
+
         expect(dating.type).toBe('range');
         expect(dating.begin.inputType).toBe('bce');
         expect(dating.begin.inputYear).toBe(0);
@@ -67,7 +72,7 @@ describe('convertFields', () => {
     });
 
 
-    it('input type dating - leave nulls unconverted', () => {
+    test('input type dating - leave nulls unconverted', () => {
 
         const category = {
             name: 'Category',
@@ -86,7 +91,7 @@ describe('convertFields', () => {
     });
 
 
-    it('dating.isUncertain is not a boolean', () => {
+    test('dating.isUncertain is not a boolean', () => {
 
         const category = {
             name: 'Category',
@@ -98,14 +103,14 @@ describe('convertFields', () => {
 
         try {
             convertFields(category)({ dating: [{ isUncertain: 'false123' }], relations: {}} as unknown as Resource);
-            fail();
+            throw new Error('Test failure');
         } catch (msgWithParams) {
             expect(msgWithParams).toEqual([CSV_NOT_A_BOOLEAN, 'false123', 'dating.0.isUncertain'])
         }
     });
 
 
-    it('input type dimension', () => {
+    test('input type dimension', () => {
 
         const category = {
             name: 'Category',
@@ -130,7 +135,8 @@ describe('convertFields', () => {
             relations: {}
         } as unknown as Resource);
 
-        const dimension: Dimension = resource['dimension'][0];
+        const dimension: Measurement = resource['dimension'][0];
+
         expect(dimension.value).toBe(1);
         expect(dimension.rangeMin).toBe(2);
         expect(dimension.rangeMax).toBe(3);
@@ -143,7 +149,7 @@ describe('convertFields', () => {
     });
 
 
-    it('input type dimension - leave nulls unconverted', () => {
+    test('input type dimension - leave nulls unconverted', () => {
 
         const category = {
             name: 'Category',
@@ -162,7 +168,121 @@ describe('convertFields', () => {
     });
 
 
-    it('input type composite', () => {
+    test('input type weight', () => {
+
+        const category = {
+            name: 'Category',
+            groups: [{ fields: [{
+                name: 'weight',
+                inputType: 'weight'
+            }] }],
+        } as CategoryForm;
+
+        const resource = convertFields(category)({
+            weight: [{
+                value: '1',
+                rangeMin: '2',
+                rangeMax: '3',
+                inputValue: '4',
+                inputRangeEndValue: '5',
+                measurementDevice: 'a',
+                measurementComment: 'b',
+                inputUnit: 'mg',
+                isImprecise: 'true'
+            }],
+            relations: {}
+        } as unknown as Resource);
+
+        const weight: Measurement = resource['weight'][0];
+
+        expect(weight.value).toBe(1);
+        expect(weight.rangeMin).toBe(2);
+        expect(weight.rangeMax).toBe(3);
+        expect(weight.inputValue).toBe(4);
+        expect(weight.inputRangeEndValue).toBe(5);
+        expect(weight.measurementDevice).toBe('a');
+        expect(weight.measurementComment).toBe('b');
+        expect(weight.inputUnit).toBe('mg');
+        expect(weight.isImprecise).toBe(true);
+    });
+
+
+    test('input type weight - leave nulls unconverted', () => {
+
+        const category = {
+            name: 'Category',
+            groups: [{ fields: [{
+                name: 'weight',
+                inputType: 'weight'
+            }]}],
+        } as CategoryForm;
+
+        const resource = convertFields(category)({
+            weight: [null],
+            relations: {}
+        } as unknown as Resource);
+
+        expect(resource['weight']).toEqual([null]);
+    });
+
+
+    test('input type volume', () => {
+
+        const category = {
+            name: 'Category',
+            groups: [{ fields: [{
+                name: 'volume',
+                inputType: 'volume'
+            }] }],
+        } as CategoryForm;
+
+        const resource = convertFields(category)({
+            volume: [{
+                value: '1',
+                rangeMin: '2',
+                rangeMax: '3',
+                inputValue: '4',
+                inputRangeEndValue: '5',
+                measurementComment: 'b',
+                inputUnit: 'ml',
+                isImprecise: 'true'
+            }],
+            relations: {}
+        } as unknown as Resource);
+
+        const volume: Measurement = resource['volume'][0];
+
+        expect(volume.value).toBe(1);
+        expect(volume.rangeMin).toBe(2);
+        expect(volume.rangeMax).toBe(3);
+        expect(volume.inputValue).toBe(4);
+        expect(volume.inputRangeEndValue).toBe(5);
+        expect(volume.measurementComment).toBe('b');
+        expect(volume.inputUnit).toBe('ml');
+        expect(volume.isImprecise).toBe(true);
+    });
+
+
+    test('input type volume - leave nulls unconverted', () => {
+
+        const category = {
+            name: 'Category',
+            groups: [{ fields: [{
+                name: 'weight',
+                inputType: 'weight'
+            }]}],
+        } as CategoryForm;
+
+        const resource = convertFields(category)({
+            weight: [null],
+            relations: {}
+        } as unknown as Resource);
+
+        expect(resource['weight']).toEqual([null]);
+    });
+
+
+    test('input type composite', () => {
 
         const category = {
             name: 'Category',
@@ -189,6 +309,7 @@ describe('convertFields', () => {
             } as unknown as Resource);
 
         const composite: any = resource.composite[0];
+
         expect(composite.subfield1).toBe(true);
         expect(composite.subfield2).toBe(7);
         expect(composite.subfield3).toEqual(['value1', 'value2']);
@@ -196,7 +317,7 @@ describe('convertFields', () => {
     });
 
 
-    it('input type composite - leave nulls unconverted', () => {
+    test('input type composite - leave nulls unconverted', () => {
 
         const category = {
             name: 'Category',
@@ -219,7 +340,7 @@ describe('convertFields', () => {
     });
 
 
-    it('input type radio', () => {
+    test('input type radio', () => {
 
         const category = {
             name: 'Category',
@@ -238,26 +359,48 @@ describe('convertFields', () => {
     });
 
 
-    it('input type date', () => {
+    test('input type date', () => {
 
         const category = {
             name: 'Category',
             groups: [{ fields: [{
-                name: 'd',
-                inputType: 'date'
-            }] }],
+                name: 'date1',
+                inputType: 'date',
+                dateConfiguration: {
+                    dataType: DateConfiguration.DataType.OPTIONAL,
+                    inputMode: DateConfiguration.InputMode.OPTIONAL
+                }
+            }, {
+                name: 'date2',
+                inputType: 'date',
+                dateConfiguration: {
+                    dataType: DateConfiguration.DataType.OPTIONAL,
+                    inputMode: DateConfiguration.InputMode.OPTIONAL
+                }
+            }]}],
         } as CategoryForm;
 
-        const resource = convertFields(category)({
-            d: '10.07.2019',
+        const resource = {
+            date1: {
+                value: '10.12.2022',
+                endValue: '11.12.2022',
+                isRange: 'true'
+            },
+            date2: {
+                value: '12.12.2022',
+                isRange: 'false'
+            },
             relations: {}
-        } as unknown as Resource);
+        } as unknown as Resource;
 
-        expect(resource['d']).toBe('10.07.2019');
+        const result = convertFields(category)(resource);
+
+        expect(result.date1.isRange).toBe(true);
+        expect(result.date2.isRange).toBe(false);
     });
 
 
-    it('input type dropdown range', () => {
+    test('input type dropdown range', () => {
 
         const category = {
             name: 'Category',
@@ -274,7 +417,8 @@ describe('convertFields', () => {
         const resource = convertFields(category)({
             dd1: 'a',
             dd2: 'b',
-            dd2End: 'c', // currently, the code handles this as a regular field, so this is not a special case. we test is here for completeness
+            dd2End: 'c', // Currently, the code handles this as a regular field, so this is not a special case.
+                         // We test it here for completeness.
             relations: {}
         } as unknown as Resource);
 
@@ -284,7 +428,7 @@ describe('convertFields', () => {
     });
 
 
-    it('input type checkboxes', () => {
+    test('input type checkboxes', () => {
 
         const category = {
             name: 'Category',
@@ -304,27 +448,7 @@ describe('convertFields', () => {
     });
 
 
-    it('input type simple multi input', () => {
-
-        const category = {
-            name: 'Category',
-            groups: [{ fields: [{
-                name: 'CB',
-                inputType: 'simpleMultiInput'
-            }] }],
-        } as CategoryForm;
-
-        const resource = convertFields(category)({
-            CB: 'a;b;c',
-            relations: {}
-        } as unknown as Resource);
-
-        const cb = resource['CB'];
-        expect(cb).toEqual(['a', 'b', 'c']);
-    });
-
-
-    it('input type int', () => {
+    test('input type int', () => {
 
         const category = {
             name: 'Category',
@@ -343,7 +467,7 @@ describe('convertFields', () => {
     });
 
 
-    it('input type unsignedInt', () => {
+    test('input type unsignedInt', () => {
 
         const category = {
             name: 'Category',
@@ -362,7 +486,7 @@ describe('convertFields', () => {
     });
 
 
-    it('input type float', () => {
+    test('input type float', () => {
 
         const category = {
             name: 'Category',
@@ -392,7 +516,7 @@ describe('convertFields', () => {
     });
 
 
-    it('input type unsignedFloat', () => {
+    test('input type unsignedFloat', () => {
 
         const category = {
             name: 'Category',
@@ -416,7 +540,7 @@ describe('convertFields', () => {
     });
 
 
-    it('relations', () => {
+    test('relations', () => {
 
         const category = {
             name: 'Category',
@@ -440,7 +564,7 @@ describe('convertFields', () => {
 
     // err cases
 
-    it('input type unsignedInt - not a number', () => {
+    test('input type unsignedInt - not a number', () => {
 
         const category = {
             name: 'Category',
@@ -454,7 +578,7 @@ describe('convertFields', () => {
     });
 
 
-    it('input type unsignedFloat - not a number', () => {
+    test('input type unsignedFloat - not a number', () => {
 
         const category = {
             name: 'Category',
@@ -468,14 +592,14 @@ describe('convertFields', () => {
     });
 
 
-    async function expectNotANumberError(category: CategoryForm, fieldName: string, value: string) {
+    function expectNotANumberError(category: CategoryForm, fieldName: string, value: string) {
 
         try {
-            const resource: Resource = {} as unknown as Resource;
+            const resource: Resource = {} as Resource;
             (resource as any)[fieldName] = value;
             convertFields(category)(resource);
 
-            fail();
+            throw new Error('Test failure');
         } catch (msgWithParams) {
             expect(msgWithParams).toEqual([ParserErrors.CSV_NOT_A_NUMBER, value, fieldName]);
         }

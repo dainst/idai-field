@@ -1,16 +1,19 @@
-defmodule FieldHubWeb.ProjectShowLiveTest do
+defmodule FieldHubWeb.Live.ProjectShowTest do
   import Phoenix.ConnTest
   import Phoenix.LiveViewTest
+
+  use FieldHubWeb, :verified_routes
 
   use FieldHubWeb.ConnCase
 
   alias FieldHubWeb.{
     UserAuth,
-    ProjectShowLive
+    Live.ProjectShow
   }
 
   alias FieldHub.{
     Project,
+    Project.DatabaseInfo,
     CouchService,
     Issues,
     User,
@@ -19,8 +22,8 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
   @endpoint FieldHubWeb.Endpoint
 
-  @project "test_project"
-  @user_name "test_project"
+  @project "live_project_show_test"
+  @user_name @project
   @user_password "test_password"
 
   @admin_user Application.compile_env(:field_hub, :couchdb_admin_name)
@@ -28,20 +31,22 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
   test "redirect to login if not authenticated", %{conn: conn} do
     # Test the authentication plug (http)
-    assert {:error, {:redirect, %{flash: _, to: "/ui/session/new"}}} =
-             conn
-             |> live("/ui/projects/show/#{@project}")
+    assert {
+             :error,
+             {:redirect, %{flash: _, to: "/ui/session/log_in"}}
+           } =
+             live(conn, ~p"/ui/projects/show/#{@project}")
 
     # Test the mount function (websocket), this makes sure that users with invalidated/old user token can not
     # access the page.
     socket =
-      ProjectShowLive.mount(
+      ProjectShow.mount(
         %{"project" => @project},
         %{"user_token" => "invalid"},
         %Phoenix.LiveView.Socket{}
       )
 
-    assert {:redirect, %{to: "/"}} = socket.redirected
+    assert {:live, :redirect, %{kind: :push, to: "/"}} = socket.redirected
   end
 
   test "redirect to landing page if not authorized for project", %{conn: conn} do
@@ -56,13 +61,13 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     # Test the mount function (websocket), this makes sure that users that navigated here from another
     # live view with an existing socket are authorized.
     socket =
-      ProjectShowLive.mount(
+      ProjectShow.mount(
         %{"project" => @project},
         %{"user_token" => UserAuth.generate_user_session_token(unknown_user)},
         %Phoenix.LiveView.Socket{}
       )
 
-    assert {:redirect, %{to: "/"}} = socket.redirected
+    assert {:live, :redirect, %{kind: :push, to: "/"}} = socket.redirected
   end
 
   test "issues are displayed, even if no custom label or description defined" do
@@ -85,25 +90,20 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
           }
         ]
 
-    count = Enum.count(issues)
-
-    groups =
-      issues
-      |> Enum.group_by(fn %{type: type, severity: severity} -> {type, severity} end)
-
     html =
-      render_component(ProjectShowLive, %{
+      render_component(ProjectShow, %{
         current_user: "test_user",
         flash: %{},
-        issue_count: count,
-        issue_status: :idle,
-        issues: groups,
+        issues_evaluating?: false,
+        issues: issues,
+        issue_count: Enum.count(issues),
         live_action: nil,
         project: "test_project",
         supervisor: :loading,
         contact: :loading,
         staff: :loading,
-        stats: :loading
+        database_info: %DatabaseInfo{doc_count: 0, size: 0, last_changes: []},
+        file_info: Phoenix.LiveView.AsyncResult.loading()
       })
 
     assert html =~ "Project file directory not found (1)"
@@ -144,21 +144,46 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       assert html_on_mount =~ "No supervisor found in project document."
       assert html_on_mount =~ "No contact data found in project document."
       assert html_on_mount =~ "Person 1, Person 2"
-      assert html_on_mount =~ "<tr><td>Statistics</td><td>\nLoading...\n</td></tr>"
+      assert html_on_mount =~ "Issues"
 
-      assert html_on_mount =~
-               "<h2><div class=\"row\"><div class=\"column column-80\">Issues</div>"
+      assert html_on_mount =~ "Database documents: 21"
+      assert html_on_mount =~ "Database size: 48.39 KB (49548 bytes)"
 
-      assert_receive {:trace, ^pid, :receive, {_ref, {:overview_task, _stats}}}
-
-      html = render(view)
-
-      assert html =~ "<h1>Project <i>#{@project}</i></h1>"
-
-      assert html =~ "Database documents: 21"
-      assert html =~ "Database size: 48.39 KB (49548 bytes)"
+      html = render_async(view)
       assert html =~ "Original images: 2, size: 697.78 KB (714528 bytes)"
       assert html =~ "Thumbnail images: 2, size: 18.84 KB (19295 bytes)"
+    end
+
+    test "old `staff as list of strings` still renders properly", %{conn: conn} do
+      [ok: project_doc] = Project.get_documents(@project, ["project"])
+
+      TestHelper.update_document(
+        @project,
+        project_doc
+        |> Map.update!("resource", fn resource ->
+          Map.put(resource, "staff", ["Person 1", "Person 2"])
+        end)
+      )
+
+      {:ok, _view, html} = live(conn, "/ui/projects/show/#{@project}")
+
+      assert html =~ "Person 1, Person 2"
+    end
+
+    test "Invalid `staff` value type does not crash the render", %{conn: conn} do
+      [ok: project_doc] = Project.get_documents(@project, ["project"])
+
+      TestHelper.update_document(
+        @project,
+        project_doc
+        |> Map.update!("resource", fn resource ->
+          Map.put(resource, "staff", resource["staff"] ++ ["Person 3", "Person 4"])
+        end)
+      )
+
+      {:ok, _view, html} = live(conn, "/ui/projects/show/#{@project}")
+
+      assert html =~ "No staff names found in project document."
     end
 
     test "user can trigger issue evaluation", %{conn: conn} do
@@ -181,12 +206,12 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
         view
         |> render()
 
-      assert html =~ "Issues (4)"
+      assert html =~ "Issues (2)"
     end
 
     test "user without project authorization can not trigger issue evaluation" do
       {:noreply, socket} =
-        ProjectShowLive.handle_event(
+        ProjectShow.handle_event(
           "evaluate_issues",
           nil,
           %Phoenix.LiveView.Socket{
@@ -204,7 +229,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       new_password = "the_password"
 
       {:noreply, socket} =
-        ProjectShowLive.handle_event(
+        ProjectShow.handle_event(
           "set_password",
           nil,
           %Phoenix.LiveView.Socket{
@@ -236,6 +261,30 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
                })
     end
 
+    test "non admin user can not delete the project" do
+      assert Project.exists?(@project)
+
+      {:noreply, socket} =
+        ProjectShow.handle_event(
+          "delete",
+          nil,
+          %Phoenix.LiveView.Socket{
+            assigns: %{
+              project: @project,
+              current_user: "unauthorized",
+              delete_files: false,
+              __changed__: %{},
+              flash: %{}
+            }
+          }
+        )
+
+      assert %{assigns: %{flash: %{"error" => "You are not authorized to delete the project."}}} =
+               socket
+
+      assert Project.exists?(@project)
+    end
+
     test "non admin user has no passwort setting interface", %{conn: conn} do
       {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
       html = render(view)
@@ -250,7 +299,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       # These are the current defaults in the mock project based on the Desktop applications `test` project.
       assert html =~ "No supervisor found in project document"
       assert html =~ "No contact data found in project document"
-      assert html =~ "<td>Staff</td><td>\nPerson 1, Person 2\n</td>"
+      assert html =~ "Person 1, Person 2"
     end
 
     test "missing project document is handled in overview", %{conn: conn} do
@@ -280,7 +329,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
 
       html = render(view)
 
-      assert html =~ "<td>Supervisor</td><td>\nMs. Supervisor\n</td>"
+      assert html =~ "Ms. Supervisor"
     end
 
     test "project contact is displayed in overview", %{conn: conn} do
@@ -301,7 +350,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       html = render(view)
 
       assert html =~
-               "<td>Contact</td><td>\nMr. Contact (<a href=\"mailto:mr.contact@dainst.de\">mr.contact@dainst.de</a>)\n</td>"
+               "Mr. Contact (<a href=\"mailto:mr.contact@dainst.de\">mr.contact@dainst.de</a>)"
     end
 
     test "project staff is displayed in overview", %{conn: conn} do
@@ -310,7 +359,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       html = render(view)
 
       # These are the current defaults in the mock project based on the Desktop applications `test` project.
-      assert html =~ "<td>Staff</td><td>\nPerson 1, Person 2\n</td>"
+      assert html =~ "Person 1, Person 2"
     end
   end
 
@@ -348,7 +397,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
                "<input type=\"text\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"\"/></div>"
 
       # The "Set new password" button should be disabled as long as the input is an empty string.
-      assert html =~ "phx-click=\"set_password\" disabled=\"disabled\" style=\"width:100%\""
+      assert html =~ "phx-click=\"set_password\" disabled=\"\" style=\"width:100%\""
 
       html =
         view
@@ -359,7 +408,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
                "<input type=\"text\" placeholder=\"New password\" id=\"password\" name=\"password\" value=\"typed_in_password\"/></div>"
 
       # The "Set new password" button should no longer be disabled.
-      assert html =~ "phx-click=\"set_password\" style=\"width:100%\""
+      refute html =~ "phx-click=\"set_password\" disabled=\"\" style=\"width:100%\""
     end
 
     test "button click generates random password", %{conn: conn} do
@@ -413,12 +462,9 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
     end
 
     test "file index cache can be deleted through the interface", %{conn: conn} do
-      {:ok, %{pid: pid} = view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
+      {:ok, view, _html_on_mount} = live(conn, "/ui/projects/show/#{@project}")
 
-      # We wait until the overview task has completed and the result is received by the view process, because the
-      # overview evaluation will create a cached index.
-      :erlang.trace(pid, true, [:receive])
-      assert_receive {:trace, ^pid, :receive, {_ref, {:overview_task, _stats}}}
+      render_async(view)
 
       assert {:ok, %{"o26" => _value}} = Cachex.get(@index_cache_name, @project)
 
@@ -537,7 +583,7 @@ defmodule FieldHubWeb.ProjectShowLiveTest do
       html = render(view)
 
       # The "Delete" button should be disabled as long as the repeated project name does not match.
-      assert html =~ "phx-click=\"delete\" disabled=\"disabled\""
+      assert html =~ "phx-click=\"delete\" disabled=\"\""
 
       html =
         view

@@ -9,7 +9,8 @@ import { ValuelistSearchQuery } from './valuelist-search-query';
     templateUrl: './valuelist-search-bar.html',
     host: {
         '(document:click)': 'handleClick($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

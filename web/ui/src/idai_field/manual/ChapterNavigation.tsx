@@ -1,6 +1,7 @@
 import React, { CSSProperties, ReactElement, RefObject } from 'react';
 import { CHAPTER_NAVIGATION_WIDTH, PADDING } from './constants';
 import { Chapter } from './Manual';
+import './chapter-navigation.css';
 
 
 interface ChapterNavigationProps {
@@ -15,7 +16,7 @@ export default function ChapterNavigation(
         { chapters, activeChapter, setActiveChapter, manualElementRef }: ChapterNavigationProps): ReactElement {
 
     return (
-        <ul className="col-md-2 nav flex-column" style={ chapterNavigationStyle }>
+        <ul id="chapter-navigation" className="nav flex-column" style={ chapterNavigationStyle }>
             {
                 chapters.map((chapter: Chapter) => {
                     return getChapterElement(

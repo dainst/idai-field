@@ -1,11 +1,13 @@
-import { filter, flow, values, is, isEmpty, not, on, to, flatMap, compose, map, any } from 'tsfun';
+import { filter, flow, values, is, isEmpty, not, on, to, flatMap, compose, map, any, clone } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { Name, Named } from '../../tools/named';
-import { FieldResource } from '../field-resource';
+import { FieldResource } from '../document/field-resource';
 import { Field } from './field';
 import { Group, GroupDefinition } from './group';
 import { Valuelist } from './valuelist';
 import { ScanCodeConfiguration } from './scan-code-configuration';
+import { SemanticReference } from './semantic-reference';
+import { FieldGeometryType } from '../document/field-geometry';
 
 
 export interface CategoryForm {
@@ -30,6 +32,7 @@ export interface CategoryForm {
     parentCategory: CategoryForm|undefined; // = undefined;
     
     groups: Array<Group>;
+    originalGroups: Array<GroupDefinition>;
     
     label: I18N.String;
     description: I18N.String;
@@ -40,6 +43,7 @@ export interface CategoryForm {
     createdBy?: string,
     creationDate?: Date;
     references?: string[];
+    semanticReferences?: Array<SemanticReference>;
 
     color?: CategoryForm.Color; // TODO make sure it is always set and make non-optional
     defaultColor?: CategoryForm.Color;
@@ -47,6 +51,8 @@ export interface CategoryForm {
     identifierPrefix?: string;
     resourceLimit?: number;
     scanCodes?: ScanCodeConfiguration;
+
+    defaultRange?: { [relationName: string]: string[] };
 }
 
 
@@ -92,7 +98,7 @@ export namespace CategoryForm {
 
         if (parentCategory) {
             newCategory.parentCategory = parentCategory;
-            newCategory.groups = parentCategory.groups;
+            newCategory.groups = clone(parentCategory.groups);
         }
 
         return newCategory;
@@ -142,12 +148,6 @@ export namespace CategoryForm {
     }
 
 
-    export function isMandatoryField(category: CategoryForm, fieldName: string): boolean {
-
-        return hasProperty(category, fieldName, Field.MANDATORY);
-    }
-
-
     export function getGroupsConfiguration(category: CategoryForm,
                                            permanentlyHiddenFields: string[]): Array<GroupDefinition> {
 
@@ -170,6 +170,24 @@ export namespace CategoryForm {
 
         const shortDescriptionField: Field = fields.find(field => field.name === FieldResource.SHORTDESCRIPTION);
         return shortDescriptionField.valuelist;
+    }
+
+
+    export function isAllowedGeometryType(category: CategoryForm, geometryType: FieldGeometryType): boolean {
+
+        const field: Field = CategoryForm.getFields(category).find(field => field.name === FieldResource.GEOMETRY);
+
+        return field.geometryTypes
+            ? field.geometryTypes.includes(geometryType)
+            : true;
+    }
+
+
+    export function isGeometryEditableOnMap(category: CategoryForm): boolean {
+
+        const field: Field = CategoryForm.getFields(category).find(field => field.name === FieldResource.GEOMETRY);
+
+        return field?.editableOnMap;
     }
 
 
@@ -207,15 +225,5 @@ export namespace CategoryForm {
             hash |= 0; // Convert to 32bit integer
         }
         return hash;
-    }
-
-
-    function hasProperty(category: CategoryForm, fieldName: string, propertyName: string) {
-
-        return flow(
-            CategoryForm.getFields(category),
-            filter(on(Named.NAME, is(fieldName))),
-            filter(on(propertyName, is(true))),
-            not(isEmpty));
     }
 }

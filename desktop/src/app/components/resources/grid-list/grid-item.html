@@ -1,9 +1,12 @@
 <span *ngIf="isQrCodeIconVisible()" class="mdi mdi-qrcode qr-code-icon"></span>
-<span *ngIf="subDocuments.length > 0" class="badge badge-primary">
+<span *ngIf="subDocuments.length > 0" class="badge bg-primary">
     {{getSubDocumentsLabel()}}
 </span>
 <grid-item-icon [category]="document.resource.category"
                 [imageUrls]="images"></grid-item-icon>
 <div class="grid-resource-info">
     {{document.resource.identifier}}
+    <span *ngIf="document.resource.shortDescription" class="grid-resource-short-description">
+        {{getLabelFromI18NString(document.resource.shortDescription)}}
+    </span>
 </div>

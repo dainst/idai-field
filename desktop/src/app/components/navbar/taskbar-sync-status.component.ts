@@ -5,7 +5,8 @@ import { MenuModalLauncher } from '../../services/menu-modal-launcher';
 
 @Component({
     selector: 'taskbar-sync-status',
-    templateUrl: './taskbar-sync-status.html'
+    templateUrl: './taskbar-sync-status.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

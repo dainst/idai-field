@@ -1,11 +1,19 @@
 <div *ngIf="contextMenu && areAnyOptionsAvailable()"
      id="context-menu"
      class="dropdown-menu show"
-     [class.orientation-top]="orientation === 'top'"
-     [class.orientation-bottom]="orientation === 'bottom'"
+     [class.orientation-top]="contextMenu.orientation === 'top'"
+     [class.orientation-bottom]="contextMenu.orientation === 'bottom'"
      [style.left]="contextMenu.position.x + 'px'"
      [style.top]="contextMenu.position.y + 'px'"
      [style.bottom]="getBottomPosition(contextMenu.position.y) + 'px'">
+     <div *ngIf="isWarningsOptionAvailable()" id="context-menu-warnings-button"
+          class="dropdown-item" (click)="selectAction('warnings')">
+        <span class="mdi mdi-alert"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.showWarnings">Warnungen anzeigen</span>
+    </div>
+
+    <hr *ngIf="isWarningsOptionAvailable()">
+
     <div *ngIf="isEditOptionAvailable()"
          id="context-menu-edit-button" class="dropdown-item" (click)="selectAction('edit')">
         <span class="mdi mdi-pencil"></span>
@@ -36,26 +44,29 @@
         <span class="mdi mdi-delete"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.delete">Löschen</span>
     </div>
-    <div *ngIf="isWarningsOptionAvailable()"
-         id="context-menu-warnings-button" class="dropdown-item" (click)="selectAction('warnings')">
-        <span class="mdi mdi-alert"></span>
-        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.showWarnings">Warnungen anzeigen</span>
+
+    <hr *ngIf="isEditWorkflowOptionAvailable()">
+
+    <div *ngIf="isEditWorkflowOptionAvailable()"
+         id="context-menu-edit-workflow-button" class="dropdown-item" (click)="selectAction('edit-workflow')">
+        <span class="mdi mdi-shovel"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.editWorkflow">Workflow dokumentieren</span>
     </div>
 
     <hr *ngIf="isCreateGeometryOptionAvailable() || isEditGeometryOptionAvailable()">
 
-    <div *ngIf="isCreateGeometryOptionAvailable()"
-         id="context-menu-create-geo-1-button" class="dropdown-item" (click)="selectAction('create-polygon')">
+    <div *ngIf="isCreateGeometryOptionAvailable('Polygon')"
+         id="context-menu-create-polygon-button" class="dropdown-item" (click)="selectAction('create-polygon')">
         <span class="mdi mdi-shape-polygon-plus"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.polygon">Polygon anlegen</span>
     </div>
-    <div *ngIf="isCreateGeometryOptionAvailable()"
-         id="context-menu-create-geo-2-button" class="dropdown-item" (click)="selectAction('create-line-string')">
-        <span class="mdi mdi-vector-polyline"></span>
+    <div *ngIf="isCreateGeometryOptionAvailable('LineString')"
+         id="context-menu-create-polyline-button" class="dropdown-item" (click)="selectAction('create-line-string')">
+        <span class="mdi mdi-vector-polyline-plus"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.polyline">Polyline anlegen</span>
     </div>
-    <div *ngIf="isCreateGeometryOptionAvailable()"
-         id="context-menu-create-geo-3-button" class="dropdown-item" (click)="selectAction('create-point')">
+    <div *ngIf="isCreateGeometryOptionAvailable('Point')"
+         id="context-menu-create-point-button" class="dropdown-item" (click)="selectAction('create-point')">
         <span class="mdi mdi-map-marker-plus"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.point">Punkt anlegen</span>
     </div>
@@ -85,11 +96,19 @@
         </span>
     </div>
 
-    <hr *ngIf="isScanStoragePlaceOptionIsAvailable()">
+    <hr *ngIf="isScanResourceOptionIsAvailable()">
 
-    <div *ngIf="isScanStoragePlaceOptionIsAvailable()" id="context-menu-scan-storage-place-button"
-         class="dropdown-item" (click)="selectAction('scan-storage-place')">
+    <div *ngIf="isScanResourceOptionIsAvailable()" id="context-menu-scan-resource-button"
+         class="dropdown-item" (click)="selectAction('scan-resource')">
         <span class="mdi mdi-qrcode-scan"></span>
-        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.scanStoragePlace">Aufbewahrungsort scannen</span>
+        <span *ngIf="isScanStoragePlaceOptionIsAvailable() && !isScanTypeOptionIsAvailable()"
+              class="dropdown-entry-label"
+              i18n="@@resources.contextMenu.scanStoragePlace">Aufbewahrungsort scannen</span>
+        <span *ngIf="!isScanStoragePlaceOptionIsAvailable() && isScanTypeOptionIsAvailable()"
+              class="dropdown-entry-label"
+              i18n="@@resources.contextMenu.scanType">Typ scannen</span>
+        <span *ngIf="isScanStoragePlaceOptionIsAvailable() && isScanTypeOptionIsAvailable()"
+              class="dropdown-entry-label"
+              i18n="@@resources.contextMenu.scanTypeOrStoragePlace">Typ oder Aufbewahrungsort scannen</span>
     </div>
 </div>

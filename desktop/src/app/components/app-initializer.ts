@@ -1,7 +1,7 @@
 import { Map, to } from 'tsfun';
-import { DocumentConverter, ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex,
+import { ConfigLoader, ConfigReader, ConfigurationDocument, ConstraintIndex,
     DocumentCache, FulltextIndex, ImageStore, Indexer, IndexFacade, PouchdbDatastore,
-    ProjectConfiguration, Document, Labels, ImageVariant, FileInfo } from 'idai-field-core';
+    ProjectConfiguration, Document, Labels, ImageVariant, FileInfo, Comparator } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ThumbnailGenerator } from '../services/imagestore/thumbnail-generator';
 import { InitializationProgress } from './initialization-progress';
@@ -10,11 +10,18 @@ import { SettingsService } from '../services/settings/settings-service';
 import { SettingsSerializer } from '../services/settings/settings-serializer';
 import { Settings } from '../services/settings/settings';
 import { SampleDataLoader } from '../services/datastore/field/sampledata/sample-data-loader';
-import { ExpressServer } from '../services/express-server';
+import { ExpressServer } from '../services/express-server/express-server';
 import { ConfigurationIndex } from '../services/configuration/index/configuration-index';
 import { copyThumbnailsFromDatabase } from '../migration/thumbnail-copy';
 import { Languages } from '../services/languages';
-import { createDisplayVariant } from '../services/imagestore/create-display-variant';
+import { createDisplayVariant } from '../services/imagestore/manipulation/create-display-variant';
+import { Backup } from '../services/backup/model/backup';
+import { BackupService } from '../services/backup/backup-service';
+import { getExistingBackups } from '../services/backup/auto-backup/get-existing-backups';
+
+const ipcRenderer = window.require('electron')?.ipcRenderer;
+const remote = window.require('@electron/remote');
+const fs = window.require('fs');
 
 
 interface Services {
@@ -24,6 +31,7 @@ interface Services {
     constraintIndex?: ConstraintIndex;
     indexFacade?: IndexFacade;
     configurationIndex?: ConfigurationIndex;
+    comparator?: Comparator;
 }
 
 
@@ -86,6 +94,16 @@ export class AppInitializerServiceLocator {
         }
         return this.services.configurationIndex;
     }
+
+
+    public get comparator(): Comparator {
+
+        if (!this.services.comparator) {
+            console.error('Comparator has not yet been provided');
+            throw new Error('Comparator has not yet been provided');
+        }
+        return this.services.comparator;
+    }
 }
 
 
@@ -99,6 +117,9 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
                                       progress: InitializationProgress,
                                       configReader: ConfigReader,
                                       configLoader: ConfigLoader) => async (): Promise<void> => {
+    
+    const onRequestClose = () => ipcRenderer.send('close');
+    ipcRenderer.on('requestClose', onRequestClose);
 
     progress.setLocale(Settings.getLocale());
     await setupServer(expressServer, progress);
@@ -107,18 +128,22 @@ export const appInitializerFactory = (serviceLocator: AppInitializerServiceLocat
     await setUpDatabase(settingsService, settings, progress);
     await loadSampleData(settings, pouchdbDatastore.getDb(), thumbnailGenerator, imagestore, progress);
 
+    const comparator: Comparator = new Comparator(remote.getGlobal('getLocale')());
+
     settings = await updateProjectNameInSettings(settingsService, pouchdbDatastore.getDb());
-    await setProjectNameInProgress(settings, progress);
+    await setProjectNameInProgress(settings, progress, comparator);
     await copyThumbnailsFromDatabase(settings.selectedProject, pouchdbDatastore, imagestore);
     await createDisplayImages(imagestore, pouchdbDatastore.getDb(), settings.selectedProject, progress);
 
     const services = await loadConfiguration(
-        settingsService, progress, configReader, configLoader, pouchdbDatastore.getDb(),
+        settingsService, progress, configReader, configLoader, comparator, pouchdbDatastore.getDb(),
         settings.selectedProject, settings.username
     );
     serviceLocator.init(services);
 
     await loadDocuments(serviceLocator, pouchdbDatastore.getDb(), documentCache, progress);
+
+    ipcRenderer.off('requestClose', onRequestClose);
 
     return await AngularUtility.refresh(700);
 };
@@ -145,10 +170,10 @@ const loadSettings = async (settingsService: SettingsService, progress: Initiali
 };
 
 
-const setProjectNameInProgress = async (settings: Settings, progress: InitializationProgress) => {
+const setProjectNameInProgress = async (settings: Settings, progress: InitializationProgress, comparator: Comparator) => {
 
     const projectIdentifier = settings.dbs[0];
-    const labels: Labels = new Labels(new Languages().get, null);
+    const labels: Labels = new Labels(comparator, new Languages().get);
     const projectName = labels.getFromI18NString(settings.projectNames?.[projectIdentifier]);
 
     await progress.setProjectName(
@@ -158,7 +183,8 @@ const setProjectNameInProgress = async (settings: Settings, progress: Initializa
 };
 
 
-const setUpDatabase = async (settingsService: SettingsService, settings: Settings, progress: InitializationProgress) => {
+const setUpDatabase = async (settingsService: SettingsService, settings: Settings,
+                             progress: InitializationProgress) => {
 
     await progress.setPhase('settingUpDatabase');
     try {
@@ -170,13 +196,19 @@ const setUpDatabase = async (settingsService: SettingsService, settings: Setting
             settings.selectedProject === 'test'
         );
     } catch (msgWithParams) {
-        await progress.setError('databaseError');
-        return Promise.reject('Database error');
+        const success: boolean = await restoreLatestBackup(settingsService, settings);
+        if (success) {
+            await setUpDatabase(settingsService, settings, progress);
+        } else {
+            console.error(msgWithParams);
+            await progress.setError('databaseError');
+            return Promise.reject('Database error');
+        }
     }
 };
 
 
-const loadSampleData = async (settings: Settings, db: PouchDB.Database, thumbnailGenerator: ThumbnailGenerator,
+const loadSampleData = async (settings: Settings, db: any, thumbnailGenerator: ThumbnailGenerator,
                               imagestore: ImageStore, progress: InitializationProgress) => {
 
     if (settings.selectedProject !== 'test') return;
@@ -190,8 +222,8 @@ const loadSampleData = async (settings: Settings, db: PouchDB.Database, thumbnai
 
 
 const loadConfiguration = async (settingsService: SettingsService, progress: InitializationProgress,
-                                 configReader: ConfigReader, configLoader: ConfigLoader,
-                                 db: PouchDB.Database, projectIdentifier: string, username: string): Promise<Services> => {
+                                 configReader: ConfigReader, configLoader: ConfigLoader, comparator: Comparator,
+                                 db: any, projectIdentifier: string, username: string): Promise<Services> => {
 
     await progress.setPhase('loadingConfiguration');
 
@@ -204,7 +236,7 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
     }
 
     const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade }
-        = IndexerConfiguration.configureIndexers(configuration);
+        = IndexerConfiguration.configureIndexers(configuration, comparator);
 
     const configurationIndex = await buildConfigurationIndex(
         configReader, configLoader, db, configuration, projectIdentifier, username
@@ -215,14 +247,13 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
         constraintIndex: createdConstraintIndex,
         fulltextIndex: createdFulltextIndex,
         indexFacade: createdIndexFacade,
-        configurationIndex
+        configurationIndex,
+        comparator
     };
 };
 
 
-const loadDocuments = async (serviceLocator: AppInitializerServiceLocator,
-                             db: PouchDB.Database<{}>,
-                             documentCache: DocumentCache,
+const loadDocuments = async (serviceLocator: AppInitializerServiceLocator, db: any, documentCache: DocumentCache,
                              progress: InitializationProgress) => {
 
     await progress.setPhase('loadingDocuments');
@@ -232,7 +263,6 @@ const loadDocuments = async (serviceLocator: AppInitializerServiceLocator,
         serviceLocator.indexFacade,
         db,
         documentCache,
-        new DocumentConverter(serviceLocator.projectConfiguration),
         serviceLocator.projectConfiguration,
         false,
         (count) => progress.setIndexingProgress(count),
@@ -242,15 +272,14 @@ const loadDocuments = async (serviceLocator: AppInitializerServiceLocator,
 };
 
 
-const updateProjectNameInSettings = async (settingsService: SettingsService,
-                                           db: PouchDB.Database<{}>): Promise<Settings> => {
+const updateProjectNameInSettings = async (settingsService: SettingsService, db: any): Promise<Settings> => {
 
     const projectDocument = await db.get('project') as Document;
     return await settingsService.updateProjectName(projectDocument);
 };
 
 
-const buildConfigurationIndex = async (configReader: ConfigReader, configLoader: ConfigLoader, db: PouchDB.Database,
+const buildConfigurationIndex = async (configReader: ConfigReader, configLoader: ConfigLoader, db: any,
                                        configuration: ProjectConfiguration, projectIdentifier: string,
                                        username: string): Promise<ConfigurationIndex> => {
 
@@ -267,7 +296,7 @@ const buildConfigurationIndex = async (configReader: ConfigReader, configLoader:
 };
 
 
-const createDisplayImages = async (imagestore: ImageStore, db: PouchDB.Database, projectIdentifier: string,
+const createDisplayImages = async (imagestore: ImageStore, db: any, projectIdentifier: string,
                                    progress: InitializationProgress) => {
 
     const fileInfos: Map<FileInfo> = await imagestore.getFileInfos(
@@ -294,14 +323,41 @@ const createDisplayImages = async (imagestore: ImageStore, db: PouchDB.Database,
 }
 
 
-const createDisplayImage = async (imageId: string, imagestore: ImageStore, db: PouchDB.Database) => {
+const createDisplayImage = async (imageId: string, imagestore: ImageStore, db: any) => {
 
     try {
         await createDisplayVariant(
             await db.get(imageId),
-            imagestore
+            imagestore,
+            await imagestore.getData(imageId, ImageVariant.ORIGINAL)
         );
     } catch (err) {
         console.warn('Failed to create display variant for image ' + imageId, err);
     }
 };
+
+
+const restoreLatestBackup = async (settingsService: SettingsService, settings: Settings): Promise<boolean> => {
+
+    const backupFilePath: string = getPathToLatestBackupFile(settings);
+
+    try {
+        await new BackupService().restore(
+            backupFilePath, settings.selectedProject, settingsService
+        );
+        return true;
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
+}
+
+
+const getPathToLatestBackupFile = (settings: Settings): string|undefined => {
+
+    const backups: Array<Backup> = getExistingBackups(settings.backupDirectoryPath)[settings.selectedProject] ?? [];
+
+    return backups.reverse()
+        .map(backup => backup.filePath)
+        .find(filePath => fs.existsSync(filePath));
+}

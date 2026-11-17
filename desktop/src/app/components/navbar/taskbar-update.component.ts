@@ -1,15 +1,12 @@
 import { Component, Input, NgZone } from '@angular/core';
-import { SettingsProvider } from '../../services/settings/settings-provider';
 
-
-const ipcRenderer = typeof window !== 'undefined'
-  ? window.require('electron').ipcRenderer
-  : require('electron').ipcRenderer;
+const ipcRenderer = window.require('electron')?.ipcRenderer;
 
 
 @Component({
     selector: 'taskbar-update',
-    templateUrl: './taskbar-update.html'
+    templateUrl: './taskbar-update.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -27,9 +24,9 @@ export class TaskbarUpdateComponent {
     private errorTimeout: any = undefined;
 
 
-    constructor(private settingsProvider: SettingsProvider, zone: NgZone) {
+    constructor(zone: NgZone) {
 
-        ipcRenderer.on('downloadProgress', (event: any, downloadInfo: any) => {
+        ipcRenderer.on('downloadProgress', (_: any, downloadInfo: any) => {
             zone.run(() => {
                 this.progressPercent = Math.round(downloadInfo.progressPercent);
                 this.version = downloadInfo.version;

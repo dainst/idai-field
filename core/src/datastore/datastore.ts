@@ -1,15 +1,16 @@
 import { clone } from 'tsfun';
 import { IndexFacade } from '../index/index-facade';
-import { Document } from '../model/document';
-import { NewDocument } from '../model/document';
-import { Query } from '../model/query';
+import { Document } from '../model/document/document';
+import { NewDocument } from '../model/document/document';
+import { Query } from '../model/datastore/query';
 import { Name } from '../tools/named';
-import { DocumentConverter } from './document-converter';
 import { DatastoreErrors } from './datastore-errors';
 import { DocumentCache } from './document-cache';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
 import { WarningsUpdater } from './warnings-updater';
 import { ProjectConfiguration } from '../services/project-configuration';
+import { Indexer } from '../index';
+import { Migrator } from './migrator';
 
 
 export type FindOptions = {
@@ -43,17 +44,15 @@ export type FindOptions = {
  */
 export class Datastore {
 
+    public updating: boolean = false;
+
+
     constructor(private datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
-                private documentConverter: DocumentConverter,
                 private projectConfiguration: ProjectConfiguration,
-                private getUser: () => Name) {
-    }
-
-
-    public suppressWait = false;
-
+                private getUser: () => Name) {}
+    
 
     /**
      * Persists a given document. If document.resource.id is not set,
@@ -71,18 +70,32 @@ export class Datastore {
      */
     public async create(document: NewDocument): Promise<Document> {
 
-        return this.updateIndex(await this.datastore.create(document, this.getUser()));
+        this.updating = true;
+
+        try {
+            return await this.updateIndex(await this.datastore.create(document, this.getUser()));
+        } finally {
+            this.updating = false;
+        }
     }
 
 
     public async bulkCreate(documents: Array<NewDocument>): Promise<Array<Document>> {
 
-        const resultDocuments: Array<Document> = [];
-        for (let document of await this.datastore.bulkCreate(documents, this.getUser())) {
-            resultDocuments.push(await this.updateIndex(document));
-        }
+        this.updating = true;
 
-        return resultDocuments;
+        try {
+            const resultDocuments: Array<Document> = [];
+            for (let document of await this.datastore.bulkCreate(documents, this.getUser())) {
+                resultDocuments.push(await this.updateIndex(document, false));
+            }
+
+            this.indexFacade.notifyObservers();
+
+            return resultDocuments;
+        } finally {
+            this.updating = false;
+        }
     }
 
 
@@ -102,34 +115,92 @@ export class Datastore {
      */
     public update: Datastore.Update = async (document: Document, squashRevisionsIds?: string[]): Promise<Document> => {
 
+        this.updating = true;
         delete document.warnings;
 
-        return this.updateIndex(await this.datastore.update(document, this.getUser(), squashRevisionsIds));
+        try {
+            return await this.updateIndex(
+                await this.datastore.update(document, this.getUser(), squashRevisionsIds),
+                true
+            );
+        } finally {
+            this.updating = false;
+        }
     }
 
 
     public async bulkUpdate(documents: Array<Document>): Promise<Array<Document>> {
 
+        this.updating = true;
+
         documents.forEach(document => delete document.warnings);
 
-        const resultDocuments: Array<Document> = [];
-        for (let document of await this.datastore.bulkUpdate(documents, this.getUser())) {
-            resultDocuments.push(await this.updateIndex(document));
-        }
+        try {
+            let resultDocuments: Array<Document> = [];
+            const updatedDocuments: Array<Document> = await this.datastore.bulkUpdate(documents, this.getUser());
+            if (updatedDocuments.length < 100) {
+                for (let document of updatedDocuments) {
+                    resultDocuments.push(await this.updateIndex(document, false));
+                }
+                this.indexFacade.notifyObservers();
+            } else {
+                resultDocuments = await this.updateIndexWithFullReindexing(updatedDocuments);
+            }
 
-        return resultDocuments;
+            return resultDocuments;
+        } finally {
+            this.updating = false;
+        }
     }
 
 
-    private async updateIndex(document: Document): Promise<Document> {
+    private async updateIndex(document: Document, notifyObservers: boolean = true): Promise<Document> {
 
-        const previousVersion: Document =  this.documentCache.get(document.resource.id);
+        const previousVersion: Document = this.documentCache.get(document.resource.id);
+        const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
+        const previousScanCode: string|undefined = previousVersion?.resource.scanCode;
+    
+        document = this.updateCache(document);
 
-        await this.convert(document);
+        Migrator.migrate(document, this.projectConfiguration);
+        await this.updateWarnings(document, notifyObservers, previousIdentifier, previousScanCode);
+
+        return this.updateCache(document);
+    }
+
+
+    private updateCache(document: Document) {
+        
+        const previousVersion: Document = this.documentCache.get(document.resource.id);
 
         return !previousVersion
             ? this.documentCache.set(document)
             : this.documentCache.reassign(document);
+    }
+
+
+    private async updateIndexWithFullReindexing(documents: Array<Document>): Promise<Array<Document>> {
+
+        const resultDocuments: Array<Document> = [];
+
+        for (let document of documents) {
+            const previousVersion: Document = this.documentCache.get(document.resource.id);
+            Migrator.migrate(document, this.projectConfiguration);
+            const updatedDocument: Document = !previousVersion
+                ? this.documentCache.set(document)
+                : this.documentCache.reassign(document);
+            resultDocuments.push(updatedDocument);
+        }
+
+        await Indexer.reindex(
+            this.indexFacade,
+            this.datastore.getDb(),
+            this.documentCache,
+            this.projectConfiguration,
+            true
+        );
+
+        return resultDocuments;
     }
 
 
@@ -158,8 +229,10 @@ export class Datastore {
         await WarningsUpdater.updateResourceLimitWarnings(
             this,
             this.indexFacade,
+            this.projectConfiguration,
             this.projectConfiguration.getCategory(document.resource.category)
         );
+        this.indexFacade.notifyObservers();
     }
 
 
@@ -168,31 +241,21 @@ export class Datastore {
      * 
      * @param resourceId the desired document's resource id
      * @param options.skipCache: boolean
-     * @param options.conflicts: boolean
      * @param options to control implementation specific behaviour
      * @returns {Promise<Document>} a document (rejects with msgWithParams in case of error)
      * @throws [DOCUMENT_NOT_FOUND] - in case document is missing
      * @throws [INVALID_DOCUMENT] - in case document is not valid
      */
-    public get: Datastore.Get = async (id: string, options?: { skipCache?: boolean, conflicts?: boolean })
-            : Promise<Document> => {
+    public get: Datastore.Get = async (id: string, options?: { skipCache?: boolean }): Promise<Document> => {
 
         const cachedDocument = this.documentCache.get(id);
 
         if ((!options || !options.skipCache) && cachedDocument) {
-            if (cachedDocument.warnings?.unconfiguredCategory) {
-                throw [DatastoreErrors.UNKNOWN_CATEGORY, cachedDocument.resource.category];
-            } else {
-                return cachedDocument;
-            }
+            return cachedDocument;
         }
 
-        let document = await this.datastore.fetch(id, options?.conflicts);
+        const document = await this.datastore.fetch(id, options);
         await this.convert(document);
-
-        if (document.warnings?.unconfiguredCategory) {
-            throw [DatastoreErrors.UNKNOWN_CATEGORY, document.resource.category];
-        }
 
         return cachedDocument
             ? this.documentCache.reassign(document)
@@ -225,7 +288,7 @@ export class Datastore {
         const clonedQuery: Query = clone(query);
         if (!options.includeResourcesWithoutValidParent) {
             if (!clonedQuery.constraints) clonedQuery.constraints = {};
-            clonedQuery.constraints['missingOrInvalidParent:exist'] = 'UNKNOWN';
+            clonedQuery.constraints['missingOrInvalidParent:exist'] = { value: 'KNOWN', subtract: true };
         }
 
         const { ids } = this.findIds(clonedQuery);
@@ -239,10 +302,10 @@ export class Datastore {
     }
 
 
-    public convert: Datastore.Convert = async (document: Document) => {
+    public convert: Datastore.Convert = async (document: Document, notifyObservers: boolean = true) => {
         
-        this.documentConverter.convert(document);
-        await this.updateWarnings(document);
+        Migrator.migrate(document, this.projectConfiguration);
+        await this.updateWarnings(document, notifyObservers);
     }  
 
 
@@ -272,7 +335,7 @@ export class Datastore {
     public async getRevision(docId: string, revisionId: string): Promise<Document> {
 
         const revision: Document = await this.datastore.fetchRevision(docId, revisionId);
-        await this.convert(revision);
+        Migrator.migrate(revision, this.projectConfiguration);
         return revision;
     }
 
@@ -295,8 +358,7 @@ export class Datastore {
     }
 
 
-    private async getDocumentsForIds(ids: string[], 
-                                     limit?: number,
+    private async getDocumentsForIds(ids: string[], limit?: number,
                                      offset?: number): Promise<{documents: Array<Document>, totalCount: number}> {
 
         let totalCount: number = ids.length;
@@ -367,8 +429,7 @@ export class Datastore {
     }
 
 
-    private mergeDocuments(documentsFromCache: Array<Document>, 
-                           documentsFromDatastore: Array<Document>,
+    private mergeDocuments(documentsFromCache: Array<Document>, documentsFromDatastore: Array<Document>,
                            idsInOrder: string[]): Array<Document> {
 
         const documents = documentsFromCache.concat(documentsFromDatastore);
@@ -383,19 +444,23 @@ export class Datastore {
     }
 
 
-    private async updateWarnings(document: Document) {
+    private async updateWarnings(document: Document, notifyObservers: boolean, previousIdentifier?: string,
+                                 previousScanCode?: string) {
 
         WarningsUpdater.updateIndexIndependentWarnings(document, this.projectConfiguration);
 
         this.indexFacade.put(document);
-        
-        const previousVersion: Document|undefined = this.documentCache.get(document.resource.id);
-        const previousIdentifier: string|undefined = previousVersion?.resource.identifier;
+
+        if (!previousIdentifier) {
+            previousIdentifier = this.documentCache.get(document.resource.id)?.resource.identifier;
+            previousScanCode = this.documentCache.get(document.resource.id)?.resource.scanCode;
+        }
 
         await WarningsUpdater.updateIndexDependentWarnings(
             document, this.indexFacade, this.documentCache, this.projectConfiguration, this,
-            previousIdentifier, true
+            previousIdentifier, previousScanCode, true
         );
+        if (notifyObservers) this.indexFacade.notifyObservers();
     }
 }
 
@@ -410,7 +475,7 @@ export namespace Datastore {
 
     export type Update = (document: Document, squashRevisionsIds?: string[]) => Promise<Document>;
 
-    export type Convert = (document: Document) => void;
+    export type Convert = (document: Document, notifyObservers?: boolean) => void;
 
 
     export interface FindIdsResult {

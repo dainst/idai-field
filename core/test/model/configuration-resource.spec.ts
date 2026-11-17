@@ -1,4 +1,4 @@
-import { ConfigurationResource } from '../../src/model/configuration-resource';
+import { ConfigurationResource } from '../../src/model/document/configuration-resource';
 
 
 /**

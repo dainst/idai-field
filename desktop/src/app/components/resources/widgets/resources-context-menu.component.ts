@@ -1,33 +1,32 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { to } from 'tsfun';
-import { FieldDocument, Named, ProjectConfiguration, CategoryForm, Relation } from 'idai-field-core';
+import { FieldDocument, Named, ProjectConfiguration, CategoryForm, Relation,
+    FieldGeometryType } from 'idai-field-core';
 import { ResourcesContextMenu } from './resources-context-menu';
-import { ContextMenuOrientation } from '../../widgets/context-menu';
 import { MoveUtility } from '../../widgets/move-modal/move-utility';
 import { UtilTranslations } from '../../../util/util-translations';
 
 
 export type ResourcesContextMenuAction = 'edit'|'move'|'delete'|'warnings'|'edit-qr-code'|'edit-images'
-    |'scan-storage-place'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
+    |'scan-resource'|'edit-workflow'|'create-polygon'|'create-line-string'|'create-point'|'edit-geometry';
 
 
 @Component({
     selector: 'resources-context-menu',
-    templateUrl: './resources-context-menu.html'
+    templateUrl: './resources-context-menu.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ResourcesContextMenuComponent implements OnChanges {
+export class ResourcesContextMenuComponent {
 
     @Input() contextMenu: ResourcesContextMenu;
     @Input() showViewOption: boolean = false;
 
     @Output() onSelectAction: EventEmitter<ResourcesContextMenuAction>
         = new EventEmitter<ResourcesContextMenuAction>();
-
-    public orientation: ContextMenuOrientation = 'top';
     
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -37,12 +36,6 @@ export class ResourcesContextMenuComponent implements OnChanges {
     public selectAction = (action: ResourcesContextMenuAction) => this.onSelectAction.emit(action);
 
     public getBottomPosition = (yPosition: number) => ResourcesContextMenu.getBottomPosition(yPosition);
-
-
-    ngOnChanges() {
-
-        this.orientation = ResourcesContextMenu.computeOrientation(this.contextMenu.position?.y);
-    }
 
 
     public areAnyOptionsAvailable(): boolean {
@@ -56,7 +49,8 @@ export class ResourcesContextMenuComponent implements OnChanges {
             || this.isWarningsOptionAvailable()
             || this.isAddQRCodeOptionAvailable()
             || this.isEditQRCodeOptionAvailable()
-            || this.isScanStoragePlaceOptionIsAvailable();
+            || this.isScanResourceOptionIsAvailable()
+            || this.isEditWorkflowOptionAvailable();
     }
 
 
@@ -86,12 +80,19 @@ export class ResourcesContextMenuComponent implements OnChanges {
     }
 
 
-    public isCreateGeometryOptionAvailable(): boolean {
+    public isCreateGeometryOptionAvailable(geometryType?: FieldGeometryType): boolean {
 
         if (this.isReadonly()) return false;
+
+        const category: CategoryForm = this.projectConfiguration.getCategory(
+            this.contextMenu.documents[0].resource.category
+        );
+
         return this.contextMenu.documents.length === 1
             && this.projectConfiguration.isGeometryCategory(
                 this.contextMenu.documents[0].resource.category)
+            && CategoryForm.isGeometryEditableOnMap(category)
+            && (!geometryType || CategoryForm.isAllowedGeometryType(category,geometryType))
             && !this.contextMenu.documents[0].resource.geometry;
     }
 
@@ -99,10 +100,13 @@ export class ResourcesContextMenuComponent implements OnChanges {
     public isEditGeometryOptionAvailable(): boolean {
 
         if (this.isReadonly()) return false;
+
         return this.contextMenu.documents.length === 1
             && this.projectConfiguration.isGeometryCategory(
                 this.contextMenu.documents[0].resource.category)
-            && this.contextMenu.documents[0].resource.geometry !== undefined;
+            && CategoryForm.isGeometryEditableOnMap(this.projectConfiguration.getCategory(
+                this.contextMenu.documents[0].resource.category
+            )) && this.contextMenu.documents[0].resource.geometry !== undefined;
     }
 
 
@@ -116,11 +120,26 @@ export class ResourcesContextMenuComponent implements OnChanges {
     }
 
 
+    public isScanResourceOptionIsAvailable(): boolean {
+
+        return this.isScanStoragePlaceOptionIsAvailable()
+            || this.isScanTypeOptionIsAvailable();
+    }
+
+
     public isScanStoragePlaceOptionIsAvailable(): boolean {
 
         if (this.isReadonly() || !this.isStoredInRelationAllowed()) return false;
 
         return this.projectConfiguration.getInventoryCategories().filter(category => category.scanCodes).length > 0;
+    }
+
+
+    public isScanTypeOptionIsAvailable(): boolean {
+
+        if (this.isReadonly() || !this.isInstanceOfRelationAllowed()) return false;
+
+        return this.projectConfiguration.getTypeCategories().filter(category => category.scanCodes).length > 0;
     }
 
 
@@ -135,6 +154,22 @@ export class ResourcesContextMenuComponent implements OnChanges {
 
         return this.isQrCodeOptionAvailable()
             && this.contextMenu.documents[0].resource.scanCode;
+    }
+
+
+    public isEditWorkflowOptionAvailable(): boolean {
+
+        const processCategories: Array<CategoryForm> = this.projectConfiguration.getCategory('Process')
+            ?.children ?? [];
+
+        return this.contextMenu.documents.length
+            && this.contextMenu.documents.find(document => {
+                return processCategories.find(category => {
+                    return this.projectConfiguration.isAllowedRelationDomainCategory(
+                        category.name, document.resource.category, Relation.Workflow.IS_CARRIED_OUT_ON
+                    );
+                }) !== undefined;
+            }) !== undefined;
     }
 
 
@@ -158,11 +193,21 @@ export class ResourcesContextMenuComponent implements OnChanges {
 
     private isStoredInRelationAllowed(): boolean {
 
-        return this.contextMenu.documents.find(document => {
-            return !this.projectConfiguration.isAllowedRelationDomainCategory(
+        return this.contextMenu.documents.every(document => {
+            return this.projectConfiguration.isAllowedRelationDomainCategory(
                 document.resource.category, 'StoragePlace', Relation.Inventory.ISSTOREDIN
             );
-        }) === undefined;
+        });
+    }
+
+
+    private isInstanceOfRelationAllowed(): boolean {
+
+        return this.contextMenu.documents.every(document => {
+            return this.projectConfiguration.isAllowedRelationDomainCategory(
+                document.resource.category, 'Type', Relation.Type.INSTANCEOF
+            );
+        });
     }
 
 

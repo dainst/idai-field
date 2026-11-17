@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Datastore, FieldDocument, FieldsViewGroup, FieldsViewUtil,
+import { Comparator, Datastore, FieldDocument, FieldsViewGroup, FieldsViewUtil,
      Labels, Name, ProjectConfiguration, Resource } from 'idai-field-core';
 
 
 @Component({
     selector: 'fields-view',
-    templateUrl: './fields-view.html'
+    templateUrl: './fields-view.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -26,7 +27,8 @@ export class FieldsViewComponent implements OnChanges {
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
-                private labels: Labels) {}
+                private labels: Labels,
+                private comparator: Comparator) {}
 
 
     public getGroupLabel = (group: FieldsViewGroup) => this.labels.get(group);
@@ -34,26 +36,23 @@ export class FieldsViewComponent implements OnChanges {
 
     async ngOnChanges(changes: SimpleChanges) {
 
-        if (!this.resource) return;
-
-        if (changes['resource']) {
+        if (this.resource && changes['resource']) {
             this.groups = await FieldsViewUtil.getGroupsForResource(
-                this.resource, this.projectConfiguration, this.datastore, this.labels
+                this.resource, this.projectConfiguration, this.datastore, this.labels, this.comparator
             );
-            if (!this.openSection && this.groups.length > 0) this.openSection = this.groups[0].name;
         }
     }
 
 
-    public showGroupSection(group: Name) {
+    public isGroupSectionOpened(group: Name): boolean {
 
-        return this.expandAllGroups || this.openSection === group;
+        return this.expandAllGroups || this.getOpenSection() === group;
     }
 
 
     public toggleGroupSection(group: FieldsViewGroup) {
 
-        this.openSection = this.openSection === group.name && !this.expandAllGroups
+        this.openSection = this.getOpenSection() === group.name && !this.expandAllGroups
             ? undefined
             : group.name;
 
@@ -64,5 +63,15 @@ export class FieldsViewComponent implements OnChanges {
     public async jumpToResource(document: FieldDocument) {
 
         this.onJumpToResource.emit(document);
+    }
+
+
+    private getOpenSection(): string {
+
+        return this.openSection
+            ? this.openSection
+            : this.groups.length > 0
+                ? this.groups[0].name
+                : undefined;
     }
 }

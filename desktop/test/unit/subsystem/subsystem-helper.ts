@@ -1,10 +1,10 @@
 import { sameset } from 'tsfun';
-import { AppConfigurator, DocumentConverter, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
+import { AppConfigurator, ChangesStream, ConfigLoader, ConfigReader, createDocuments, Datastore,
     Document, DocumentCache, NiceDocs, PouchdbDatastore, Query, RelationsManager, Resource, SyncService, ImageStore,
     ImageSyncService, Indexer } from 'idai-field-core';
-import { ExpressServer } from '../../../src/app/services/express-server';
+import { ExpressServer } from '../../../src/app/services/express-server/express-server';
 import { ImageDocumentsManager } from '../../../src/app/components/image/overview/view/image-documents-manager';
-import { ImageOverviewFacade } from '../../../src/app/components/image/overview/view/imageoverview-facade';
+import { ImageOverviewFacade } from '../../../src/app/components/image/overview/view/image-overview-facade';
 import { ImagesState } from '../../../src/app/components/image/overview/view/images-state';
 import { makeDocumentsLookup } from '../../../src/app/components/import/import/utils';
 import { ImageRelationsManager } from '../../../src/app/services/image-relations-manager';
@@ -21,10 +21,10 @@ import { FsAdapter } from '../../../src/app/services/imagestore/fs-adapter';
 import { ThumbnailGenerator } from '../../../src/app/services/imagestore/thumbnail-generator';
 import { RemoteImageStore } from '../../../src/app/services/imagestore/remote-image-store';
 import { DocumentHolder } from '../../../src/app/components/docedit/document-holder';
-
-import PouchDB = require('pouchdb-node');
 import { Messages } from '../../../src/app/components/messages/messages';
+import { Comparator } from 'idai-field-core';
 
+const PouchDB = require('pouchdb-node');
 const fs = require('fs');
 
 
@@ -38,11 +38,11 @@ class IdGenerator {
 
 
 /**
- * Boot project via settings service such that it immediately starts syncinc with http://localhost:3003/synctestremotedb
+ * Boot project via settings service so that it immediately starts syncing with http://localhost:3003/synctestremotedb
  */
 export async function setupSettingsService(pouchdbDatastore, projectIdentifier = 'testdb') {
 
-    const pouchdbServer = new ExpressServer(undefined);
+    const pouchdbServer = new ExpressServer(undefined, undefined, undefined, undefined, undefined, undefined, undefined);
     const settingsProvider = new SettingsProvider();
     const fileSystemAdapter = new FsAdapter();
     const mockMessages = new Messages(undefined, 0);
@@ -76,7 +76,9 @@ export async function setupSettingsService(pouchdbDatastore, projectIdentifier =
         dbs: [projectIdentifier],
         selectedProject: '',
         imagestorePath: process.cwd() + '/test/test-temp/imagestore',
-        username: 'synctestuser'
+        backupDirectoryPath: process.cwd() + '/test/test-temp/backups',
+        username: 'synctestuser',
+        keepBackups: { custom: 0, customInterval: 0, daily: 0, weekly: 0, monthly: 0 }
     });
 
     await settingsService.bootProjectDb(
@@ -112,29 +114,32 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
 
     const pouchdbDatastore = new PouchdbDatastore(
         (name: string) => new PouchDB(name),
-        new IdGenerator());
+        new IdGenerator()
+    );
     pouchdbDatastore.createDbForTesting(projectIdentifier);
     pouchdbDatastore.setupChangesEmitter();
+
+
+    const comparator = new Comparator('de');
 
     const {
         settingsService,
         projectConfiguration,
         settingsProvider,
-        imageStore
+        imageStore,
+        remoteImageStore
     } = await setupSettingsService(pouchdbDatastore, projectIdentifier);
 
-    const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration);
+    const { createdIndexFacade } = IndexerConfiguration.configureIndexers(projectConfiguration, comparator);
 
     await imageStore.init(settingsProvider.getSettings().imagestorePath, settingsProvider.getSettings().selectedProject);
 
     const documentCache = new DocumentCache();
-    const documentConverter = new DocumentConverter(projectConfiguration);
 
     const datastore = new Datastore(
         pouchdbDatastore,
         createdIndexFacade,
         documentCache,
-        documentConverter,
         projectConfiguration,
         () => settingsProvider.getSettings().username
     );
@@ -143,7 +148,6 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         createdIndexFacade,
         pouchdbDatastore.getDb(),
         documentCache,
-        documentConverter,
         projectConfiguration,
         false
     );
@@ -153,23 +157,24 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         datastore,
         createdIndexFacade,
         documentCache,
-        documentConverter,
         projectConfiguration,
         () => settingsProvider.getSettings().username
     );
 
-    const stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
-    stateSerializer.load.and.returnValue(Promise.resolve({}));
-    stateSerializer.store.and.returnValue(Promise.resolve());
+    const stateSerializer: any = {
+        load: jest.fn().mockReturnValue(Promise.resolve({})),
+        store: jest.fn().mockReturnValue(Promise.resolve())
+    };
 
-    const tabSpaceCalculator = jasmine.createSpyObj('tabSpaceCalculator',
-        ['getTabSpaceWidth', 'getTabWidth']);
-    tabSpaceCalculator.getTabSpaceWidth.and.returnValue(1000);
-    tabSpaceCalculator.getTabWidth.and.returnValue(0);
+    const tabSpaceCalculator: any = {
+        getTabSpaceWidth: jest.fn().mockReturnValue(1000),
+        getTabWidth: jest.fn().mockReturnValue(0)
+    };
 
     const tabManager = new TabManager(createdIndexFacade, tabSpaceCalculator, stateSerializer,
         datastore,
-        () => Promise.resolve());
+        () => Promise.resolve()
+    );
     tabManager.routeChanged('/project');
 
     const resourcesStateManager = new ResourcesStateManager(
@@ -182,7 +187,9 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         true
     );
 
-    const messages = jasmine.createSpyObj('messages', ['add']);
+    const messages: any = {
+        add: jest.fn()
+    };
 
     const viewFacade = new ViewFacade(
         datastore,
@@ -216,7 +223,17 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
 
     const imagesState = new ImagesState(projectConfiguration, stateSerializer);
     const imageDocumentsManager = new ImageDocumentsManager(imagesState, datastore);
-    const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, projectConfiguration);
+
+    const imageToolLauncher: any = {
+        update: jest.fn()
+    };
+
+    const imageOverviewFacade = new ImageOverviewFacade(
+        imageDocumentsManager,
+        imagesState,
+        projectConfiguration,
+        imageToolLauncher
+    );
 
     return {
         remoteChangesStream,
@@ -233,6 +250,12 @@ export async function createApp(projectIdentifier = 'testdb'): Promise<App> {
         imageStore,
         imageRelationsManager
     };
+}
+
+
+export async function cleanUp(projectIdentifier = 'testdb') {
+
+    await new PouchDB(projectIdentifier).destroy();
 }
 
 

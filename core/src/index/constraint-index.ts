@@ -2,8 +2,8 @@ import { isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singlet
     subtract, clone, isObject } from 'tsfun';
 import { CategoryForm } from '../model/configuration/category-form';
 import { Field } from '../model/configuration/field';
-import { Document } from '../model/document';
-import { Resource } from '../model/resource';
+import { Document } from '../model/document/document';
+import { Resource } from '../model/document/resource';
 
 
 export type IndexType = 'match'|'contain'|'contained'|'exist'|'links';

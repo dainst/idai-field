@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
-import { I18n } from '@ngx-translate/i18n-polyfill';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Datastore, ProjectConfiguration, RelationsManager, SyncService } from 'idai-field-core';
 import { Messages } from './messages/messages';
 import { SettingsService } from '../services/settings/settings-service';
 import { SettingsProvider } from '../services/settings/settings-provider';
@@ -12,14 +13,25 @@ import { ImageUrlMaker } from '../services/imagestore/image-url-maker';
 import { ConfigurationChangeNotifications } from './configuration/notifications/configuration-change-notifications';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
 import { AppState } from '../services/app-state';
+import { AutoBackupService } from '../services/backup/auto-backup/auto-backup-service';
+import { QuittingModalComponent } from './widgets/quitting-modal.component';
+import { MenuContext } from '../services/menu-context';
+import { ImageToolLauncher } from '../services/imagestore/image-tool-launcher';
+import { ExpressServer } from '../services/express-server/express-server';
+import { ImportExportProcessModalComponent } from './widgets/import-export-process-modal.component';
+import { Menus } from '../services/menus';
+import { ImageUploader } from './image/upload/image-uploader';
+import { UploadModalComponent } from './image/upload/upload-modal.component';
+import { UploadStatus } from './image/upload/upload-status';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : undefined;
+const remote = window.require('@electron/remote');
+const ipcRenderer = window.require('electron')?.ipcRenderer;
 
 
 @Component({
     selector: 'idai-field-app',
-    templateUrl: './app.html'
+    templateUrl: './app.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy
@@ -30,19 +42,34 @@ export class AppComponent {
 
     public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
 
+    private closing: boolean = false;
+    private modal: ImportExportProcessModalComponent;
+    private previousMenuContext: MenuContext;
+
+
     constructor(router: Router,
                 menuNavigator: MenuNavigator,
                 appController: AppController,
                 configurationChangeNotifications: ConfigurationChangeNotifications,
                 imageUrlMaker: ImageUrlMaker,
                 settingsService: SettingsService,
-                appState: AppState,
+                imageToolLauncher: ImageToolLauncher,
+                projectConfiguration: ProjectConfiguration,
+                relationsManager: RelationsManager,
+                imageUploader: ImageUploader,
+                uploadStatus: UploadStatus,
+                private appState: AppState,
+                private expressServer: ExpressServer,
                 private messages: Messages,
-                private i18n: I18n,
                 private utilTranslations: UtilTranslations,
                 private settingsProvider: SettingsProvider,
                 private changeDetectorRef: ChangeDetectorRef,
-                private menuModalLauncher: MenuModalLauncher) {
+                private menuModalLauncher: MenuModalLauncher,
+                private datastore: Datastore,
+                private autoBackupService: AutoBackupService,
+                private modalService: NgbModal,
+                private menuService: Menus,
+                private syncService: SyncService) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -57,25 +84,36 @@ export class AppComponent {
             }
         });
 
+        this.expressServer.setDatastore(this.datastore);
+        this.expressServer.setRelationsManager(relationsManager);
+        this.expressServer.setProjectConfiguration(projectConfiguration);
+        this.expressServer.setImageUploader(imageUploader);
+        this.expressServer.setUploadStatus(uploadStatus);
+
         appState.load();
         settingsService.setupSync();
         appController.initialize();
         menuNavigator.initialize();
         configurationChangeNotifications.initialize();
+        imageToolLauncher.update();
 
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();
         this.listenToSettingsChangesFromMenu();
+        this.listenToDataTransferEvents();
+        this.handleCloseRequests();
 
         if (!Settings.hasUsername(settingsProvider.getSettings())) {
             this.menuModalLauncher.openUpdateUsernameModal(true);
         }
+
+        this.autoBackupService.start();
     }
 
 
     private listenToSettingsChangesFromMenu() {
 
-        ipcRenderer.on('settingChanged', async (event: any, setting: string, newValue: boolean) => {
+        ipcRenderer.on('settingChanged', async (_: any, setting: string, newValue: boolean) => {
             const settings: Settings = this.settingsProvider.getSettings();
             settings[setting] = newValue;
             this.settingsProvider.setSettingsAndSerialize(settings);
@@ -84,192 +122,332 @@ export class AppComponent {
     }
 
 
+    private listenToDataTransferEvents() {
+
+        this.appState.dataTransferNotifications().subscribe(notification => {
+            switch (notification.newDataTransfer) {
+                case 'import':
+                case 'fileImport':
+                case 'export':
+                    if (!this.modal) {
+                        this.previousMenuContext = this.menuService.getContext();
+                        this.menuService.setContext(MenuContext.BLOCKING_MODAL);
+                        const modalRef: NgbModalRef = this.modalService.open(
+                            notification.newDataTransfer === 'fileImport'
+                                ? UploadModalComponent
+                                : ImportExportProcessModalComponent,
+                            { backdrop: 'static', keyboard: false, animation: false }
+                        );
+                        this.modal = modalRef.componentInstance;
+                        this.changeDetectorRef.detectChanges();
+                    }
+                    if (notification.newDataTransfer !== 'fileImport') this.modal.type = notification.newDataTransfer;
+                    break;
+                case 'none':
+                    if (this.modal) this.closeModal();
+                    break;
+            }
+        });
+    }
+
+
+    public closeModal() {
+
+        this.menuService.setContext(this.previousMenuContext);
+        this.modal.activeModal.close();
+        this.modal = undefined;
+        this.previousMenuContext = undefined;
+        this.changeDetectorRef.detectChanges();
+    }
+
+
+    private handleCloseRequests() {
+
+        ipcRenderer.on('requestClose', async () => {
+            if (this.closing || this.datastore.updating) return;
+
+            this.closing = true;
+            this.syncService.stopSync();
+            this.openQuittingModal();
+            await this.autoBackupService.requestBackupCreation();
+
+            ipcRenderer.send('close');
+        });
+    }
+
+
+    private openQuittingModal() {
+
+        setTimeout(() => {
+            this.menuService.setContext(MenuContext.BLOCKING_MODAL);
+            this.modalService.open(
+                QuittingModalComponent,
+                { backdrop: 'static', keyboard: false, animation: false }
+            );
+        }, 200);
+    }
+
+
     private initializeUtilTranslations() {
 
         this.utilTranslations.addTranslation(
-            'bce', this.i18n({ id: 'util.dating.bce', value: 'v. Chr.' })
+            'bce', $localize `:@@util.dating.bce:v. Chr.`
         );
         this.utilTranslations.addTranslation(
-            'ce', this.i18n({ id: 'util.dating.ce', value: 'n. Chr.' })
+            'ce', $localize `:@@util.dating.ce:n. Chr.`
         );
         this.utilTranslations.addTranslation(
-            'bp', this.i18n({ id: 'util.dating.bp', value: 'BP' })
+            'bp', $localize `:@@util.dating.bp:BP`
         );
         this.utilTranslations.addTranslation(
-            'before', this.i18n({ id: 'util.dating.before', value: 'Vor' })
+            'before', $localize `:@@util.dating.before:Vor`
         );
         this.utilTranslations.addTranslation(
-            'after', this.i18n({ id: 'util.dating.after', value: 'Nach' })
+            'after', $localize `:@@util.dating.after:Nach`
         );
         this.utilTranslations.addTranslation(
-            'asMeasuredBy', this.i18n({ id: 'util.dimension.asMeasuredBy', value: 'gemessen an' })
+            'asMeasuredBy', $localize `:@@util.dimension.asMeasuredBy:gemessen an:`
         );
         this.utilTranslations.addTranslation(
-            'zenonId', this.i18n({ id: 'util.literature.zenonId', value: 'Zenon-ID' })
+            'measurementDevice', $localize `:@@util.dimension.measurementDevice:Messgerät:`
         );
         this.utilTranslations.addTranslation(
-            'doi', this.i18n({ id: 'util.literature.doi', value: 'DOI' })
+            'measurementTechnique', $localize `:@@util.volume.measurementTechnique:Messverfahren:`
         );
         this.utilTranslations.addTranslation(
-            'page', this.i18n({ id: 'util.literature.page', value: 'Seite' })
+            'zenonId', $localize `:@@util.literature.zenonId:Zenon-ID`
         );
         this.utilTranslations.addTranslation(
-            'figure', this.i18n({ id: 'util.literature.figure', value: 'Abbildung' })
+            'doi', $localize `:@@util.literature.doi:DOI`
         );
         this.utilTranslations.addTranslation(
-            'from', this.i18n({ id: 'util.optionalRange.from', value: 'Von: ' })
+            'page', $localize `:@@util.literature.page:Seite`
         );
         this.utilTranslations.addTranslation(
-            'to', this.i18n({ id: 'util.optionalRange.to', value: ', bis: ' })
+            'figure', $localize `:@@util.literature.figure:Abbildung`
         );
         this.utilTranslations.addTranslation(
-            'true', this.i18n({ id: 'boolean.yes', value: 'Ja' })
+            'from', $localize `:@@util.optionalRange.from:Von: `
         );
         this.utilTranslations.addTranslation(
-            'false', this.i18n({ id: 'boolean.no', value: 'Nein' })
+            'to', $localize `:@@util.optionalRange.to:, bis: `
         );
         this.utilTranslations.addTranslation(
-            'warnings.all', this.i18n({ id: 'util.warnings.all', value: 'Alle' })
+            'toDate', $localize `:@@util.date.to:bis`
+        );
+        this.utilTranslations.addTranslation(
+            'unspecifiedDate', $localize `:@@util.date.unspecified:Unbestimmtes Datum`
+        );
+        this.utilTranslations.addTranslation(
+            'true', $localize `:@@boolean.yes:Ja`
+        );
+        this.utilTranslations.addTranslation(
+            'false', $localize `:@@boolean.no:Nein`
+        );
+        this.utilTranslations.addTranslation(
+            'condition.filledIn', $localize `:@@condition.filledIn:Feld ausgefüllt`
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.all', $localize `:@@util.warnings.all:Alle`
         );
         this.utilTranslations.addTranslation(
             'warnings.conflicts',
-            this.i18n({ id: 'util.warnings.conflicts', value: 'Konflikte' })
+            $localize `:@@util.warnings.conflicts:Konflikte`
         );
         this.utilTranslations.addTranslation(
             'warnings.unconfiguredCategories',
-            this.i18n({ id: 'util.warnings.unconfiguredCategories', value: 'Unkonfigurierte Kategorien' })
+            $localize `:@@util.warnings.unconfiguredCategories:Unkonfigurierte Kategorien`
         );
         this.utilTranslations.addTranslation(
             'warnings.unconfiguredFields',
-            this.i18n({ id: 'util.warnings.unconfiguredFields', value: 'Unkonfigurierte Felder' })
+            $localize `:@@util.warnings.unconfiguredFields:Unkonfigurierte Felder`
         );
         this.utilTranslations.addTranslation(
             'warnings.invalidFieldData',
-            this.i18n({ id: 'util.warnings.invalidFieldData', value: 'Ungültige Felddaten' })
+            $localize `:@@util.warnings.invalidFieldData:Ungültige Felddaten`
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.missingMandatoryFields',
+            $localize `:@@util.warnings.missingMandatoryFields:Nicht ausgefüllte Pflichtfelder`
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.unfulfilledConditionFields',
+            $localize `:@@util.warnings.unfulfilledConditionFields:Nicht erfüllte Anzeigebedingungen`
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.unallowedCharacterFields',
+            $localize `:@@util.warnings.unallowedCharacterFields:Nicht erlaubte Zeichen`
         );
         this.utilTranslations.addTranslation(
             'warnings.outlierValues',
-            this.i18n({ id: 'util.warnings.outlierValues', value: 'Nicht in Werteliste enthaltene Werte' })
+            $localize `:@@util.warnings.outlierValues:Nicht in Werteliste enthaltene Werte`
         );
         this.utilTranslations.addTranslation(
             'warnings.missingRelationTargets',
-            this.i18n({ id: 'util.warnings.missingRelationTargets', value: 'Fehlende Zielressourcen von Relationen' })
+            $localize `:@@util.warnings.missingRelationTargets:Fehlende Zielressourcen von Relationen`
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.invalidRelationTargets',
+            $localize `:@@util.warnings.invalidRelationTargets:Ungültige Zielressourcen von Relationen`
         );
         this.utilTranslations.addTranslation(
             'warnings.missingOrInvalidParent',
-            this.i18n({ id: 'util.warnings.missingOrInvalidParent', value: 'Fehlende oder ungültige übergeordnete Ressource' })
+            $localize `:@@util.warnings.missingOrInvalidParent:Fehlende oder ungültige übergeordnete Ressource`
         );
         this.utilTranslations.addTranslation(
             'warnings.missingIdentifierPrefixes',
-            this.i18n({ id: 'util.warnings.missingIdentifierPrefixes', value: 'Fehlende Bezeichner-Präfixe' })
+            $localize `:@@util.warnings.missingIdentifierPrefixes:Fehlende Bezeichner-Präfixe`
         );
         this.utilTranslations.addTranslation(
             'warnings.nonUniqueIdentifiers',
-            this.i18n({ id: 'util.warnings.nonUniqueIdentifiers', value: 'Uneindeutige Bezeichner' })
+            $localize `:@@util.warnings.nonUniqueIdentifiers:Uneindeutige Bezeichner`
         );
         this.utilTranslations.addTranslation(
             'warnings.resourceLimitExceeded',
-            this.i18n({ id: 'util.warnings.resourceLimitExceeded', value: 'Ressourcenlimit überschritten' })
+            $localize `:@@util.warnings.resourceLimitExceeded:Ressourcenlimit überschritten`
+        );
+        this.utilTranslations.addTranslation(
+            'warnings.invalidProcessState',
+            $localize `:@@util.warnings.invalidProcessState:Ungültiger Status`
         );
         this.utilTranslations.addTranslation(
             'inventoryRegister',
-            this.i18n({ id: 'util.inventoryRegister', value: 'Inventarverzeichnis' })
+            $localize `:@@util.inventoryRegister:Inventarverzeichnis`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.input',
-            this.i18n({ id: 'config.inputType.input', value: 'Einzeiliger Text' })
+            $localize `:@@config.inputType.input:Einzeiliger Text`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.multiInput',
-            this.i18n({ id: 'config.inputType.multiInput', value: 'Einzeiliger Text mit Mehrfachauswahl' })
+            $localize `:@@config.inputType.multiInput:Einzeiliger Text (Liste)`
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.valuelistMultiInput',
+            $localize `:@@config.inputType.valuelistMultiInput:Projekt-Werteliste`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.text',
-            this.i18n({ id: 'config.inputType.text', value: 'Mehrzeiliger Text' })
+            $localize `:@@config.inputType.text:Mehrzeiliger Text`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.int',
-            this.i18n({ id: 'config.inputType.int', value: 'Ganzzahl' })
+            $localize `:@@config.inputType.int:Ganzzahl`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.unsignedInt',
-            this.i18n({ id: 'config.inputType.unsignedInt', value: 'Positive Ganzzahl' })
+            $localize `:@@config.inputType.unsignedInt:Positive Ganzzahl`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.float',
-            this.i18n({ id: 'config.inputType.float', value: 'Kommazahl' })
+            $localize `:@@config.inputType.float:Kommazahl`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.unsignedFloat',
-            this.i18n({ id: 'config.inputType.unsignedFloat', value: 'Positive Kommazahl' })
+            $localize `:@@config.inputType.unsignedFloat:Positive Kommazahl`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.url',
-            this.i18n({ id: 'config.inputType.url', value: 'URL' })
+            $localize `:@@config.inputType.url:URL`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.dropdown',
-            this.i18n({ id: 'config.inputType.dropdown', value: 'Dropdown-Liste' })
+            $localize `:@@config.inputType.dropdown:Dropdown-Liste`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.dropdownRange',
-            this.i18n({ id: 'config.inputType.dropdownRange', value: 'Dropdown-Liste (Bereich)' })
+            $localize `:@@config.inputType.dropdownRange:Dropdown-Liste (Bereich)`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.radio',
-            this.i18n({ id: 'config.inputType.radio', value: 'Radiobutton' })
+            $localize `:@@config.inputType.radio:Radiobutton`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.boolean',
-            this.i18n({ id: 'config.inputType.boolean', value: 'Ja / Nein' })
+            $localize `:@@config.inputType.boolean:Ja / Nein`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.checkboxes',
-            this.i18n({ id: 'config.inputType.checkboxes', value: 'Checkboxen' })
+            $localize `:@@config.inputType.checkboxes:Checkboxen`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.dating',
-            this.i18n({ id: 'config.inputType.dating', value: 'Datierungsangabe' })
+            $localize `:@@config.inputType.dating:Datierungsangabe`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.date',
-            this.i18n({ id: 'config.inputType.date', value: 'Datum' })
+            $localize `:@@config.inputType.date:Datum`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.dimension',
-            this.i18n({ id: 'config.inputType.dimension', value: 'Maßangabe' })
+            $localize `:@@config.inputType.dimension:Längenangabe`
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.weight',
+            $localize `:@@config.inputType.weight:Gewichtsangabe`
+        );
+        this.utilTranslations.addTranslation(
+            'inputTypes.volume',
+            $localize `:@@config.inputType.volume:Volumenangabe`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.literature',
-            this.i18n({ id: 'config.inputType.literature', value: 'Literaturangabe' })
+            $localize `:@@config.inputType.literature:Literaturangabe`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.composite',
-            this.i18n({ id: 'config.inputType.composite', value: 'Kompositfeld' })
+            $localize `:@@config.inputType.composite:Kompositfeld`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.geometry',
-            this.i18n({ id: 'config.inputType.geometry', value: 'Geometrie' })
+            $localize `:@@config.inputType.geometry:Geometrie`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.instanceOf',
-            this.i18n({ id: 'config.inputType.instanceOf', value: 'Typenauswahl' })
+            $localize `:@@config.inputType.instanceOf:Typenauswahl`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.relation',
-            this.i18n({ id: 'config.inputType.relation', value: 'Relation' })
+            $localize `:@@config.inputType.relation:Relation`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.derivedRelation',
-            this.i18n({ id: 'config.inputType.derivedRelation', value: 'Abgeleitete Relation' })
+            $localize `:@@config.inputType.derivedRelation:Abgeleitete Relation`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.category',
-            this.i18n({ id: 'config.inputType.category', value: 'Kategorie' })
+            $localize `:@@config.inputType.category:Kategorie`
         );
         this.utilTranslations.addTranslation(
             'inputTypes.identifier',
-            this.i18n({ id: 'config.inputType.identifier', value: 'Bezeichner' })
+            $localize `:@@config.inputType.identifier:Bezeichner`
+        );
+        this.utilTranslations.addTranslation(
+            'configurationFile', $localize `:@@config.configurationFile:Field-Konfigurationsdatei`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.Point',
+            $localize `:@@geometry.point:Punkt`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.MultiPoint',
+            $localize `:@@geometry.multiPoint:Multipunkt`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.LineString',
+            $localize `:@@geometry.polyline:Polyline`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.MultiLineString',
+            $localize `:@@geometry.multiPolyline:Multipolyline`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.Polygon',
+            $localize `:@@geometry.polygon:Polygon`
+        );
+        this.utilTranslations.addTranslation(
+            'geometry.MultiPolygon',
+            $localize `:@@geometry.multiPolygon:Multipolygon`
         );
     }
 

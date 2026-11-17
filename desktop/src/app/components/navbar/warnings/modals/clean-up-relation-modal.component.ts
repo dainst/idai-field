@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { isEmpty } from 'tsfun';
-import { Datastore, Document } from 'idai-field-core';
+import { Datastore, Document, WarningType } from 'idai-field-core';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
     templateUrl: './clean-up-relation-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -19,10 +22,12 @@ export class CleanUpRelationModalComponent {
     public relationName: string;
     public relationLabel: string|undefined;
     public invalidTargetIds: string[];
+    public warningType: WarningType;
 
 
     constructor(public activeModal: NgbActiveModal,
-                private datastore: Datastore) {}
+                private datastore: Datastore,
+                private menuService: Menus) {}
 
 
     public cancel = () => this.activeModal.dismiss('cancel');
@@ -30,7 +35,9 @@ export class CleanUpRelationModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 

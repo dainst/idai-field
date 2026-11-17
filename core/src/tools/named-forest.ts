@@ -45,5 +45,5 @@ function _filterTrees<N extends Named>(invert: boolean, a: any, bs: any[]): Fore
 
     return isArray(a)
         ? $(a, take(1, bs)[0], drop(1, bs))
-        : (t: any) => $(t, a, bs);
+        : ((t: any) => $(t, a, bs)) as any;
 }

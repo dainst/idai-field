@@ -1,21 +1,23 @@
 import { equal, is, isArray, isObject, on, set, to, Map } from 'tsfun';
-import { Document } from '../model/document';
+import { Document } from '../model/document/document';
 import { Named } from '../tools/named';
 import { CategoryForm } from '../model/configuration/category-form';
 import { BaseField, Field } from '../model/configuration/field';
 import { ValuelistUtil } from '../tools/valuelist-util';
-import { Resource } from '../model/resource';
-import { ImageResource } from '../model/image-resource';
-import { MissingRelationTargetWarnings, OutlierWarnings, Warnings } from '../model/warnings';
+import { Resource } from '../model/document/resource';
+import { ImageResource } from '../model/document/image-resource';
+import { RelationTargetWarnings, OutlierWarnings, Warnings } from '../model/document/warnings';
 import { IndexFacade } from '../index/index-facade';
 import { Datastore } from './datastore';
-import { Query } from '../model/query';
+import { Constraints, Query, SortMode } from '../model/datastore/query';
 import { DocumentCache } from './document-cache';
-import { Hierarchy } from '../services/utilities/hierarchy';
-import { ProjectConfiguration } from '../services';
 import { Tree } from '../tools/forest';
-import { FieldResource } from '../model/field-resource';
+import { FieldResource } from '../model/document/field-resource';
 import { Valuelist } from '../model/configuration/valuelist';
+import { Relation } from '../model/configuration/relation';
+import { ProcessResource } from '../model/document/process-resource';
+import { ProjectConfiguration } from '../services/project-configuration';
+import { Condition } from '../model/configuration/condition';
 
 
 /**
@@ -24,9 +26,10 @@ import { Valuelist } from '../model/configuration/valuelist';
 export module WarningsUpdater {
 
     const FIELDS_TO_SKIP = [
-        Resource.ID, Resource.IDENTIFIER, Resource.CATEGORY, Resource.RELATIONS, FieldResource.SCANCODE,
-        ImageResource.GEOREFERENCE, ImageResource.ORIGINAL_FILENAME
-    ];
+        Resource.ID, Resource.CATEGORY, Resource.RELATIONS, FieldResource.SCANCODE, ImageResource.GEOREFERENCE,
+        ImageResource.ORIGINAL_FILENAME
+    ].concat(Relation.Hierarchy.ALL)
+    .concat(Relation.Image.ALL);
 
 
     /**
@@ -35,7 +38,7 @@ export module WarningsUpdater {
      */
     export function updateIndexIndependentWarnings(document: Document, projectConfiguration: ProjectConfiguration) {
 
-        if (document.resource.category === 'Configuration') return;
+        if (document.resource.category === 'Configuration' || document.project) return;
 
         const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
 
@@ -55,61 +58,77 @@ export module WarningsUpdater {
                                                        documentCache: DocumentCache,
                                                        projectConfiguration: ProjectConfiguration,
                                                        datastore?: Datastore, previousIdentifier?: string,
-                                                       updateAll: boolean = false) {
+                                                       previousScanCode?: string, updateAll: boolean = false) {
 
         const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
-        if (!category) return;
+        if (!category || document.project) return;
 
-        await updateNonUniqueIdentifierWarning(document, indexFacade, datastore, previousIdentifier, updateAll);
-        await updateResourceLimitWarning(document, category, indexFacade, datastore, updateAll);
-        await updateRelationTargetWarning(document, indexFacade, documentCache, datastore, updateAll);
-        await updateMissingOrInvalidParentWarning(document, projectConfiguration, indexFacade, documentCache);
+        await updateNonUniqueFieldWarning(document, indexFacade, 'identifier', 'nonUniqueIdentifier', datastore,
+            previousIdentifier, updateAll);
+        await updateNonUniqueFieldWarning(document, indexFacade, 'scanCode', 'nonUniqueQrCode', datastore,
+            previousScanCode, updateAll);
+        await updateResourceLimitWarning(document, category, indexFacade, projectConfiguration, datastore, updateAll);
+        await updateMissingRelationTargetWarning(document, indexFacade, documentCache, datastore, updateAll);
+        await updateInvalidRelationTargetWarning(document, indexFacade, projectConfiguration, documentCache, datastore,
+            updateAll);
+        await updateMissingOrInvalidParentWarning(document, projectConfiguration, indexFacade, documentCache,
+            datastore, updateAll);
         await updateOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache,
             datastore, updateAll);
     }
 
 
-    export async function updateNonUniqueIdentifierWarning(document: Document, indexFacade: IndexFacade,
-                                                           datastore?: Datastore, previousIdentifier?: string,
-                                                           updateAll: boolean = false) {
+    export async function updateNonUniqueFieldWarning(document: Document, indexFacade: IndexFacade,
+                                                      fieldName: string, warningName: string, 
+                                                      datastore?: Datastore, previousFieldValue?: string,
+                                                      updateAll: boolean = false) {
 
-        if (indexFacade.getCount('identifier:match', document.resource.identifier) > 1) {
+        const fieldValue: string = document.resource[fieldName];
+
+        if (fieldValue && indexFacade.getCount(fieldName + ':match', fieldValue) > 1) {
             if (!document.warnings) document.warnings = Warnings.createDefault();
-            if (!document.warnings.nonUniqueIdentifier) {
-                document.warnings.nonUniqueIdentifier = true;
-                updateIndex(indexFacade, document, ['nonUniqueIdentifier:exist']);
+            if (!document.warnings[warningName]) {
+                document.warnings[warningName] = true;
+                updateIndex(indexFacade, document, [warningName + ':exist']);
                 if (updateAll) {
-                    await updateNonUniqueIdentifierWarnings(
-                        datastore, indexFacade, document.resource.identifier
+                    await updateNonUniqueFieldWarnings(
+                        datastore, indexFacade, fieldName, warningName, fieldValue
                     );
                 }
             }
-        } else if (document.warnings?.nonUniqueIdentifier) {
-            delete document.warnings.nonUniqueIdentifier;
+        } else if (document.warnings?.[warningName]) {
+            delete document.warnings[warningName];
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
-            updateIndex(indexFacade, document, ['nonUniqueIdentifier:exist']);
+            updateIndex(indexFacade, document, [warningName + ':exist']);
         }
-        
-        if (updateAll && previousIdentifier && previousIdentifier !== document.resource.identifier
-                && indexFacade.getCount('identifier:match', previousIdentifier) > 0) {
-            await updateNonUniqueIdentifierWarnings(datastore, indexFacade, previousIdentifier);
+
+        if (updateAll && previousFieldValue && previousFieldValue !== fieldValue
+                && indexFacade.getCount(fieldName + ':match', previousFieldValue) > 0) {
+            await updateNonUniqueFieldWarnings(datastore, indexFacade, fieldName, warningName, previousFieldValue);
         }
     }
 
 
     export async function updateResourceLimitWarning(document: Document, category: CategoryForm,
-                                                     indexFacade: IndexFacade, datastore?: Datastore,
-                                                     updateAll: boolean = false) {
+                                                     indexFacade: IndexFacade,
+                                                     projectConfiguration: ProjectConfiguration,
+                                                     datastore?: Datastore, updateAll: boolean = false) {
     
         if (!category) return;
 
-        const query: Query = { categories: [category.name] };
+        const resourceLimit: number = category.parentCategory?.resourceLimit ?? category.resourceLimit;
+        const parentCategoryName: string = category.parentCategory?.name ?? category.name;
 
-        if (category.resourceLimit && indexFacade.find(query).length  > category.resourceLimit) {
+        const query: Query = {
+            categories: projectConfiguration.getCategoryWithSubcategories(parentCategoryName).map(to(Named.NAME)),
+            sort: { mode: SortMode.None }
+        };
+
+        if (resourceLimit !== undefined && indexFacade.find(query).length  > resourceLimit) {
             if (!document.warnings) document.warnings = Warnings.createDefault();
             document.warnings.resourceLimitExceeded = true;
             updateIndex(indexFacade, document, ['resourceLimitExceeded:exist']);
-            if (updateAll) await updateResourceLimitWarnings(datastore, indexFacade, category);
+            if (updateAll) await updateResourceLimitWarnings(datastore, indexFacade, projectConfiguration, category);
         } else if (document.warnings?.resourceLimitExceeded) {
             delete document.warnings.resourceLimitExceeded;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
@@ -119,24 +138,36 @@ export module WarningsUpdater {
 
 
     export async function updateResourceLimitWarnings(datastore: Datastore, indexFacade: IndexFacade,
+                                                      projectConfiguration: ProjectConfiguration,
                                                       category: CategoryForm) {
 
         if (!category) return;
-        const documents: Array<Document> = (await datastore.find({ categories: [category.name] })).documents;
+
+        const parentCategoryName: string = category.parentCategory?.name ?? category.name;
+
+        const documents: Array<Document> = (await datastore.find({
+            categories: projectConfiguration.getCategoryWithSubcategories(parentCategoryName).map(to(Named.NAME)),
+            sort: { mode: SortMode.None }
+        })).documents;
 
         for (let document of documents) {
-            await updateResourceLimitWarning(document, category, indexFacade);
+            await updateResourceLimitWarning(
+                document,
+                projectConfiguration.getCategory(document.resource.category),
+                indexFacade,
+                projectConfiguration
+            );
         }
     }
 
 
-    export async function updateRelationTargetWarning(document: Document, indexFacade: IndexFacade,
-                                                      documentCache: DocumentCache, datastore?: Datastore,
-                                                      updateRelationTargets: boolean = false) {
+    export async function updateMissingRelationTargetWarning(document: Document, indexFacade: IndexFacade,
+                                                             documentCache: DocumentCache, datastore?: Datastore,
+                                                             updateRelationTargets: boolean = false) {
     
-        const warnings: MissingRelationTargetWarnings = { relationNames: [], targetIds: [] };
+        const warnings: RelationTargetWarnings = { relationNames: [], targetIds: [] };
 
-        for (let relationName of Object.keys(document.resource.relations)) {
+        for (let relationName of getRelationNames(document)) {
             for (let targetId of document.resource.relations[relationName]) {
                 if (!documentCache.get(targetId)) {
                     if (!warnings.relationNames.includes(relationName)) warnings.relationNames.push(relationName);
@@ -149,28 +180,83 @@ export module WarningsUpdater {
             if (!document.warnings) document.warnings = Warnings.createDefault();
             document.warnings.missingRelationTargets = warnings;
             updateIndex(indexFacade, document, ['missingRelationTargets:exist']);
+            updateIndex(indexFacade, document, ['missingRelationTargetIds:contain']);
         } else if (document.warnings?.missingRelationTargets) {
             delete document.warnings.missingRelationTargets;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
             updateIndex(indexFacade, document, ['missingRelationTargets:exist']);
+            updateIndex(indexFacade, document, ['missingRelationTargetIds:contain']);
         }
 
         if (updateRelationTargets) {
-            await updateRelationTargetWarnings(datastore, documentCache, indexFacade, document.resource.id);
+            await updateMissingRelationTargetWarnings(datastore, documentCache, indexFacade, document.resource.id);
+        }
+    }
+
+
+    export async function updateInvalidRelationTargetWarning(document: Document, indexFacade: IndexFacade,
+                                                             projectConfiguration: ProjectConfiguration,
+                                                             documentCache: DocumentCache, datastore?: Datastore,
+                                                             updateRelationTargets: boolean = false) {
+    
+        const warnings: RelationTargetWarnings = { relationNames: [], targetIds: [] };
+
+        for (let relationName of getRelationNames(document)) {
+            if (document.warnings?.unconfiguredFields.includes(relationName)) continue;
+
+            for (let targetId of document.resource.relations[relationName]) {
+                const targetDocument: Document = documentCache.get(targetId);
+                if (!targetDocument) continue;
+                if (!projectConfiguration.isAllowedRelationDomainCategory(
+                    document.resource.category, targetDocument.resource.category, relationName
+                )) {
+                    if (!warnings.relationNames.includes(relationName)) warnings.relationNames.push(relationName);
+                    if (!warnings.targetIds.includes(targetId)) warnings.targetIds.push(targetId);
+                }
+
+            }
+        }
+
+        if (warnings.relationNames.length > 0) {
+            if (!document.warnings) document.warnings = Warnings.createDefault();
+            document.warnings.invalidRelationTargets = warnings;
+            updateIndex(indexFacade, document, ['invalidRelationTargets:exist']);
+            updateIndex(indexFacade, document, ['invalidRelationTargetIds:contain']);
+        } else if (document.warnings?.invalidRelationTargets) {
+            delete document.warnings.invalidRelationTargets;
+            if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
+            updateIndex(indexFacade, document, ['invalidRelationTargets:exist']);
+            updateIndex(indexFacade, document, ['invalidRelationTargetIds:contain']);
+        }
+
+        if (updateRelationTargets) {
+            await updateInvalidRelationTargetWarnings(
+                datastore, documentCache, indexFacade, projectConfiguration, document.resource.id
+            );
         }
     }
 
 
     export async function updateMissingOrInvalidParentWarning(document: Document,
                                                               projectConfiguration: ProjectConfiguration,
-                                                              indexFacade: IndexFacade, documentCache: DocumentCache) {
+                                                              indexFacade: IndexFacade, documentCache: DocumentCache,
+                                                              datastore?: Datastore, updateAll: boolean = false) {
 
-        const parentDocument: Document = await Hierarchy.getParentDocument(
-            (id: string) => Promise.resolve(documentCache[id]),
-            document
-        );
+        let hasValidParent: boolean = true;
+        
+        const ancestors: Array<Document> = getAncestorDocuments(document, documentCache);
 
-        const hasValidParent: boolean = await Document.isValidParent(document, parentDocument, projectConfiguration);
+        for (let i = 0; i <= ancestors.length; i++) {
+            const baseDocument: Document = i ? ancestors[i - 1] : document;
+            const parentDocument: Document = i < ancestors.length ? ancestors[i] : undefined;
+            const recordedInTargetIds: string[] = baseDocument.resource.relations[Relation.Hierarchy.RECORDEDIN];
+            const recordedInTargetId: string = recordedInTargetIds?.length ? recordedInTargetIds[0] : undefined;
+            const recordedInTarget: Document = recordedInTargetId ? documentCache.get(recordedInTargetId) : undefined;
+            if (!Document.isValidParent(baseDocument, parentDocument, recordedInTarget, projectConfiguration)) {
+                hasValidParent = false;
+                break;
+            }
+        }
 
         if (!hasValidParent) {
             if (!document.warnings) document.warnings = Warnings.createDefault();
@@ -180,6 +266,12 @@ export module WarningsUpdater {
             delete document.warnings.missingOrInvalidParent;
             if (!Warnings.hasWarnings(document.warnings)) delete document.warnings;
             updateIndex(indexFacade, document, ['missingOrInvalidParent:exist']);
+        }
+
+        if (updateAll) {
+            await updateMissingOrInvalidParentWarningsForDescendants(
+                document, datastore, documentCache, indexFacade, projectConfiguration
+            );
         }
     }
 
@@ -194,14 +286,11 @@ export module WarningsUpdater {
             return Field.InputType.VALUELIST_INPUT_TYPES.concat([Field.InputType.COMPOSITE])
                 .includes(field.inputType);
         });
-        const parentResource: Resource = await Hierarchy.getParentResource(
-            id => Promise.resolve(documentCache.get(id)), document.resource
-        );
         const outlierWarnings: OutlierWarnings = { fields: {}, values: [] };
 
         for (let field of fields) {
             const outlierValues: Map<string[]>|string[] = getOutlierValues(
-                document.resource, field, documentCache.get('project'), parentResource
+                document.resource, field, documentCache.get('project')
             );
             if (isArray(outlierValues) && !outlierValues.length) continue;
             if (isObject(outlierValues) && !Object.keys(outlierValues).length) continue;
@@ -228,31 +317,31 @@ export module WarningsUpdater {
             }
         }
 
-        if (document.resource.category === 'Project' && updateAll) {
+        if (updateAll && document.resource.category === 'Project') {
             await updateProjectFieldOutlierWarnings(datastore, documentCache, indexFacade, projectConfiguration);
         }
     }
 
 
-    function getOutlierValues(fieldContainer: any, field: BaseField, projectDocument: Document,
-                              parentResource: Resource): Map<string[]>|string[] {
+    function getOutlierValues(fieldContainer: any, field: BaseField,
+                              projectDocument: Document): Map<string[]>|string[] {
 
         const fieldContent: any = fieldContainer[field.name];
         if (!fieldContent) return [];
 
         if (field.inputType === Field.InputType.COMPOSITE) {
-            return getOutlierValuesForCompositeField(field, fieldContent, projectDocument, parentResource);
+            return getOutlierValuesForCompositeField(field, fieldContent, projectDocument);
         }
 
-        const valuelist: Valuelist = ValuelistUtil.getValuelist(field, projectDocument, parentResource);
+        const valuelist: Valuelist = ValuelistUtil.getValuelist(field, projectDocument, [], true);
         return valuelist
             ? set(ValuelistUtil.getValuesNotIncludedInValuelist(fieldContent, valuelist) ?? [])
             : [];
     }
 
 
-    function getOutlierValuesForCompositeField(field: Field, fieldContent: any, projectDocument: Document,
-                                               parentResource: Resource): Map<string[]> {
+    function getOutlierValuesForCompositeField(field: Field, fieldContent: any,
+                                               projectDocument: Document): Map<string[]> {
 
         if (!isArray(fieldContent)) return {};
 
@@ -264,9 +353,8 @@ export module WarningsUpdater {
             for (let subfield of field.subfields) {
                 if (!Field.InputType.VALUELIST_INPUT_TYPES.includes(subfield.inputType)) continue;
 
-                const subfieldOutliers: string[] = getOutlierValues(
-                    entry, subfield, projectDocument, parentResource
-                ) as string[];
+                const subfieldOutliers: string[] = getOutlierValues(entry, subfield, projectDocument) as string[];
+                if (!subfieldOutliers.length) continue;
 
                 if (outliers[subfield.name]) {
                     outliers[subfield.name] = set(outliers[subfield.name].concat(subfieldOutliers));
@@ -280,28 +368,48 @@ export module WarningsUpdater {
     }
 
 
-    async function updateNonUniqueIdentifierWarnings(datastore: Datastore, indexFacade: IndexFacade,
-                                                     identifier: string) {
+    async function updateNonUniqueFieldWarnings(datastore: Datastore, indexFacade: IndexFacade, fieldName: string,
+                                                warningName: string, fieldValue: string) {
+
+        const constraints: Constraints = {};
+        constraints[fieldName + ':match'] = fieldValue;
 
         const documents: Array<Document> = (await datastore.find({
-            constraints: { 'identifier:match': identifier }
-        })).documents;
+            constraints,
+            sort: { mode: SortMode.None }
+        }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
-            await updateNonUniqueIdentifierWarning(document, indexFacade);
+            await updateNonUniqueFieldWarning(document, indexFacade, fieldName, warningName);
         }
     }
 
 
-    async function updateRelationTargetWarnings(datastore: Datastore, documentCache: DocumentCache,
-                                                indexFacade: IndexFacade, id: string) {
+    async function updateMissingRelationTargetWarnings(datastore: Datastore, documentCache: DocumentCache,
+                                                       indexFacade: IndexFacade, id: string) {
 
         const documents: Array<Document> = (await datastore.find({
-            constraints: { 'missingRelationTargetIds:contain': id }
-        })).documents;
+            constraints: { 'missingRelationTargetIds:contain': id },
+            sort: { mode: SortMode.None }
+        }, { includeResourcesWithoutValidParent: true })).documents;
 
         for (let document of documents) {
-            await updateRelationTargetWarning(document, indexFacade, documentCache, datastore);
+            await updateMissingRelationTargetWarning(document, indexFacade, documentCache, datastore);
+        }
+    }
+
+
+    async function updateInvalidRelationTargetWarnings(datastore: Datastore, documentCache: DocumentCache,
+                                                       indexFacade: IndexFacade, projectConfiguration: ProjectConfiguration,
+                                                       id: string) {
+
+        const documents: Array<Document> = (await datastore.find({
+            constraints: { 'invalidRelationTargetIds:contain': id },
+            sort: { mode: SortMode.None }
+        }, { includeResourcesWithoutValidParent: true })).documents;
+
+        for (let document of documents) {
+            await updateInvalidRelationTargetWarning(document, indexFacade, projectConfiguration, documentCache, datastore);
         }
     }
 
@@ -314,13 +422,37 @@ export module WarningsUpdater {
             return CategoryForm.getFields(category).find(field => field.valuelistFromProjectField);
         }).map(to(Named.NAME));
 
-        const documents: Array<Document> = (await datastore.find({ categories: categoryNames })).documents;
+        const documents: Array<Document> = (await datastore.find(
+            { categories: categoryNames, sort: { mode: SortMode.None } },
+            { includeResourcesWithoutValidParent: true }
+        )).documents;
 
         for (let document of documents) {
             const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
             if (!category) continue;
 
             await updateOutlierWarning(document, projectConfiguration, category, indexFacade, documentCache, datastore);
+        }
+    }
+
+
+    async function updateMissingOrInvalidParentWarningsForDescendants(document: Document, datastore: Datastore,
+                                                                      documentCache: DocumentCache,
+                                                                      indexFacade: IndexFacade,
+                                                                      projectConfiguration: ProjectConfiguration) {
+
+        const documents: Array<Document> = (await datastore.find({
+            constraints: {
+                'isChildOf:contain': { value: document.resource.id, searchRecursively: true },
+                'missingOrInvalidParent:exist': 'KNOWN'
+            },
+            sort: { mode: SortMode.None }
+        }, { includeResourcesWithoutValidParent: true })).documents;
+
+        for (let document of documents) {
+            await updateMissingOrInvalidParentWarning(
+                document, projectConfiguration, indexFacade, documentCache, datastore
+            );
         }
     }
 
@@ -335,16 +467,24 @@ export module WarningsUpdater {
         }
 
         const fieldDefinitions: Array<Field> = CategoryForm.getFields(category);
+        updateMandatoryFieldWarnings(warnings, document, fieldDefinitions);
 
         if (document._conflicts) warnings.conflicts = true;
         if (isIdentifierPrefixMissing(document, category)) warnings.missingIdentifierPrefix = true;
+        if (category.parentCategory?.name === 'Process'
+                && !ProcessResource.validateState(document.resource as ProcessResource)) {
+            warnings.invalidProcessState = true;
+        }
 
         return Object.keys(document.resource)
+            .concat(Object.keys(document.resource.relations))
             .filter(fieldName => !FIELDS_TO_SKIP.includes(fieldName))
             .reduce((result, fieldName) => {
-                const fieldContent: any = document.resource[fieldName];
                 const field: Field = fieldDefinitions.find(on(Named.NAME, is(fieldName)));
-                updateWarningsForField(warnings, fieldName, field, fieldContent);
+                const fieldContent: any = field && Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(field?.inputType)
+                    ? document.resource.relations[fieldName]
+                    : document.resource[fieldName];
+                updateWarningsForField(warnings, fieldName, field, fieldContent, document.resource, category);
                 return result;
             }, warnings);
     }
@@ -358,12 +498,37 @@ export module WarningsUpdater {
     }
 
 
-    function updateWarningsForField(warnings: Warnings, fieldName: string, field: Field, fieldContent: any) {
+    function updateMandatoryFieldWarnings(warnings: Warnings, document: Document, fieldDefinitions: Array<Field>) {
+
+        fieldDefinitions.filter(field => field.mandatory).forEach(field => {
+            if (!Field.isFilled(field, document.resource)) {
+                warnings.missingMandatoryFields.push(field.name);
+            }
+        });
+    }
+
+
+    function updateWarningsForField(warnings: Warnings, fieldName: string, field: Field, fieldContent: any,
+                                    resource: Resource, category: CategoryForm) {
+
+        if (fieldName === Resource.IDENTIFIER && category.name === 'Project') return;
 
         if (!field) {
             warnings.unconfiguredFields.push(fieldName);
         } else if (!Field.isValidFieldData(fieldContent, field)) {
             warnings.invalidFields.push(fieldName);
+        } else {
+            if (!Condition.isFulfilled(field.condition, resource, CategoryForm.getFields(category), 'field')) {
+                warnings.unfulfilledConditionFields.push(fieldName);
+            }
+            if (Field.hasUnallowedCharacters(fieldContent, field)) {
+                warnings.unallowedCharacterFields.push(fieldName);
+            }
+
+            if (field.inputType === Field.InputType.GEOMETRY && field.geometryTypes
+                    && !field.geometryTypes.includes(fieldContent.type)) {
+                warnings.unallowedGeometryType = true;
+            }
         }
     }
 
@@ -372,5 +537,40 @@ export module WarningsUpdater {
 
         indexNames.forEach(indexName => indexFacade.putToSingleIndex(document, indexName));
         indexFacade.putToSingleIndex(document, 'warnings:exist');
+    }
+
+
+    function getAncestorDocuments(document: Document, documentCache: DocumentCache): Array<Document> {
+
+        const result: Array<Document> = [];
+        let parent: Document;
+
+        do {
+            parent = getParentDocument(parent ?? document, documentCache);
+            if (parent) {
+                if (result.includes(parent)) return [];
+                result.push(parent);
+            }
+        } while (parent);
+
+        return result;
+    }
+
+
+    function getParentDocument(document: Document, documentCache: DocumentCache): Document {
+
+        return Resource.hasRelations(document.resource, Relation.Hierarchy.LIESWITHIN)
+            ? documentCache.get(document.resource.relations.liesWithin[0])
+            : Resource.hasRelations(document.resource, Relation.Hierarchy.RECORDEDIN)
+                ? documentCache.get(document.resource.relations.isRecordedIn[0])
+                : undefined;
+    }
+
+
+    function getRelationNames(document: Document): string[] {
+
+        return Object.keys(document.resource.relations).filter(relationName => {
+            return !Relation.Hierarchy.ALL.includes(relationName);
+        });
     }
 }

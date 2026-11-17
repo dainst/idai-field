@@ -1,9 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { set } from 'tsfun';
-import { FieldDocument, Named, CategoryForm, Tree, ProjectConfiguration, FieldResource, Valuelist, 
-    Labels } from 'idai-field-core';
-import { ResourcesComponent } from '../resources.component';
+import { FieldDocument, CategoryForm, ProjectConfiguration, FieldResource, Valuelist, Labels } from 'idai-field-core';
 import { Loading } from '../../widgets/loading';
 import { BaseList } from '../base-list';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
@@ -14,37 +11,39 @@ import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 @Component({
     selector: 'list',
-    templateUrl: './list.html'
+    templateUrl: './list.html',
+    standalone: false
 })
 /**
  * @author Fabian Z.
  * @author Thomas Kleinke
  * @author Philipp Gerth
  */
-export class ListComponent extends BaseList implements OnChanges {
+export class ListComponent extends BaseList implements OnChanges, OnDestroy {
 
     @Input() documents: Array<FieldDocument>;
     @Input() selectedDocument: FieldDocument;
 
-    public categoriesMap: { [category: string]: CategoryForm };
     public shortDescriptionValuelists: { [category: string]: { valuelist: Valuelist, values: string[] } };
     public availableLanguages: Array<Language>;
     public selectedLanguage: Language|undefined;
+
+    public readonly itemSize: number = 42;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private settingsProvider: SettingsProvider,
                 private labels: Labels,
-                private i18n: I18n,
-                resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
-                menuService: Menus) {
+                menuService: Menus,
+                changeDetectorRef: ChangeDetectorRef) {
 
-        super(resourcesComponent, viewFacade, loading, menuService);
+        super(viewFacade, loading, menuService, changeDetectorRef);
 
-        // TODO review if we couln't just make use of getCategory()
-        this.categoriesMap = Named.arrayToMap(Tree.flatten(projectConfiguration.getCategories()));
+        this.viewFacade.navigationPathNotifications().subscribe(() => {
+            if (!this.selectedDocument) this.scrollToLastSelectedSegmentResource();
+        });
     }
 
 
@@ -56,7 +55,7 @@ export class ListComponent extends BaseList implements OnChanges {
 
     public trackDocument = (index: number, item: FieldDocument) => item.resource.id;
 
-    public getCategory = (document: FieldDocument) => this.categoriesMap[document.resource.category];
+    public getCategory = (document: FieldDocument) => this.projectConfiguration.getCategory(document.resource.category);
 
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -66,6 +65,12 @@ export class ListComponent extends BaseList implements OnChanges {
             this.updateAvailableLanguages();
             this.updateShortDescriptionValuelists();
         }
+    }
+
+
+    ngOnDestroy() {
+        
+        this.removeListeners();
     }
 
 
@@ -99,7 +104,7 @@ export class ListComponent extends BaseList implements OnChanges {
             Languages.getAvailableLanguages(),
             this.projectConfiguration.getProjectLanguages(),
             this.settingsProvider.getSettings().languages,
-            this.i18n({ id: 'languages.noLanguage', value: 'Ohne Sprachangabe' })
+            $localize `:@@languages.noLanguage:Ohne Sprachangabe`
         );
 
         if (this.availableLanguages.length > 0) this.selectedLanguage = this.availableLanguages[0];

@@ -3,15 +3,15 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Chapter, HelpLoader } from './help-loader';
 import { TabManager } from '../../services/tabs/tab-manager';
-import { SettingsService } from '../../services/settings/settings-service';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
 import { Settings } from '../../services/settings/settings';
+import { AngularUtility } from '../../angular/angular-utility';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
-const HELP_LANGUAGES = ['de', 'en'];
+const HELP_LANGUAGES = ['de', 'en', 'tr'];
 const FALLBACK_LANGUAGE = 'en';
 
 
@@ -20,7 +20,8 @@ const FALLBACK_LANGUAGE = 'en';
     templateUrl: './help.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -30,6 +31,12 @@ export class HelpComponent implements OnInit {
     public html: SafeHtml;
     public chapters: Array<Chapter> = [];
     public activeChapter: Chapter;
+    public searchResults: HTMLCollectionOf<Element>;
+    public hasSearchResults: boolean;
+
+    private htmlString: string;
+    private searchResultIndex: number;
+    private searchTimeout: any;
 
     @ViewChild('help', { static: false }) rootElement: ElementRef;
 
@@ -39,7 +46,6 @@ export class HelpComponent implements OnInit {
 
     constructor(private domSanitizer: DomSanitizer,
                 private http: HttpClient,
-                private settingsService: SettingsService,
                 private tabManager: TabManager,
                 private changeDetectorRef: ChangeDetectorRef,
                 private menuService: Menus) {}
@@ -49,14 +55,14 @@ export class HelpComponent implements OnInit {
 
         const folderPath: string = remote.getGlobal('manualPath');
 
-        const {html, chapters} = await HelpLoader.load(
+        const { html, chapters } = await HelpLoader.load(
             HelpComponent.getFilePath(HelpComponent.getLocale(), folderPath),
             folderPath,
-            this.http,
-            this.domSanitizer
+            this.http
         );
 
-        this.html = html;
+        this.htmlString = html;
+        this.html = this.domSanitizer.bypassSecurityTrustHtml(this.htmlString);
         this.chapters = chapters;
         if (this.chapters.length > 0) this.activeChapter = this.chapters[0];
     }
@@ -73,10 +79,7 @@ export class HelpComponent implements OnInit {
     public scrollToChapter(chapter: Chapter) {
 
         const element: HTMLElement|null = document.getElementById(chapter.id);
-        if (!element) return;
-
-        element.scrollIntoView(true);
-        this.rootElement.nativeElement.scrollTop += HelpComponent.scrollOffset;
+        this.scrollToElement(element);
     }
 
 
@@ -92,6 +95,131 @@ export class HelpComponent implements OnInit {
             }
         });
         this.changeDetectorRef.detectChanges();
+    }
+
+
+    public triggerSearch(searchTerm) {
+
+        if (this.searchTimeout) clearTimeout(this.searchTimeout);
+
+        this.searchTimeout = setTimeout(() => {
+            this.search(searchTerm);
+            this.searchTimeout = undefined;
+        }, 300);
+    }
+
+
+    public async onSearchInputKeyUp(event: KeyboardEvent) {
+        
+        if (event.key === 'Enter') this.scrollToNextSearchResult();
+    }
+
+
+    public scrollToPreviousSearchResult() {
+
+        if (!this.searchResults?.length) return;
+
+        if (this.searchResultIndex > 0) {
+            this.scrollToSearchResult(this.searchResultIndex - 1);
+        } else {
+            this.scrollToSearchResult(this.searchResults.length - 1);
+        }
+    }
+
+
+    public scrollToNextSearchResult() {
+
+        if (!this.searchResults?.length) return;
+
+        if (this.searchResultIndex < this.searchResults.length - 1) {
+            this.scrollToSearchResult(this.searchResultIndex + 1);
+        } else {
+            this.scrollToSearchResult(0);
+        }
+    }
+
+
+    private async search(searchTerm: string) {
+
+        searchTerm = searchTerm?.trim();
+
+        const updatedHtmlString: string = searchTerm.length > 2
+            ? this.replaceSearchString(searchTerm)
+            : this.htmlString;
+
+        this.html = this.domSanitizer.bypassSecurityTrustHtml(updatedHtmlString);
+
+        await AngularUtility.refresh();
+
+        this.searchResults = document.getElementsByClassName('search-result');
+        this.hasSearchResults = this.searchResults?.length > 0;
+        this.searchResultIndex = 0;
+
+        if (this.searchResults.length > 0) this.scrollToSearchResult(0);
+        this.changeDetectorRef.detectChanges();
+    }
+
+    
+    private replaceSearchString(searchTerm: string) {
+
+        const lowerCaseSearchTerm: string = searchTerm[0].toLowerCase() + searchTerm.slice(1);
+        const upperCaseSearchTerm: string = searchTerm[0].toUpperCase() + searchTerm.slice(1);
+
+        let result: string = '';
+        let content: string = '';
+        let cursor: number = 0;
+
+        do {
+            const character: string = this.htmlString[cursor];
+            if (character === '<') {
+                if (content.length) {
+                    let updatedContent: string = content.replaceAll(
+                        lowerCaseSearchTerm,
+                        '<span class="search-result">' + lowerCaseSearchTerm + '</span>'
+                    );
+                    if (lowerCaseSearchTerm !== upperCaseSearchTerm) {
+                        updatedContent = updatedContent.replaceAll(
+                            upperCaseSearchTerm,
+                            '<span class="search-result">' + upperCaseSearchTerm + '</span>'
+                        );
+                    }
+                    result += updatedContent;
+                }
+                content = character;
+            } else if (character === '>') {
+                result += content + character;
+                content = '';
+            } else {
+                content += character;
+            }
+        } while (++cursor < this.htmlString.length);
+
+        return result;
+    }
+
+
+    private scrollToSearchResult(index: number) {
+
+        if (this.searchResultIndex !== undefined) {
+            (this.searchResults.item(this.searchResultIndex) as HTMLElement).classList
+                .remove('selected-search-result');
+        }
+
+        if (this.searchResults.length > index) {
+            const element: HTMLElement = this.searchResults.item(index) as HTMLElement;
+            element.classList.add('selected-search-result');
+            this.scrollToElement(element, 2);
+            this.searchResultIndex = index;
+        }
+    }
+
+
+    private scrollToElement(element: HTMLElement, offset: number = 0) {
+
+        if (!element) return;
+
+        element.scrollIntoView(true);
+        this.rootElement.nativeElement.scrollTop += HelpComponent.scrollOffset + offset;
     }
 
 

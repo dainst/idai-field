@@ -1,30 +1,48 @@
-import { validateReferences } from '../../../../../src/app/components/configuration/validation/validate-references';
+import { validateReferences,
+    validateSemanticReferences } from '../../../../../src/app/components/configuration/validation/validate-references';
+import { M } from '../../../../../src/app/components/messages/m';
 
 
 describe('validate references', () => {
 
-    it('perform validation', () => {
+    test('validate general references', () => {
         
-        try {
-            validateReferences(['http://www.example.de']);
-        } catch(err) {
-            fail();
-        }
-
-        try {
-            validateReferences(['https://www.example.de']);
-        } catch(err) {
-            fail();
-        }
+        validateReferences(['http://www.example.de']);
+        validateReferences(['https://www.example.de']);
 
         try {
             validateReferences(['www.example.de']);
-            fail();
-        } catch(err) {}
+            throw new Error('Test failure');
+        } catch(err) {
+            expect(err).toEqual([M.CONFIGURATION_ERROR_INVALID_REFERENCE, 'www.example.de']);
+        }
 
         try {
             validateReferences(['abc']);
-            fail();
-        } catch(err) {}
+            throw new Error('Test failure');
+        } catch(err) {
+            expect(err).toEqual([M.CONFIGURATION_ERROR_INVALID_REFERENCE, 'abc']);
+        }
+    });
+
+
+    test('validate semantic references', () => {
+        
+        validateSemanticReferences([{ predicate: 'skos:exactMatch', uri: 'http://www.example.de' }]);
+        validateSemanticReferences([{ predicate: 'skos:exactMatch', uri: 'https://www.example.de' }]);
+
+        try {
+            validateSemanticReferences([{ predicate: 'skos:exactMatch', uri: 'www.example.de' }]);
+            throw new Error('Test failure');
+        } catch(err) {
+            expect(err).toEqual([M.CONFIGURATION_ERROR_INVALID_REFERENCE, 'www.example.de']);
+        }
+
+        try {
+            validateSemanticReferences([{ predicate: 'skos:exactMatch', uri: 'abc' }]);
+            throw new Error('Test failure');
+        } catch(err) {
+            expect(err).toEqual([M.CONFIGURATION_ERROR_INVALID_REFERENCE, 'abc']);
+        }
     });
 });

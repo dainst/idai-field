@@ -51,16 +51,16 @@ describe('Validator', () => {
     } as any);
 
 
-    it('should report duplicate identifier', async done => {
+    test('should report duplicate identifier', async () => {
 
         const find = () =>
             Promise.resolve(
-                { totalCount: 1, documents: [{ resource: { id: '2', identifier: 'eins' } }] } as unknown as Datastore.FindResult
+                { totalCount: 1, documents: [{ resource: { id: '2', identifier: 'one' } }] } as Datastore.FindResult
             );
 
         const document = {
             resource: {
-                id: '1', identifier: 'eins', category: 'T', mandatory: 'm', relations: { 'isRecordedIn': [] }
+                id: '1', identifier: 'one', category: 'T', mandatory: 'm', relations: { 'isRecordedIn': [] }
             }
         };
 
@@ -68,9 +68,7 @@ describe('Validator', () => {
             await new Validator(projectConfiguration, find).assertIdentifierIsUnique(document);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ValidationErrors.IDENTIFIER_ALREADY_EXISTS, 'eins']);
+            expect(expected).toEqual([ValidationErrors.IDENTIFIER_ALREADY_EXISTS, 'one']);
         }
-
-        done();
     });
 });

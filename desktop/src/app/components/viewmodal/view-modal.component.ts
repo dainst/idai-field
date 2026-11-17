@@ -20,7 +20,7 @@ export abstract class ViewModalComponent {
     constructor(protected activeModal: NgbActiveModal,
                 protected modalService: NgbModal,
                 private routingService: Routing,
-                private menuService: Menus,
+                protected menuService: Menus,
                 protected messages: Messages) {}
 
 
@@ -56,12 +56,12 @@ export abstract class ViewModalComponent {
             { size: 'lg', backdrop: 'static', animation: false }
         );
         const doceditModalComponent = doceditModalRef.componentInstance;
-        doceditModalComponent.setDocument(this.getDocument(isImageDocument), isImageDocument);
+        doceditModalComponent.setDocument(this.getDocument(isImageDocument));
         if (activeGroup) doceditModalComponent.activeGroup = activeGroup;
 
         try {
             const result = await doceditModalRef.result;
-            if (result.document) this.setDocument(result.document, isImageDocument);
+            if (result.documents) this.setDocument(result.documents[0], isImageDocument);
         } catch (closeReason) {
             // Cancelled
         }

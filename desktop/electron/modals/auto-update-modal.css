@@ -8,6 +8,12 @@
   margin-bottom: 15px;
 }
 
+#update-warning {
+  font-weight: bold;
+  margin-bottom: 15px;
+  font-size: 15px;
+}
+
 h2 {
   font-size: 15px;
 }

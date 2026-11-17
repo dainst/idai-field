@@ -11,7 +11,8 @@ import { ComponentHelpers } from '../../../../component-helpers';
     templateUrl: './multi-language-text-field.html',
     host: {
         '(window:mousedown)': 'onMouseDown($event)',
-    }
+    },
+    standalone: false
 })
 
 /**

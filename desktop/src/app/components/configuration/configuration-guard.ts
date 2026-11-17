@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanDeactivate } from '@angular/router';
+
 import { ConfigurationComponent } from './configuration.component';
 
 
@@ -7,7 +7,7 @@ import { ConfigurationComponent } from './configuration.component';
 /**
  * @author Thomas Kleinke
  */
-export class ConfigurationGuard implements CanDeactivate<ConfigurationComponent> {
+export class ConfigurationGuard  {
     
     async canDeactivate(target: ConfigurationComponent): Promise<boolean> {
         

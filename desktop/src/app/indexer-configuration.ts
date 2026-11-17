@@ -1,4 +1,4 @@
-import { basicIndexConfiguration, ConstraintIndex, IndexFacade, ProjectConfiguration, Tree } from 'idai-field-core';
+import { basicIndexConfiguration, Comparator, ConstraintIndex, IndexFacade, ProjectConfiguration, Tree } from 'idai-field-core';
 
 
 /**
@@ -7,7 +7,7 @@ import { basicIndexConfiguration, ConstraintIndex, IndexFacade, ProjectConfigura
  */
 export module IndexerConfiguration {
 
-    export function configureIndexers(projectConfiguration: ProjectConfiguration, showWarnings = true) {
+    export function configureIndexers(projectConfiguration: ProjectConfiguration, comparator: Comparator, showWarnings = true) {
 
         const createdConstraintIndex = ConstraintIndex.make({
             ... basicIndexConfiguration,
@@ -25,8 +25,8 @@ export module IndexerConfiguration {
             'isSameAs:exist': { path: 'resource.relations.isSameAs', pathArray: ['resource', 'relations', 'isSameAs'], type: 'exist' },
             'geometry:exist': { path: 'resource.geometry', pathArray: ['resource', 'geometry'], type: 'exist' },
             'georeference:exist': { path: 'resource.georeference', pathArray: ['resource', 'georeference'], type: 'exist' },
+            'originalFilename:match': { path: 'resource.originalFilename', pathArray: ['resource', 'originalFilename'], type: 'match' },
             'conflicts:exist': { path: '_conflicts', pathArray: ['_conflicts'], type: 'exist' },
-            'scanCode:match': { path: 'resource.scanCode', pathArray: ['resource', 'scanCode'], type: 'match' },
             'project:exist': { path: 'project', pathArray: ['project'], type: 'exist' } // *project* property is set for documents which are not "owned" by the current project. This is the case for images of imported type catalogs, for example.
         }, Tree.flatten(projectConfiguration.getCategories()));
 
@@ -35,6 +35,7 @@ export module IndexerConfiguration {
             createdConstraintIndex,
             createdFulltextIndex,
             projectConfiguration,
+            comparator,
             showWarnings
         );
 

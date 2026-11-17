@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ChangesStream, Datastore, FieldDocument, FieldGeometry, RelationsManager } from 'idai-field-core';
+import { isArray } from 'tsfun';
+import { ChangesStream, Datastore, DatastoreErrors, FieldDocument, RelationsManager } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { NavigationPath } from '../../../components/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
@@ -7,12 +8,16 @@ import { Messages } from '../../messages/messages';
 import { Loading } from '../../widgets/loading';
 import { ResourcesComponent } from '../resources.component';
 import { MenuContext } from '../../../services/menu-context';
+import { M } from '../../messages/m';
 
 
 @Component({
     selector: 'resources-map',
     templateUrl: './resources-map.html',
-    host: { '(window:keydown)': 'onKeyDown($event)' }
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira
@@ -58,13 +63,15 @@ export class ResourcesMapComponent {
 
     public isPopoverMenuOpened = () => this.resourcesComponent.popoverMenuOpened;
 
-    public isEditingGeometry = () => this.menuService.getContext() === MenuContext.GEOMETRY_EDIT;
+    public isEditingGeometry = () => [MenuContext.GEOMETRY_EDIT, MenuContext.GEOMETRY_EDIT_MODAL]
+        .includes(this.menuService.getContext());
 
     public isEditing = (menuContext = this.menuService.getContext()) =>
-        [MenuContext.GEOMETRY_EDIT, MenuContext.MAP_LAYERS_EDIT].includes(menuContext);
+        [MenuContext.GEOMETRY_EDIT, MenuContext.GEOMETRY_EDIT_MODAL, MenuContext.MAP_LAYERS_EDIT]
+            .includes(menuContext);
 
-    public isModalOpened = () => this.menuService.getContext() === MenuContext.MODAL
-        || this.menuService.getContext() === MenuContext.DOCEDIT;
+    public isModalOpened = () => [MenuContext.MODAL, MenuContext.BLOCKING_MODAL, MenuContext.IMAGE_TOOL_MODAL,
+        MenuContext.DOCEDIT].includes(this.menuService.getContext());
     
     public getPaddingLeft = () => (this.viewFacade.getSelectedDocument()
         && this.resourcesComponent.popoverMenuOpened) ? 258 : 0;
@@ -97,49 +104,37 @@ export class ResourcesMapComponent {
 
 
     /**
-     * @param geometry
-     *   <code>null</code> indicates geometry should get deleted.
+     * @param editedDocument
      *   <code>undefined</code> indicates editing operation aborted.
      */
-    public async quitEditing(geometry: FieldGeometry|undefined) {
-
-        const selectedDocument = this.viewFacade.getSelectedDocument();
-        if (!selectedDocument) return;
-        if (!selectedDocument.resource.geometry) return;
-
-        if (geometry) {
-            selectedDocument.resource.geometry = geometry;
-        } else if (geometry === null || !selectedDocument.resource.geometry.coordinates
-                || selectedDocument.resource.geometry.coordinates.length === 0) {
-            delete selectedDocument.resource.geometry;
-        }
+    public async quitEditing(editedDocument: FieldDocument|undefined) {
 
         if (this.selectedDocumentIsNew()) {
-            if (geometry !== undefined) {
-                const selectedDocument = this.viewFacade.getSelectedDocument();
-                if (selectedDocument) await this.resourcesComponent.editDocument(selectedDocument);
+            if (editedDocument) {
+                await this.resourcesComponent.editDocument(editedDocument);
             } else {
                 this.viewFacade.deselect();
                 this.resourcesComponent.quitGeometryEditing();
             }
         } else {
-            if (geometry !== undefined) await this.save();
+            if (editedDocument) await this.save(editedDocument);
             this.resourcesComponent.quitGeometryEditing();
         }
     }
 
 
-    private async save() {
-
-        const selectedDocument = this.viewFacade.getSelectedDocument();
-        if (!selectedDocument) return;
+    private async save(document: FieldDocument) {
 
         try {
             await this.viewFacade.setSelectedDocument(
-                (await this.relationsManager.update(selectedDocument)).resource.id
+                (await this.relationsManager.update(document)).resource.id
             );
-        } catch (msgWithParams) {
-            this.messages.add(msgWithParams);
+        } catch (errWithParams) {
+            if (isArray(errWithParams) && errWithParams[0] === DatastoreErrors.DOCUMENT_NOT_FOUND) {
+                this.messages.add([M.RESOURCES_ERROR_RESOURCE_DELETED, document.resource.identifier]);
+            } else {
+                this.messages.add(errWithParams);
+            }
         }
     }
 

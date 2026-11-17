@@ -38,7 +38,8 @@ export abstract class MenuComponent {
         this.removeMouseEventListener = this.renderer.listen(
             'document',
             'click',
-            event => this.handleMouseEvent(event));
+            event => this.handleMouseEvent(event)
+        );
     }
 
 

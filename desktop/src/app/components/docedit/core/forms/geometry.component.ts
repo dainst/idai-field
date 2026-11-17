@@ -1,13 +1,12 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
-
-
-type GeometryType = 'Point'|'MultiPoint'|'LineString'|'MultiLineString'|'Polygon'|'MultiPolygon';
+import { Field, FieldGeometry, FieldGeometryType } from 'idai-field-core';
+import { UtilTranslations } from '../../../../util/util-translations';
 
 
 @Component({
     selector: 'form-field-geometry',
-    templateUrl: './geometry.html'
+    templateUrl: './geometry.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -15,44 +14,32 @@ type GeometryType = 'Point'|'MultiPoint'|'LineString'|'MultiLineString'|'Polygon
 export class GeometryComponent implements OnChanges {
 
     @Input() fieldContainer: any;
+    @Input() field: Field;
 
     public coordinates: string;
+    public geometryTypes: Array<FieldGeometryType> = [];
     public edit: boolean;
 
 
-    constructor(private i18n: I18n) {}
+    constructor(private utilTranslations: UtilTranslations) {}
 
 
     ngOnChanges() {
 
         this.resetCoordinates();
+        this.geometryTypes = this.getGeometryTypes();
     }
 
 
-    public getGeometryTypeLabel(): string {
+    public getGeometryTypeLabel(geometryType: FieldGeometryType = this.fieldContainer.geometry?.type): string {
 
-        if (!this.fieldContainer.geometry) return this.i18n({ id: 'geometry.none', value: 'Keine Geometrie'});
-
-        switch(this.fieldContainer.geometry.type) {
-            case 'Point':
-                return this.i18n({ id: 'geometry.point', value: 'Punkt'});
-            case 'MultiPoint':
-                return this.i18n({ id: 'geometry.multiPoint', value: 'Multipunkt'});
-            case 'LineString':
-                return this.i18n({ id: 'geometry.polyline', value: 'Polyline'});
-            case 'MultiLineString':
-                return this.i18n({ id: 'geometry.multiPolyline', value: 'Multipolyline'});
-            case 'Polygon':
-                return this.i18n({ id: 'geometry.polygon', value: 'Polygon'});
-            case 'MultiPolygon':
-                return this.i18n({ id: 'geometry.multiPolygon', value: 'Multipolygon'});
-            default:
-                return '';
-        }
+        return geometryType
+            ? this.utilTranslations.getTranslation('geometry.' + geometryType)
+            : $localize `:@@geometry.none:Keine Geometrie`;
     }
 
 
-    public setGeometryType(type: ''|GeometryType) {
+    public setGeometryType(type: ''|FieldGeometryType) {
 
         if (!this.fieldContainer.geometry) {
             this.fieldContainer.geometry = { type: type, coordinates: [] };
@@ -82,5 +69,17 @@ export class GeometryComponent implements OnChanges {
             // Do nothing
             if (resetIfInvalid) this.resetCoordinates();
         }
+    }
+
+
+    private getGeometryTypes(): Array<FieldGeometryType> {
+
+        const geometryTypes: Array<FieldGeometryType> = FieldGeometry.getAvailableGeometryTypes();
+        if (!this.field.geometryTypes) return geometryTypes;
+
+        return geometryTypes.filter(geometryType => {
+            return geometryType === this.fieldContainer.geometry?.type
+                || this.field.geometryTypes.includes(geometryType);
+        });
     }
 }

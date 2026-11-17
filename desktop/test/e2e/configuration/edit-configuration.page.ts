@@ -39,6 +39,18 @@ export class EditConfigurationPage {
     }
 
 
+    public static clickToggleMandatorySlider() {
+
+        return click('#toggle-mandatory-slider');
+    }
+
+
+    public static clickToggleEditableOnMapSlider() {
+
+        return click('#toggle-editable-on-map-slider');
+    }
+
+
     public static clickToggleMultiLanguageSlider() {
 
         return click('#toggle-multi-language-slider');
@@ -81,9 +93,10 @@ export class EditConfigurationPage {
     }
 
 
-    public static clickCancel() {
+    public static async clickCancel(discard: boolean = false) {
 
-        return click('#cancel-button');
+        await click('#cancel-button');
+        if (discard) await click('#overview-save-confirmation-modal-discard-button');
     }
 
 
@@ -96,6 +109,12 @@ export class EditConfigurationPage {
     public static clickConfirmValue() {
 
         return click('#confirm-value-button');
+    }
+
+
+    public static async clickGeometryTypeCheckbox(index: number) {
+
+        return click(await this.getGeometryTypeCheckbox(index));
     }
 
 
@@ -124,27 +143,55 @@ export class EditConfigurationPage {
     }
 
 
+    public static async clickDeleteSubfield(subfieldIndex: number) {
+
+        const subfieldElement = await getLocator('.subfield-container').nth(subfieldIndex);
+        return click(await subfieldElement.locator('.delete-subfield-button'));
+    }
+
+
     public static clickInputTypeSelectOption(optionValue: string, modalContext: ModalContext) {
 
         return selectOption(this.getModalClass(modalContext) + ' .input-type-select', optionValue);
     }
 
 
-    public static async clickSelectConditionSubfield(subfieldName: string) {
+    public static async clickSelectConditionField(fieldName: string, modalContext: ModalContext) {
 
-        const element = (await getLocator('#condition-subfield-select'));
-        return selectOption(element, subfieldName);
+        const element = (await getLocator(this.getModalClass(modalContext) + ' .condition-field-select'));
+        return selectOption(element, fieldName);
     }
 
 
-    public static async clickSelectConditionValue(type: 'boolean'|'valuelist', valueIndex: number) {
+    public static async clickSelectConditionValue(type: 'boolean'|'valuelist', valueIndex: number,
+                                                  modalContext: ModalContext) {
 
-        const elementId = '#' + (
+        const elementId = this.getModalClass(modalContext) + ' .' + (
             type === 'boolean' ? 'boolean-condition-radio-buttons' : 'valuelist-condition-checkboxes'
         );
         await waitForExist(elementId);
         const element = (await getLocator(elementId + ' input')).nth(valueIndex);
         return click(element);
+    }
+
+
+    public static clickSelectInverseRelation(relationName: string) {
+
+        return selectOption('#inverse-relation-select', relationName);
+    }
+
+
+    // get
+
+    public static async getInverseRelationOptions() {
+
+        return getLocator('#inverse-relation-select option');
+    }
+
+
+    public static async getGeometryTypeCheckbox(index: number) {
+
+        return await getLocator('.geometry-type-checkbox').nth(index);
     }
 
 
@@ -160,6 +207,20 @@ export class EditConfigurationPage {
 
         const elements = await getLocator('#field-editor-valuelist-section valuelist-view code');
         return getText(elements.nth(index));
+    }
+
+
+    public static async getConditionSelectValues(modalContext: ModalContext) {
+
+        const elements = await (await getLocator(this.getModalClass(modalContext) + ' .condition-field-select option')).all();
+        const result = [];
+
+        for (let element of elements) {
+            const text = await element.textContent();
+            result.push(text.trim());
+        }
+
+        return result;
     }
 
 

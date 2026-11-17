@@ -9,7 +9,8 @@ import { Menus } from '../../../../../services/menus';
 
 @Component({
     selector: 'form-field-type-relation',
-    templateUrl: './type-relation.html'
+    templateUrl: './type-relation.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

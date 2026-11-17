@@ -8,7 +8,8 @@ import { UtilTranslations } from '../../../../../util/util-translations';
 
 @Component({
     selector: 'input-type-selector',
-    templateUrl: './input-type-selector.html'
+    templateUrl: './input-type-selector.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

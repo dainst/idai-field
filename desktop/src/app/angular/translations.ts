@@ -1,5 +1,6 @@
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const remote = window.require('@electron/remote');
+const fs = window.require('fs');
+
 
 /**
  * @author Thomas Kleinke

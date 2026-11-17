@@ -6,8 +6,8 @@ import { CategoryForm } from '../../../src/model/configuration/category-form';
 import { Field } from '../../../src/model/configuration/field';
 import { Groups } from '../../../src/model/configuration/group';
 import { Relation } from '../../../src/model/configuration/relation';
-import { FieldResource } from '../../../src/model/field-resource';
-import { Resource } from '../../../src/model/resource';
+import { FieldResource } from '../../../src/model/document/field-resource';
+import { Resource } from '../../../src/model/document/resource';
 import { Tree } from '../../../src/tools/forest';
 import { Named } from '../../../src/tools/named';
 

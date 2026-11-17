@@ -37,28 +37,6 @@
       box-shadow: 0 0 10px 2px $brand-primary !important;
     }
 
-    .icons {
-      position: absolute;
-      top: 7px;
-      right: 7px;
-      overflow: hidden;
-    }
-
-    img {
-      border: 3px solid white;
-    }
-
-    .identifier {
-      width: calc(100% - 1px);
-    }
-
-    .title {
-      background-color: white;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: none;
-    }
-
     &:hover {
       box-shadow: 1px 10px 30px 0 rgba(0, 0, 0, 0.3);
       z-index: 100;

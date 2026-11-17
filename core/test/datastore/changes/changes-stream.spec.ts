@@ -1,5 +1,6 @@
 import { ChangesStream } from '../../../src/datastore/changes/changes-stream';
-import { Document } from '../../../src/model';
+import { Field } from '../../../src/model/configuration/field';
+import { Document } from '../../../src/model/document/document';
 
 
 /**
@@ -13,7 +14,6 @@ describe('ChangesStream', () => {
     let pouchdbDatastore;
     let datastore;
     let indexFacade;
-    let documentConverter;
     let documentCache;
     let projectConfiguration;
     let getUsername;
@@ -43,12 +43,12 @@ describe('ChangesStream', () => {
 
         spyOn(console, 'warn'); // suppress console.warn
 
-        indexFacade = jasmine.createSpyObj('MockIndexFacade', ['put', 'putToSingleIndex', 'get', 'remove', 'getCount']);
-        documentConverter = jasmine.createSpyObj('MockDocumentConverter', ['convert']);
+        indexFacade = jasmine.createSpyObj('MockIndexFacade',
+            ['put', 'putToSingleIndex', 'get', 'remove', 'getCount', 'notifyObservers']);
         documentCache = jasmine.createSpyObj('MockDocumentCache', ['get', 'reassign']);
+        documentCache.reassign.and.callFake(document => document);
 
         getUsername = () => 'localuser';
-        documentConverter.convert.and.returnValue(doc);
         indexFacade.getCount.and.returnValue(0);
         documentCache.get.and.returnValue({ resource: { id: '1', identifier: '1' } });
 
@@ -62,64 +62,61 @@ describe('ChangesStream', () => {
         datastore = jasmine.createSpyObj('MockDatastore', ['find'])
         datastore.find.and.returnValue(Promise.resolve({ documents: [] }));
 
-        projectConfiguration = jasmine.createSpyObj(['MockProjectConfiguration'], ['getCategory', 'getRegularCategories']);
-        projectConfiguration.getCategory.and.returnValue({ name: 'Object', groups: [] });
+        const category = {
+            name: 'Object',
+            groups: [{
+                name: 'stem',
+                fields: [{
+                    name: 'identifier',
+                    inputType: Field.InputType.IDENTIFIER
+                }]
+            }]
+        };
+
+        projectConfiguration = jasmine.createSpyObj('MockProjectConfiguration',
+            ['getCategory', 'getRegularCategories', 'getCategoryWithSubcategories']);
+        projectConfiguration.getCategory.and.returnValue(category);
         projectConfiguration.getRegularCategories.and.returnValue([]);
+        projectConfiguration.getCategoryWithSubcategories.and.returnValue([category]);
 
         rcs = new ChangesStream(
             pouchdbDatastore,
             datastore,
             indexFacade,
             documentCache,
-            documentConverter,
             projectConfiguration,
             getUsername);
     });
 
 
-    it('should put to index facade and reassign to cache', async done => {
+    it('should put to index facade and reassign to cache', async () => {
 
         await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalledWith(doc);
         expect(documentCache.reassign).toHaveBeenCalledWith(doc);
-        done();
     });
 
 
-    it('send through category converter', async done => {
-
-        await onChange(doc);
-        expect(documentConverter.convert).toHaveBeenCalledWith(doc);
-        done();
-    });
-
-
-    it('detect that it is remote change', async done => {
-
-        documentConverter.convert.and.returnValue(doc);
+    it('detect that it is remote change', async () => {
 
         await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalledWith(doc);
-        done();
     });
 
 
-    it('detect that it is local change', async done => {
+    it('detect that it is local change', async () => {
 
         doc.modified[0] = {
             user: 'localuser', // same user
             date: new Date('2018-02-08T01:00:00.00Z')
         };
 
-        documentConverter.convert.and.returnValue(doc);
-
         await onChange(doc);
         expect(indexFacade.put).not.toHaveBeenCalled();
-        done();
     });
 
 
-    it('detect remote change for conflicted document', async done => {
+    it('detect remote change for conflicted document', async () => {
 
         const rev2 = {
             resource: {
@@ -142,15 +139,12 @@ describe('ChangesStream', () => {
         pouchdbDatastore.fetch.and.returnValue(Promise.resolve({'_conflicts': ['first'], resource: { id: '1' }}));
         pouchdbDatastore.fetchRevision.and.returnValue(Promise.resolve(rev2));
 
-        documentConverter.convert.and.returnValue(doc);
-
         await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalledWith(doc);
-        done();
     });
 
 
-    it('always treat changes to conflicted documents as remote changes', async done => {
+    it('always treat changes to conflicted documents as remote changes', async () => {
 
         const rev2 = {
             resource: {
@@ -173,15 +167,12 @@ describe('ChangesStream', () => {
         pouchdbDatastore.fetch.and.returnValue(Promise.resolve({'_conflicts': ['first'], resource: { id: '1' }}));
         pouchdbDatastore.fetchRevision.and.returnValue(Promise.resolve(rev2));
 
-        documentConverter.convert.and.returnValue(doc);
-
         await onChange(doc);
         expect(indexFacade.put).toHaveBeenCalled();
-        done();
     });
 
 
-    it('update non-unique identifier warnings', async done => {
+    it('update non-unique identifier warnings', async () => {
 
         let doc2: Document = {
             resource: {
@@ -202,7 +193,13 @@ describe('ChangesStream', () => {
         indexFacade.getCount.and.returnValue(2);
         datastore.find.and.returnValue(Promise.resolve({ documents: [doc2] }));
         documentCache.reassign.and.callFake(document => {
-            document.id === 'id1' ? doc = document : doc2 = document;
+            if (document.id === 'id1') {
+                doc = document;
+                return doc;
+             } else {
+                doc2 = document;
+                return doc2;
+             }
         });
 
         await onChange(doc);
@@ -217,7 +214,5 @@ describe('ChangesStream', () => {
         await onChange(doc2);
         expect(doc.warnings).toBeUndefined();
         expect(doc2.warnings).toBeUndefined();
-
-        done();
     });
 });

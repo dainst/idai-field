@@ -3,6 +3,10 @@ import { NewDocument, Document } from 'idai-field-core';
 import { Validator } from '../../model/validator';
 
 
+export const MIN_NUMBER_OF_DUPLICATES: number = 1;
+export const MAX_NUMBER_OF_DUPLICATES: number = 10000;
+
+
 /**
  * @author Thomas Kleinke
  */
@@ -22,6 +26,9 @@ export module DuplicationUtil {
         }
         if (document.resource.relations.liesWithin) {
             template.resource.relations.liesWithin = document.resource.relations.liesWithin;
+        }
+        if (document.resource.relations.resultsIn) {
+            template.resource.relations.resultsIn = document.resource.relations.resultsIn;
         }
 
         return template;

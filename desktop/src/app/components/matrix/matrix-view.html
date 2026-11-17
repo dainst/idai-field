@@ -1,9 +1,12 @@
 <div id="matrix-view" class="row bg-light">
     <div class="col col-md-6">
         <div class="row">
-            <div *ngIf="showOperationSelector()" class="dropdown"
-                 ngbDropdown placement="bottom-left" role="group">
-                <button class="btn btn-outline-primary" ngbDropdownToggle>
+            <div *ngIf="showOperationSelector()"
+                 id="operation-selection-container"
+                 class="dropdown"
+                 ngbDropdown placement="bottom-left"
+                 role="group">
+                <button id="operation-selection-button" class="btn btn-outline-primary" ngbDropdownToggle>
                     <span *ngIf="selectedOperation" id="selected-operation-label">
                         {{getDocumentLabel(selectedOperation)}}
                     </span>
@@ -21,7 +24,7 @@
         </div>
     </div>
 
-    <div class="col col-md-6 text-right toolbar">
+    <div class="col col-md-6 text-end toolbar">
         <div class="btn-group">
             <div id="edit-mode-button"
                  class="btn btn-outline-primary"
@@ -67,7 +70,7 @@
             </div>
         </div>
 
-        <div class="btn-group pl-2">
+        <div class="btn-group ms-2">
             <div id="clear-selection-button"
                  class="btn btn-primary"
                  [class.disabled]="!documentsSelected()"
@@ -103,7 +106,7 @@
                  [class.disabled]="!graphFromSelection"
                  ngbTooltip="Matrix neu laden"
                  i18n-ngbTooltip="@@matrix.view.tooltips.reloadMatrix"
-                 placement="left"
+                 placement="bottom"
                  container="body"
                  triggers="manual"
                  #reloadGraphTooltip="ngbTooltip"
@@ -113,6 +116,41 @@
                 <span class="mdi mdi-reload"></span>
             </div>
         </div>
+
+        <div id="export-button"
+             class="btn btn-primary btn-square ms-2"
+             [class.disabled]="!dotGraph"
+             ngbTooltip="Matrix exportieren"
+             i18n-ngbTooltip="@@matrix.view.tooltips.export"
+             [ngbPopover]="exportMenu" 
+             [autoClose]="'outside'"
+             placement="bottom-right"
+             container="body"
+             triggers="manual"
+             #exportTooltip="ngbTooltip"
+             #exportPopover="ngbPopover"
+             (mouseover)="exportTooltip.open()"
+             (mouseleave)="exportTooltip.close()"
+             (click)="exportPopover.toggle(); exportTooltip.close();">
+            <span class="mdi mdi-file-export"></span>
+        </div>
+        <ng-template #exportMenu>
+            <div id="export-matrix-menu">
+                <div class="popover-custom-title">
+                    <span i18n="@@matrix.export.selectFormat">Bitte wählen Sie das Dateiformat für den Matrix-Export aus.</span>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item popover-item"
+                        (click)="exportPopover.close(); exportGraph('dot');">
+                        <span class="button-label">Dot (Graphviz)</span>
+                    </li>
+                    <li class="list-group-item popover-item"
+                        (click)="exportPopover.close(); exportGraph('svg');">
+                        <span class="button-label">SVG</span>
+                    </li>
+                </ul>
+            </div>
+        </ng-template>
     </div>
 </div>
 
@@ -149,7 +187,15 @@
         </em>
     </div>
 
-    <graph [graph]="graph"
+    <div *ngIf="graphvizFailure"
+         class="col-8 text-center alert alert-warning matrix-alert">
+        <em i18n="@@matrix.view.tooBigWarning">
+            Die Matrix überschreitet die maximale Darstellungsgröße. Bitte verwenden Sie die Exportfunktion, um die
+            Matrix zur Anzeige in einem externen Viewer als Dot-Datei zu speichern.
+        </em>
+    </div>
+
+    <graph [graph]="svgGraph"
            [selection]="selection"
            (onSelectForEdit)="edit($event)">
     </graph>

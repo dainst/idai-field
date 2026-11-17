@@ -15,6 +15,7 @@
     "baseUrl": "./",
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true
   },
   "exclude": [
     "e2e",

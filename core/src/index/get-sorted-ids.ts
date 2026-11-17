@@ -1,9 +1,9 @@
 import { is, on, Pair, to, sort, count, flow, map, tuplify, flatten, compose, size, isUndefinedOrEmpty,
     separate, cond, pairWith, left, subsetOf } from 'tsfun';
-import { Resource } from '../model/resource';
+import { Resource } from '../model/document/resource';
 import { IndexItem, TypeResourceIndexItem } from './index-item';
-import { Query } from '../model/query';
-import { SortUtil } from '../tools/sort-util';
+import { Query, SortMode } from '../model/datastore/query';
+import { Comparator } from '../services/comparator';
 import { Name } from '../tools/named';
 
 
@@ -33,18 +33,17 @@ type Percentage = number;
  *     puts an element which matches the query exactly, to the
  *     front of the resulting list.
  */
-export function getSortedIds(indexItems: Array<IndexItem>, query: Query,
-                             typeCategories: string[]): Array<Resource.Id> {
+export function getSortedIds(indexItems: Array<IndexItem>, query: Query, typeCategories: string[],
+                             comparator: Comparator): Array<Resource.Id> {
 
     const rankEntries = shouldRankCategories(query, typeCategories)
-        ? rankTypeResourceIndexItems(query.sort.matchCategory)
-        : rankRegularIndexItems;
+        ? rankTypeResourceIndexItems(query.sort.matchCategory, comparator)
+        : rankRegularIndexItems(query.sort?.mode ?? SortMode.Alphanumeric, comparator);
 
-    const handleExactMatchIfQuerySaysSo =
-        cond(
-            shouldHandleExactMatch(query),
-            handleExactMatch(query.q)
-        );
+    const handleExactMatchIfQuerySaysSo = cond(
+        shouldHandleExactMatch(query),
+        handleExactMatch(query.q)
+    );
 
     return flow(
         indexItems,
@@ -57,7 +56,7 @@ export function getSortedIds(indexItems: Array<IndexItem>, query: Query,
 
 function shouldHandleExactMatch(query: Query) {
 
-    return query.sort?.mode === 'exactMatchFirst' && !isUndefinedOrEmpty(query.q)
+    return query.sort?.mode === SortMode.ExactMatchFirst && !isUndefinedOrEmpty(query.q)
 }
 
 
@@ -67,8 +66,8 @@ function shouldRankCategories(query: Query, typeCategories: string[]) {
 }
 
 
-function comparePercentages([itemA, pctgA]: Pair<TypeResourceIndexItem, Percentage>,
-                            [itemB, pctgB]: Pair<TypeResourceIndexItem, Percentage>) {
+const comparePercentages = (comparator: Comparator) => ([itemA, pctgA]: Pair<TypeResourceIndexItem, Percentage>,
+                            [itemB, pctgB]: Pair<TypeResourceIndexItem, Percentage>) => {
 
     if (pctgA < pctgB) return 1;
     if (pctgA > pctgB) return -1;
@@ -76,7 +75,7 @@ function comparePercentages([itemA, pctgA]: Pair<TypeResourceIndexItem, Percenta
     if (size(itemA.instances) < size(itemB.instances)) return 1;
     if (size(itemA.instances) > size(itemB.instances)) return -1;
 
-    return SortUtil.alnumCompare(itemA.identifier, itemB.identifier);
+    return comparator.alnumCompare(itemA.identifier, itemB.identifier);
 }
 
 
@@ -112,10 +111,31 @@ const handleExactMatch = (q: string)
         flatten() as any);
 
 
-const rankRegularIndexItems
-    : (indexItems: Array<IndexItem>) => Array<IndexItem> =
-    sort((a: IndexItem, b: IndexItem) =>
-        SortUtil.alnumCompare(a.identifier, b.identifier));
+const rankRegularIndexItems = (sortMode: SortMode, comparator: Comparator): (indexItems: Array<IndexItem>) =>
+        Array<IndexItem> =>
+    sort((a: IndexItem, b: IndexItem) => {
+        switch (sortMode) {
+            case SortMode.Alphanumeric:
+                return comparator.alnumCompare(a.identifier, b.identifier);
+            case SortMode.AlphanumericDescending:
+                return comparator.alnumCompare(a.identifier, b.identifier) * -1;
+            case SortMode.Date:
+                return rankIndexItemsByDateAndIdentifier(a, b, false, comparator);
+            case SortMode.DateDescending:
+                return rankIndexItemsByDateAndIdentifier(a, b, true, comparator);
+        }
+    });
+
+
+function rankIndexItemsByDateAndIdentifier(a: IndexItem, b: IndexItem, descending: boolean,
+                                           comparator: Comparator): number {
+
+    const result: number = comparator.numberCompare(a.date, b.date);
+
+    return result !== 0
+        ? result * (descending ? -1 : 1)
+        : comparator.alnumCompare(a.identifier, b.identifier);
+}
 
 
 /**
@@ -130,8 +150,10 @@ const rankRegularIndexItems
  *  {id: '2', instances: {'4': 'T1', '6': 'T2'}}            // 50%
  *  {id: '3', instances: {'7': 'T2'}}]                      // 0%
  */
-const rankTypeResourceIndexItems = (categoryToMatch: Name): (indexItems: Array<IndexItem>) => Array<IndexItem> => 
+const rankTypeResourceIndexItems = (categoryToMatch: Name, comparator: Comparator): (indexItems: Array<IndexItem>) =>
+        Array<IndexItem> => 
     compose(
         map(pairWith(calcPercentage(categoryToMatch))),
-        sort(comparePercentages) as any,
-        map(left) as any);
+        sort(comparePercentages(comparator)) as any,
+        map(left) as any
+    );

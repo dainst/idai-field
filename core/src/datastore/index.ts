@@ -1,4 +1,3 @@
-export * from './document-converter';
 export * from './changes';
 export * from './datastore';
 export { Datastore } from './datastore';
@@ -10,3 +9,4 @@ export * from './pouchdb';
 export * from './image';
 export { SampleDataLoaderBase } from './sampledata/sample-data-loader-base'
 export { SyncStatus } from './sync-status';
+export { WarningsUpdater } from './warnings-updater';

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { clone, nop } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, Field, Valuelist } from 'idai-field-core';
 import { AddValuelistModalComponent } from '../../../add/valuelist/add-valuelist-modal.component';
@@ -12,7 +12,8 @@ import { SubfieldEditorData } from '../subfield-editor-modal.component';
 
 @Component({
     selector: 'valuelist-selector',
-    templateUrl: './valuelist-selector.html'
+    templateUrl: './valuelist-selector.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -41,7 +42,13 @@ export class ValuelistSelectorComponent implements OnChanges {
         this.updateValuelist();
     }
 
+
+    public isSwapValuelistButtonVisible(): boolean {
+     
+        return this.category.name !== 'Process' || this.clonedField.name !== 'state';
+    }
     
+
     public isEditValuelistButtonVisible(): boolean {
      
         return this.getSelectedValuelist() !== undefined

@@ -1286,6 +1286,41 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
+    it('allow overwriting "required" setting in built-in configuration for common fields', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    aCommon: { required: true }
+                },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['aCommon'] }]
+                }
+            }
+        };
+
+        const commonFields: Map<BuiltInFieldDefinition> = {
+            aCommon: { inputType: 'text' }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            A: { fields: {} }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            {},
+            customForms,
+            commonFields
+        );
+
+        expect(result['A'].groups[0].fields[0].name).toBe('aCommon');
+        expect(result['A'].groups[0].fields[0].inputType).toBe('text');
+        expect(result['A'].groups[0].fields[0].required).toBe(true);
+    });
+
+
     it('throw error if field not found', () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
@@ -1631,7 +1666,7 @@ describe('buildRawProjectConfiguration', () => {
             '123': {
                 values: {
                     'one': { label: { de: 'Eins', en: 'One' } },
-                    'two': { references: ['https://xyz.de/1234567'] },
+                    'two': { semanticReferences: [{ predicate: 'skos:exactMatch', uri: 'https://xyz.de/1234567' }] },
                     'three': {}
                 },
                 id: '123',
@@ -1658,7 +1693,7 @@ describe('buildRawProjectConfiguration', () => {
 
         expect(result['A'].groups[0].fields[0].valuelist.values).toEqual({
             one: { label: { de: 'Eins', en: 'One' } },
-            two: { references: ['https://xyz.de/1234567'] },
+            two: { semanticReferences: [{ predicate: 'skos:exactMatch', uri: 'https://xyz.de/1234567' }] },
             three: {}
         });
     });
@@ -2013,9 +2048,169 @@ describe('buildRawProjectConfiguration', () => {
             customForms
         );
 
-        expect(result['A'].groups[0].fields[0].inputType).toBe('text');
-        expect(result['A'].groups[1].fields[0].inputType).toBe('boolean');
         expect(result['A'].groups[0].name).toBe(Groups.STEM);
+        expect(result['A'].groups[1].name).toBe(Groups.OTHER);
+        expect(result['A'].groups[0].fields[0].name).toBe('field1');
+        expect(result['A'].groups[1].fields[0].name).toBe('field2');
+    });
+
+
+    it('add all fields from built-in parent form even if not selected in custom form group', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                fields: {
+                    field1: { inputType: 'text' }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['field1'] }
+                    ]
+                }
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A': {
+                fields: {}
+            },
+            'B': {
+                parent: 'A',
+                fields: {
+                    field2: { inputType: 'boolean' }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['field2'] }
+                ]
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            {},
+            customForms
+        );
+
+        expect(result['B'].groups[0].name).toBe(Groups.STEM);
+        expect(result['B'].groups[1].name).toBe(Groups.OTHER);
+        expect(result['B'].groups[0].fields[0].name).toBe('field2');
+        expect(result['B'].groups[1].fields[0].name).toBe('field1');
+    });
+
+
+    it('add all fields from built-in parent form even if not selected in custom parent form group', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                fields: {
+                    field1: { inputType: 'text' }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['field1'] }
+                    ]
+                }
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A': {
+                fields: {
+                    field2: { inputType: 'text' }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['field2'] }
+                ]
+            },
+            'B': {
+                parent: 'A',
+                fields: {
+                    field3: { inputType: 'boolean' }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['field3'] }
+                ]
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            {},
+            customForms
+        );
+
+        expect(result['B'].groups[0].name).toBe(Groups.STEM);
+        expect(result['B'].groups[1].name).toBe(Groups.OTHER);
+        expect(result['B'].groups[0].fields[0].name).toBe('field3');
+        expect(result['B'].groups[1].fields[0].name).toBe('field1');
+        expect(result['B'].groups[1].fields[1].name).toBe('field2');
+    });
+
+
+    it('add all fields from library parent form even if not selected in custom form group', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                fields: {
+                    field1: { inputType: 'text' },
+                    field2: { inputType: 'boolean' }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['field1'] }
+                    ]
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                groups: [
+                    { name: Groups.STEM, fields: ['field1', 'field2'] }
+                ],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {}
+            },
+            'B': {
+                parent: 'A',
+                fields: {
+                    field3: { inputType: 'int' }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['field3'] }
+                ]
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['B'].groups[0].name).toBe(Groups.STEM);
+        expect(result['B'].groups[1].name).toBe(Groups.OTHER);
+        expect(result['B'].groups[0].fields[0].name).toBe('field3');
+        expect(result['B'].groups[1].fields[0].name).toBe('field1');
+        expect(result['B'].groups[1].fields[1].name).toBe('field2');
     });
 
 
@@ -2303,10 +2498,9 @@ describe('buildRawProjectConfiguration', () => {
         const relationDefinitions: Array<Relation> = [{
             name: 'isAbove',
             inverse: 'isBelow',
-            domain: ['P:inherit'],
-            range: ['P:inherit'],
-            inputType: 'relation',
-            sameMainCategoryResource: true
+            domain: ['P'],
+            range: ['P'],
+            inputType: 'relation'
         }];
 
         const result = buildRaw(
@@ -2425,7 +2619,141 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
-   it('return categories, common fields and relations with correct labels', () => {
+    it('allow overwriting condition set in library form', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    fieldA: { 
+                        inputType: 'boolean'
+                    },
+                    fieldB: {
+                        inputType: 'text'
+                    }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: 'stem', fields: ['fieldA', 'fieldB'] }
+                    ]
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                fields: {
+                    fieldB: {
+                        condition: {
+                            fieldName: 'fieldA',
+                            values: true
+                        }
+                    }
+                },
+                groups: [
+                    { name: 'stem', fields: ['fieldA', 'fieldB'] }
+                ],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {
+                    fieldB: {
+                        condition: {
+                            fieldName: 'fieldA',
+                            values: false
+                        }
+                    }
+                },
+                color: 'red'
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].groups[0].fields[1].condition.fieldName).toEqual('fieldA');
+        expect(result['A'].groups[0].fields[1].condition.values).toBe(false);
+        expect(result['A'].groups[0].fields[1].defaultCondition.fieldName).toEqual('fieldA');
+        expect(result['A'].groups[0].fields[1].defaultCondition.values).toBe(true);
+    });
+
+
+    it('allow removing condition set in library form', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    fieldA: { 
+                        inputType: 'boolean'
+                    },
+                    fieldB: {
+                        inputType: 'text'
+                    }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: 'stem', fields: ['fieldA', 'fieldB'] }
+                    ]
+                }
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                fields: {
+                    fieldB: {
+                        condition: {
+                            fieldName: 'fieldA',
+                            values: true
+                        }
+                    }
+                },
+                groups: [
+                    { name: 'stem', fields: ['fieldA', 'fieldB'] }
+                ],
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {
+                    fieldB: {
+                        condition: null
+                    }
+                },
+                color: 'red'
+            }
+        };
+
+        const result = buildRaw(
+            builtInCategories,
+            {},
+            libraryForms,
+            customForms
+        );
+
+        expect(result['A'].groups[0].fields[1].condition).toBeUndefined();
+        expect(result['A'].groups[0].fields[1].defaultCondition.fieldName).toEqual('fieldA');
+        expect(result['A'].groups[0].fields[1].defaultCondition.values).toBe(true);
+    });
+
+
+    it('return categories, common fields and relations with correct labels', () => {
 
         const commonFields: Map<BuiltInFieldDefinition> = {
             aCommon: { inputType: Field.InputType.TEXT }
@@ -2570,6 +2898,106 @@ describe('buildRawProjectConfiguration', () => {
         expect(forms['A'].groups[1].fields[1].defaultLabel.en).toBe('Field 2');
         expect(forms['A'].groups[1].fields[2].label.en).toBe('Field 3');
         expect(forms['A'].groups[1].fields[2].defaultLabel.en).toBe(undefined);
+    });
+
+
+    it('apply labels for custom relation in supercategory', () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: []   
+                },
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true
+            }
+        };
+
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
+            'A': {
+                fields: {},
+                description: {}
+            },
+            'B': {
+                parent: 'A',
+                fields: {},
+                description: {}
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                groups: []
+            },
+            'B:default': {
+                categoryName: 'B',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                description: {},
+                groups: []
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {
+                    customRelation: { inputType: Field.InputType.RELATION, range: ['A'] }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['customRelation'] }
+                ]
+            },
+            'B:default': {
+                fields: {},
+                groups: [
+                    { name: Groups.STEM, fields: ['customRelation'] }
+                ]
+            }
+        };
+
+        const customLanguageConfiguration: LanguageConfiguration = {
+            relations: {
+                customRelation: { label: 'Custom relation label' }
+            }
+        };
+
+        const languageConfigurations: LanguageConfigurations = {
+            complete: {
+                en: [customLanguageConfiguration, {}]
+            },
+            default: {
+                en: [{}]
+            },
+            custom: {
+                en: [customLanguageConfiguration]
+            }
+        };
+
+        const rawConfiguration: RawProjectConfiguration = buildRawProjectConfiguration(
+            builtInCategories,
+            libraryCategories,
+            libraryForms,
+            customForms,
+            {}, {}, {}, {}, [],
+            languageConfigurations
+        );
+
+        const forms: Map<CategoryForm> = Named.arrayToMap(Tree.flatten<CategoryForm>(rawConfiguration.forms));
+
+        expect(rawConfiguration.relations[0].label.en).toBe('Custom relation label');
+        expect(rawConfiguration.relations[0].defaultLabel.en).toBeUndefined();
+
+        expect(forms['A'].groups[0].fields[0].label.en).toBe('Custom relation label');
+        expect(forms['A'].groups[0].fields[0].defaultLabel.en).toBeUndefined();
+        expect(forms['B'].groups[0].fields[0].label.en).toBe('Custom relation label');
+        expect(forms['B'].groups[0].fields[0].defaultLabel.en).toBeUndefined();
     });
 
 

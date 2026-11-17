@@ -4,7 +4,6 @@ import { Document, Relation, Resource, Lookup} from 'idai-field-core';
 import { ImportErrors as E } from '../import-errors';
 import { AssertIsAllowedRelationDomainType } from '../types';
 import { setInverseRelationsForDbResources } from './set-inverse-relations-for-db-resources';
-import { assertSameOperationRestriction } from '../utils';
 import IS_CONTEMPORARY_WITH = Relation.Time.CONTEMPORARY;
 import IS_AFTER = Relation.Time.AFTER;
 import IS_BEFORE = Relation.Time.BEFORE;
@@ -18,7 +17,6 @@ import IS_BEFORE = Relation.Time.BEFORE;
  * @param documentsLookup
  * @param targetsLookup
  * @param inverseRelationsMap
- * @param sameOperationRelations
  * @param assertIsAllowedRelationDomainCategory
  * @param mergeMode
  *
@@ -42,7 +40,6 @@ import IS_BEFORE = Relation.Time.BEFORE;
 export function completeInverseRelations(documentsLookup: Lookup<Document>,
                                          targetsLookup: Lookup<[Array<Resource.Id>, Array<Document>]>,
                                          inverseRelationsMap: Relation.InverseRelationsMap,
-                                         sameOperationRelations: string[],
                                          assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType = () => {},
                                          mergeMode: boolean = false): Array<Document> {
 
@@ -52,7 +49,6 @@ export function completeInverseRelations(documentsLookup: Lookup<Document>,
         importDocuments,
         documentsLookup,
         inverseRelationsMap,
-        sameOperationRelations,
         assertIsAllowedRelationDomainCategory
     );
 
@@ -60,7 +56,6 @@ export function completeInverseRelations(documentsLookup: Lookup<Document>,
         importDocuments,
         targetsLookup as any,
         inverseRelationsMap,
-        sameOperationRelations,
         assertIsAllowedRelationDomainCategory,
         Relation.UNIDIRECTIONAL
     );
@@ -70,7 +65,6 @@ export function completeInverseRelations(documentsLookup: Lookup<Document>,
 function setInverseRelationsForImportResources(importDocuments: Array<Document>,
                                                documentsLookup: { [_: string]: Document },
                                                inverseRelationsMap: Relation.InverseRelationsMap,
-                                               sameOperationRelations: string[],
                                                assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType): void {
 
     for (let importDocument of importDocuments) {
@@ -79,13 +73,12 @@ function setInverseRelationsForImportResources(importDocuments: Array<Document>,
             Object.keys,
             map(pairWith(lookup(inverseRelationsMap))),
             forEach(assertNotBadlyInterrelated(importDocument)),
-            forEach(setInverses(importDocument, documentsLookup, sameOperationRelations, assertIsAllowedRelationDomainCategory)));
+            forEach(setInverses(importDocument, documentsLookup, assertIsAllowedRelationDomainCategory)));
     }
 }
 
 
 function setInverses(importDocument: Document, documentsLookup: { [_: string]: Document },
-                     sameOperationRelations: string[],
                      assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType) {
 
     return ([relationName, inverseRelationName]: [string, string|undefined]) => {
@@ -108,8 +101,8 @@ function setInverses(importDocument: Document, documentsLookup: { [_: string]: D
 
         if (!inverseRelationName) return;
 
-        flow(tmp,
-            forEach(assertSameOperationRestriction(importDocument, sameOperationRelations)),
+        flow(
+            tmp,
             map(to(['resource', 'relations'])),
             forEach(setInverse(importDocument.resource.id, inverseRelationName as string))
         );

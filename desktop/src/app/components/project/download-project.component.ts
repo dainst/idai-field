@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Menus } from '../../services/menus';
-import { FileInfo, ImageStore, ImageVariant, FileSyncPreference, PouchdbDatastore, SyncService } from 'idai-field-core';
+import { Map } from 'tsfun';
+import { FileInfo, ImageStore, ImageVariant, FileSyncPreference, PouchdbDatastore,
+    SyncService } from 'idai-field-core';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { DownloadProjectProgressModalComponent } from './download-project-progress-modal.component';
@@ -13,9 +15,11 @@ import { reloadAndSwitchToHomeRoute } from '../../services/reload';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { RemoteImageStore } from '../../services/imagestore/remote-image-store';
 import { AngularUtility } from '../../angular/angular-utility';
+import { getFileSizeLabel } from '../../util/get-file-size-label';
+import { Settings } from '../../services/settings/settings';
+import { getIpAddress } from '../../services/get-ip-address';
 
-const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
-const address = typeof window !== 'undefined' ? window.require('address') : require('address');
+const PouchDB = window.require('pouchdb-browser');
 
 const CREDENTIALS_TIMER_INTERVAL: number = 500;
 
@@ -24,14 +28,15 @@ const CREDENTIALS_TIMER_INTERVAL: number = 500;
     templateUrl: './download-project.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  * @author Simon Hohl
  */
-export class DownloadProjectComponent {
+export class DownloadProjectComponent implements OnInit {
 
     public url: string = '';
     public projectIdentifier: string = '';
@@ -47,6 +52,7 @@ export class DownloadProjectComponent {
     private fileDownloadPromises: Array<Promise<void>> = [];
     private credentialsTimer: ReturnType<typeof setTimeout>;
     private getFileSizesStart: Date;
+    private ipAddress: string = '';
 
 
     constructor(private messages: Messages,
@@ -65,6 +71,12 @@ export class DownloadProjectComponent {
     public checkCredentialsCompleteness = () => this.getUrl() && this.getProjectIdentifier() && this.getPassword();
 
 
+    async ngOnInit() {
+
+        this.ipAddress = await getIpAddress();
+    }
+
+
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
@@ -77,6 +89,8 @@ export class DownloadProjectComponent {
 
         this.menuService.setContext(MenuContext.MODAL);
 
+        const settings: Settings = this.settingsProvider.getSettings();
+
         const progressModalRef: NgbModalRef = this.modalService.open(
             DownloadProjectProgressModalComponent,
             { backdrop: 'static', keyboard: false, animation: false }
@@ -86,8 +100,7 @@ export class DownloadProjectComponent {
         progressModalRef.componentInstance.filesProgressPercent = -1;
         progressModalRef.componentInstance.cancelFunction = () => this.cancel(progressModalRef);
 
-        const destroyExisting: boolean = this.overwriteProject
-            || !this.settingsProvider.getSettings().dbs.includes(this.getProjectIdentifier());
+        const destroyExisting: boolean = this.overwriteProject || !settings.dbs.includes(this.getProjectIdentifier());
 
         try {
             const databaseSteps: number = await this.getUpdateSequence();
@@ -98,7 +111,7 @@ export class DownloadProjectComponent {
 
             const preferences: Array<FileSyncPreference> = this.getSelectedFileSyncPreferences();
 
-            const fileList = preferences.length > 0
+            const fileList: Map<FileInfo> = preferences.length > 0
                 ? await this.remoteImageStore.getFileInfosUsingCredentials(
                     this.getUrl(),
                     this.getPassword(),
@@ -106,7 +119,11 @@ export class DownloadProjectComponent {
                     preferences.map(preference => preference.variant)
                 ) : undefined;
 
-            await this.syncDatabase(progressModalRef, databaseSteps, destroyExisting);
+            if (Settings.isSynchronizationActive(settings)) this.syncService.stopSync();
+
+            const lastUpdateSequence: string|number = await this.downloadDatabase(
+                progressModalRef, databaseSteps, destroyExisting
+            );
             progressModalRef.componentInstance.databaseProgressPercent = 100;
     
             if (fileList) {
@@ -122,17 +139,17 @@ export class DownloadProjectComponent {
 
             await AngularUtility.refresh(1000);
 
-            this.settingsService.addProject(
+            await this.settingsService.addProject(
                 this.getProjectIdentifier(),
                 {
                     isSyncActive: true,
                     address: this.getUrl(),
                     password: this.getPassword(),
-                    fileSyncPreferences: preferences
+                    fileSyncPreferences: preferences,
+                    startSequence: lastUpdateSequence
                 }
-            ).then(() => {
-                reloadAndSwitchToHomeRoute();
-            });
+            );
+            reloadAndSwitchToHomeRoute();
         } catch (e) {
             if (e === 'DB not empty') {
                 this.messages.add([M.INITIAL_SYNC_DB_NOT_EMPTY]);
@@ -144,13 +161,18 @@ export class DownloadProjectComponent {
                 this.messages.add([M.INITIAL_SYNC_INVALID_CREDENTIALS]);
             } else if (e === 'canceled') {
                 console.log('Download cancelled.');
+            } else if (e === 'fileDownloadInterrupted') {
+                console.log('File download got interrupted, finishing download and falling back to sync.')
             } else {
                 await this.cancel(progressModalRef);
                 this.messages.add([M.INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR]);
                 console.error('Error while downloading project', e);
             }
 
-            if (e !== 'canceled') this.closeModal(progressModalRef);
+            if (e !== 'canceled') {
+                this.closeModal(progressModalRef);
+                if (Settings.isSynchronizationActive(settings)) this.syncService.startSync();
+            }
         }
     }
 
@@ -185,10 +207,10 @@ export class DownloadProjectComponent {
             const sizes = ImageStore.getFileSizeSums(fileList);
 
             if (this.getFileSizesStart === startDate) {
-                this.originalImagesSize = `(${ImageStore.byteCountToDescription(
+                this.originalImagesSize = `(${getFileSizeLabel(
                     sizes.original_image, (value) => this.decimalPipe.transform(value)
                 )})`;
-                this.thumbnailImagesSize = `(${ImageStore.byteCountToDescription(
+                this.thumbnailImagesSize = `(${getFileSizeLabel(
                     sizes.thumbnail_image, (value) => this.decimalPipe.transform(value)
                 )})`;
             }
@@ -225,22 +247,24 @@ export class DownloadProjectComponent {
     }
 
 
-    private async syncDatabase(progressModalRef: NgbModalRef, databaseSteps: number,
-                               destroyExisting: boolean): Promise<void> {
+    private async downloadDatabase(progressModalRef: NgbModalRef, databaseSteps: number,
+                                   destroyExisting: boolean): Promise<string|number> {
 
         return new Promise(async (resolve, reject) => {
+            let lastUpdateSequence: string|number;
             try {
                 (await this.syncService.startReplication(
                     this.getUrl(), this.getPassword(), this.getProjectIdentifier(), databaseSteps, destroyExisting
                 )).subscribe({
                     next: lastSequence => {
+                        lastUpdateSequence = lastSequence;
                         const databaseProgress: number = DownloadProjectComponent.parseSequenceNumber(lastSequence);
                         progressModalRef.componentInstance.setDatabaseProgressPercent(
                             Math.min((databaseProgress / databaseSteps * 100), 100)
                         );
                     },
                     error: err => reject(err),
-                    complete: () => resolve()
+                    complete: () => resolve(lastUpdateSequence)
                 });
             } catch (e) {
                 reject(e);
@@ -255,49 +279,55 @@ export class DownloadProjectComponent {
         const fileCount: number = Object.keys(files).length;
         const batchSize: number = fileCount > 100 ? 20 : 1;
 
+        const uuids: string[] = Object.keys(files);
+
+        const batches: string[][] = [];
+        for (let i = 0; i < uuids.length; i += batchSize) {
+            const chunk: string[] = uuids.slice(i, i + batchSize);
+            batches.push(chunk);
+        }
+
+        for (const batch of batches) {
+            await this.loadImageBatch(files, batch, 5);
+
+            counter += batch.length;
+            const progressValue = ((counter / fileCount) * 100);
+            progressModalRef.componentInstance.filesProgressPercent = progressValue;
+        }
+    }
+
+
+    private async loadImageBatch(files: { [uuid: string]: FileInfo }, batch: string[], retries: number) {
+
         try {
-            const uuids: string[] = Object.keys(files);
+            if (this.cancelling) throw 'canceled';
 
-            const batches: string[][] = [];
-            for (let i = 0; i < uuids.length; i += batchSize) {
-                const chunk: string[] = uuids.slice(i, i + batchSize);
-                batches.push(chunk);
-            }
-
-            for (const batch of batches) {
-                if (this.cancelling) throw 'canceled';
-
-                this.fileDownloadPromises = [];
-
-                for (const uuid of batch) {
-                    if (files[uuid].deleted) {
-                        this.imageStore.remove(uuid, this.getProjectIdentifier());
-                        continue;
-                    }
-
-                    for (const variant of files[uuid].variants) {
-                        if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(variant.name)) {
-                            this.fileDownloadPromises.push(
-                                this.remoteImageStore.getDataUsingCredentials(
-                                    this.getUrl(), this.getPassword(), uuid, variant.name, this.getProjectIdentifier()
-                                ).then((data) => {
-                                    return this.imageStore.store(uuid, data, this.getProjectIdentifier(), variant.name);
-                                })
-                            );
-                        }
-                    }
+            for (const uuid of batch) {
+                if (files[uuid].deleted) {
+                    this.imageStore.remove(uuid, this.getProjectIdentifier());
+                    continue;
                 }
 
-                await Promise.all(this.fileDownloadPromises);
-
-                if (this.cancelling) throw 'canceled';
-
-                counter += batch.length;
-                const progressValue = ((counter / fileCount) * 100);
-                progressModalRef.componentInstance.filesProgressPercent = progressValue;
+                for (const variant of files[uuid].variants) {
+                    if ([ImageVariant.ORIGINAL, ImageVariant.THUMBNAIL].includes(variant.name)) {
+                        this.fileDownloadPromises.push(
+                            this.remoteImageStore.getDataUsingCredentials(
+                                this.getUrl(), this.getPassword(), uuid, variant.name, this.getProjectIdentifier()
+                            ).then((data) => {
+                                return this.imageStore.store(uuid, data, this.getProjectIdentifier(), variant.name);
+                            })
+                        );
+                    }
+                }
             }
+
+            await Promise.all(this.fileDownloadPromises);
         } catch (e) {
-            throw (e);
+            if (retries > 0) {
+                this.loadImageBatch(files, batch, retries - 1)
+            } else {
+                throw "fileDownloadInterrupted";
+            }
         }
     }
 
@@ -316,6 +346,7 @@ export class DownloadProjectComponent {
             await this.imageStore.deleteData(this.getProjectIdentifier());
             this.cancelling = false;
             this.closeModal(progressModalRef);
+            if (Settings.isSynchronizationActive(this.settingsProvider.getSettings())) this.syncService.startSync();
         }
     }
 
@@ -351,7 +382,7 @@ export class DownloadProjectComponent {
         const url: string = this.url?.trim();
 
         // Prevent trying to download project from own database
-        return url.replace('http://', '').replace(':3000', '') === address.ip()
+        return url.replace('http://', '').replace(':3000', '') === this.ipAddress
             ? '.'
             : url;
     }
@@ -377,7 +408,7 @@ export class DownloadProjectComponent {
     }
 
 
-    private static parseSequenceNumber(updateSequence: number | string): number {
+    private static parseSequenceNumber(updateSequence: string|number): number {
 
         return Number.parseInt((updateSequence + '').split('-')[0], 10);
     }

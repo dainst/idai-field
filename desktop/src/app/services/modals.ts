@@ -11,14 +11,19 @@ import { Menus } from './menus';
  */
 export class Modals {
 
-    private menuContextsStack: Array<MenuContext> = [];
+    private menuContextsStack: Array<MenuContext> = [MenuContext.DEFAULT];
 
 
     constructor(private modalService: NgbModal,
                 private menuService: Menus) {}
 
 
-    public initialize = (menuContext: MenuContext) => this.menuContextsStack = [menuContext];
+    public initialize(menuContext: MenuContext) {
+
+        if (!this.menuContextsStack.includes(menuContext)) {
+            this.menuContextsStack = [menuContext];
+        }
+    }
 
 
     /**
@@ -72,7 +77,7 @@ export class Modals {
     }
 
 
-    public async closeModal(componentInstance: any) {
+    public closeModal(componentInstance: any) {
 
         this.restorePreviousMenuContext();
         componentInstance.activeModal.close();

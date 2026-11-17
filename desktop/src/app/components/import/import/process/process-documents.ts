@@ -8,10 +8,10 @@ import { mergeResource } from './merge-resource';
 /**
  * @returns clones of the documents with their properties validated and adjusted
  */
-export function processDocuments(documents: Array<Document>,
-                                 mergeDocs: { [resourceId: string]: Document },
-                                 validator: ImportValidator,
-                                 ignoreUnconfiguredFields: boolean): Array<Document> {
+export async function processDocuments(documents: Array<Document>,
+                                       mergeDocs: { [resourceId: string]: Document },
+                                       validator: ImportValidator,
+                                       ignoreUnconfiguredFields: boolean): Promise<Array<Document>> {
 
     const mergeMode = size(mergeDocs) > 0;
     if (!mergeMode) assertNoDuplicates(documents);
@@ -35,6 +35,8 @@ export function processDocuments(documents: Array<Document>,
         // We need to make sure the category is set in any case.
         document.resource.category = finalDocument.resource.category;
 
+        validator.assertGeometryIsValid(finalDocument);
+
         if (ignoreUnconfiguredFields) {
             validator.getUndefinedFields(finalDocument).forEach(fieldName => delete finalDocument.resource[fieldName]);
         } else {
@@ -49,6 +51,7 @@ export function processDocuments(documents: Array<Document>,
 
     const result: Array<Document> = Object.values(finalDocuments);
     validator.assertResourceLimitNotExceeded(result);
+    await validator.assertQrCodesAreUnique(result);
 
     return result;
 }

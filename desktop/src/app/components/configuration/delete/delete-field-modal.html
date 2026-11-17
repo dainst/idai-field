@@ -1,18 +1,37 @@
 <div class="modal-header">
-    <h5 class="modal-title" i18n="@@configuration.deleteField.header">Feld löschen?</h5>
+    <h5 *ngIf="isDeletionAllowed()" class="modal-title" i18n="@@configuration.deleteField.header">Feld löschen?</h5>
+    <h5 *ngIf="!isDeletionAllowed()" class="modal-title" i18n="@@configuration.deleteField.header.notAllowed">Feld löschen nicht möglich</h5>
 </div>
 
-<div class="modal-body">
-    <span i18n="@@configuration.deleteField.body">Möchten Sie das Feld <code>{{field.name}}</code> wirklich löschen?</span>
+<div class="modal-body configuration-delete-modal-body">
+    <span *ngIf="isDeletionAllowed()"
+          i18n="@@configuration.deleteField.body">Möchten Sie das Feld <code>{{field.name}}</code> wirklich löschen?</span>
+    <span *ngIf="isInverseRelation()"
+          i18n="@@configuration.deleteField.body.notAllowed.inverseRelation">
+          Das Feld <code>{{field.name}}</code> kann nicht gelöscht werden, solange es als Gegenrelation verwendet wird.
+    </span>
+    <span *ngIf="conditionalFieldName && !conditionalFieldSubcategory"
+          i18n="@@configuration.deleteField.body.notAllowed.conditionalField">
+          Das Feld <code>{{field.name}}</code> kann nicht gelöscht werden, solange es als Bedingungsfeld für das
+          Feld <code>{{conditionalFieldName}}</code> konfiguriert ist.
+    </span>
+    <span *ngIf="conditionalFieldName && conditionalFieldSubcategory"
+          i18n="@@configuration.deleteField.body.notAllowed.conditionalField.subcategory">
+          Das Feld <code>{{field.name}}</code> kann nicht gelöscht werden, solange es als Bedingungsfeld für das
+          Feld <code>{{conditionalFieldName}}</code> der Unterkategorie
+          "{{getCategoryLabel(conditionalFieldSubcategory)}}" konfiguriert ist.
+    </span>
 </div>
 
 <div class="modal-footer">
     <div id="delete-field-button"
          class="btn btn-danger"
+         [class.disabled]="!isDeletionAllowed()"
          (click)="confirmDeletion()">
         <span i18n="@@buttons.delete">Löschen</span>
     </div>
-    <div class="btn btn-secondary"
+    <div id="cancel-field-deletion-button"
+         class="btn btn-secondary"
          (click)="cancel()">
         <span i18n="@@buttons.cancel">Abbrechen</span>
     </div>

@@ -351,8 +351,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -681,8 +680,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -941,8 +939,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -1067,8 +1064,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -1186,8 +1182,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -1275,8 +1270,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -1629,8 +1623,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },

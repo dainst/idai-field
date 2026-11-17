@@ -18,7 +18,6 @@ sidebar-list {
 
     .has-warnings {
       border-right: 2px solid red !important;
-      transition: border-right 1s ease;
     }
 
     .new-from-remote {
@@ -50,7 +49,7 @@ sidebar-list {
   }
 
   #create-document-button .circular-button {
-    left: 45%;
+    left: calc(50% - 20px);
     margin: -45px auto auto auto;
     z-index: 100;
   }

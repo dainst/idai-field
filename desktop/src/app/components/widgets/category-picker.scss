@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 category-picker {
   .category-picker {
     border-radius: 0;
@@ -34,7 +36,7 @@ category-picker {
 
       .category-item:hover,
       &.selected-category .category-item {
-        background-color: darken($color: $custom-highlight-color, $amount: 5) !important;
+        background-color: color.adjust($custom-highlight-color, $lightness: -5%) !important;
       }
     }
 
@@ -45,7 +47,7 @@ category-picker {
     }
 
     &.parent-selected.selected-category .category-item:hover {
-      background-color: darken($list-item-hover-color, 5%) !important;
+      background-color: color.adjust($list-item-hover-color, $lightness: -5%) !important;
     }
 
     &:not(.custom-category):hover {
@@ -82,10 +84,7 @@ category-picker {
     background-color: transparent;
     border: 0;
     height: 100%;
-
-    &:hover {
-      cursor: default;
-    }
+    cursor: default;
 
     &:focus {
       outline: none;
@@ -150,11 +149,7 @@ category-picker .category-item,
   display: flex;
   align-items: center;
   min-height: 30px;
-  padding: 10px 0 10px 20px;
-
-  &.short-category-item {
-    width: calc(100% - 28px);
-  }
+  padding: 10px 20px;
 
   category-icon {
     position: absolute;
@@ -163,7 +158,6 @@ category-picker .category-item,
   .category-label {
     display: inline-block;
     margin-left: 40px;
-    width: calc(100% - 50px);
     font-size: 15px;
   }
 }
@@ -177,7 +171,7 @@ category-picker .category-item,
   border-radius: 0.25rem;
   padding: 10px 20px 10px 20px;
   height: 44px;
-  font-family: 'Open SansVariable';
+  font-family: 'Open Sans Variable';
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2),
               0 9px 11px 2px rgba(0, 0, 0, 0.14),
               0 3px 14px 3px rgba(0, 0, 0, 0.12);
@@ -197,13 +191,13 @@ category-picker .category-item,
 
     &:hover {
         color: $primary-button-color;
-        background-color: darken(white, 5%) !important;
+        background-color: color.adjust(white, $lightness: -5%) !important;
     }
 }
 
 .add-new-category-button {
     border-bottom-style: solid;
-    border-bottom-color: lighten($primary-button-color, 33%);
+    border-bottom-color: color.adjust($primary-button-color, $lightness: 33%);
 }
 
 .popover-inner {

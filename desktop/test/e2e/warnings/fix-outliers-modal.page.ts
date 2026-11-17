@@ -1,4 +1,4 @@
-import { click, getText, selectSearchableSelectOption, typeIn } from '../app';
+import { click, getLocator, getText, selectSearchableSelectOption } from '../app';
 
 
 /**
@@ -14,6 +14,14 @@ export class FixOutliersModalPage {
     }
 
 
+    public static async clickCheckboxesValue(checkboxIndex: number) {
+
+        const element = await (await getLocator('.checkbox')).nth(checkboxIndex);
+        
+        return click(element);
+    }
+
+
     public static clickMultipleSwitch() {
 
         return click('#multiple-switch .switch');
@@ -26,11 +34,22 @@ export class FixOutliersModalPage {
     }
 
 
+    public static clickCancelButton() {
 
+        return click('#cancel-button');
+    }
+
+    
     // get
 
     public static async getHeading() {
 
         return getText('#fix-outliers-modal-header h5');
+    }
+
+    
+    public static getMultipleSwitch() {
+
+        return getLocator('#multiple-switch .switch');
     }
 }

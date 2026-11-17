@@ -1,10 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { I18n } from '@ngx-translate/i18n-polyfill';
-import { on, is, isArray, isString, isEmpty, Map } from 'tsfun';
+import { on, is, isString, isEmpty, Map } from 'tsfun';
 import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, CustomFormDefinition,
-    CustomSubfieldDefinition, Field, I18N, InPlace, Labels, Named, Subfield, SubfieldCondition,
-    Valuelists } from 'idai-field-core';
+    CustomSubfieldDefinition, Field, I18N, InPlace, Labels, Named, Subfield, Condition,
+    Valuelists, Valuelist } from 'idai-field-core';
 import { InputType } from '../../../configuration-util';
 import { SubfieldEditorData, SubfieldEditorModalComponent } from '../subfield-editor-modal.component';
 import { MenuContext } from '../../../../../services/menu-context';
@@ -13,11 +12,14 @@ import { Modals } from '../../../../../services/modals';
 import { AngularUtility } from '../../../../../angular/angular-utility';
 import { getInputTypeLabel } from '../../../../../util/get-input-type-label';
 import { UtilTranslations } from '../../../../../util/util-translations';
+import { Messages } from '../../../../messages/messages';
+import { M } from '../../../../messages/m';
 
 
 @Component({
     selector: 'subfields-section',
-    templateUrl: './subfields-section.html'
+    templateUrl: './subfields-section.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -40,15 +42,13 @@ export class SubfieldsSectionComponent {
 
     public newSubfieldName: string;
 
-    public newSubfieldInputPlaceholder: string = this.i18n({
-        id: 'configuration.newSubfield', value: 'Neues Unterfeld'
-    });
+    public newSubfieldInputPlaceholder: string = $localize `:@@configuration.newSubfield:Neues Unterfeld`;
 
   
     constructor(private labels: Labels,
                 private modals: Modals,
                 private utilTranslations: UtilTranslations,
-                private i18n: I18n) {}
+                private messages: Messages) {}
 
 
     public getClonedSubfieldDefinitions = () => this.clonedFieldDefinition.subfields;
@@ -64,7 +64,7 @@ export class SubfieldsSectionComponent {
     }
 
 
-    public getConditionSubfieldLabel(condition: SubfieldCondition): string {
+    public getConditionSubfieldLabel(condition: Condition): string {
 
         const subfield: Subfield = this.clonedField.subfields?.find(on(Named.NAME, is(condition.subfieldName)));
 
@@ -72,15 +72,16 @@ export class SubfieldsSectionComponent {
     }
 
 
-    public getConditionValueLabels(condition: SubfieldCondition): string {
+    public getConditionValueLabel(condition: Condition): string {
 
         const subfield: Subfield = this.clonedField.subfields?.find(on(Named.NAME, is(condition.subfieldName)));
 
         return subfield
-            ? (condition.values as string[])
-                .map(valueId => this.labels.getValueLabel(subfield.valuelist, valueId))
-                .join(', ')
-            : '';
+            ? Condition.generateLabel(
+                condition,
+                key => this.utilTranslations.getTranslation(key),
+                valueId => this.labels.getValueLabel(subfield.valuelist, valueId)
+            ) : '';
     }
 
 
@@ -160,6 +161,7 @@ export class SubfieldsSectionComponent {
         componentInstance.parentField = this.clonedField;
         componentInstance.category = this.category;
         componentInstance.references = subfieldDefinition.references;
+        componentInstance.semanticReferences = subfieldDefinition.semanticReferences;
         componentInstance.subfields = this.clonedField.subfields;
         componentInstance.availableInputTypes = this.availableInputTypes;
         componentInstance.projectLanguages = this.projectLanguages;
@@ -178,18 +180,40 @@ export class SubfieldsSectionComponent {
 
     public deleteSubfield(subfieldToDelete: CustomSubfieldDefinition) {
 
+        if (this.showErrorIfConditionSubfield(subfieldToDelete)) return;
+
         this.clonedFieldDefinition.subfields = this.clonedFieldDefinition.subfields.filter(
             subfield => subfield.name !== subfieldToDelete.name
         );
         this.clonedField.subfields = this.clonedField.subfields.filter(
             subfield => subfield.name !== subfieldToDelete.name
         );
+
+        this.setValuelistForEditedSubfield(null, subfieldToDelete);
     }
 
 
     public onDropSubfield(event: CdkDragDrop<any>) {
 
         InPlace.moveInArray(this.clonedFieldDefinition.subfields, event.previousIndex, event.currentIndex);
+    }
+
+
+    private showErrorIfConditionSubfield(subfieldDefinition: CustomSubfieldDefinition): boolean {
+
+        const conditionSubfield: Subfield = this.clonedField.subfields.find(subfield => {
+            return subfield.condition?.subfieldName === subfieldDefinition.name;
+        });
+
+        if (conditionSubfield) {
+            this.messages.add([
+                M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_DELETION,
+                this.labels.get(conditionSubfield)
+            ]);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
@@ -207,13 +231,25 @@ export class SubfieldsSectionComponent {
         subfieldDefinition.inputType = editedSubfieldData.inputType;
         clonedSubfield.inputType = editedSubfieldData.inputType;
 
-        if (editedSubfieldData.references.length > 0) {
+        if (editedSubfieldData.references?.length) {
             subfieldDefinition.references = editedSubfieldData.references;
         } else {
             delete subfieldDefinition.references;
         }
 
-        if (SubfieldsSectionComponent.isValidSubfieldCondition(editedSubfieldData.condition)) {
+        if (editedSubfieldData.semanticReferences?.length) {
+            subfieldDefinition.semanticReferences = editedSubfieldData.semanticReferences;
+        } else {
+            delete subfieldDefinition.semanticReferences;
+        }
+
+        if (editedSubfieldData.dateConfiguration) {
+            subfieldDefinition.dateConfiguration = editedSubfieldData.dateConfiguration;
+        } else {
+            delete subfieldDefinition.dateConfiguration;
+        }
+
+        if (Condition.isValid(editedSubfieldData.condition, 'subfield')) {
             subfieldDefinition.condition = editedSubfieldData.condition;
             clonedSubfield.condition = editedSubfieldData.condition;
         } else {
@@ -221,31 +257,31 @@ export class SubfieldsSectionComponent {
             delete clonedSubfield.condition;
         }
 
-        this.setValuelistForEditedSubfield(editedSubfieldData, subfieldDefinition, clonedSubfield);
+        this.setValuelistForEditedSubfield(editedSubfieldData.valuelist, subfieldDefinition, clonedSubfield);
         this.setLabelsForEditedSubfield(editedSubfieldData, subfieldDefinition, clonedSubfield);
     }
 
 
-    private setValuelistForEditedSubfield(editedSubfieldData: SubfieldEditorData,
-                                          subfieldDefinition: CustomSubfieldDefinition, clonedSubfield: Subfield) {
+    private setValuelistForEditedSubfield(valuelist: Valuelist|null, subfieldDefinition: CustomSubfieldDefinition,
+                                          clonedSubfield?: Subfield) {
 
         if (!this.clonedFormDefinition.valuelists) this.clonedFormDefinition.valuelists = {};
 
         const valuelists: Valuelists = this.clonedFormDefinition.valuelists;
-        if (editedSubfieldData.valuelist) {
+        if (valuelist) {
             if (!valuelists[this.clonedField.name]
                     || isString(valuelists[this.clonedField.name])) {
                 valuelists[this.clonedField.name] = {};
             }
-            valuelists[this.clonedField.name][subfieldDefinition.name] = editedSubfieldData.valuelist.id;
+            valuelists[this.clonedField.name][subfieldDefinition.name] = valuelist.id;
+            clonedSubfield.valuelist = valuelist;
         } else if (valuelists[this.clonedField.name]?.[subfieldDefinition.name]) {
             delete valuelists[this.clonedField.name][subfieldDefinition.name];
             if (isEmpty(valuelists[this.clonedField.name])) {
                 delete valuelists[this.clonedField.name];
             }
+            if (clonedSubfield) delete clonedSubfield.valuelist;
         }
-
-        clonedSubfield.valuelist = editedSubfieldData.valuelist;
     }
 
 
@@ -268,16 +304,5 @@ export class SubfieldsSectionComponent {
         return this.clonedField.subfields.find(clonedSubfield => {
             return clonedSubfield.name === subfieldDefinition.name;
         });
-    }
-
-
-    private static isValidSubfieldCondition(condition: SubfieldCondition): boolean {
-
-        return condition
-            && condition.subfieldName
-            && (condition.values === true
-                || condition.values === false
-                || isArray(condition.values) && condition.values.length > 0
-            );
     }
 }

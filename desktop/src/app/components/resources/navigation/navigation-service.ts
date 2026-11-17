@@ -16,6 +16,7 @@ export class NavigationService {
 
     private moveIntoObservers: Array<Observer<any>> = [];
 
+
     constructor(private projectConfiguration: ProjectConfiguration,
                 private routingService: Routing,
                 private viewFacade: ViewFacade,
@@ -40,6 +41,9 @@ export class NavigationService {
 
 
     public async moveInto(document: FieldDocument|undefined) {
+
+        const navigationPath = this.viewFacade.getNavigationPath();
+        if (navigationPath.selectedSegmentId === document?.resource.id) return;
 
         await this.viewFacade.moveInto(document);
         ObserverUtil.notify(this.moveIntoObservers, undefined);
@@ -85,10 +89,8 @@ export class NavigationService {
     public shouldShowArrowTopRightForSearchMode(document: FieldDocument) {
 
         return (this.viewFacade.isInOverview() && this.viewFacade.isInExtendedSearchMode()
-            && (!this.projectConfiguration
-                .isSubcategory(document.resource.category, 'Operation')
-                    && document.resource.category !== 'Place')
-        );
+            && (!this.projectConfiguration.isSubcategory(document.resource.category, 'Operation')
+                && !this.projectConfiguration.isSubcategory(document.resource.category, 'Place')));
     }
 
 
@@ -96,9 +98,8 @@ export class NavigationService {
 
         return (!this.viewFacade.isInOverview() && this.viewFacade.isInExtendedSearchMode())
             || (this.viewFacade.isInOverview() && this.viewFacade.isInExtendedSearchMode()
-                && (this.projectConfiguration
-                    .isSubcategory(document.resource.category, 'Operation')
-                    || document.resource.category === 'Place')
+                && (this.projectConfiguration.isSubcategory(document.resource.category, 'Operation')
+                    || this.projectConfiguration.isSubcategory(document.resource.category, 'Place'))
             );
     }
 

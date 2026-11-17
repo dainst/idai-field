@@ -4,35 +4,39 @@
             <code>{{valuelist.id}}</code>
         </span>
         <div *ngIf="valuelist.extendedValuelist"
-                id="extension-info"
-                ngbTooltip="Diese Werteliste stellt eine Erweiterung einer bestehenden Werteliste dar."
-                i18n-ngbTooltip="@@configuration.valuelistExtensionTooltip"
-                container="body"
-                placement="bottom">
+             id="extension-info"
+             ngbTooltip="Diese Werteliste stellt eine Erweiterung einer bestehenden Werteliste dar."
+             i18n-ngbTooltip="@@configuration.valuelistExtensionTooltip"
+             container="body"
+             placement="bottom">
             <span class="mdi mdi-plus"></span> <code>{{valuelist.extendedValuelist}}</code>
         </div>
     </div>
     <div id="preview-body" [class.extending-valuelist]="valuelist.extendedValuelist">
-        <div *ngIf="valuelist.createdBy" class="valuelist-preview-section">
+        <div *ngIf="valuelist.createdBy" class="preview-section">
             <b i18n="@@configuration.createdBy">Erstellt von:</b>
-            <div class="valuelist-preview-text">{{valuelist.createdBy}}</div>
+            <div class="preview-text">{{valuelist.createdBy}}</div>
         </div>
 
-        <div *ngIf="getValuelistDescription()" class="valuelist-preview-section">
+        <div *ngIf="getValuelistDescription()" class="preview-section">
             <b i18n="@@configuration.descriptionHeading">Beschreibung:</b>
-            <div class="valuelist-preview-text">{{getValuelistDescription()}}</div>
+            <div class="preview-text">{{getValuelistDescription()}}</div>
         </div>
 
-        <b i18n="@@configuration.valuesHeading">Werte:</b>
-        <ul class="list-group list-group-flush">
-            <li *ngIf="valuelist.values" class="list-group-item">
-                <valuelist-view [valuelist]="valuelist"
-                                [showDescription]="false"
-                                [largeList]="true"></valuelist-view>
-            </li>
-        </ul>
+        <div *ngIf="valuelist.references?.length || valuelist.semanticReferences?.length" class="preview-section">
+            <references-info [references]="valuelist.references"
+                             [semanticReferences]="valuelist.semanticReferences"
+                             [context]="'configuration'"></references-info>
+        </div>
 
-        <b *ngIf="getUsage().length > 0" i18n="@@configuration.usedBy">Verwendet von:</b>
+        <div *ngIf="valuelist.values" class="preview-section">
+            <b i18n="@@configuration.valuesHeading">Werte:</b>
+            <valuelist-view [valuelist]="valuelist"
+                            [showDescription]="false"
+                            [largeList]="true"></valuelist-view>
+        </div>
+
+        <b *ngIf="getUsage().length > 0" id="used-by-header" i18n="@@configuration.usedBy">Verwendet von:</b>
         <div *ngFor="let categoryUsage of getUsage()">
             <category-icon [category]="categoryUsage.category" size="23"></category-icon>
             <span class="valuelist-preview-label">{{getLabel(categoryUsage.category)}}</span>

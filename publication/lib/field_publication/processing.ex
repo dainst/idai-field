@@ -1,0 +1,497 @@
+defmodule FieldPublication.Processing do
+  use GenServer
+
+  alias Phoenix.PubSub
+
+  alias FieldPublication.EmbeddedSchema.LogEntry
+
+  alias FieldPublication.Processing.{
+    WebImage,
+    MapTiles
+  }
+
+  alias FieldPublication.Publication
+
+  alias FieldPublication.Publication.{
+    DocumentPreview,
+    DataIssues,
+    Geo,
+    Search
+  }
+
+  require Logger
+
+  @moduledoc """
+  This GenServer is used to start, stop and track processing tasks.
+
+  GenServers are a core building block in Elixir (or rather the whole Erlang ecosystem).
+  Basically this defines a child process that gets started when the application is started
+  (see application.ex) and waits for requests from other processes within the system.
+  It holds an internal state (a list of running tasks) and provides some API functions
+  that let other part of the application start/stop or monitor the running tasks.
+
+  See also https://hexdocs.pm/elixir/1.15.7/GenServer.htm
+
+  Each item in the internal state is a tuple of the pattern `{task, processing_type, processing_context}`,
+  where `task` is a reference to the Elixir Task that got initiated, processing_type is an atom that identifies the
+  type of processing (for example `:web_images`) and `processing_context` identifies the context within FieldPublication
+  that is being processed (for example the document id of a certain `FieldPublication.DatabaseSchema.Publication`). The
+  `processing_context` value is also used to broadcast PubSub messages throughout the application.
+
+  Use the API functions below to interact with the module.
+  """
+
+  def start_link(_opts) do
+    Logger.debug("Starting Processing GenServer")
+    GenServer.start_link(__MODULE__, [], name: __MODULE__)
+  end
+
+  def init(_) do
+    Logger.debug("Initializing Processing GenServer state to empty list")
+    {:ok, []}
+  end
+
+  #########################################################################
+  ## Start of API functions to be called from the rest of the application.
+
+  @doc """
+  Start all processing tasks for the given publication. The `:geo_collection` task is already part
+  of the `:search_index` one, so we do not start it twice.
+  """
+  def start(%Publication{} = publication) do
+    GenServer.call(__MODULE__, {:start, publication, :web_images})
+    GenServer.call(__MODULE__, {:start, publication, :tile_images})
+    GenServer.call(__MODULE__, {:start, publication, :search_index})
+    GenServer.call(__MODULE__, {:start, publication, :preview_documents})
+    GenServer.call(__MODULE__, {:start, publication, :database_indices})
+  end
+
+  @doc """
+  Start a processing task as defined by `type` for the given publication.
+  """
+  def start(%Publication{} = publication, type)
+      when type in [
+             :web_images,
+             :tile_images,
+             :search_index,
+             :preview_documents,
+             :geo_collections,
+             :database_indices
+           ] do
+    # Extend the list of atoms in the guard above to support additional processing steps. You
+    # still need to implement the  appropriate `handle_call/3` below.
+    GenServer.call(__MODULE__, {:start, publication, type})
+  end
+
+  @doc """
+  Get information about all currently running processing tasks.
+  """
+  def show() do
+    GenServer.call(__MODULE__, :show)
+  end
+
+  @doc """
+  Get information about all currently running processing tasks for the given publication.
+  """
+  def show(%Publication{} = publication) do
+    GenServer.call(__MODULE__, {:show, publication._id})
+  end
+
+  @doc """
+  Get information about the currently running processing task as defined by `type` for the given publication.
+  """
+  def show(%Publication{} = publication, type)
+      when type in [
+             :web_images,
+             :tile_images,
+             :search_index,
+             :preview_documents,
+             :geo_collections,
+             :database_indices
+           ] do
+    GenServer.call(__MODULE__, {:show, publication._id, type})
+  end
+
+  @doc """
+  Stop all currently running processing tasks.
+  """
+  def stop() do
+    GenServer.call(__MODULE__, :stop)
+  end
+
+  @doc """
+  Stop all currently running processing tasks for the given publication.
+  """
+  def stop(%Publication{} = publication) do
+    GenServer.call(__MODULE__, {:stop, publication._id})
+  end
+
+  @doc """
+  Stop the currently running processing task as defined by `type` for the given publication.
+  """
+  def stop(%Publication{_id: id}, type)
+      when type in [
+             :web_images,
+             :tile_images,
+             :search_index,
+             :preview_documents,
+             :geo_collections,
+             :database_indices
+           ] do
+    GenServer.call(__MODULE__, {:stop, id, type})
+  end
+
+  # End of API function definitions. Everything below should __not__ get called directly from other modules.
+  ###################################
+
+  @doc """
+  These `handle_call/3` implementations handle messages sent by other processes to
+  the GenServer. These calls will in general originate from the API functions defined above or from the
+  asynchronous tasks started by the GenServer itself (reporting that the processing task has finished/crashed...).
+  """
+  def handle_call(
+        {:start, %Publication{_id: publication_id} = publication, :web_images},
+        _from,
+        running_tasks
+      ) do
+    Enum.any?(running_tasks, fn {_task, type, context} ->
+      publication_id == context and type == :web_images
+    end)
+    |> if do
+      # The `:web_images` task is already running for the given publication, keep the state as-is and return a
+      # `:already_running` atom to the caller.
+      {:reply, :already_running, running_tasks}
+    else
+      # Start the `:web_images` task for the given publication, broadcast the event to the publication's PubSub channel,
+      # update the state and return an `:ok` atom to the caller.
+      task =
+        Task.Supervisor.async_nolink(
+          FieldPublication.ProcessingSupervisor,
+          # Module that implements the actual processing.
+          WebImage,
+          # Function within that module to start the task.
+          :start,
+          # Parameters for that function.
+          [publication]
+        )
+
+      broadcast(publication_id, :web_images, :processing_started)
+
+      {:reply, :ok, running_tasks ++ [{task, :web_images, publication_id}]}
+    end
+  end
+
+  def handle_call(
+        {:start, %Publication{_id: publication_id} = publication, :tile_images},
+        _from,
+        running_tasks
+      ) do
+    Enum.any?(running_tasks, fn {_task, type, context} ->
+      publication_id == context and type == :tile_images
+    end)
+    |> if do
+      # The `:tile_images` task is already running for the given publication, keep the state as-is and return a
+      # `:already_running` atom to the caller.
+      {:reply, :already_running, running_tasks}
+    else
+      # Start the `:tile_images` task for the given publication, broadcast the event to the publication's PubSub channel,
+      # update the state and return an `:ok` atom to the caller.
+      task =
+        Task.Supervisor.async_nolink(
+          FieldPublication.ProcessingSupervisor,
+          # Module that implements the actual processing.
+          MapTiles,
+          # Function within that module to start the processing.
+          :start,
+          # Parameters for that function.
+          [publication]
+        )
+
+      broadcast(publication_id, :tile_images, :processing_started)
+
+      {:reply, :ok, running_tasks ++ [{task, :tile_images, publication_id}]}
+    end
+  end
+
+  def handle_call(
+        {:start, %Publication{_id: publication_id} = publication, :search_index},
+        _from,
+        running_tasks
+      ) do
+    Enum.any?(running_tasks, fn {_task, type, context} ->
+      publication_id == context and type == :search_index
+    end)
+    |> if do
+      # The `:search_index` task is already running for the given publication, keep the state as-is and return a
+      # `:already_running` atom to the caller.
+      {:reply, :already_running, running_tasks}
+    else
+      # Start the `:search_index` task for the given publication, broadcast the event to the publication's PubSub channel,
+      # update the state and return an `:ok` atom to the caller.
+      task =
+        Task.Supervisor.async_nolink(
+          FieldPublication.ProcessingSupervisor,
+          # Module that implements the actual processing.
+          Search,
+          # Function within that module to start the processing.
+          :index_documents!,
+          # Parameters for that function.
+          [publication]
+        )
+
+      broadcast(publication_id, :search_index, :processing_started)
+
+      {:reply, :ok, running_tasks ++ [{task, :search_index, publication_id}]}
+    end
+  end
+
+  def handle_call(
+        {:start, %Publication{_id: publication_id} = publication, :preview_documents},
+        _from,
+        running_tasks
+      ) do
+    Enum.any?(running_tasks, fn {_task, type, context} ->
+      publication_id == context and type == :preview_documents
+    end)
+    |> if do
+      # The `:preview_documents` task is already running for the given publication, keep the state as-is and return a
+      # `:already_running` atom to the caller.
+      {:reply, :already_running, running_tasks}
+    else
+      task =
+        Task.Supervisor.async_nolink(
+          FieldPublication.ProcessingSupervisor,
+          # Module that implements the actual processing.
+          DocumentPreview,
+          # Function within that module to start the processing.
+          :recreate_previews,
+          # Parameters for that function.
+          [publication]
+        )
+
+      broadcast(publication_id, :preview_documents, :processing_started)
+
+      {:reply, :ok, running_tasks ++ [{task, :preview_documents, publication_id}]}
+    end
+  end
+
+  def handle_call(
+        {:start, %Publication{_id: publication_id} = publication, :geo_collections},
+        _from,
+        running_tasks
+      ) do
+    Enum.any?(running_tasks, fn {_task, type, context} ->
+      publication_id == context and type == :geo_collections
+    end)
+    |> if do
+      # The `:geo_collections` task is already running for the given publication, keep the state as-is and return a
+      # `:already_running` atom to the caller.
+      {:reply, :already_running, running_tasks}
+    else
+      task =
+        Task.Supervisor.async_nolink(
+          FieldPublication.ProcessingSupervisor,
+          # Module that implements the actual processing.
+          Geo,
+          # Function within that module to start the processing.
+          :generate_feature_collections!,
+          # Parameters for that function.
+          [publication]
+        )
+
+      broadcast(publication_id, :geo_collections, :processing_started)
+
+      {:reply, :ok, running_tasks ++ [{task, :geo_collections, publication_id}]}
+    end
+  end
+
+  def handle_call(
+        {:start, %Publication{_id: publication_id} = publication, :database_indices},
+        _from,
+        running_tasks
+      ) do
+    Enum.any?(running_tasks, fn {_task, type, context} ->
+      publication_id == context and type == :database_indices
+    end)
+    |> if do
+      # The `:preview_documents` task is already running for the given publication, keep the state as-is and return a
+      # `:already_running` atom to the caller.
+      {:reply, :already_running, running_tasks}
+    else
+      task =
+        Task.Supervisor.async_nolink(
+          FieldPublication.ProcessingSupervisor,
+          # Module that implements the actual processing.
+          Publication,
+          # Function within that module to start the processing.
+          :recreate_database_indices,
+          # Parameters for that function.
+          [publication]
+        )
+
+      broadcast(publication_id, :database_indices, :processing_started)
+
+      {:reply, :ok, running_tasks ++ [{task, :database_indices, publication_id}]}
+    end
+  end
+
+  def handle_call(:show, _from, running_tasks) do
+    {:reply, running_tasks, running_tasks}
+  end
+
+  def handle_call({:show, requested_context}, _from, running_tasks) do
+    requested_tasks =
+      Enum.filter(running_tasks, fn {_task, _type, context} ->
+        context == requested_context
+      end)
+
+    {:reply, requested_tasks, running_tasks}
+  end
+
+  def handle_call({:show, requested_context, requested_type}, _from, running_tasks) do
+    requested_task =
+      Enum.find(running_tasks, fn {_task, type, context} ->
+        context == requested_context and type == requested_type
+      end)
+
+    {:reply, requested_task, running_tasks}
+  end
+
+  def handle_call(:stop, _from, running_tasks) do
+    Logger.debug("Stopping all processing tasks.")
+
+    Enum.each(running_tasks, fn {task, _type, _context} ->
+      Process.exit(task.pid, :stopped)
+    end)
+
+    {:reply, :ok, running_tasks}
+  end
+
+  def handle_call({:stop, requested_context}, _from, running_tasks) do
+    Logger.debug("Stopping all processing tasks for #{requested_context}.")
+
+    {requested_tasks, _remaining_tasks} =
+      Enum.split_with(running_tasks, fn {_task, _type, context} ->
+        context == requested_context
+      end)
+
+    Enum.each(requested_tasks, fn {task, _type, _context} ->
+      Process.exit(task.pid, :stopped)
+    end)
+
+    {:reply, :ok, running_tasks}
+  end
+
+  def handle_call({:stop, requested_context, requested_type}, _from, running_tasks) do
+    Logger.debug("Stopping '#{requested_type}' processing task for #{requested_context}.")
+
+    {requested_tasks, _remaining_tasks} =
+      Enum.split_with(running_tasks, fn {_task, type, context} ->
+        context == requested_context && type == requested_type
+      end)
+
+    Enum.each(requested_tasks, fn {task, _type, _context} ->
+      Process.exit(task.pid, :stopped)
+    end)
+
+    {:reply, :ok, running_tasks}
+  end
+
+  # Handling of finished, stopped or crashed tasks
+
+  def handle_info({_ref, _answer}, running_tasks) do
+    # Handles successfull tasks, we currently do not extract data contained in the answer. Instead
+    # we just reply with the running tasks and let the appropriate {:DOWN, _, _, _,} message update the
+    # internal state, see below.
+    {:noreply, running_tasks}
+  end
+
+  def handle_info({:DOWN, ref, :process, _pid, :normal}, running_tasks) do
+    {:noreply, cleanup(ref, running_tasks)}
+  end
+
+  def handle_info({:DOWN, ref, :process, _pid, :stopped}, running_tasks) do
+    {:noreply, cleanup(ref, running_tasks)}
+  end
+
+  def handle_info({:DOWN, ref, :process, _pid, reason}, running_tasks) do
+    Logger.error("A processing task failed irregularly.")
+
+    try do
+      report_crash_to_publication(ref, reason, running_tasks)
+    after
+      :ok
+    end
+
+    {:noreply, cleanup(ref, running_tasks)}
+  end
+
+  defp report_crash_to_publication(ref, reason, running_tasks) do
+    Enum.find(running_tasks, fn {task, _type, _context} ->
+      task.ref == ref
+    end)
+    |> case do
+      {_task, type, context} ->
+        Publication.get(context)
+        |> case do
+          {:ok, publication} ->
+            # This clears all data issues associated with processing, which
+            # is slightly hacky, because there might be issues related to a different
+            # processing type (for example: this call might report a search index issue,
+            # while there might also be a reported crash concerning web images.).
+            #
+            # But: This only affects completely unhandled processing issues, the more nuanced
+            # issues reported by the processing tasks themselves are left intact.
+
+            report_key = report_key_by_processing_type(type)
+            DataIssues.remove_entries(report_key, publication)
+
+            DataIssues.add_entry(
+              "general",
+              LogEntry.create(%{
+                type: "general_processing_crash",
+                reported_by: report_key,
+                severity: :error,
+                message: inspect(reason)
+              }),
+              publication
+            )
+
+          _ ->
+            Logger.error("Could not find publication by task context.")
+        end
+
+      _ ->
+        Logger.error("Could not find task by reference.")
+    end
+  end
+
+  defp cleanup(ref, task_list) do
+    Enum.split_with(task_list, fn {task, _type, _context} ->
+      task.ref == ref
+    end)
+    |> case do
+      {[{_task, type, context}], rest} ->
+        broadcast(context, type, :processing_stopped)
+        rest
+
+      {[], rest} ->
+        rest
+    end
+  end
+
+  # PubSub interaction
+
+  defp broadcast(channel, processing_type, msg)
+       when msg in [:processing_started, :processing_stopped] do
+    Logger.info("#{msg}: #{processing_type}, #{channel}")
+    PubSub.broadcast!(FieldPublication.PubSub, channel, {channel, {msg, processing_type}})
+  end
+
+  def report_key_by_processing_type(:web_images), do: WebImage.report_key()
+  def report_key_by_processing_type(:tile_images), do: MapTiles.report_key()
+  def report_key_by_processing_type(:search_index), do: Search.report_key()
+  def report_key_by_processing_type(:preview_documents), do: DocumentPreview.report_key()
+  def report_key_by_processing_type(:geo_collections), do: Geo.report_key()
+  def report_key_by_processing_type(:database_indices), do: Publication.report_key()
+end

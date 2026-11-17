@@ -4,6 +4,10 @@
     user-select: none;
   }
 
+  div.disabled {
+    color: grey;
+  }
+
   .warnings-tool-info {
     margin-bottom: 5px;
   }
@@ -35,5 +39,14 @@
   .ng-select .ng-select-container {  
     height: 33px !important;
     min-height: 33px;
+  }
+
+  .form-check-label {
+    margin-bottom: 0;
+  }
+
+  .replacement-values-container {
+    margin-bottom: 8px;
+    margin-top: 8px;
   }
 }

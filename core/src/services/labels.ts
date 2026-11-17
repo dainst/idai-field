@@ -1,11 +1,10 @@
 import { isString } from 'tsfun';
 import { I18N } from '../tools/i18n';
 import { Valuelist } from '../model/configuration/valuelist';
-import { ProjectConfiguration } from './project-configuration';
 import { CategoryForm } from '../model/configuration/category-form';
-import { SortUtil } from '../tools/sort-util';
 import { Relation } from '../model/configuration/relation';
 import { Field } from '../model/configuration/field';
+import { Comparator } from './comparator';
 
 
 /**
@@ -13,8 +12,8 @@ import { Field } from '../model/configuration/field';
  */
 export class Labels {
 
-    constructor(private getLanguages: () => string[],
-                private projectConfiguration: ProjectConfiguration) {}
+    constructor(private comparator: Comparator,
+                private getLanguages: () => string[]) {}
 
 
     public get(labeledValue: I18N.LabeledValue): string {
@@ -38,9 +37,9 @@ export class Labels {
     
     public getValueLabel(valuelist: Valuelist, valueId: string): string {
 
-        const label = Valuelist.getValueLabel(valuelist, valueId);
-
+        const label: I18N.String|undefined = Valuelist.getValueLabel(valuelist, valueId);
         const translation: string|undefined = I18N.getTranslation(label, this.getLanguages());
+
         return translation ?? valueId;
     }
 
@@ -66,11 +65,11 @@ export class Labels {
     }
 
 
-    public getRelationLabel(relationName: string): string {
+    public getRelationLabel(relation: Relation|string, relations?: Array<Relation>): string {
 
-        const relation: Relation = this.projectConfiguration.getRelations().find(relation => {
-            return relation.name === relationName;
-        });
+        if (typeof(relation) === 'string') {
+            relation = relations.find(entry => entry.name === relation);
+        }
         if (!relation) return undefined;
 
         return I18N.getLabel(relation, this.getLanguages());
@@ -85,7 +84,7 @@ export class Labels {
 
     private sortAlphanumerically = (valuelist: Valuelist) => (valueA: string, valueB: string): number => {
 
-        return SortUtil.alnumCompare(
+        return this.comparator.alnumCompare(
             this.getValueLabel(valuelist, valueA).toLowerCase(),
             this.getValueLabel(valuelist, valueB).toLowerCase()
         );

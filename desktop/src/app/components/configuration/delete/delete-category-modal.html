@@ -3,9 +3,9 @@
 </div>
 
 <div id="delete-category-modal-body configuration-delete-modal-body" class="modal-body">
-    <span *ngIf="!isConfirmationDialogVisible() && !hasChildCategories()"
+    <span *ngIf="!isConfirmationDialogVisible() && isDeletionAllowed()"
           i18n="configuration.deleteCategory.body">Möchten Sie die Kategorie <code>{{category.name}}</code> wirklich löschen?</span>
-    <div *ngIf="isConfirmationDialogVisible() && !hasChildCategories()">
+    <div *ngIf="isConfirmationDialogVisible() && isDeletionAllowed()">
         <div *ngIf="customized" class="text-center alert alert-warning"
              i18n="@@configuration.deleteCategory.warning.changes">
             An dieser Kategorie wurden Änderungen vorgenommen, die beim Löschen verloren gehen.
@@ -38,10 +38,15 @@
          Die Kategorie <code>{{category.name}}</code> kann nicht gelöscht werden, solange sie Unterkategorien besitzt.
          Bitte entfernen Sie zunächst die Unterkategorien.
     </div>
+    <div *ngIf="!hasChildCategories() && isRelationTargetCategory()" class="text-center alert alert-warning"
+         i18n="@@configuration.deleteCategory.isRelationTargetCategory">
+         Die Kategorie <code>{{category.name}}</code> kann nicht gelöscht werden, solange sie als Zielkategorie einer
+         Relation konfiguriert ist.
+    </div>
 </div>
 
 <div class="modal-footer">
-    <div *ngIf="!hasChildCategories()"
+    <div *ngIf="isDeletionAllowed()"
          id="delete-category-button"
          class="btn btn-danger"
          [ngClass]="{ 'disabled': isConfirmationDialogVisible() && !this.checkConfirmDeletionCategoryName() }"

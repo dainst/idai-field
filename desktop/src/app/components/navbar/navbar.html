@@ -3,7 +3,7 @@
      (dragover)="false" (dragleave)="false" (drop)="false">
     <div id="navbarSupportedContent" class="navbar-collapse">
         <ul #tabSpace id="resources-tabs" *ngIf="isInDefaultResourcesView()"
-            class="nav navbar-nav navbar-tabbed mr-auto">
+            class="nav navbar-nav navbar-tabbed me-auto">
             <li id="navbar-project" class="nav-item tab" [class.active]="isActiveRoute('/resources/project')">
                 <a class="nav-link" 
                    href="#" routerLink="/resources/project">
@@ -36,8 +36,8 @@
         </ul>
 
         <ul *ngIf="!isInDefaultResourcesView()"
-            id="non-resources-tab" class="nav navbar-nav navbar-tabbed mr-auto">
-            <span class="form-inline">
+            id="non-resources-tab" class="nav navbar-nav navbar-tabbed me-auto">
+            <span class="d-flex flex-row align-items-center flex-wrap">
                 <button class="btn btn-link"
                      (click)="$event.stopPropagation(); openActiveTab();">
                     <span class="mdi mdi-arrow-left-circle"></span>

@@ -1,7 +1,7 @@
- import { Component } from '@angular/core';
+ import { ChangeDetectorRef, Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { clone } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, CustomFormDefinition, SortUtil,
+import { CategoryForm, ConfigurationDocument, Field, CustomFormDefinition, Comparator,
     Valuelist } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
@@ -10,7 +10,6 @@ import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { SubfieldEditorData } from '../../editor/field/subfield-editor-modal.component';
-import { ConfigurationUtil } from '../../configuration-util';
 
 
 @Component({
@@ -19,7 +18,8 @@ import { ConfigurationUtil } from '../../configuration-util';
         '(window:keydown)': 'onKeyDown($event)',
         '(window:click)': 'onClick($event, false)',
         '(window:contextmenu)': 'onClick($event, true)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -37,9 +37,11 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
                 modals: Modals,
                 menus: Menus,
                 messages: Messages,
-                settingsProvider: SettingsProvider) {
+                settingsProvider: SettingsProvider,
+                comparator: Comparator,
+                changeDetectorRef: ChangeDetectorRef) {
 
-        super(activeModal, configurationIndex, modals, menus, messages, settingsProvider);
+        super(activeModal, configurationIndex, modals, comparator, menus, messages, settingsProvider, changeDetectorRef);
     }
 
 
@@ -63,7 +65,7 @@ export class AddValuelistModalComponent extends ManageValuelistsModalComponent {
     protected submitQuery(): Array<Valuelist> {
         
         return this.configurationIndex.findValuelists(this.searchQuery.queryString)
-            .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
+            .sort((valuelist1, valuelist2) => this.comparator.alnumCompare(valuelist1.id, valuelist2.id));
     }
 
 

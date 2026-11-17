@@ -1,3 +1,4 @@
+import { nop } from 'tsfun';
 import { NativeJsonlParser } from '../../../../../src/app/components/import/parser/native-jsonl-parser';
 import { ParserErrors } from '../../../../../src/app/components/import/parser/parser-errors';
 
@@ -8,70 +9,57 @@ import { ParserErrors } from '../../../../../src/app/components/import/parser/pa
  */
 describe('NativeJsonlParser', () => {
 
-    beforeEach(
-        function() {
-            spyOn(console, 'error'); // to suppress console.error output
-        }
-    );
+    beforeAll(() => {
 
-   it('should create objects from file content', done => {
+        jest.spyOn(console, 'error').mockImplementation(nop);
+    });
 
-        let fileContent  = '{ "category": "Find", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
+
+    afterAll(() => {
+
+        (console.error as any).mockRestore();
+    });
+
+
+    test('should create objects from file content', async () => {
+
+        const fileContent  = '{ "category": "Find", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
             + '{ "category": "Find", "identifier" : "ob2", "title": "Obi-Two Kenobi"}\n'
             + '{ "category": "Find", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
 
-        let parse = NativeJsonlParser.parse;
-        parse(fileContent).then(objects => {
-            // expect(resultDocument).not.toBe(undefined);
-            // objects.push(resultDocument);
-            expect(objects[0]['resource']['category']).toEqual('Find');
-            expect(objects[2]['resource'].title).toEqual('Obi-Three Kenobi');
-            expect(objects.length).toEqual(3);
-            done();
-        }, () => {
-            fail();
-            done();
-        });
+        const objects = await NativeJsonlParser.parse(fileContent);
 
-   });
+        expect(objects[0]['resource']['category']).toEqual('Find');
+        expect(objects[2]['resource'].title).toEqual('Obi-Three Kenobi');
+        expect(objects.length).toEqual(3);
+    });
 
 
-   it('should abort on syntax errors in file content', done => {
+    test('should abort on syntax errors in file content', async () => {
 
-        let fileContent = '{ "category": "Find", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
+        const fileContent = '{ "category": "Find", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
             + '{ "category": "Find", "identifier" : "ob2", "title": "Obi-Two Kenobi"\n'
             + '{ "category": "Find", "identifier" : "ob3", "title": "Obi-Three Kenobi"}';
 
-        let parse = NativeJsonlParser.parse;
-        let objects = [];
-        parse(fileContent).then(resultDocument => {
-            // expect(resultDocument).not.toBe(undefined);
-            // objects.push(resultDocument);
-            fail();
-            done();
-        }, (error) => {
-            // expect(objects.length).toEqual(1);
-            expect(error).toEqual([ParserErrors.FILE_INVALID_JSONL,2]);
-            done();
-        });
-   });
+        try {
+            await NativeJsonlParser.parse(fileContent);
+            throw new Error('Test failure');
+        } catch (err) {
+            expect(err).toEqual([ParserErrors.FILE_INVALID_JSONL, 2]);
+        }
+    });
 
 
-   it('abort if id found', done => {
+    test('abort if id found', async () => {
 
-        let fileContent = '{ "category": "Find", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
+        const fileContent = '{ "category": "Find", "identifier" : "ob1", "title": "Obi-Wan Kenobi"}\n'
             + '{ "category": "Find", "identifier" : "ob3", "id" : "abc", "title": "Obi-Three Kenobi"}';
 
-        let parse = NativeJsonlParser.parse;
-        // let objects = [];
-        parse(fileContent).then(resultDocument => {
-            // expect(resultDocument).not.toBe(undefined);
-            // objects.push(resultDocument);
-            done();
-        }, (error) => {
-            // expect(objects.length).toEqual(1);
-            expect(error).toEqual([ParserErrors.ID_MUST_NOT_BE_SET]);
-            done();
-        });
+        try {
+            await NativeJsonlParser.parse(fileContent);
+            throw new Error('Test failure');
+        } catch (err) {
+            expect(err).toEqual([ParserErrors.ID_MUST_NOT_BE_SET]);
+        }
     });
 });

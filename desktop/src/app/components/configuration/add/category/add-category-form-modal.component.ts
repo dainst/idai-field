@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryForm, ConfigurationDocument, ProjectConfiguration, SortUtil } from 'idai-field-core';
+import { clone, Map } from 'tsfun';
+import { CategoryForm, ConfigurationDocument, Field, Groups, ProjectConfiguration, Relation, Comparator } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { MenuContext } from '../../../../services/menu-context';
 import { AngularUtility } from '../../../../angular/angular-utility';
@@ -11,13 +12,15 @@ import { Menus } from '../../../../services/menus';
 import { CategoriesFilter, ConfigurationUtil } from '../../configuration-util';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { Naming } from '../naming';
+import { AddProcessSubcategoryModalComponent } from './add-process-subcategory-modal.component';
 
 
 @Component({
     templateUrl: './add-category-form-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira
@@ -44,7 +47,8 @@ export class AddCategoryFormModalComponent {
                 private configurationIndex: ConfigurationIndex,
                 private modals: Modals,
                 private menus: Menus,
-                private settingsProvider: SettingsProvider) {}
+                private settingsProvider: SettingsProvider,
+                private comparator: Comparator) {}
 
 
     public initialize() {
@@ -71,7 +75,7 @@ export class AddCategoryFormModalComponent {
     }
 
 
-    public confirmSelection() {
+    public async confirmSelection() {
 
         if (!this.selectedForm) return;
 
@@ -79,6 +83,7 @@ export class AddCategoryFormModalComponent {
                 this.configurationDocument, this.categoryFormToReplace, true)) {
             this.showSwapConfirmationModal();
         } else {
+            if (this.parentCategory?.name === 'Process') await this.addWorkflowRelations(this.selectedForm);
             this.addSelectedCategory();
         }
     }
@@ -101,7 +106,7 @@ export class AddCategoryFormModalComponent {
                 ) && (!this.projectCategoryNames || !this.projectCategoryNames.includes(category.name))
                 && (!this.categoryFormToReplace || category.name === this.categoryFormToReplace.name)
             )
-            .sort((categoryForm1, categoryForm2) => SortUtil.alnumCompare(
+            .sort((categoryForm1, categoryForm2) => this.comparator.alnumCompare(
                 categoryForm1.libraryId ?? categoryForm1.name,
                 categoryForm2.libraryId ?? categoryForm2.name
             ));
@@ -137,6 +142,53 @@ export class AddCategoryFormModalComponent {
 
     private async createNewSubcategory() {
 
+        const newCategory: CategoryForm = CategoryForm.build(this.emptyForm.libraryId, this.parentCategory);
+        if (this.parentCategory?.name === 'Process') await this.addWorkflowRelations(newCategory);
+        await this.openCategoryEditorModal(newCategory);
+    }
+
+
+    private async addWorkflowRelations(category: CategoryForm) {
+
+        const result: Map<string[]> = await this.openAddProcessSubcategoryModal(category);
+        category.groups.splice(1, 0, { name: Groups.WORKFLOW, fields: [] });
+
+        for (let relationName of Object.keys(result)) {
+            if (!result[relationName].length) continue;
+            category.groups[1].fields.push({
+                name: relationName,
+                inputType: Field.InputType.RELATION,
+                range: result[relationName]
+            } as Relation);
+        }
+    }
+
+
+    private async openAddProcessSubcategoryModal(category: CategoryForm): Promise<Map<string[]>> {
+
+        const [result, componentInstance] = this.modals.make<AddProcessSubcategoryModalComponent>(
+            AddProcessSubcategoryModalComponent,
+            MenuContext.CONFIGURATION_MODAL,
+            undefined,
+            'add-process-subcategory-modal'
+        );
+
+        componentInstance.category = category;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
+        componentInstance.selectedCategories = category.defaultRange ? clone(category.defaultRange) : undefined;
+        componentInstance.initialize();
+
+        return new Promise(resolve => {
+            this.modals.awaitResult(result,
+                targetCategories => resolve(targetCategories),
+                () => AngularUtility.blurActiveElement()
+            );
+        });
+    }
+
+
+    private async openCategoryEditorModal(category: CategoryForm) {
+
         const [result, componentInstance] = this.modals.make<CategoryEditorModalComponent>(
             CategoryEditorModalComponent,
             MenuContext.CONFIGURATION_EDIT,
@@ -146,7 +198,7 @@ export class AddCategoryFormModalComponent {
         componentInstance.applyChanges = this.applyChanges;
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
-        componentInstance.category = CategoryForm.build(this.emptyForm.libraryId, this.parentCategory);
+        componentInstance.category = category;
         componentInstance.new = true;
         componentInstance.numberOfCategoryResources = 0;
         componentInstance.initialize();

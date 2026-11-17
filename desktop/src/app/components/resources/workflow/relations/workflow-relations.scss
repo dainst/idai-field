@@ -1,0 +1,105 @@
+workflow-relations {
+  display: flex;
+  height: 100%;
+
+  .dropdown {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    .workflow-relations-toggle {
+      height: 100%;
+      padding-top: 12px;
+
+      .category-info {
+        width: 35px;
+        float: left;
+
+        &:not(:last-child) {
+          margin-right: 12px;
+        }
+
+        .category-count {
+          position: relative;
+          top: 3px;
+          right: 11px;
+          padding: 0 6px;
+          display: inline-block;
+          color: white;
+          background-color: #636060;
+          border-radius: 31px;
+          font-size: 12px;
+          text-align: center;
+          z-index: 1;
+
+          &.additional-categories {
+            top: 4px;
+            margin-left: 18px;
+          }
+        }
+      }
+    }
+
+    .dropdown-toggle::after {
+      display: none;
+    }
+
+    .dropdown-menu {
+      padding: 0;
+      
+      .relation-targets-container {
+        padding: 5px 0;
+      }
+
+      .relation-targets-scroll-viewport {
+        height: 194px;
+        overflow-y: scroll;
+
+        .cdk-virtual-scroll-content-wrapper {
+          width: 100%;
+          padding: 5px 0;
+        }
+      }
+
+      .relation-targets-container,
+      .relation-targets-scroll-viewport {
+        width: 400px;
+        overflow-x: hidden;
+
+        .dropdown-item {
+          padding: 5px 16px;
+          cursor: default;
+
+          .teasercontent {
+            width: calc(100% - 28px);
+
+            .subtitle {
+              display: block;
+              -webkit-line-clamp: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .single-workflow-relation-target,
+  .workflow-relations-toggle {
+    &:hover {
+      .category-icon {
+        filter: saturate(50%) brightness(117%);
+      }
+
+      .category-count {
+        filter: brightness(120%);
+      }
+    }
+  }
+
+  .single-workflow-relation-target {
+    .document-teaser {
+      height: 100%;
+    }
+  }
+}

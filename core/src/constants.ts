@@ -1,6 +1,6 @@
 import { on } from 'tsfun';
-import { Document } from './model/document';
-import { Resource } from './model/resource';
+import { Document } from './model/document/document';
+import { Resource } from './model/document/resource';
 
 // Constants
 

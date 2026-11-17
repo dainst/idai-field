@@ -1,7 +1,7 @@
 import { Observable, Observer } from 'rxjs';
-import { clone, isString, set, subtract } from 'tsfun';
+import { clone, isString, set, subtract, Map } from 'tsfun';
 import { ChangesStream, Datastore, Document, FieldDocument, NewDocument, ObserverUtil, Query, Resource,
-    CHILDOF_EXIST, Constraints, UNKNOWN } from 'idai-field-core';
+    CHILDOF_EXIST, Constraints, UNKNOWN, RemoteChangeInfo, SortMode } from 'idai-field-core';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { Loading } from '../../../components/widgets/loading';
 import { ResourcesStateManager } from './resources-state-manager';
@@ -44,7 +44,7 @@ export class DocumentsManager {
                 private getIndexMatchTermCount: (indexName: string, matchTerm: string) => number) {
         
         changesStream.remoteChangesNotifications()
-            .subscribe(document => this.handleRemoteChange(document));
+            .subscribe(remoteChangeInfo => this.handleRemoteChange(remoteChangeInfo));
     }
 
 
@@ -90,9 +90,16 @@ export class DocumentsManager {
     }
 
 
-    public async setCustomConstraints(constraints: { [name: string]: string}) {
+    public async setCustomConstraints(constraints: { [name: string]: string }) {
 
         this.resourcesStateManager.setCustomConstraints(constraints);
+        await this.populateAndDeselectIfNecessary();
+    }
+
+
+    public async setSortMode(sortMode: SortMode) {
+
+        this.resourcesStateManager.setSortMode(sortMode);
         await this.populateAndDeselectIfNecessary();
     }
 
@@ -159,7 +166,8 @@ export class DocumentsManager {
     }
 
 
-    public async setSelected(resourceId: string, adjustListIfNecessary: boolean = true,
+    public async setSelected(resourceId: string, checkIfInList: boolean = true,
+                             adjustListIfNecessary: boolean = true,
                              viaResourceLink: boolean = false): Promise<any> {
 
         this.removeNewDocument();
@@ -168,9 +176,14 @@ export class DocumentsManager {
         this.newDocumentsFromRemote
             = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 
-        if (adjustListIfNecessary && !(await this.isDocumentInList(documentToSelect))) {
-            await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
-            await this.populateDocumentList();
+        if (checkIfInList && !(await this.isDocumentInList(documentToSelect))) {
+            if (adjustListIfNecessary) {
+                await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
+                await this.populateDocumentList();
+            } else {
+                await this.deselect();
+                return;
+            }
         }
 
         this.selectAndNotify(documentToSelect, viaResourceLink);
@@ -202,6 +215,8 @@ export class DocumentsManager {
         this.populateInProgress = true;
         if (this.loading) this.loading.start();
 
+        const newDocument: FieldDocument = this.documents?.find(document => !NewDocument.hasId(document));
+
         if (reset) {
             this.newDocumentsFromRemote = [];
             this.documents = [];
@@ -221,7 +236,7 @@ export class DocumentsManager {
             return;
         }
 
-        this.documents = result.documents as Array<FieldDocument>;
+        this.documents = (newDocument ? [newDocument] : []).concat(result.documents as Array<FieldDocument>);
         this.totalDocumentCount = result.totalCount;
 
         this.populateInProgress = false;
@@ -249,6 +264,18 @@ export class DocumentsManager {
     }
 
 
+    public async populateAndDeselectIfNecessary() {
+
+        await this.populateDocumentList();
+
+        const selectedDocument: FieldDocument = ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
+
+        if (!this.documents.find(Document.hasEqualId(selectedDocument))) {
+            this.deselect();
+        }
+    }
+
+
     private getAllowedCategoryNames(): string[] {
 
         return this.resourcesStateManager.isInOverview()
@@ -258,7 +285,9 @@ export class DocumentsManager {
                 ? this.resourcesStateManager.getTypeManagementCategoryNames()
                 : this.resourcesStateManager.isInInventoryManagement()
                     ? this.resourcesStateManager.getInventoryCategoryNames()
-                    : this.resourcesStateManager.getConcreteFieldCategoryNames();
+                    : this.resourcesStateManager.isInWorkflowManagement()
+                        ? this.resourcesStateManager.getWorkflowCategoryNames()
+                        : this.resourcesStateManager.getConcreteFieldCategoryNames()
     }
 
 
@@ -292,25 +321,17 @@ export class DocumentsManager {
     }
 
 
-    private async populateAndDeselectIfNecessary() {
-
-        await this.populateDocumentList();
-
-        if (!this.documents.find(Document.hasEqualId(ResourcesState.getSelectedDocument(this.resourcesStateManager.get())))) {
-            this.deselect();
-        }
-    }
-
-
-    private async handleRemoteChange(changedDocument: Document) {
+    private async handleRemoteChange(remoteChangeInfo: RemoteChangeInfo) {
 
         if (!this.documents) return;
 
-        if (this.documents.find(Document.hasEqualId(changedDocument))) {
+        if (!remoteChangeInfo.new) {
             return ObserverUtil.notify(this.documentChangedFromRemoteObservers, undefined);
         }
 
-        this.newDocumentsFromRemote = set(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
+        this.newDocumentsFromRemote = set(
+            this.newDocumentsFromRemote.concat([remoteChangeInfo.document.resource.id])
+        );
         await this.populateDocumentList(false);
     }
 
@@ -342,7 +363,8 @@ export class DocumentsManager {
 
     private async updatedDocumentListContainsSelectedDocument(documentToSelect: Document): Promise<boolean> {
 
-        return (await this.createUpdatedDocumentList()).documents.find(Document.hasEqualId(documentToSelect)) !== undefined;
+        return (await this.createUpdatedDocumentList())
+            .documents.find(Document.hasEqualId(documentToSelect)) !== undefined;
     }
 
 
@@ -357,16 +379,16 @@ export class DocumentsManager {
     }
 
 
-    private static buildQuery(operationId: string|undefined,
-                              resourcesStateManager: ResourcesStateManager,
+    private static buildQuery(operationId: string|undefined, resourcesStateManager: ResourcesStateManager,
                               allowedCategoryNames: string[]): Query {
 
-        const extendedSearchMode = resourcesStateManager.isInExtendedSearchMode();
-        const state = resourcesStateManager.get();
-        const categoryFilters = ResourcesState.getCategoryFilters(state);
-        const customConstraints = ResourcesState.getCustomConstraints(state);
+        const extendedSearchMode: boolean = resourcesStateManager.isInExtendedSearchMode();
+        const state: ResourcesState = resourcesStateManager.get();
+        const categoryFilters: string[] = ResourcesState.getCategoryFilters(state);
+        const customConstraints: Map<string> = ResourcesState.getCustomConstraints(state);
+        const sortMode: SortMode = ResourcesState.getSortMode(state);
 
-        return {
+        const query: Query = {
             q: ResourcesState.getQueryString(state),
             constraints: DocumentsManager.buildConstraints(
                 customConstraints,
@@ -381,13 +403,17 @@ export class DocumentsManager {
                 ? this.getDocumentsLimit(resourcesStateManager)
                 : undefined
         };
+
+        if (sortMode) {
+            query.sort = { mode: sortMode };
+        }
+
+        return query;
     }
 
 
-    private static buildConstraints(customConstraints: Constraints,
-                                    operationId: string|undefined,
-                                    liesWithinId: string|undefined,
-                                    isInExtendedSearchMode: boolean): Constraints {
+    private static buildConstraints(customConstraints: Constraints, operationId: string|undefined,
+                                    liesWithinId: string|undefined, isInExtendedSearchMode: boolean): Constraints {
 
         const constraints = clone(customConstraints);
 

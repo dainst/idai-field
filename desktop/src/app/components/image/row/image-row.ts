@@ -1,6 +1,5 @@
-import {ImageDocument} from 'idai-field-core';
-import {Document} from 'idai-field-core';
-import {ImageWidthCalculator} from './image-width-calculator';
+import { ImageDocument, Document } from 'idai-field-core';
+import { ImageWidthCalculator } from './image-width-calculator';
 
 
 export type ImageRowUpdate = { newImageIds: string[], firstShownImageIndex: number };
@@ -40,9 +39,11 @@ export class ImageRow {
     constructor(private width: number,
                 private height: number,
                 private maxImageWidth: number,
-                private images: Array<ImageDocument>) {
+                private placeholderWidth: number,
+                private images: Array<ImageDocument>,
+                thumbnailIds: string[]) {
 
-        this.imageWidths = this.calculateImageWidths(images);
+        this.imageWidths = this.calculateImageWidths(images, thumbnailIds);
     }
 
 
@@ -133,19 +134,21 @@ export class ImageRow {
     }
 
 
-    private calculateImageWidths(images: Array<ImageDocument>): { [imageId: string]: number } {
+    private calculateImageWidths(images: Array<ImageDocument>, thumbnailIds: string[]): { [imageId: string]: number } {
 
         return images.reduce((imageWidths: { [imageId: string]: number }, image: ImageDocument) => {
-            imageWidths[image.resource.id] = this.calculateImageWidth(image);
+            imageWidths[image.resource.id] = this.calculateImageWidth(image, thumbnailIds);
             return imageWidths;
         }, {});
     }
 
 
-    private calculateImageWidth(image: ImageDocument) {
+    private calculateImageWidth(image: ImageDocument, thumbnailIds: string[]): number {
+
+        if (!thumbnailIds.includes(image.resource.id)) return this.placeholderWidth;
 
         return image.resource.id === PLACEHOLDER
-            ? image.resource.width
+            ? this.placeholderWidth
             : ImageWidthCalculator.computeWidth(
                 image.resource.width, image.resource.height, this.height, this.maxImageWidth
             );

@@ -24,8 +24,8 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
           field_definition.inputType == "dating" ->
             convert_dating(resource, field_name, field_value)
 
-          field_definition.inputType == "dimension" ->
-            convert_dimension(resource, field_name, field_value)
+          field_definition.inputType in ["dimension", "weight", "volume"] ->
+            convert_measurement(resource, field_name, field_value)
 
           field_definition.inputType == "multiInput"
             or field_definition.inputType == "simpleMultiInput" ->
@@ -80,20 +80,20 @@ defmodule Api.Worker.Enricher.I18NFieldConverter do
     dating_item_source
   end
 
-  defp convert_dimension(resource, field_name, field_value) do
-    put_in(resource, [field_name], Enum.map(field_value, &convert_dimension_item/1))
+  defp convert_measurement(resource, field_name, field_value) do
+    put_in(resource, [field_name], Enum.map(field_value, &convert_measurement_item/1))
   end
 
-  defp convert_dimension_item(dimension_item = %{ measurementComment: measurement_comment }) do
-    put_in(dimension_item.measurementComment, convert_dimension_measurement_comment(measurement_comment))
+  defp convert_measurement_item(item = %{ measurementComment: measurement_comment }) do
+    put_in(item.measurementComment, convert_measurement_comment(measurement_comment))
   end
-  defp convert_dimension_item(dimension_item), do: dimension_item
+  defp convert_measurement_item(item), do: item
 
-  defp convert_dimension_measurement_comment(dimension_measurement_comment) when not is_map(dimension_measurement_comment) do
-    %{ unspecifiedLanguage: dimension_measurement_comment }
+  defp convert_measurement_comment(measurement_comment) when not is_map(measurement_comment) do
+    %{ unspecifiedLanguage: measurement_comment }
   end
-  defp convert_dimension_measurement_comment(dimension_measurement_comment) do
-    dimension_measurement_comment
+  defp convert_measurement_comment(measurement_comment) do
+    measurement_comment
   end
 
   defp convert_composite_field(resource, field_name, field_value, field_definition) do

@@ -14,10 +14,6 @@ valuelist-preview {
   }
 
   #preview-body {
-    b {
-      font-weight: 500;
-    }
-
     .valuelist-preview-label {
       position: relative;
       top: 2px;
@@ -30,23 +26,21 @@ valuelist-preview {
     font-size: 13px;
   }
 
-  .valuelist-preview-text {
-    font-size: 14px;
-  }
-
-  .valuelist-preview-section {
-    padding-bottom: 12px;
-  }
-
   category-icon {
     position: relative;
-    top: 2px;
+    top: 3px;
     margin-right: 1px;
+  }
+
+  #used-by-header {
+    display: block;
+    margin-bottom: 2px;
   }
 
   .fields-in-use {
     position: relative;
     top: 2px;
+    margin-bottom: 6px;
 
     .field-in-use {
       margin-left: 28px;

@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 category-listing {
   display: block;
   width: 100%;
@@ -12,7 +14,7 @@ category-listing {
       }
 
       &:hover:not(.category-header):not(.new-entry-button) {
-        background-color: darken($list-item-hover-color, 5%);
+        background-color: color.adjust($list-item-hover-color, $lightness: -5%);
         transition: background-color .5s ease;
       }
 

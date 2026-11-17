@@ -8,7 +8,8 @@ import { GridListComponent } from './grid-list.component';
 @Component({
     selector: 'grid',
     templateUrl: './grid.html',
-    providers: [{ provide: VIRTUAL_SCROLL_STRATEGY, useClass: GridListVirtualScrollStrategy }]
+    providers: [{ provide: VIRTUAL_SCROLL_STRATEGY, useClass: GridListVirtualScrollStrategy }],
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

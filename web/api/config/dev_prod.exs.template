@@ -6,13 +6,13 @@ config :api,
   elasticsearch_url: "elasticsearch:9200",
   elasticsearch_index_prefix: "idai-field",
   cantaloupe_url: "http://cantaloupe:8182/iiif/2/", # must end with slash
-  couchdb_url: "field.dainst.org/sync",
+  couchdb_url: "",
   couchdb_user: "",
   couchdb_password: "",
   gazetteer_url: "https://gazetteer.dainst.org",
   projects: ["db1", "db2", "db3"],
   locales: ["de", "en"],
-  rights: %{ 
+  rights: %{
     users: [
       %{ name: "user-1", pass: "pass-1", admin: true }
     ],
@@ -20,7 +20,8 @@ config :api,
       "user-1" => ["a", "b", "c", "d"],
       "anonymous" => ["a"]
     }
-  }
+  },
+  cache_control_header: "private, max-age=31536000, immutable"
 
 config :api, Api.Auth.Guardian,
        issuer: "api",

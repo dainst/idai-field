@@ -1,6 +1,4 @@
-$greenbgr: #1b9519;
-$redbgr: #e00000;
-$lightgraybgr: #eeeeee;
+@use 'sass:color';
 
 .btn {
   cursor: default !important;
@@ -50,28 +48,24 @@ $lightgraybgr: #eeeeee;
   transition: background-color .3s ease;
 }
 
-.lightgray-button:hover {
-  background-color: $lightgraybgr;
-}
-
 .green-button {
-  background-color: $greenbgr;
+  background-color: $green-button-color;
   color: #fff;
   font-weight: normal;
 }
 
 .green-button:hover {
-  background-color: lighten($greenbgr, 5%);
+  background-color: color.adjust($green-button-color, $lightness: 5%);
 }
 
 .red-button {
-  background-color: $redbgr;
+  background-color: $red-button-color;
   color: #fff;
   font-weight: normal;
 }
 
 .red-button:hover {
-  background-color: lighten($redbgr, 35%);
+  background-color: color.adjust($red-button-color, $lightness: 35%);
 }
 
 .nav-link {
@@ -122,7 +116,7 @@ category-switcher-button {
   }
 
   .plus-sign-circle {
-    background-color: $greenbgr;
+    background-color: $green-button-color;
 
     .mdi {
       top: -1px;
@@ -189,7 +183,7 @@ category-switcher-button {
   }
 
   &:active {
-    background-color: darken($list-item-hover-color, 5%);
+    background-color: color.adjust($list-item-hover-color, $lightness: -5%);
     outline: 0;
   }
 }
@@ -197,4 +191,34 @@ category-switcher-button {
 .button-label {
   display: inline-block;
   margin-left: 5px;
+}
+
+.btn-info {
+  color: white !important;
+  background-color: $info-button-color;
+  border-color: $info-button-color;
+
+  &:hover, &:active, &:focus {
+    background-color: #138496 !important;
+    border-color: #138496 !important;
+  }
+}
+
+.bg-info {
+  background-color: $info-button-color !important;
+}
+
+button {
+  .mdi-close,
+  .mdi-cloud-download,
+  .mdi-file-export {
+    position: relative;
+    left: 0.5px;
+  }
+}
+
+@media(-webkit-device-pixel-ratio: 1) {
+  button .mdi-cloud-download {
+    bottom: 0.5px;
+  }
 }

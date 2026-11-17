@@ -1,7 +1,7 @@
 <div id="export" class="row" (dragover)="false" (dragleave)="false" (drop)="false">
     <div class="col">
         <div class="row">
-            <div class="col default-nav bg-light text-right">
+            <div class="col default-nav bg-light text-end">
                 <button id="exportStartButton"
                         class="btn btn-primary" [class.disabled]="!isExportButtonEnabled()"
                         (click)="!isExportButtonEnabled() || startExport()">
@@ -12,9 +12,9 @@
         </div>
 
         <div class="row">
-            <div class="form-group col default-container">
+            <div class="col default-container mb-3">
                 <div *ngIf="invalidFields.length < 2" class="col-lg-6 mx-lg-auto py-4">
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label class="control-label col-form-label"
                                for="ExportFormatSelect" i18n="@@export.format">Format</label>
                         <select id="ExportFormatSelect" class="form-control" [(ngModel)]="format">
@@ -25,15 +25,15 @@
                         </select>
                     </div>
 
-                    <div *ngIf="format === 'csv'" class="form-group">
+                    <div *ngIf="format === 'csv'" class="mb-3">
                         <div class="form-check">
                             <input class="form-check-input" type="radio"
                                    [(ngModel)]="csvExportMode"
                                    (change)="setCategoryCounts()"
                                    value="complete" id="completeselect"/>
                             <label class="form-check-label" for="completeselect" i18n="@@export.csvimportmode.complete">Komplett</label>
-                        <div class="form-check">
                         </div>
+                        <div class="form-check">
                             <input class="form-check-input" type="radio"
                                    [(ngModel)]="csvExportMode"
                                    (change)="setCategoryCounts()"
@@ -42,7 +42,7 @@
                         </div>
                     </div>
 
-                    <div *ngIf="showOperations()" class="form-group">
+                    <div *ngIf="showOperations()" class="mb-3">
                         <label class="control-label col-form-label"
                                for="operationSelect"
                                i18n="@@export.operationSelect.label">Kontext</label>
@@ -57,7 +57,7 @@
                         </select>
                     </div>
 
-                    <div *ngIf="showCatalogs() && this.catalogs.length > 0" class="form-group">
+                    <div *ngIf="showCatalogs() && this.catalogs.length > 0" class="mb-3">
                         <label class="control-label col-form-label"
                                for="catalogSelect"
                                i18n="@@export.catalogSelect.label">Katalog</label>
@@ -68,7 +68,7 @@
                         </select>
                     </div>
 
-                    <div *ngIf="format === 'csv' && categoryCounts.length > 0" class="form-group">
+                    <div *ngIf="format === 'csv' && categoryCounts.length > 0" class="mb-3">
                         <label class="control-label col-form-label"
                                for="categorySelect"
                                i18n="@@export.format.categorySelect">Kategorie</label>
@@ -81,7 +81,7 @@
                         </select>
                     </div>
 
-                    <div *ngIf="format === 'csv'" class="form-group">
+                    <div *ngIf="format === 'csv'" class="mb-3">
                         <label class="control-label col-form-label"
                                i18n="@@import.csv.separator">Feldtrennzeichen</label>
                         <input class="form-control" id="separatorInput"
@@ -90,7 +90,7 @@
                     </div>
 
                     <div *ngIf="format === 'csv'" id="combine-hierarchical-relations-checkbox"
-                         class="form-group form-check-inline">
+                         class="form-check-inline">
                         <input type="checkbox" id="hierarchical-relations-checkbox" class="form-check-input"
                                 [(ngModel)]="combineHierarchicalRelations">
                         <label for="hierarchical-relations-checkbox" class="form-check-label"
@@ -125,15 +125,7 @@
                         jeweiligen Ressourcen.
                     </div>
 
-
-                    <div *ngIf="isJavaInstallationMissing()" class="export-info text-danger"
-                         i18n="@@export.shapefile.javaWarning">
-                        Zur Durchführung eines Shapefile-Exports ist die Installation von Java JDK 8 oder höher
-                        erforderlich.
-                    </div>
-
-
-                    <div *ngIf="format === 'shapefile' && !isJavaInstallationMissing() && !noResourcesFound()"
+                    <div *ngIf="format === 'shapefile' && !noResourcesFound()"
                          class="export-info" i18n="@@export.shapefile.info">
                         Exportiert werden Geometrien und die Felder <em>Bezeichner</em> (identifier),
                         <em>Kurzbeschreibung</em> (shortdesc) und <em>Kategorie</em> (category) der jeweiligen

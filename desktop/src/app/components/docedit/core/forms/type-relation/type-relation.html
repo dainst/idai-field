@@ -1,12 +1,15 @@
 <div class="type-relation">
-    <div *ngFor="let targetDocument of targetDocuments; let i = index" class="relation-picker">
+    <div *ngFor="let targetDocument of targetDocuments; let i = index"
+         class="relation-picker has-target">
         <document-teaser [document]="targetDocument"></document-teaser>
         <div class="delete-relation small-circular-button red-button" (click)="deleteRelation(i)">
             <span class="mdi mdi-delete"></span>
         </div>
     </div>
 
-    <div class="circular-button add-type-relation"
+    <div class="circular-button add-relation"
          type="button"
-         (click)="openInstanceOfModal()">+</div>
+         (click)="openInstanceOfModal()">
+        <span class="mdi mdi-plus"></span>
+    </div>
 </div>

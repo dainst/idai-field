@@ -7,6 +7,8 @@ import { Injectable } from '@angular/core';
  */
 export class UploadStatus {
 
+    public running: boolean;
+
     private totalImages: number;
     private handledImages: number;
 

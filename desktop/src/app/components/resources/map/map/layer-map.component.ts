@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, NgZone, SimpleChanges } from '@angular/core';
 import L from 'leaflet';
 import { FieldDocument, ImageDocument, ImageGeoreference, PouchdbDatastore, ProjectConfiguration,
-    Document } from 'idai-field-core';
+    Document, Labels } from 'idai-field-core';
 import { MenuContext } from '../../../../services/menu-context';
 import { Menus } from '../../../../services/menus';
 import { ImageContainer } from '../../../../services/imagestore/image-container';
@@ -11,12 +11,13 @@ import { LayerImageProvider } from './layers/layer-image-provider';
 import { LayerManager, ListDiffResult } from './layers/layer-manager';
 import { MapComponent } from './map.component';
 
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const fs = window.require('fs');
 
 
 @Component({
     selector: 'layer-map',
-    templateUrl: './layer-map.html'
+    templateUrl: './layer-map.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -34,6 +35,7 @@ export class LayerMapComponent extends MapComponent {
 
 
     constructor(projectConfiguration: ProjectConfiguration,
+                labels: Labels,
                 private layerManager: LayerManager,
                 private layerImageProvider: LayerImageProvider,
                 protected messages: Messages,
@@ -41,9 +43,9 @@ export class LayerMapComponent extends MapComponent {
                 protected zone: NgZone,
                 protected changeDetectorRef: ChangeDetectorRef,
                 private datastore: PouchdbDatastore,
-                private menuService: Menus) {
+                protected menuService: Menus) {
 
-        super(projectConfiguration, zone);
+        super(projectConfiguration, labels, zone);
 
         this.layerManager.reset();
         this.datastore.changesNotifications().subscribe(document => this.reloadLayersOnChange(document));
@@ -61,7 +63,7 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    public async updateLayers(reloadLayerGroups: boolean = true): Promise<void> {
+    public async updateLayers(reloadLayerGroups: boolean = true) {
 
         this.layerImageProvider.reset();
 
@@ -72,6 +74,17 @@ export class LayerMapComponent extends MapComponent {
         this.handleActiveLayersChange(activeLayersChange);
 
         this.changeDetectorRef.detectChanges();
+    }
+
+    
+    public async updateLayerImages() {
+
+        this.layerImageProvider.reset();
+
+        for (let [resourceId, imageOverlay] of Object.entries(this.imageOverlays)) {
+            const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
+            imageOverlay.setUrl(imageContainer.imgSrc ? imageContainer.imgSrc : imageContainer.thumbSrc as any);
+        }
     }
 
 

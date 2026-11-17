@@ -1,11 +1,6 @@
-.preview {
+category-preview {
   #preview-header {
-    category-icon {
-      position: relative;
-      top: 2px;
-      margin-left: 4px;
-      margin-right: 3px;
-    }
+    margin-bottom: 5px;
 
     .badge {
       margin-top: 8px;
@@ -15,8 +10,17 @@
       background-color: #37588e;
     }
 
+    category-icon {
+      position: relative;
+      top: 2px;
+    }
+
     #creation-date {
       font-size: 12px;
+    }
+
+    b {
+      margin-left: 6px;
     }
   }
 
@@ -28,7 +32,7 @@
 
     #groups-list {
       li {
-        margin: 4px 6px 18px 6px;
+        margin: 4px 6px 14px 6px;
       }
 
       ul li {
@@ -48,10 +52,6 @@
           font-size: 12px;
         }
       }
-    }
-
-    b {
-      font-weight: 500;
     }
   }
 }

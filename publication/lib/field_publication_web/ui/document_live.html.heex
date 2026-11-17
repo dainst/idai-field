@@ -1,0 +1,66 @@
+<div>
+  <% category = Document.get_field_value(@doc, "category") %>
+
+  <div class="flex gap-2 justify-between">
+    <.publication_navigation
+      projects={@projects}
+      publications={@publications}
+      current_publication={@publication}
+      uuid={@uuid}
+      identifier={
+        if category != "Project",
+          do: Document.get_field_value(@doc, "identifier")
+      }
+    />
+  </div>
+
+  <.document_heading :if={category != "Project"}>
+    <.document_link doc={@doc} />
+  </.document_heading>
+
+  <%= cond do %>
+    <% category == "Project" -> %>
+      <.live_component
+        id={"image-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.Project}
+        doc={@doc}
+        publication={@publication}
+      />
+    <% category in @image_categories -> %>
+      <.live_component
+        id={"image-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.Image}
+        doc={@doc}
+        publication={@publication}
+      />
+    <% category == "Type" -> %>
+      <.live_component
+        id={"type-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.GenericDatasheet}
+        doc={@doc}
+        publication={@publication}
+      />
+    <% category == "TypeCatalog" -> %>
+      <.live_component
+        id={"type-catalog-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.TypeCatalog}
+        doc={@doc}
+        publication={@publication}
+      />
+    <% @live_action in [:map_datasheet, :map_hierarchy, :map_context] -> %>
+      <.live_component
+        id={"datasheet-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.GenericMap}
+        doc={@doc}
+        publication={@publication}
+        live_action={@live_action}
+      />
+    <% true -> %>
+      <.live_component
+        id={"datasheet-#{@doc.id}"}
+        module={FieldPublicationWeb.Presentation.Document.GenericDatasheet}
+        doc={@doc}
+        publication={@publication}
+      />
+  <% end %>
+</div>

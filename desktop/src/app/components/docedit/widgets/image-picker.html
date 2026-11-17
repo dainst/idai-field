@@ -29,10 +29,10 @@
         <search-bar [class.hidden-search-bar]="selectedDocuments.length"
                     [showFiltersMenu]="false"
                     (onQueryStringChanged)="setQueryString($event)"
-                    class="ml-2">
+                    class="ms-2">
         </search-bar>
 
-        <paging-buttons class="ml-2"
+        <paging-buttons class="ms-2"
             [currentPage]="getCurrentPage()"
             [pageCount]="getPageCount()"
             [canTurnPage]="canTurnPage()"
@@ -41,7 +41,7 @@
             (onTurnPageBack)="turnPageBack()">
         </paging-buttons>
 
-        <button id="image-picker-close-button" type="button" class="btn btn-primary btn-square ml-2"
+        <button id="image-picker-close-button" type="button" class="btn btn-primary btn-square ms-2"
                 (click)="activeModal.dismiss('cancel')">
             <span class="mdi mdi-close"></span>
         </button>

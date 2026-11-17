@@ -1,9 +1,9 @@
 import { SampleDataLoaderBase } from 'idai-field-core';
-import { getAsynchronousFs } from '../../../getAsynchronousFs';
+import { getAsynchronousFs } from '../../../get-asynchronous-fs';
 import { ThumbnailGenerator } from '../../../imagestore/thumbnail-generator';
 
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const fs = window.require('fs');
+const remote = window.require('@electron/remote');
 
 
 /**
@@ -22,7 +22,7 @@ export class SampleDataLoader extends SampleDataLoaderBase {
     }
 
 
-    public async go(db: PouchDB.Database, project: string) {
+    public async go(db: any, project: string) {
 
         try {
             await this.loadSampleDocuments(db);

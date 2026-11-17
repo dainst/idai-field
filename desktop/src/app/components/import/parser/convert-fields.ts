@@ -1,5 +1,6 @@
-import { includedIn, is, isNot, isnt, on, Path, to } from 'tsfun';
-import { CategoryForm, Field, Relation, InPlace, Dating, Dimension, Resource, Named } from 'idai-field-core';
+import { includedIn, isNot, isnt, Path, to, clone, isString } from 'tsfun';
+import { CategoryForm, Field, Relation, InPlace, Dating, Measurement, Resource, Named,
+    DateSpecification } from 'idai-field-core';
 import { CsvExportConsts } from '../../export/csv/csv-export-consts';
 import { ParserErrors } from './parser-errors';
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
@@ -25,9 +26,10 @@ export function convertFields(category: CategoryForm) {
 
     return (resource: Resource) => {
 
-        for (const fieldName of fields(resource)) {
+        const categoryFields: Array<Field> = CategoryForm.getFields(category);
 
-            const field = CategoryForm.getFields(category).find(on(Field.NAME, is(fieldName)));
+        for (const fieldName of fields(resource)) {
+            const field: Field = categoryFields.find(field => field.name === fieldName);
             if (!field) continue;
 
             const inputType: InputType = field.inputType;
@@ -36,7 +38,8 @@ export function convertFields(category: CategoryForm) {
 
         for (const relationName of Object.keys(resource.relations).filter(isnt(Relation.PARENT))) {
             if (resource.relations[relationName] === null) continue;
-            resource.relations[relationName] = (resource.relations[relationName] as unknown as string).split(ARRAY_SEPARATOR)
+            resource.relations[relationName] = (resource.relations[relationName] as unknown as string)
+                .split(ARRAY_SEPARATOR);
         }
 
         return resource;
@@ -53,35 +56,36 @@ const convertFloat = (container: any, path: string) => convertNumber(container, 
 function convertTypeDependent(container: any, fieldName: string, inputType: InputType, field: Field) {
 
     if (inputType === InputType.BOOLEAN) convertBoolean(container, fieldName);
+    if (inputType === InputType.DATE) convertBoolean(container[fieldName], DateSpecification.IS_RANGE);
     if (inputType === InputType.DATING) convertDating(container, fieldName);
-    if (inputType === InputType.DIMENSION) convertDimension(container, fieldName);
+    if (InputType.MEASUREMENT_INPUT_TYPES.includes(inputType)) convertMeasurement(container, fieldName);
     if (inputType === InputType.INT || inputType === InputType.UNSIGNEDINT) convertInt(container, fieldName);
     if (inputType === InputType.FLOAT || inputType === InputType.UNSIGNEDFLOAT) convertFloat(container, fieldName);
     if (inputType === InputType.COMPOSITE) convertComposite(container, fieldName, field);
-    if (inputType === InputType.CHECKBOXES || inputType === InputType.SIMPLE_MULTIINPUT) {
+    if (inputType === InputType.CHECKBOXES || inputType === InputType.VALUELIST_MULTIINPUT) {
         convertStringArray(container, fieldName)
     };
 }
 
 
-function convertDimension(container: any, fieldName: string) {
+function convertMeasurement(container: any, fieldName: string) {
 
     let i = 0;
-    for (const dimension of container[fieldName] as Array<Dimension>) {
+    for (const measurement of container[fieldName] as Array<Measurement>) {
 
-        if (dimension === undefined) throw 'Undefined dimension found';
-        if (dimension === null) continue;
+        if (measurement === undefined) throw 'Undefined measurement found';
+        if (measurement === null) continue;
 
-        if (dimension.inputUnit) (dimension.inputUnit as string) = dimension.inputUnit.toLowerCase();
+        if (measurement.inputUnit) (measurement.inputUnit as string) = measurement.inputUnit.toLowerCase();
 
         try {
-            convertFloat(dimension, 'value');
-            convertFloat(dimension, Dimension.RANGEMIN);
-            convertFloat(dimension, Dimension.RANGEMAX);
-            convertFloat(dimension, Dimension.INPUTVALUE);
-            convertFloat(dimension, Dimension.INPUTRANGEENDVALUE);
-            convertBoolean(dimension, Dimension.ISIMPRECISE);
-            convertBoolean(dimension, 'isRange');
+            convertFloat(measurement, 'value');
+            convertFloat(measurement, Measurement.RANGEMIN);
+            convertFloat(measurement, Measurement.RANGEMAX);
+            convertFloat(measurement, Measurement.INPUTVALUE);
+            convertFloat(measurement, Measurement.INPUTRANGEENDVALUE);
+            convertBoolean(measurement, Measurement.ISIMPRECISE);
+            convertBoolean(measurement, 'isRange');
         } catch (msgWithParams) {
             throw [msgWithParams[0], msgWithParams[1], fieldName + '.' + i + '.' + msgWithParams[2]];
         }
@@ -98,9 +102,11 @@ function convertDating(container: any, fieldName: string) {
         if (dating === undefined) throw 'Undefined dating found';
         if (dating === null) continue;
 
+        if (dating.type === 'scientific') dating.begin = clone(dating.end);
+
         try {
-            convertInt(dating, ['begin','inputYear']);
-            convertInt(dating, ['end','inputYear']);
+            convertInt(dating, ['begin', 'inputYear']);
+            convertInt(dating, ['end', 'inputYear']);
             convertInt(dating, 'margin');
             convertBoolean(dating, 'isImprecise');
             convertBoolean(dating, 'isUncertain');
@@ -119,7 +125,7 @@ function convertComposite(resource: Resource, fieldName: string, field: Field) {
         if (element === null) return;
 
         Object.keys(element).forEach(subfieldName => {
-            const inputType: InputType = field.subfields?.find(on(Named.NAME, is(subfieldName)))?.inputType;
+            const inputType: InputType = field.subfields?.find(subfield => subfield.name === subfieldName)?.inputType;
             if (inputType) {
                 convertTypeDependent(element, subfieldName, inputType, field);
             } else {
@@ -160,8 +166,9 @@ function convertNumber(container: any, path: Path, type: 'int'|'float') {
  */
 function convertBoolean(container: any, path: Path) {
 
-    const val = to(path, undefined)(container);
-    if (!val) return;
-    if (isNot(includedIn(['true', 'false']))(val)) throw [ParserErrors.CSV_NOT_A_BOOLEAN, val, path];
-    InPlace.setOn(container, path)(val === 'true');
+    let value = to(path, undefined)(container);
+    if (!value) return;
+    if (isString(value)) value = value.toLowerCase();
+    if (isNot(includedIn(['true', 'false']))(value)) throw [ParserErrors.CSV_NOT_A_BOOLEAN, value, path];
+    InPlace.setOn(container, path)(value === 'true');
 }

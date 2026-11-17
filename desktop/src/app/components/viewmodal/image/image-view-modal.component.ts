@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { on, is, first, isEmpty } from 'tsfun';
+import { on, is, first } from 'tsfun';
 import { Datastore, Document, FieldDocument, ImageDocument, Relation } from 'idai-field-core';
 import { ImagesState } from '../../../components/image/overview/view/images-state';
 import { ViewModalComponent } from '../view-modal.component';
@@ -12,6 +11,7 @@ import { Menus } from '../../../services/menus';
 import { Routing } from '../../../services/routing';
 import { Messages } from '../../messages/messages';
 import { SavingChangesModal } from '../../widgets/saving-changes-modal.component';
+import { MenuContext } from '../../../services/menu-context';
 
 
 export namespace ImageViewModalComponent {
@@ -24,7 +24,8 @@ export namespace ImageViewModalComponent {
     templateUrl: './image-view-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira
@@ -45,8 +46,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
                 menuService: Menus,
                 messages: Messages,
                 private datastore: Datastore,
-                private imageRelationsManager: ImageRelationsManager,
-                private i18n: I18n) {
+                private imageRelationsManager: ImageRelationsManager) {
 
         super(activeModal, modalService, routingService, menuService, messages);
     }
@@ -150,8 +150,8 @@ export class ImageViewModalComponent extends ViewModalComponent {
     public getRemoveLinksTooltip(): string {
 
         return this.selected.length === 1
-            ? this.i18n({ id: 'docedit.tabs.images.tooltips.removeLink', value: 'Verknüpfung löschen' })
-            : this.i18n({ id: 'docedit.tabs.images.tooltips.removeLinks', value: 'Verknüpfungen löschen' });
+            ? $localize `:@@docedit.tabs.images.tooltips.removeLink:Verknüpfung löschen`
+            : $localize `:@@docedit.tabs.images.tooltips.removeLinks:Verknüpfungen löschen`;
     }
 
 
@@ -163,6 +163,9 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public async startEditImages() {
 
+        const menuContext: MenuContext = this.menuService.getContext();
+        this.menuService.setContext(MenuContext.IMAGE_PICKER_MODAL);
+
         const imagePickerModal = this.modalService.open(
             ImagePickerComponent, { size: 'lg', keyboard: false, animation: false }
         );
@@ -173,6 +176,8 @@ export class ImageViewModalComponent extends ViewModalComponent {
             await this.saveChanges(await imagePickerModal.result);
         } catch {
             // modal cancelled
+        } finally {
+            this.menuService.setContext(menuContext);
         }
     }
 
@@ -225,7 +230,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
         this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
             .map(ImageRowItem.ofDocument);
-        this.selectedImage = isEmpty(this.images)
+        this.selectedImage = !this.images.length
             ? undefined
             : first(this.images);
         this.selected = [];

@@ -2,7 +2,8 @@
     <ul class="list-group list-group-flush">
         <li id="valuelist-header" class="list-group-item">
             <code>{{getSelectedValuelistId()}}</code>
-            <button id="swap-valuelist-button"
+            <button *ngIf="isSwapValuelistButtonVisible()"
+                    id="swap-valuelist-button"
                     class="btn btn-primary btn-square"
                     type="button"
                     [disabled]="disabled"

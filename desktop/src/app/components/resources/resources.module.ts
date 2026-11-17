@@ -20,7 +20,6 @@ import { BaseList } from './base-list';
 import { ResourceDeletion } from './actions/delete/resource-deletion';
 import { ListComponent } from './list/list.component';
 import { RowComponent } from './list/row.component';
-import { GeometryViewComponent } from './map/list/geometry-view.component';
 import { SidebarListComponent } from './map/list/sidebar-list.component';
 import { EditableMapComponent } from './map/map/editable-map.component';
 import { LayerMapComponent } from './map/map/layer-map.component';
@@ -51,12 +50,24 @@ import { SettingsProvider } from '../../services/settings/settings-provider';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
 import { DeleteQrCodeModalComponent } from './actions/edit-qr-code/delete-qr-code-modal.component';
 import { QrCodeService } from './service/qr-code-service';
-import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
-import { ScanStoragePlaceModalComponent } from './actions/scan-storage-place/scan-storage-place-modal.component';
+import { ResourceScanner } from './actions/scan-resource/resource-scanner';
+import { StoragePlaceScannerModalComponent } from './actions/scan-resource/storage-place-scanner-modal.component';
 import { PrintSettingsModalComponent } from './actions/edit-qr-code/print-settings/print-settings-modal.component';
 import { CreatePrintSettingsProfileModalComponent } from './actions/edit-qr-code/print-settings/create-print-settings-profile-modal.component';
+import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
+import { ProcessPlusButtonComponent } from './actions/edit-workflow/plus-button/process-plus-button.component';
+import { WorkflowRelationsComponent } from './workflow/relations/workflow-relations.component';
+import { LinkProcessButtonComponent } from './actions/edit-workflow/link-button/link-process-button.component';
+import { LinkProcessModalComponent } from './actions/edit-workflow/link-button/link-process-modal.component';
+import { DeleteProcessModalComponent } from './workflow/delete/delete-process-modal.component';
+import { ProcessStateComponent } from './workflow/state/process-state.component';
+import { ProcessListComponent } from './workflow/process-list.component';
+import { WorkflowOverviewComponent } from './workflow/workflow-overview.component';
+import { TypeScannerModalComponent } from './actions/scan-resource/type-scanner-modal.component';
+import { ZValuesAlertModalComponent } from './map/map/z-values-alert-modal.component';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+
+const remote = window.require('@electron/remote');
 
 
 @NgModule({
@@ -73,7 +84,6 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
     ],
     declarations: [
         ResourcesComponent,
-        GeometryViewComponent,
         MapComponent,
         LayerMapComponent,
         EditableMapComponent,
@@ -100,7 +110,18 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         PrintSettingsModalComponent,
         CreatePrintSettingsProfileModalComponent,
         DeleteQrCodeModalComponent,
-        ScanStoragePlaceModalComponent,
+        StoragePlaceScannerModalComponent,
+        TypeScannerModalComponent,
+        WorkflowOverviewComponent,
+        WorkflowEditorModalComponent,
+        ProcessPlusButtonComponent,
+        WorkflowRelationsComponent,
+        LinkProcessButtonComponent,
+        LinkProcessModalComponent,
+        ProcessStateComponent,
+        DeleteProcessModalComponent,
+        ProcessListComponent,
+        ZValuesAlertModalComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },
@@ -110,39 +131,21 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         LayerImageProvider,
         ResourceDeletion,
         QrCodeService,
-        StoragePlaceScanner,
+        ResourceScanner,
         {
             provide: NavigationService,
-            useFactory: (projectConfiguration: ProjectConfiguration,
-                         routingService: Routing,
-                         viewFacade: ViewFacade,
-                         messages: Messages) => {
-
+            useFactory: (projectConfiguration: ProjectConfiguration, routingService: Routing, viewFacade: ViewFacade, messages: Messages) => {
                 return new NavigationService(projectConfiguration, routingService, viewFacade, messages);
             },
             deps: [ProjectConfiguration, Routing, ViewFacade, Messages]
         },
         {
             provide: ResourcesStateManager,
-            useFactory: (datastore: Datastore,
-                         indexFacade: IndexFacade,
-                         stateSerializer: StateSerializer,
-                         projectConfiguration: ProjectConfiguration,
-                         settingsProvider: SettingsProvider,
-                         tabManager: TabManager) => {
-
+            useFactory: (datastore: Datastore, indexFacade: IndexFacade, stateSerializer: StateSerializer, projectConfiguration: ProjectConfiguration, settingsProvider: SettingsProvider, tabManager: TabManager) => {
                 const projectIdentifier: string = settingsProvider.getSettings().selectedProject;
-                if (!projectIdentifier) throw 'project not set';
-
-                return new ResourcesStateManager(
-                    datastore,
-                    indexFacade,
-                    stateSerializer,
-                    tabManager,
-                    projectIdentifier,
-                    projectConfiguration,
-                    remote.getGlobal('switches').suppress_map_load_for_test
-                );
+                if (!projectIdentifier)
+                    throw 'project not set';
+                return new ResourcesStateManager(datastore, indexFacade, stateSerializer, tabManager, projectIdentifier, projectConfiguration, remote.getGlobal('switches').suppress_map_load_for_test);
             },
             deps: [
                 Datastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsProvider,
@@ -151,24 +154,8 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
         },
         {
             provide: ViewFacade,
-            useFactory: function(
-                datastore: Datastore,
-                changesStream: ChangesStream,
-                resourcesStateManager: ResourcesStateManager,
-                loading: Loading,
-                indexFacade: IndexFacade,
-                messages: Messages,
-                syncService: SyncService
-            ) {
-                return new ViewFacade(
-                    datastore,
-                    changesStream,
-                    resourcesStateManager,
-                    loading,
-                    indexFacade,
-                    messages,
-                    syncService
-                );
+            useFactory: function (datastore: Datastore, changesStream: ChangesStream, resourcesStateManager: ResourcesStateManager, loading: Loading, indexFacade: IndexFacade, messages: Messages, syncService: SyncService) {
+                return new ViewFacade(datastore, changesStream, resourcesStateManager, loading, indexFacade, messages, syncService);
             },
             deps: [
                 Datastore,
@@ -180,12 +167,6 @@ const remote = typeof window !== 'undefined' ? window.require('@electron/remote'
                 SyncService
             ]
         },
-    ],
-    exports: [
-        GeometryViewComponent
-    ],
-    entryComponents: [
-        MoveModalComponent
     ]
 })
 

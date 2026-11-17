@@ -9,7 +9,7 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe('settings/username --', () => {
+test.describe('settings/username', () => {
 
     test.afterEach(async () => {
 

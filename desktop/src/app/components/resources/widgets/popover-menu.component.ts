@@ -9,7 +9,8 @@ import { Messages } from '../../messages/messages';
 
 @Component({
     selector: 'popover-menu',
-    templateUrl: './popover-menu.html'
+    templateUrl: './popover-menu.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

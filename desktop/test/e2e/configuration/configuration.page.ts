@@ -1,5 +1,6 @@
 import { click, getLocator, getText, rightClick, typeIn, waitForNotExist } from '../app';
 import { CategoryPickerPage } from '../widgets/category-picker.page';
+import { AddFieldModalPage } from './add-field-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
 
 
@@ -19,7 +20,8 @@ export class ConfigurationPage {
 
     public static async clickOpenContextMenuForField(fieldName: string) {
 
-        return rightClick(await this.getField(fieldName));
+        const element = (await this.getField(fieldName)).locator('.card-header');
+        return rightClick(element);
     }
 
 
@@ -61,7 +63,7 @@ export class ConfigurationPage {
 
     public static async clickSelectField(fieldName: string) {
 
-        return click(await this.getField(fieldName));
+        return click(await this.getField(fieldName).locator('b'));
     }
 
 
@@ -77,9 +79,9 @@ export class ConfigurationPage {
     }
 
 
-    public static clickConfirmFieldDeletionButton() {
+    public static clickNextInAddProcessSubcategoryModal() {
 
-        return click('#delete-field-button');
+        return click('#add-process-subcategory-modal-next-button');
     }
 
     
@@ -94,6 +96,12 @@ export class ConfigurationPage {
     public static getGroup(groupName: string) {
 
         return getLocator('#group-' + groupName.replace(':', '-'));
+    }
+
+
+    public static getActiveGroup(groupName: string) {
+
+        return getLocator('#group-' + groupName.replace(':', '-') + '.active');
     }
 
 
@@ -115,6 +123,25 @@ export class ConfigurationPage {
     }
 
 
+    public static async getValues() {
+
+        return getLocator('valuelist-view code');
+    }
+
+
+    public static async getInverseRelation(relationName: string) {
+
+        const relationField = await this.getField(relationName);
+        return relationField.locator('.inverse-relation-label');
+    }
+
+
+    public static getFieldConditionLabel() {
+
+        return getLocator('.field-condition-label');
+    }
+
+
     // get text
 
     public static async getValue(index: number) {
@@ -124,9 +151,15 @@ export class ConfigurationPage {
     }
 
 
-    public static async getValues() {
+    public static async getInverseRelationLabel(relationName: string) {
 
-        return getLocator('valuelist-view code');
+        return getText(await this.getInverseRelation(relationName));
+    }
+
+
+    public static getConditionLabelText() {
+
+        return getText(this.getFieldConditionLabel());
     }
 
 
@@ -178,5 +211,53 @@ export class ConfigurationPage {
         await EditConfigurationPage.clickToggleScanCodesSlider();
         await EditConfigurationPage.clickConfirm();
         await ConfigurationPage.save();
+    }
+
+
+    public static async createRelation(categoryName: string, relationName: string, relationLabel: string,
+                                       targetCategoryNames: string[],
+                                       targetSupercategoryNames: Array<string|undefined>,
+                                       supercategoryName?: string) {
+
+        await CategoryPickerPage.clickSelectCategory(categoryName, supercategoryName);
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput(relationName);
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('relation', 'field');
+        await EditConfigurationPage.typeInTranslation(0, 0, relationLabel, 'field');
+
+        await ConfigurationPage.selectTargetCategories(targetCategoryNames, targetSupercategoryNames);
+
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+    }
+
+
+    public static async addRelation(categoryName: string, relationName: string, targetCategoryNames: string[],
+                                    targetSupercategoryNames: Array<string|undefined>, supercategoryName?: string) {
+
+        await CategoryPickerPage.clickSelectCategory(categoryName, supercategoryName);
+        await ConfigurationPage.clickAddFieldButton();        
+        await AddFieldModalPage.typeInSearchFilterInput(relationName);
+        await AddFieldModalPage.clickSelectField(relationName);
+        await AddFieldModalPage.clickConfirmSelection();
+        
+        await ConfigurationPage.selectTargetCategories(targetCategoryNames, targetSupercategoryNames);
+        
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+    }
+
+
+    private static async selectTargetCategories(targetCategoryNames: string[],
+                                         targetSupercategoryNames: Array<string|undefined>) {
+
+        for (let i = 0; i < targetCategoryNames.length; i++) {
+            await CategoryPickerPage.clickSelectCategory(
+                targetCategoryNames[i],
+                targetSupercategoryNames[i],
+                'target-category-picker-container'
+            );
+        }
     }
 }

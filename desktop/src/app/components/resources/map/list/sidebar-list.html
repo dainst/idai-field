@@ -6,7 +6,7 @@
 <popover-menu *ngIf="selectedDocument" [document]="selectedDocument"
               (onDocumentInfoHeaderRightClicked)="contextMenu.open($event, [selectedDocument])"></popover-menu>
 
-<cdk-virtual-scroll-viewport itemSize="58" id="sidebar-viewport">
+<cdk-virtual-scroll-viewport [itemSize]="itemSize" id="sidebar-viewport" [class.invisible]="waitingForScroll">
     <ul #sidebar id="sidebar" class="resources-listing"
         tabindex="0" (scroll)="contextMenu.close()" (keydown)="onKeyDown($event)">
         <li *cdkVirtualFor="let document of viewFacade.getDocuments(); trackBy: trackDocument"
@@ -22,8 +22,7 @@
                              (dblclick)="editDocument(document)"
                              [document]="document"></document-teaser>
             <list-button-group [document]="document"
-                               [isDocumentSelected]="selectedDocument?.resource.id === document.resource.id">
-            </list-button-group>
+                               (contextmenu)="select(document, $event, false)"></list-button-group>
         </li>
         <li *ngIf="resourcesComponent.isDocumentLimitExceeded()">
             <div id="document-limit-info" (click)="resourcesComponent.removeLimit()"
@@ -38,7 +37,7 @@
 
 <plus-button *ngIf="isPlusButtonShown()" id="create-document-button" [placement]="'top'"
              [preselectedCategory]="getCurrentFilterCategory()"
-             [liesWithin]="getSelectedSegmentDoc()"
+             [liesWithin]="getSelectedSegmentDocument()"
              [isRecordedIn]="viewFacade.getCurrentOperation()"
              [status]="getPlusButtonStatus()"></plus-button>
 <loading-icon></loading-icon>

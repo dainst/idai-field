@@ -5,7 +5,8 @@ import { ObjectUtils, Name, ObserverUtil } from 'idai-field-core';
 import { Settings } from './settings';
 import { SettingsSerializer } from './settings-serializer';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
+const pathSeparator = window.require('path').sep;
 
 
 @Injectable()
@@ -65,7 +66,7 @@ export class SettingsProvider {
     public async selectProjectAndSerialize(project: Name) {
 
         this.settings.dbs = set([project].concat(this.settings.dbs));
-        await this.serialize();
+        await this.serialize(false);
     }
 
 
@@ -93,23 +94,25 @@ export class SettingsProvider {
         if (settings.hostPassword === undefined) settings.hostPassword = SettingsProvider.generatePassword();
 
         if (settings.imagestorePath) {
-            let path: string = settings.imagestorePath;
-            if (path.substr(-1) != '/') path += '/';
-            settings.imagestorePath = path;
-        } else {
-            if (remote.app) {
-                settings.imagestorePath = remote.app.getPath('appData') + '/'
-                    + remote.app.getName() + '/imagestore/';
-            }
+            settings.imagestorePath = SettingsProvider.addPathSeparator(settings.imagestorePath);
+        } else if (remote.app) {
+            settings.imagestorePath = remote.getGlobal('appDataPath') + pathSeparator + 'imagestore' + pathSeparator;
         }
+
+        if (settings.backupDirectoryPath) {
+            settings.backupDirectoryPath = SettingsProvider.addPathSeparator(settings.backupDirectoryPath);
+        } else if (remote.app) {
+            settings.backupDirectoryPath = remote.getGlobal('appDataPath') + pathSeparator + 'backups' + pathSeparator;
+        }
+
         this.settings = settings;
     }
 
 
-    private async serialize() {
+    private async serialize(notifyObservers: boolean = true) {
 
         await this.settingsSerializer.store(this.settings);
-        ObserverUtil.notify(this.settingsChangesObservers, this.getSettings());
+        if (notifyObservers) ObserverUtil.notify(this.settingsChangesObservers, this.getSettings());
     }
 
 
@@ -124,5 +127,13 @@ export class SettingsProvider {
         }
 
         return password;
+    }
+
+
+    private static addPathSeparator(path: string): string {
+        
+        return path.endsWith('/') || path.endsWith('\\')
+            ? path
+            : path + pathSeparator;
     }
 }

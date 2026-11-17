@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { includedIn, isNot } from 'tsfun';
 import { DatastoreErrors, Document, Datastore, Field, FieldDocument, Group, ImageDocument, CategoryForm,
     Name, ProjectConfiguration, Labels, Resource } from 'idai-field-core';
@@ -15,6 +14,7 @@ import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.c
 import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
 import { EditSaveDialogComponent } from '../widgets/edit-save-dialog.component';
 import { MessagesConversion } from './messages-conversion';
+import { MAX_NUMBER_OF_DUPLICATES } from './duplication-util';
 
 
 @Component({
@@ -23,7 +23,8 @@ import { MessagesConversion } from './messages-conversion';
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:keyup)': 'onKeyUp($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * Uses the document edit forms of idai-field-core and adds styling
@@ -41,6 +42,8 @@ export class DoceditComponent {
     public groups: Array<Group>|undefined;
     public identifierPrefix: string|undefined;
     public scrollTargetField: string;
+    public fixedNumberOfDuplicates: number|undefined = undefined;
+    public disabledRelationFields: string[];
 
     public parentLabel: string|undefined = undefined;
     public resourceLabel: string;
@@ -60,8 +63,7 @@ export class DoceditComponent {
                 private datastore: Datastore,
                 private labels: Labels,
                 private loading: Loading,
-                private menuService: Menus,
-                private i18n: I18n) {}
+                private menuService: Menus) {}
 
 
     public isChanged = () => this.documentHolder.isChanged();
@@ -95,12 +97,16 @@ export class DoceditComponent {
     }
 
 
-    public showDuplicateButton(): boolean {
+    public isDuplicateButtonVisible(): boolean {
 
         return this.documentHolder.clonedDocument !== undefined
             && this.documentHolder.clonedDocument.resource.category !== 'Project'
             && !this.projectConfiguration.isSubcategory(
-                this.documentHolder.clonedDocument.resource.category, 'Image')
+                this.documentHolder.clonedDocument.resource.category, 'Image'
+            )
+            && !this.projectConfiguration.isSubcategory(
+                this.documentHolder.clonedDocument.resource.category, 'Process'
+            )
             && (this.documentHolder.isNewDocument()
                 ? this.maxNumberOfDuplicates > 1
                 : this.maxNumberOfDuplicates > 0);
@@ -131,9 +137,10 @@ export class DoceditComponent {
     }
 
 
-    public async setDocument(document: FieldDocument|ImageDocument) {
+    public async setDocument(document: FieldDocument|ImageDocument, allowEmptyFields?: string[]) {
 
         this.documentHolder.setDocument(document);
+        this.documentHolder.allowEmptyFields = allowEmptyFields ?? [];
 
         this.getFieldLabel = (fieldName: string) =>
             this.labels.getFieldLabel(this.projectConfiguration.getCategory(document), fieldName);
@@ -146,9 +153,8 @@ export class DoceditComponent {
 
     public changeCategory(newCategory: string) {
 
-        const { invalidFields, invalidRelations } = this.documentHolder.changeCategories(newCategory);
-        this.showCategoryChangeFieldsWarning(invalidFields);
-        this.showCategoryChangeRelationsWarning(newCategory, invalidRelations);
+        const invalidFieldNames: string[] = this.documentHolder.changeCategories(newCategory);
+        this.showCategoryChangeFieldsWarning(invalidFieldNames);
         this.updateFields();
     }
 
@@ -185,7 +191,7 @@ export class DoceditComponent {
     }
 
 
-    public async save(numberOfDuplicates?: number) {
+    public async save(numberOfDuplicates: number = this.fixedNumberOfDuplicates) {
 
         this.operationInProgress = numberOfDuplicates ? 'duplicate' : 'save';
         this.loading.start('docedit');
@@ -193,15 +199,16 @@ export class DoceditComponent {
         const documentBeforeSave: Document = Document.clone(this.documentHolder.clonedDocument);
 
         try {
-            const documentAfterSave: Document = numberOfDuplicates
+            const documentsAfterSave: Array<Document> = numberOfDuplicates
                 ? await this.documentHolder.duplicate(numberOfDuplicates)
-                : await this.documentHolder.save();
-            await this.handleSaveSuccess(documentBeforeSave, documentAfterSave, this.operationInProgress);
+                : [await this.documentHolder.save()];
+            await this.handleSaveSuccess(documentBeforeSave, documentsAfterSave);
         } catch (errorWithParams) {
             await this.handleSaveError(
                 errorWithParams.length > 0 && errorWithParams[0] === DoceditErrors.NOT_FOUND
                     ? M.DATASTORE_ERROR_NOT_FOUND
-                    : errorWithParams);
+                    : errorWithParams
+            );
         } finally {
             this.loading.stop('docedit');
             this.operationInProgress = 'none';
@@ -220,14 +227,13 @@ export class DoceditComponent {
     }
 
 
-    private async handleSaveSuccess(documentBeforeSave: Document, documentAfterSave: Document,
-                                    operation: 'save'|'duplicate') {
+    private async handleSaveSuccess(documentBeforeSave: Document, documentsAfterSave: Array<Document>) {
 
         try {
-            if (DoceditComponent.detectSaveConflicts(documentBeforeSave, documentAfterSave)) {
-                this.handleSaveConflict(documentAfterSave);
+            if (DoceditComponent.detectSaveConflicts(documentBeforeSave, documentsAfterSave[0])) {
+                this.handleSaveConflict(documentsAfterSave[0]);
             } else {
-                await this.closeModalAfterSave(documentAfterSave.resource.id, operation);
+                await this.closeModalAfterSave(documentsAfterSave.map(document => document.resource.id));
             }
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
@@ -279,7 +285,7 @@ export class DoceditComponent {
 
         return !document.resource.relations.isRecordedIn
                 || document.resource.relations.isRecordedIn.length === 0
-            ? this.i18n({ id: 'docedit.parentLabel.project', value: 'Projekt' })
+            ? $localize `:@@docedit.parentLabel.project:Projekt`
             : document.resource.id
                 ? undefined
                 : (await this.datastore.get(
@@ -299,9 +305,8 @@ export class DoceditComponent {
             const modalRef: NgbModalRef = this.modalService.open(
                 EditSaveDialogComponent, { keyboard: false, animation: false }
             );
-            modalRef.componentInstance.changeMessage = this.i18n({
-                id: 'docedit.saveModal.resourceChanged', value: 'Die Ressource wurde geändert.'
-            });
+            modalRef.componentInstance.changeMessage
+                = $localize `:@@docedit.saveModal.resourceChanged:Die Ressource wurde geändert.`;
             modalRef.componentInstance.escapeKeyPressed = this.escapeKeyPressed;
 
             const result: string = await modalRef.result;
@@ -323,7 +328,7 @@ export class DoceditComponent {
 
         if (invalidFields.length > 0) {
             this.messages.add([
-                M.DOCEDIT_WARNING_CATEGORY_CHANGE_FIELDS,
+                M.DOCEDIT_WARNING_FIELD_DATA_DELETION,
                 invalidFields
                     .map(this.getFieldLabel)
                     .reduce((acc, fieldLabel) => acc + ', ' + fieldLabel)
@@ -332,25 +337,10 @@ export class DoceditComponent {
     }
 
 
-    private showCategoryChangeRelationsWarning(newCategory: Name, invalidRelations: string[]) {
-
-        const category = this.projectConfiguration.getCategory(newCategory);
-
-        if (invalidRelations.length > 0) {
-            this.messages.add([
-                M.DOCEDIT_WARNING_CATEGORY_CHANGE_RELATIONS,
-                invalidRelations
-                    .map((relationName: string) => this.labels.getFieldLabel(category, relationName))
-                    .reduce((acc, relationLabel) => acc + ', ' + relationLabel)
-            ]);
-        }
-    }
-
-
-    private async closeModalAfterSave(resourceId: string, operation: 'save'|'duplicate'): Promise<any> {
+    private async closeModalAfterSave(resourceIds: string[]): Promise<any> {
 
         this.activeModal.close({
-            document: (await this.datastore.get(resourceId))
+            documents: (await this.datastore.getMultiple(resourceIds))
         });
     }
 
@@ -389,9 +379,9 @@ export class DoceditComponent {
 
         if (category.resourceLimit) {
             const resourcesCount: number = await this.datastore.findIds({ categories: [category.name] }).totalCount;
-            return Math.max(0, category.resourceLimit - resourcesCount);
+            return Math.min(MAX_NUMBER_OF_DUPLICATES, Math.max(0, category.resourceLimit - resourcesCount));
         } else {
-            return 100;
+            return MAX_NUMBER_OF_DUPLICATES;
         }
     }
 

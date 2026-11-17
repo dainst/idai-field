@@ -40,14 +40,6 @@ import { DoceditModule } from '../docedit/docedit.module';
         DownloadProjectComponent,
         DownloadProjectProgressModalComponent,
         CancelModalComponent
-    ],
-    entryComponents: [
-        CreateProjectModalComponent,
-        DeleteProjectModalComponent,
-        SynchronizationModalComponent,
-        ProjectInformationModalComponent,
-        DownloadProjectProgressModalComponent,
-        CancelModalComponent
     ]
 })
 

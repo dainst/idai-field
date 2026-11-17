@@ -3,8 +3,8 @@
         <div class="type-image-container">
             <img *ngIf="mainThumbnailUrl" [src]="mainThumbnailUrl">
             <category-icon *ngIf="!mainThumbnailUrl"
-                   [size]="60"
-                   [category]="document.resource.category"></category-icon>
+                           [size]="60"
+                           [category]="document.resource.category"></category-icon>
         </div>
         <div class="type-title">
             {{document.resource.identifier}}

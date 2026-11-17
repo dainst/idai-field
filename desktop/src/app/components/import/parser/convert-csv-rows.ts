@@ -37,15 +37,15 @@ export function convertCsvRows(separator: string) {
     return (content: string): Array<Object> => {
 
         const rows: string[][] = getRows(content, separator);
-        if (rows.length < 0) return [];
-
         const headings: string[] = rows.shift() as string[];
+
         assertHeadingsIsntEmptyandDoesntContainEmptyEntries(headings);
         assertHeadingsConsistent(headings);
         assertHeadingsDoNotContainIncompleteArrays(headings);
         assertRowsAndHeadingLengthsMatch(headings, rows);
 
-        return rows.map(row => row.reduce(insertFieldIntoDocument(headings), {}));
+        return rows.filter(row => !row.every(entry => !entry?.length))
+            .map(row => row.reduce(insertFieldIntoDocument(headings), {}));
     }
 }
 

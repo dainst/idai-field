@@ -3,16 +3,20 @@
      [style.maxWidth.px]="cell['calculatedWidth']-15">
 
     <span *ngIf="showLinkBadges">
-        <span *ngIf="cell['document'].resource.relations.depicts.length > 0" class="badge badge-info">
+        <span *ngIf="cell['document'].resource.relations.depicts?.length > 0" class="badge bg-info">
              <span class="mdi mdi-link"></span>
         </span>
     </span>
-    <span *ngIf="main && main.resource.id === cell['document'].resource.id" class="badge badge-info">
+    <span *ngIf="main && main.resource.id === cell['document'].resource.id" class="badge bg-info">
         <span class="mdi mdi-star"></span>
     </span>
     <span *ngIf="showGeoIcon && cell['document'].resource.georeference"
-          class="badge badge-dark">
+          class="badge bg-dark">
         <span class="mdi mdi-map"></span>
+    </span>
+    <span *ngIf="showNoOriginalImageIcon && !cell.hasOriginalImage"
+          class="badge bg-secondary">
+        <span class="mdi mdi-image-off"></span>
     </span>
 </div>
 
@@ -26,12 +30,14 @@
     <category-icon [category]="cell['document'].resource.category" [size]="60"></category-icon>
 </div>
 
-<div *ngIf="showIdentifier" class="identifier px-1 bg-white text-truncate" [class.small]="nrOfColumns > 5">{{cell['document'].resource.identifier}}</div>
+<div *ngIf="showIdentifier"
+     class="identifier px-1 bg-white text-truncate"
+     [class.small]="nrOfColumns > 5">{{cell['document'].resource.identifier}}</div>
 <div class="title" [class.small]="nrOfColumns > 5">
-    <div *ngIf="showLinkBadges && cell['document'].resource.relations.depicts.length > 0" class="p-2" align="right">
-        <span *ngFor="let resourceId of cell['document'].resource.relations['depicts']"
-              id="related-resource-{{resourceId}}" class="badge badge-info mr-1 related-resource-{{resourceId}}">
-            <span class="mdi mdi-link"></span> {{getIdentifier(resourceId)}}
+    <div *ngIf="showLinkBadges && linkedResources.length" class="p-2" align="right">
+        <span *ngFor="let resource of linkedResources"
+              id="related-resource-{{resource.id}}" class="badge bg-info me-1 related-resource-{{resource.id}}">
+            <span class="mdi mdi-link"></span> {{resource.identifier}}
         </span>
     </div>
     <div *ngIf="showShortDescription && cell['document'].resource.shortDescription" class="p-1">

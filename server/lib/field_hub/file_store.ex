@@ -1,12 +1,10 @@
 defmodule FieldHub.FileStore do
   @file_directory_root Application.compile_env(:field_hub, :file_directory_root)
   @tombstone_suffix ".deleted"
+  @temporary_suffix ".writing"
   @valid_file_variants Application.compile_env(:field_hub, :valid_file_variants)
   @index_cache_name Application.compile_env(:field_hub, :file_index_cache_name)
   @index_cache_expiration_ms 1000 * 60 * 60 * 24
-  # @index_cache_expiration_ms 3000
-
-  require Logger
 
   @moduledoc """
   Bundles functions to facilitate the storing, discarding and indexing of files in file system for the different projects.
@@ -15,7 +13,7 @@ defmodule FieldHub.FileStore do
   or until a file gets stored or discarded.
 
   To extent the list of valid file variants (currently `#{inspect(@valid_file_variants)}`), it should suffice to add an additonal
-  `get_variant_directory/2` function here, an additional `parse_type/1` in FieldHubWeb.Api.FileController and update the list in config.exs.
+  `get_variant_directory/2` function here, an additional `parse_type/1` in FieldHubWeb.Api.Rest.File and update the list in config.exs.
   """
 
   @doc """
@@ -180,6 +178,54 @@ defmodule FieldHub.FileStore do
   end
 
   @doc """
+  Copy a file into the specified project's directory.
+
+  __Parameters__
+
+  - `uuid` the uuid for the file (will be used as its file_name).
+  - `project_identifier` the project's name.
+  - `file_variant` a valid file variant, one of `#{inspect(@valid_file_variants)}`.
+  - `input_path` path to the source file to be copied.
+
+  Returns `:ok` on success or `{:error, posix}` on failure.
+  """
+  def store_by_moving(uuid, project_identifier, file_variant, input_path) do
+    directory = get_variant_directory(project_identifier, file_variant)
+
+    target_path = "#{directory}/#{uuid}"
+
+    result =
+      if File.exists?(target_path) do
+        :ok
+      else
+        File.rename(input_path, target_path)
+      end
+
+    clear_cache(project_identifier)
+    result
+  end
+
+  @doc """
+  Open a io_device for a new file.
+
+  The io_device can then be used to write chunked/streamed data without having to
+  load the whole file into memory at once.
+
+  __Parameters__
+
+  - `uuid` the uuid for the file (will be used as its file_name).
+  - `project_identifier` the project's name.
+  - `file_variant` a valid file variant, one of `#{inspect(@valid_file_variants)}`.
+
+  Returns `{:ok, io_device}` on success or `{:error, posix}` on failure.
+  """
+  def create_write_io_device(uuid, project_identifier, file_variant) do
+    directory = get_variant_directory(project_identifier, file_variant)
+    file_path = "#{directory}/#{uuid}#{@temporary_suffix}"
+    {File.open(file_path, [:write]), file_path}
+  end
+
+  @doc """
   Mark all file variants for a UUID/file as deleted.
 
   The function will add an empty tombstone file for the given UUID in all its existing variants. The FileStore
@@ -243,6 +289,10 @@ defmodule FieldHub.FileStore do
 
     variant_directory
     |> File.ls!()
+    |> Stream.reject(fn file_name ->
+      # Ignore all files that are currently being streamed (.writing suffix).
+      String.ends_with?(file_name, @temporary_suffix)
+    end)
     |> Stream.map(fn file_name ->
       # Evaluate file size and type
       %{
@@ -259,7 +309,7 @@ defmodule FieldHub.FileStore do
     end)
     |> Stream.reject(fn %{stat_type: type} -> type == :directory end)
     |> Stream.reject(fn %{name: file_name} ->
-      # Reject all files containing dots, added to ignore hidden OS files
+      # Reject all files containing dots, added to ignore hidden OS files.
       file_name
       |> String.trim_trailing(@tombstone_suffix)
       |> String.contains?(".")

@@ -1,0 +1,28 @@
+<div class="configuration-editor-section">
+    <div class="configuration-editor-section-title"
+         i18n="@@configuration.date.dataType">Angabe der Uhrzeit</div>
+    <select class="form-control"
+            [disabled]="disabled"
+            (change)="setDataType($event.target.value)">
+        <option i18n="@@configuration.date.time.optional" value="optional"
+                [selected]="dateConfiguration.dataType === 'optional'">Optional</option>
+        <option i18n="@@configuration.date.time.mandatory" value="dateTime"
+                [selected]="dateConfiguration.dataType === 'dateTime'">Verpflichtend</option>
+        <option i18n="@@configuration.date.time.no" value="date"
+                [selected]="dateConfiguration.dataType === 'date'">Nicht erlaubt</option>
+    </select>
+</div>
+<div class="configuration-editor-section">
+    <div class="configuration-editor-section-title"
+         i18n="@@configuration.date.inputMode">Eingabemodus</div>
+    <select class="form-control"
+            [disabled]="disabled"
+            (change)="setInputMode($event.target.value)">
+        <option i18n="@@configuration.date.inputMode.optional" value="optional"
+                [selected]="dateConfiguration.inputMode === 'optional'">Wählbar</option>
+        <option i18n="@@configuration.date.inputMode.single" value="single"
+                [selected]="dateConfiguration.inputMode === 'single'">Einzeldatum</option>
+        <option i18n="@@configuration.date.inputMode.range" value="range"
+                [selected]="dateConfiguration.inputMode === 'range'">Datumsbereich</option>
+    </select>
+</div>

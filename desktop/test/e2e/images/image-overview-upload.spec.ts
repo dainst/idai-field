@@ -1,12 +1,11 @@
-import { navigateTo, resetApp, start, stop, waitForExist, doubleClick, getByText } from '../app';
+import { navigateTo, resetApp, start, stop, waitForExist, doubleClick, getByText, waitForMessage } from '../app';
 import { ImageOverviewPage } from './image-overview.page';
-import { NavbarPage } from '../navbar.page';
 
 const { test, expect } = require('@playwright/test');
 const path = require('path');
 
 
-test.describe('images/upload --', () => {
+test.describe('image overview/upload', () => {
 
     // image is already present in mediastore folder since uploading does not work in HttpMediastore
     const imageFileName: string = 'logo.png';
@@ -52,7 +51,7 @@ test.describe('images/upload --', () => {
         await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/' + imageFileName));
         await ImageOverviewPage.clickUploadConfirm();
 
-        await NavbarPage.awaitAlert('Ein Bild mit dem gleichen Dateinamen existiert bereits', false);
+        await waitForMessage('Ein Bild mit dem gleichen Dateinamen existiert bereits', false);
     });
 
 

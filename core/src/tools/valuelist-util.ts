@@ -1,11 +1,11 @@
-import { clone, filter, includedIn, isArray, isDefined, isNot, isString } from 'tsfun';
-import { Document } from '../model/document';
-import { Resource } from '../model/resource';
+import { includedIn, isArray, isDefined, isNot, isObject, isString } from 'tsfun';
+import { Document } from '../model/document/document';
 import { Valuelist } from '../model/configuration/valuelist';
-import { OptionalRange } from '../model/optional-range';
+import { OptionalRange } from '../model/input-types/optional-range';
 import { ValuelistValue } from '../model/configuration/valuelist-value';
 import { Field } from '../model/configuration/field';
-import { Dimension } from '../model';
+import { Measurement } from '../model/input-types/measurement';
+import { EditableValue } from '../model/input-types/editable-value';
 
 
 /**
@@ -19,7 +19,10 @@ export module ValuelistUtil {
         if (!fieldContent || !valuelist) return undefined;
         
         const valuesToCheck: string[] = isArray(fieldContent)
-            ? fieldContent.map(entry => entry?.[Dimension.MEASUREMENTPOSITION] ?? entry)
+            ? fieldContent.map(entry => entry?.[Measurement.MEASUREMENTPOSITION]
+                    ?? entry?.[Measurement.MEASUREMENTDEVICE]
+                    ?? entry?.[Measurement.MEASUREMENTTECHNIQUE]
+                    ?? entry)
                 .filter(entry => isString(entry))
             : fieldContent[OptionalRange.VALUE]
                 ? [fieldContent[OptionalRange.VALUE], fieldContent[OptionalRange.ENDVALUE]]
@@ -34,49 +37,41 @@ export module ValuelistUtil {
     }
 
 
-    export function getValuelist(field: Field, 
-                                 projectDocument: Document,
-                                 parentResource?: Resource): Valuelist {
+    /**
+     * @param valuesToInclude These values will always be kept even if unselectable
+     */
+    export function getValuelist(field: Field, projectDocument: Document, valuesToInclude?: string[],
+                                 includeUnselectable: boolean = false): Valuelist {
 
-        const valuelist: Valuelist|string[] = field.valuelist
-            ? field.valuelist
-            : getValuelistFromProjectField(field.valuelistFromProjectField as string, projectDocument);
+        if (field.valuelist) return field.valuelist;
 
-        return field.allowOnlyValuesOfParent && parentResource
-                && parentResource.category !== 'Place'
-            ? getValuesOfParentField(valuelist, field.name, parentResource)
-            : valuelist;
+        return field.valuelistFromProjectField
+            ? getValuelistFromProjectField(
+                field.valuelistFromProjectField, projectDocument, valuesToInclude, includeUnselectable
+            ) : undefined;
     }
 
 
-    export function getValuelistFromProjectField(fieldName: string,
-                                                 projectDocument: Document): Valuelist {
+    export function getValuelistFromProjectField(fieldName: string, projectDocument: Document,
+                                                 valuesToInclude?: string[],
+                                                 includeUnselectable: boolean = false): Valuelist {
 
-        const id = 'project-' + fieldName;
-        const field: string[]|undefined = projectDocument.resource[fieldName];
+        const valuelistId: string = 'project-' + fieldName;
+        const fieldData: Array<EditableValue>|undefined = projectDocument.resource[fieldName];
 
-        return field && isArray(field)
-            ? {
-                values: field.reduce((values: { [fieldId: string]: ValuelistValue }, fieldName: string) => {
-                    values[fieldName] = {};
-                    return values;
-                }, {}), id: id
+        if (!fieldData || !isArray(fieldData) || !fieldData.every(element => isObject(element) && element.value)) {
+            return { values: {}, id: valuelistId };
+        }
+
+        const values: { [valueId: string]: ValuelistValue } = fieldData.reduce((values, entry) => {
+            if (entry.selectable || includeUnselectable || valuesToInclude?.includes(entry.value)) {
+                values[entry.value] = {};
             }
-        : { values: {}, id: id };
-    }
-
-
-    function getValuesOfParentField(valuelist: Valuelist, 
-                                    fieldName: string,
-                                    parentResource: Resource): Valuelist {
-
-        const parentValues: string[] = parentResource[fieldName] ?? [];
-
-        const result: Valuelist = clone(valuelist);
-        result.values = filter((_, key: string) => {
-            return parentValues.includes(key);
-        })(valuelist.values) as { [key: string]: ValuelistValue };
-
-        return result;
+            return values;
+        }, {});
+        
+        return {
+            values, id: valuelistId
+        };
     }
 }

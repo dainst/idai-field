@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { copy, flow, forEach, isEmpty, map, remove, take, to } from 'tsfun';
 import { CategoryForm, Datastore, Document, IdGenerator, Labels, Named, ProjectConfiguration, RelationsManager,
     SyncService, Tree, ImageStore } from 'idai-field-core';
@@ -8,7 +7,6 @@ import { AngularUtility } from '../../angular/angular-utility';
 import { ExportRunner } from '../../components/export/export-runner';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../components/import/importer';
 import { ImageRelationsManager } from '../../services/image-relations-manager';
-import { JavaToolExecutor } from '../../services/java/java-tool-executor';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 import { SettingsProvider } from '../../services/settings/settings-provider';
@@ -18,15 +16,21 @@ import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ImportState } from './import-state';
 import { MessagesConversion } from './messages-conversion';
-import { UploadModalComponent } from './upload-modal.component';
+import { AppState } from '../../services/app-state';
+import { Settings } from '../../services/settings/settings';
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
+
+
+const remote = window.require('@electron/remote');
+const path = window.require('path');
 
 
 @Component({
     templateUrl: './import.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * Delegates calls to the Importer, waits for
@@ -40,7 +44,6 @@ import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithou
 export class ImportComponent implements OnInit {
 
     public operations: Array<Document> = [];
-    public javaInstalled: boolean = true;
     public running: boolean = false;
     public ignoredIdentifiers: string[] = [];
 
@@ -57,11 +60,11 @@ export class ImportComponent implements OnInit {
                 private http: HttpClient,
                 private settingsProvider: SettingsProvider,
                 private projectConfiguration: ProjectConfiguration,
-                private modalService: NgbModal,
                 private synchronizationService: SyncService,
                 private idGenerator: IdGenerator,
                 private tabManager: TabManager,
                 private menuService: Menus,
+                private appState: AppState,
                 private labels: Labels) {
 
         this.resetOperationIfNecessary();
@@ -72,15 +75,14 @@ export class ImportComponent implements OnInit {
 
     public getCategoryLabel = (category: CategoryForm) => this.labels.get(category);
 
-    public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
-
     public isDefaultFormat = () => Importer.isDefault(this.importState.format);
 
     public isMergeMode = () => this.importState.mergeMode;
 
     public shouldDisplayPermitDeletionsOption = () => this.isDefaultFormat() && this.importState.mergeMode === true;
 
-    public shouldDisplayImportIntoOperation = () => Importer.importIntoOperationAvailable(this.importState);
+    public shouldDisplayImportIntoOperation = () =>
+        Importer.importIntoOperationAvailable(this.importState, this.projectConfiguration);
 
     public getSeparator = () => this.importState.separator;
 
@@ -95,7 +97,6 @@ export class ImportComponent implements OnInit {
 
         this.operations = await this.fetchOperations();
         this.updateCategories();
-        this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
 
@@ -109,6 +110,7 @@ export class ImportComponent implements OnInit {
 
     public async onImportButtonClick() {
 
+        AngularUtility.blurActiveElement();
         if (!this.isReady()) return;
 
         this.running = true;
@@ -126,10 +128,9 @@ export class ImportComponent implements OnInit {
         return !this.running
             && this.ignoredIdentifiers.length < 2
             && this.importState.format !== undefined
-            && (this.importState.format !== 'shapefile' || !this.isJavaInstallationMissing())
             && (this.importState.format !== 'csv' || this.importState.selectedCategory)
             && (this.importState.sourceType === 'file'
-                ? this.importState.file !== undefined
+                ? this.importState.filePath !== undefined
                 : this.importState.url !== undefined);
     }
 
@@ -137,7 +138,7 @@ export class ImportComponent implements OnInit {
     public reset(): void {
 
         this.messages.removeAllMessages();
-        this.importState.file = undefined;
+        this.importState.filePath = undefined;
         this.importState.format = undefined;
         this.importState.url = undefined;
         this.importState.mergeMode = false;
@@ -146,25 +147,23 @@ export class ImportComponent implements OnInit {
     }
 
 
-    public selectFile(event: any) {
+    public async selectFile() {
+
+        const filePath: string = await this.showOpenFileDialog();
+        if (!filePath) return;
 
         this.reset();
-
         this.importState.typeFromFileName = false;
+        this.importState.filePath = filePath;
 
-        const files = event.target.files;
-        this.importState.file = !files || files.length === 0
-            ? undefined
-            : files[0];
-
-        if (this.importState.file) {
+        if (this.importState.filePath) {
             this.updateFormat();
             if (!this.importState.format) {
                 this.messages.add([M.IMPORT_ERROR_INVALID_FILE_FORMAT, this.allowedFileExtensions]);
                 return;
             }
 
-            this.importState.selectedCategory = this.getCategoryFromFileName(this.importState.file.name);
+            this.importState.selectedCategory = this.getCategoryFromFileName(path.basename(this.importState.filePath));
             if (this.importState.selectedCategory) this.importState.typeFromFileName = true;
         }
     }
@@ -181,21 +180,23 @@ export class ImportComponent implements OnInit {
     public updateFormat() {
 
         this.importState.format = ImportComponent.getImportFormat(
-            this.importState.file
-                ? this.importState.file.name
+            this.importState.filePath
+                ? path.basename(this.importState.filePath)
                 : this.importState.url
         );
     }
 
 
-    public updateCategories() {
+    private updateCategories() {
 
         this.importState.categories = getCategoriesWithoutExcludedCategories(
             Tree.flatten(this.projectConfiguration.getCategories()), this.getCategoriesToExclude()
         );
 
         if (!this.importState.categories.includes(this.importState.selectedCategory)) {
-            this.importState.selectedCategory = undefined;
+            this.importState.selectedCategory = this.importState.filePath
+                ? this.getCategoryFromFileName(path.basename(this.importState.filePath))
+                : undefined;
         }
     }
 
@@ -216,11 +217,7 @@ export class ImportComponent implements OnInit {
 
         this.messages.removeAllMessages();
 
-        this.menuService.setContext(MenuContext.MODAL);
-        const uploadModalRef: any = this.modalService.open(
-            UploadModalComponent,
-            { backdrop: 'static', keyboard: false, animation: false }
-        );
+        this.appState.setRunningDataTransfer('import');
 
         await AngularUtility.refresh();
 
@@ -232,10 +229,11 @@ export class ImportComponent implements OnInit {
         } catch (errWithParams) {
             this.messages.add(MessagesConversion.convertMessage(errWithParams));
         }
-        await this.synchronizationService.startSync();
+        if (Settings.isSynchronizationActive(this.settingsProvider.getSettings())) {
+            await this.synchronizationService.startSync();
+        }
 
-        uploadModalRef.close();
-        this.menuService.setContext(MenuContext.DEFAULT);
+        this.appState.setRunningDataTransfer('none');
 
         if (importReport) this.showImportResult(importReport);
     }
@@ -282,7 +280,8 @@ export class ImportComponent implements OnInit {
             () => this.idGenerator.generateId(),
             options,
             documents,
-            this.projectConfiguration.getTypeCategories().map(to(Named.NAME))
+            this.projectConfiguration.getTypeCategories().map(to(Named.NAME)),
+            this.projectConfiguration.getImageCategories().map(to(Named.NAME))
         );
     }
 
@@ -368,6 +367,58 @@ export class ImportComponent implements OnInit {
         }
 
         return undefined;
+    }
+
+
+    private async showOpenFileDialog(): Promise<string> {
+
+        const result = await remote.dialog.showOpenDialog(
+            remote.getCurrentWindow(),
+            {
+                properties: ['openFile'],
+                defaultPath: this.appState.getFolderPath('import'),
+                buttonLabel: $localize `:@@openFileDialog.select:Auswählen`,
+                filters: this.getFileFilters()
+            }
+        );
+
+        if (result.filePaths.length) {
+            await this.appState.setFolderPath(result.filePaths[0], 'import');
+            return result.filePaths[0];
+        } else {
+            return undefined;
+        }
+    }
+
+
+    private getFileFilters(): any[] {
+
+        return [
+            {
+                name: $localize `:@@import.selectFile.filters.all:Alle unterstützten Formate`,
+                extensions: ['csv', 'jsonl', 'geojson', 'json', 'shp', 'catalog']
+            },
+            {
+                name: 'CSV',
+                extensions: ['csv']
+            },
+            {
+                name: 'JSON Lines',
+                extensions: ['jsonl']
+            },
+            {
+                name: 'GeoJSON',
+                extensions: ['geojson', 'json']
+            },
+            {
+                name: 'Shapefile',
+                extensions: ['shp']
+            },
+            {
+                name: $localize `:@@import.selectFile.filters.catalog:Field-Typenkatalog`,
+                extensions: ['catalog']
+            }
+        ];
     }
 
 

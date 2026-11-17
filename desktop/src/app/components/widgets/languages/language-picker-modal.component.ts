@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { SortUtil } from 'idai-field-core';
+import { Comparator } from 'idai-field-core';
 import { Language, Languages } from '../../../services/languages';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 
 @Component({
     templateUrl: './language-picker-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -22,7 +25,9 @@ export class LanguagePickerModalComponent {
     private sortedLanguages: Array<Language>;
 
 
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal,
+                private menuService: Menus,
+                private comparator: Comparator) {}
 
 
     public getLanguageCodes = () => Languages.getSortedLanguageCodes(this.languages);
@@ -34,7 +39,9 @@ export class LanguagePickerModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key.length === 1) {
+        if (event.key.length === 1
+                && (this.menuService.getContext() === MenuContext.MODAL
+                || this.menuService.getContext() === MenuContext.CONFIGURATION_MODAL))  {
             this.searchTerm += event.key;
             this.scrollToSearchTermEntry();
             this.resetTimeout();
@@ -44,7 +51,7 @@ export class LanguagePickerModalComponent {
 
     public initialize() {
 
-        this.sortedLanguages = LanguagePickerModalComponent.getSortedLanguages(this.languages);
+        this.sortedLanguages = this.getSortedLanguages(this.languages);
     }
 
 
@@ -86,10 +93,10 @@ export class LanguagePickerModalComponent {
     }
 
 
-    private static getSortedLanguages(languages: { [languageCode: string]: Language }): Array<Language> {
+    private getSortedLanguages(languages: { [languageCode: string]: Language }): Array<Language> {
 
         return Object.values(languages).sort((language1, language2) => {
-            return SortUtil.alnumCompare(language1.label, language2.label);
+            return this.comparator.alnumCompare(language1.label, language2.label);
         });
     }
 }

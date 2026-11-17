@@ -12,7 +12,7 @@
         <canvas *ngIf="hasQrCode()" #qrCodeCanvas id="qr-code-canvas"></canvas>
         <div *ngIf="hasQrCode() && !saving"
              id="qr-code-string"
-             class="badge badge-light">{{document.resource.scanCode}}</div>
+             class="badge bg-light">{{document.resource.scanCode}}</div>
         <div *ngIf="hasQrCode()"
              id="qr-code-print-label">
             <div id="qr-code-identifier">{{document.resource.identifier}}</div>

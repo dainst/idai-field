@@ -20,6 +20,7 @@ import { ConvertFieldDataModalComponent } from './warnings/modals/convert-field-
 import { SelectNewFieldModalComponent } from './warnings/modals/select-new-field-modal.component';
 import { SelectNewCategoryModalComponent } from './warnings/modals/select-new-category-modal.component';
 import { InvalidResourceViewComponent } from './warnings/widgets/invalid-resource-view.component';
+import { WarningsContextMenuComponent } from './warnings/context-menu/warnings-context-menu.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { InvalidResourceViewComponent } from './warnings/widgets/invalid-resourc
         InvalidResourceViewComponent,
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
-        ProjectsComponent
+        ProjectsComponent,
+        WarningsContextMenuComponent
     ],
     exports: [
         NavbarComponent

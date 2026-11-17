@@ -29,7 +29,7 @@ export class ImagePickerModalPage {
 
     // typeIn
 
-    public static typeInIdentifierInSearchField(identifier) {
+    public static typeInIdentifierInSearchField(identifier: string) {
 
        return typeIn('#image-picker-modal .search-bar-input', identifier);
     }

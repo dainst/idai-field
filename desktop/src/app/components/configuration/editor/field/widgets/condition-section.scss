@@ -1,0 +1,20 @@
+condition-section {
+  .configuration-editor-section {
+    margin-bottom: 25px;
+
+    .exists-condition-switch {
+      margin-top: 15px;
+    }
+
+    .checkbox,
+    .radio {
+      margin-bottom: 0;
+
+      label {
+        margin-bottom: 0;
+        padding-left: 3px;
+        user-select: none;
+      }
+    }
+  }
+}

@@ -1,8 +1,9 @@
 /**
  * @author Thomas Kleinke
  */
+@use 'sass:color';
 
- $active-navigation-button-background-color: #d5dfef;
+$active-navigation-button-background-color: #d5dfef;
 
 navigation {
   width: 100%;
@@ -43,13 +44,13 @@ navigation {
 
     .root-document ~ .navigation-button,
     .root-document ~ .navigation-button:active {
-      color: lighten($primary-button-color, 30%);
-      border-color: lighten($primary-button-color, 30%);
+      color: color.adjust($primary-button-color, $lightness: 30%);
+      border-color: color.adjust($primary-button-color, $lightness: 30%);
     }
 
     .root-document ~ .navigation-button:hover {
-      color: lighten($primary-button-color, 35%);
-      border-color: lighten($primary-button-color, 35%);
+      color: color.adjust($primary-button-color, $lightness: 35%);
+      border-color: color.adjust($primary-button-color, $lightness: 35%);
     }
 
     .root-document + .navigation-button,
@@ -58,7 +59,9 @@ navigation {
     }
 
     #navigation-button-group {
+      width: fit-content;
       max-width: calc(100% - 50px);
+      padding: 0;
     }
 
     .navigation-button {
@@ -79,7 +82,7 @@ navigation {
     }
 
     .navigation-button:not(:last-child):before {
-      border-left-color: darken($primary-button-color, 5%);
+      border-left-color: color.adjust($primary-button-color, $lightness: -5%);
       border-width: 6px;
       margin-top: -6px;
       transition: border-left-color 0.15s ease-in-out;
@@ -98,7 +101,7 @@ navigation {
     }
 
     .root-document ~ .navigation-button:not(:last-child):before {
-      border-left-color: lighten($primary-button-color, 30%);
+      border-left-color: color.adjust($primary-button-color, $lightness: 30%);
     }
 
     #hierarchy-mode-switch {

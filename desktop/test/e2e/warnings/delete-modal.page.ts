@@ -1,4 +1,4 @@
-import { click, getText, typeIn } from '../app';
+import { click, getLocator, getText, typeIn } from '../app';
 
 
 /**
@@ -20,6 +20,12 @@ export class DeleteModalPage {
     }
 
 
+    public static clickCancelButton() {
+
+        return click('#cancel-button');
+    }
+
+
     // Type
 
     public static async typeInConfirmValue(fieldName: string) {
@@ -33,5 +39,11 @@ export class DeleteModalPage {
     public static async getHeading(modalName: string) {
 
         return getText('#' + modalName + '-modal-header h5');
+    }
+    
+
+    public static getMultipleSwitch() {
+
+        return getLocator('#multiple-switch .switch');
     }
 }

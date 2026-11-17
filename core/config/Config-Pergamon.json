@@ -28,8 +28,7 @@
             "supervisor",
             "processor",
             "campaign",
-            "beginningDate",
-            "endDate"
+            "date"
           ]
         },
         {
@@ -336,8 +335,7 @@
             "shortDescription",
             "processor",
             "campaign",
-            "beginningDate",
-            "endDate"
+            "date"
           ]
         },
         {
@@ -2580,8 +2578,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate"
+            "date"
           ]
         },
         {
@@ -2758,8 +2755,7 @@
           "fields": [
             "identifier",
             "shortDescription",
-            "beginningDate",
-            "endDate",
+            "date",
             "diary",
             "processor"
           ]
@@ -2882,8 +2878,7 @@
           "fields": [
             "identifier",
             "shortDescription",
-            "beginningDate",
-            "endDate",
+            "date",
             "diary",
             "processor"
           ]
@@ -2947,8 +2942,7 @@
             "category",
             "shortDescription",
             "campaign",
-            "beginningDate",
-            "endDate",
+            "date",
             "diary",
             "processor"
           ]
@@ -3000,8 +2994,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },

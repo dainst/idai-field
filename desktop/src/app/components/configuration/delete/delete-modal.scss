@@ -1,6 +1,9 @@
 .configuration-delete-modal-body {
+  span {
+    user-select: none;
+  }
+
   #confirm-delete-info {
     margin-bottom: 10px;
-    user-select: none;
   }
 }

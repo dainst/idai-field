@@ -34,6 +34,12 @@ export class MoveModalPage {
     }
 
 
+    public static getNoResourcesFoundInfo() {
+
+        return getLocator('.no-resources-found-info');
+    }
+
+
     // type in
 
     public static typeInSearchBarInput(identifier: string) {

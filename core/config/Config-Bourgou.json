@@ -21,8 +21,7 @@
             "supervisor",
             "processor",
             "campaign",
-            "beginningDate",
-            "endDate"
+            "date"
           ]
         },
         {
@@ -79,8 +78,7 @@
             "supervisor",
             "processor",
             "campaign",
-            "beginningDate",
-            "endDate",
+            "date",
             "diary"
           ]
         },
@@ -245,8 +243,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -744,8 +741,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -914,8 +910,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -1003,8 +998,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -1075,8 +1069,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -1350,8 +1343,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },
@@ -2026,8 +2018,7 @@
             "processor",
             "campaign",
             "diary",
-            "beginningDate",
-            "endDate",
+            "date",
             "isSameAs"
           ]
         },

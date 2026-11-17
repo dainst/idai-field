@@ -7,7 +7,8 @@ import { ImageUploadResult } from '../../image/upload/image-uploader';
 
 @Component({
     selector: 'image-view-edit',
-    templateUrl: './image-view-edit.html'
+    templateUrl: './image-view-edit.html',
+    standalone: false
 })
 /**
  * @author F.Z.
@@ -49,6 +50,6 @@ export class ImageViewEditComponent implements OnChanges {
     public onResize() {
 
         if (!this.images || this.images.length === 0) return;
-        this.imageGrid.calcGrid();
+        this.imageGrid.triggerGridCalculation();
     }
 }

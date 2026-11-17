@@ -1,0 +1,132 @@
+process-list {
+  display: block;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 14px;
+  user-select: none;
+
+  .cdk-virtual-scroll-content-wrapper {
+    width: 100%;
+    min-height: 100%;
+  }
+
+  .processes-headings,
+  .processes-body {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  .processes-body {
+    height: calc(100% - 48px);
+
+    .process {
+      height: 59px;
+    }
+  }
+
+  .process {
+    display: flex;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+    .process-state-header,
+    .process-date,
+    .process-identifier,
+    .process-category {
+      padding: 10px;
+    }
+
+    .process-date,
+    .process-identifier,
+    .process-category {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .process-date,
+    .process-identifier,
+    .process-category {
+      line-height: 35px;
+    }
+
+    .process-carried-out-on,
+    .process-results-in {
+      flex: 0 0 149px;
+    }
+
+    .process-state-header,
+    .process-state,
+    .process-date {
+      display: flex;
+      align-items: center;
+    }
+
+
+    .process-state-header,
+    .process-state {
+      flex: 0 0 70px;
+      justify-content: center;
+    }
+
+    .process-date {
+      flex: 0 0 250px;
+      line-height: 17px;
+      white-space: break-spaces;
+    }
+
+    .process-identifier {
+      flex-grow: 1;
+    }
+
+    .process-category {
+      flex: 0 0 190px;
+    }
+
+    .process-buttons {
+      flex: 0 0 83px;
+
+      button {
+        border-radius: 0;
+      }
+    }
+
+    &.processes-headings {
+      .process-carried-out-on,
+      .process-results-in {
+        padding: 10px;
+      }
+
+      .process-date,
+      .process-identifier {
+        transition: color 0.05s ease-in-out;
+
+        .mdi {
+          opacity: 0;
+          transition: opacity 0.05s ease-in-out;
+          margin-left: 5px;
+          font-size: 15px;
+
+          &.selected {
+            opacity: 1;
+          }
+        }
+
+        &:hover {
+          color: $text-hover-color;
+
+          .mdi {
+            opacity: 1;
+          }
+        }
+      }
+
+      div {
+        height: 48px;
+        line-height: 28px;
+        font-weight: 600;
+      }
+    }
+  }
+}

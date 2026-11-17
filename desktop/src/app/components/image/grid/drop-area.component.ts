@@ -3,11 +3,16 @@ import { Document } from 'idai-field-core';
 import { ImageUploader, ImageUploadResult } from '../upload/image-uploader';
 import { Messages } from '../../messages/messages';
 import { MsgWithParams } from '../../messages/msg-with-params';
+import { AppState } from '../../../services/app-state';
+
+const remote = window.require('@electron/remote');
+const webUtils = window.require('electron').webUtils;
 
 
 @Component({
     selector: 'drop-area',
-    templateUrl: './drop-area.html'
+    templateUrl: './drop-area.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy
@@ -25,10 +30,9 @@ export class DropAreaComponent {
     protected dragOverActive: boolean = false;
 
 
-    public constructor(
-        protected imageUploader: ImageUploader,
-        protected messages: Messages
-    ) {}
+    public constructor(protected imageUploader: ImageUploader,
+                       protected messages: Messages,
+                       protected appState: AppState) {}
 
 
     public onDragOver(event: any) {
@@ -51,22 +55,52 @@ export class DropAreaComponent {
     public async onDrop(event: any) {
 
         event.preventDefault();
-
-        const uploadResult: ImageUploadResult
-            = await this.imageUploader.startUpload(event, this.depictsRelationTarget);
-        this.handleUploadResult(uploadResult);
-
         this.onDragLeave(event);
+
+        const filePaths: string[] = DropAreaComponent.getFilePaths(event);
+        await this.upload(filePaths);
     }
 
 
-    public async onSelectImages(event: any) {
+    public async selectFiles(event: MouseEvent) {
 
-        const uploadResult: ImageUploadResult
-            = await this.imageUploader.startUpload(event, this.depictsRelationTarget);
-        this.handleUploadResult(uploadResult);
+        event.preventDefault();
 
-        this.fileInputElement.nativeElement.value = null;
+        const result: any = await remote.dialog.showOpenDialog(
+            remote.getCurrentWindow(),
+            {
+                properties: ['openFile', 'multiSelections'],
+                defaultPath: this.appState.getFolderPath('imageUpload'),
+                buttonLabel: $localize `:@@openFileDialog.select:Auswählen`,
+                filters: [
+                    {
+                        name: $localize `:@@import.selectFile.filters.all:Alle unterstützten Formate`,
+                        extensions: ImageUploader.supportedImageFileTypes.concat(ImageUploader.supportedWorldFileTypes)
+                    },
+                    {
+                        name: 'JPEG',
+                        extensions: ['jpg', 'jpeg']
+                    },
+                    {
+                        name: 'PNG',
+                        extensions: ['png']
+                    },
+                    {
+                        name: 'TIFF',
+                        extensions: ['tif', 'tiff']
+                    },
+                    {
+                        name: 'Worldfile',
+                        extensions: ImageUploader.supportedWorldFileTypes
+                    }
+                ]
+            }
+        );
+
+        if (result.filePaths.length) {
+            this.appState.setFolderPath(result.filePaths[0], 'imageUpload');
+            await this.upload(result.filePaths);
+        }
     }
 
 
@@ -79,6 +113,16 @@ export class DropAreaComponent {
     }
 
 
+    private async upload(filePaths: string[]) {
+
+        const uploadResult: ImageUploadResult = await this.imageUploader.startUpload(
+            filePaths, this.depictsRelationTarget
+        );
+
+        this.handleUploadResult(uploadResult);
+    }
+
+
     private handleUploadResult(uploadResult: ImageUploadResult) {
 
         if (uploadResult.uploadedImages > 0) this.onImagesUploaded.emit(uploadResult);
@@ -86,5 +130,13 @@ export class DropAreaComponent {
         for (let msgWithParams of uploadResult.messages) {
             this.messages.add(msgWithParams as MsgWithParams);
         }
+    }
+
+
+    private static getFilePaths(event: any): string[] {
+
+        return event?.dataTransfer?.files
+            ? Array.from(event?.dataTransfer?.files).map((file: any) => webUtils.getPathForFile(file))
+            : [];
     }
 }

@@ -1,0 +1,40 @@
+## This file is a PO Template file.
+##
+## "msgid"s here are often extracted from source code.
+## Add new messages manually only if they're dynamic
+## messages that can't be statically extracted.
+##
+## Run "mix gettext.extract" to bring this file up to
+## date. Leave "msgstr"s empty as changing them here has no
+## effect: edit them in PO (.po) files instead.
+#
+msgid ""
+msgstr ""
+
+#: lib/field_publication_web/components/core_components.ex:474
+#: lib/field_publication_web/live/admin_live/user_management.ex:22
+#: lib/field_publication_web/live/project_live/index.html.heex:18
+#, elixir-autogen, elixir-format
+msgid "Actions"
+msgstr ""
+
+#: lib/field_publication_web/components/core_components.ex:76
+#: lib/field_publication_web/components/core_components.ex:128
+#, elixir-autogen, elixir-format
+msgid "close"
+msgstr ""
+
+#: lib/field_publication_web/live/presentation/home_live.html.heex:1
+#, elixir-autogen, elixir-format
+msgid "home_title"
+msgstr ""
+
+#: lib/field_publication_web/live/presentation/components/project_document.ex:21
+#, elixir-autogen, elixir-format
+msgid "project_doc_about_project"
+msgstr ""
+
+#: lib/field_publication_web/live/presentation/components/project_document.ex:26
+#, elixir-autogen, elixir-format
+msgid "project_doc_about_publication"
+msgstr ""

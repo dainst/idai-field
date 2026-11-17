@@ -1,5 +1,5 @@
 import { append, compose, dropRight, flow, takeRight, take, drop, cond, size, isnt, last, throws} from 'tsfun';
-import { Document } from '../model/document';
+import { Document } from '../model/document/document';
 
 
 /**

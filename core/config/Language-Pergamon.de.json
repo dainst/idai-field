@@ -786,14 +786,6 @@
           "label": "Fläche in m2",
           "description": "Flächenangabe in Quadratmetern"
         },
-        "beginningDate": {
-          "label": "Startdatum",
-          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit begann"
-        },
-        "endDate": {
-          "label": "Enddatum",
-          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit endete"
-        },
         "comparison": {
           "label": "Vergleich(e)",
           "description": "Vergleich mit ähnlichen Befunden, Objekten, Inschriften etc. mit Angabe einer Referenz"
@@ -966,14 +958,6 @@
     "Excavation": {
       "label": "Ausgrabung",
       "fields": {
-        "beginningDate": {
-          "label": "Startdatum",
-          "description": "Datum, an dem die Aufnahme begann"
-        },
-        "endDate": {
-          "label": "Enddatum",
-          "description": "Datum, an dem die Aufnahme endete"
-        },
         "diary": {
           "label": "Tagebuch",
           "description": "Verweis auf Grabungstagebuch"
@@ -1006,14 +990,6 @@
         "area": {
           "label": "Fläche in m2",
           "description": "Flächenangabe in Quadratmetern"
-        },
-        "beginningDate": {
-          "label": "Startdatum",
-          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit begann"
-        },
-        "endDate": {
-          "label": "Enddatum",
-          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit endete"
         },
         "comparison": {
           "label": "Vergleich(e)",
@@ -1105,14 +1081,6 @@
         "area": {
           "label": "Fläche in m2",
           "description": "Flächenangabe in Quadratmetern"
-        },
-        "beginningDate": {
-          "label": "Startdatum",
-          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit begann"
-        },
-        "endDate": {
-          "label": "Enddatum",
-          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit endete"
         },
         "comparison": {
           "label": "Vergleich(e)",

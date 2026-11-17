@@ -1,28 +1,55 @@
-import { Component, OnChanges, Input, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnChanges, Input, NgZone, ChangeDetectorRef, ElementRef, ViewChild,
+    OnDestroy } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
-import { ImageContainer } from '../../../services/imagestore/image-container';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 import { showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConsole } from '../log-messages';
 import { Messages } from '../../messages/messages';
 import { M } from '../../messages/m';
 import { Loading } from '../../widgets/loading';
+import { AngularUtility } from '../../../angular/angular-utility';
+import { ImageToolLauncher } from '../../../services/imagestore/image-tool-launcher';
+
+const panzoom = require('panzoom');
+
+
+type LoadingResult = {
+    imageUrl: SafeResourceUrl;
+    isOriginal: boolean;
+};
 
 
 @Component({
     selector: 'image-viewer',
-    templateUrl: './image-viewer.html'
+    templateUrl: './image-viewer.html',
+    host: {
+        '(window:resize)': 'onResize()'
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ImageViewerComponent implements OnChanges {
+export class ImageViewerComponent implements OnChanges, OnDestroy {
 
-    @Input() image: ImageDocument;
+    @Input() imageDocument: ImageDocument;
 
-    public imageContainer: ImageContainer;
+    @ViewChild('container') containerElement: ElementRef;
+    @ViewChild('image') imageElement: ElementRef;
+    @ViewChild('preloadImage') preloadImageElement: ElementRef;
+    @ViewChild('overlay') overlayElement: ElementRef;
+
+    public imageUrl: SafeResourceUrl;
+    public isOriginal: boolean;
+    public maxZoom: number;
+    public panning: boolean = false;
     public loadingIconVisible: boolean = false;
     public loadingIconTimeout: any = undefined;
+
+    private loadedImageId: string;
+    private panzoomInstance: any;
+    private zooming: boolean = false;
 
 
     constructor(private imageUrlMaker: ImageUrlMaker,
@@ -30,85 +57,130 @@ export class ImageViewerComponent implements OnChanges {
                 private messages: Messages,
                 private loading: Loading,
                 private zone: NgZone,
-                private changeDetectorRef: ChangeDetectorRef) {}
+                private changeDetectorRef: ChangeDetectorRef,
+                private imageToolLauncher: ImageToolLauncher) {}
+
+
+    public getScale = () => this.panzoomInstance?.getTransform().scale ?? 0;
+
+    public zoomIn = () => this.zoom(2);
+
+    public zoomOut = () => this.zoom(0.5);
+
+    public isDownloadButtonVisible = () => this.imageToolLauncher.isDownloadPossible([this.imageDocument]);
+
+    public isExportButtonVisible = () => this.imageToolLauncher.isExportPossible([this.imageDocument]);
 
 
     async ngOnChanges() {
 
-        if (!this.imagestore.getAbsoluteRootPath()) {
-            this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
-        }
-        
-        if (this.image) await this.update();
+        await this.update();
     }
 
 
-    public containsOriginal(imageContainer: ImageContainer): boolean {
+    ngOnDestroy() {
+        
+        this.resetPanZoom();
+    }
 
-        return imageContainer?.imgSrc !== undefined && imageContainer?.imgSrc !== '';
+
+    public onResize() {
+
+        this.resetPanZoom();
+        this.setupPanZoom();
     }
 
 
     public isImageContainerVisible(): boolean {
         
         return !this.loadingIconVisible
-            || (this.image?.resource.id === this.imageContainer?.document.resource.id);
+            || (this.imageDocument?.resource.id === this.loadedImageId);
     }
 
 
     public isOriginalNotFoundWarningVisible(): boolean {
 
-        return this.imageContainer
-            && !this.containsOriginal(this.imageContainer)
+        return this.imageUrl
+            && !this.isOriginal
             && !this.loadingIconVisible;
     }
 
 
-    public stopLoading() {
+    public async onImageLoaded() {
 
-        if (this.loadingIconTimeout) {
-            clearTimeout(this.loadingIconTimeout);
-            this.loadingIconTimeout = undefined;
-        }
-        this.loading.stop('image-viewer', false);
-        this.loadingIconVisible = false;
+        this.stopLoading();
+        await this.setupPanZoom();
+
+        this.overlayElement.nativeElement.style['z-index'] = 1000;
+    }
+
+
+    public getDownloadTooltip() {
+
+        const sizeLabel: string = this.imageToolLauncher.getDownloadSizeLabel([this.imageDocument]);
+        return $localize `:@@images.download.tooltip.single:Originalbild herunterladen` + ' (' + sizeLabel + ')';
+    }
+
+
+    public async downloadImage() {
+
+        await this.imageToolLauncher.downloadImages([this.imageDocument]);
+        this.loadedImageId = undefined;
+        this.imageUrl = undefined;
+        await this.update();
+    }
+
+
+    public async exportImage() {
+        
+        await this.imageToolLauncher.exportImages([this.imageDocument]);
     }
 
 
     private async update() {
 
-        this.stopLoading();
+        if (!this.imagestore.getAbsoluteRootPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
 
-        if (this.image.resource.id === this.imageContainer?.document.resource.id) return;
+        this.resetPanZoom();
+        this.stopLoading();
+        await AngularUtility.refresh();
+
+        if (!this.imageDocument || this.imageDocument.resource.id === this.loadedImageId) return;
         
         this.zone.run(async () => {
-            const newImageContainer: ImageContainer = await this.loadImage(this.image);
-            if (newImageContainer.document.resource.id === this.image.resource.id) {
-                this.imageContainer = newImageContainer;
+            const imageId: string = this.imageDocument.resource.id;
+            const result: LoadingResult = await this.loadImage(this.imageDocument);
+            if (imageId === this.imageDocument.resource.id) {
+                this.loadedImageId = imageId;
+                this.imageUrl = result.imageUrl;
+                this.isOriginal = result.isOriginal;
+                if (this.imageUrl === ImageUrlMaker.blackImg) this.stopLoading();
+                if (!this.isOriginal) this.showMissingImageMessageOnConsole();
             }
         });
     }
 
 
-    private async loadImage(document: ImageDocument): Promise<ImageContainer> {
+    private async loadImage(document: ImageDocument): Promise<LoadingResult> {
 
         this.startLoading();
+        this.overlayElement.nativeElement.style['z-index'] = 1002;
         this.changeDetectorRef.detectChanges();
 
-        const imageContainer: ImageContainer = { document };
+        let imageUrl: SafeResourceUrl;
+        let isOriginal: boolean;
 
         try {
-            imageContainer.imgSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.DISPLAY);
-            this.changeDetectorRef.detectChanges();
-        } catch (e) {
-            imageContainer.imgSrc = undefined;
-            imageContainer.thumbSrc = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.THUMBNAIL);
-            this.stopLoading();
+            imageUrl = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.DISPLAY);
+            isOriginal = true;
+        } catch (_) {
+            imageUrl = await this.imageUrlMaker.getUrl(document.resource.id, ImageVariant.THUMBNAIL);
+            isOriginal = false;
         }
 
-        this.showConsoleErrorIfImageIsMissing(imageContainer);
-
-        return imageContainer;
+        this.changeDetectorRef.detectChanges();
+        
+        return { imageUrl, isOriginal };
     }
 
 
@@ -122,18 +194,123 @@ export class ImageViewerComponent implements OnChanges {
     }
 
 
-    private showConsoleErrorIfImageIsMissing(imageContainer: ImageContainer) {
+    private stopLoading() {
 
-        if (this.containsOriginal(imageContainer)) return;
+        if (this.loadingIconTimeout) {
+            clearTimeout(this.loadingIconTimeout);
+            this.loadingIconTimeout = undefined;
+        }
+        this.loading.stop('image-viewer', false);
+        this.loadingIconVisible = false;
+    }
 
-        const imageId: string = imageContainer.document && imageContainer.document.resource
-            ? imageContainer.document.resource.id
-            : 'unknown';
 
-        if (imageContainer.thumbSrc === ImageUrlMaker.blackImg) {
+    private showMissingImageMessageOnConsole() {
+
+        const imageId: string = this.imageDocument?.resource.id ?? 'unknown';
+
+        if (this.imageUrl === ImageUrlMaker.blackImg) {
             showMissingImageMessageOnConsole(imageId);
         } else {
             showMissingOriginalImageMessageOnConsole(imageId);
         }
+    }
+
+
+    private async setupPanZoom() {
+
+        await AngularUtility.refresh();
+
+        this.maxZoom = this.calculateMaxZoom();
+        this.imageElement.nativeElement.style.transform = 'none';
+        this.preloadImageElement.nativeElement.style.transform
+            = `matrix(${this.maxZoom}, 0, 0, ${this.maxZoom}, 0, 0)`;
+
+        this.panzoomInstance = panzoom(
+            this.imageElement.nativeElement,
+            {
+                smoothScroll: false,
+                zoomDoubleClickSpeed: 1,
+                initialZoom: 1,
+                maxZoom: this.maxZoom,
+                minZoom: 1
+            }
+        );
+
+        this.setupPanZoomEvents();
+        this.centerImage();
+
+        if (!this.isOriginal) this.panzoomInstance.pause();
+    }
+
+
+    private setupPanZoomEvents() {
+
+        this.panzoomInstance.on('zoom', () => {
+            this.changeDetectorRef.detectChanges();
+        });
+
+        this.panzoomInstance.on('zoomend', () => {
+            this.zooming = false;
+            this.changeDetectorRef.detectChanges();
+        });
+
+        this.panzoomInstance.on('panstart', () => {
+            this.panning = true;
+            this.changeDetectorRef.detectChanges();
+        });
+
+        this.panzoomInstance.on('panend', () => {
+            this.panning = false;
+            this.changeDetectorRef.detectChanges();
+        });
+    }
+
+
+    private centerImage() {
+
+        const imageBounds: any = this.imageElement.nativeElement.getBoundingClientRect();
+        const containerBounds: any = this.containerElement.nativeElement.getBoundingClientRect();
+        const x: number = containerBounds.width / 2 - imageBounds.width / 2;
+        const y: number = containerBounds.height / 2 - imageBounds.height / 2;
+
+        this.panzoomInstance.moveTo(x, y);
+    }
+
+
+    private resetPanZoom() {
+
+        if (!this.panzoomInstance) return;
+
+        this.panzoomInstance.dispose();
+        this.panzoomInstance = undefined;
+    }
+
+
+    private zoom(value: number) {
+
+        if (this.zooming) return;
+
+        if (this.getScale() < 2 && value < 1) value = 0.45;
+
+        this.zooming = true;
+
+        const containerBounds: any = this.containerElement.nativeElement.getBoundingClientRect();
+        const x: number = containerBounds.width / 2;
+        const y: number = containerBounds.height / 2;
+
+        this.panzoomInstance.smoothZoom(x, y, value);
+    }
+
+
+    private calculateMaxZoom(): number {
+
+        const imageWidth: number = this.imageElement.nativeElement.naturalWidth;
+        const imageHeight: number = this.imageElement.nativeElement.naturalHeight;
+
+        const containerWidth: number = this.containerElement.nativeElement.getBoundingClientRect().width;
+        const containerHeight: number = this.containerElement.nativeElement.getBoundingClientRect().height;
+        
+        return Math.max(1, Math.max(imageWidth / containerWidth, imageHeight / containerHeight));
     }
 }

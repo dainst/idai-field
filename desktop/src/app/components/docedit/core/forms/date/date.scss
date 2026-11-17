@@ -1,0 +1,35 @@
+form-field-date {
+  select {
+    margin-bottom: 10px !important;
+  }
+
+  .date-container {
+    display: flex;
+
+    .range-labels {
+      height: 100%;
+      margin-right: 12px;
+      color: black;
+      background-color: transparent;
+  
+      .range-label {
+        position: relative;
+        top: 7px;
+        font-size: 13px;
+        user-select: none;
+  
+        &:not(:first-child) {
+          margin-top: 21px;
+        }
+      }
+    }
+
+    .date-values-container {
+      flex-grow: 1;
+
+      date-value:not(:first-child) {
+        margin-top: 7px;
+      }
+    }
+  }
+}

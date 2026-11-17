@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Map } from 'tsfun';
 import { Resource, Field, Subfield } from 'idai-field-core';
 import { Language } from '../../../services/languages';
@@ -6,7 +6,8 @@ import { Language } from '../../../services/languages';
 
 @Component({
     selector: 'edit-form-field',
-    templateUrl: './edit-form-field.html'
+    templateUrl: './edit-form-field.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -23,4 +24,8 @@ export class EditFormFieldComponent {
     @Input() field: Field|Subfield;
     @Input() languages: Map<Language>;
     @Input() identifierPrefix: string|undefined;
+    @Input() disabled: boolean;
+
+    // Detects changes for input types "dropdown", "radio", "checkboxes" and "boolean"
+    @Output() onChanged: EventEmitter<void> = new EventEmitter<void>(); 
 }

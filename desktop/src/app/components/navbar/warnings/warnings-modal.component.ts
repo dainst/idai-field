@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Map, flatten, isArray, nop } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Datastore, FieldDocument, IndexFacade, Labels, ProjectConfiguration,
-    WarningType, ConfigReader, Group, Resource, Field, Tree, MissingRelationTargetWarnings, InvalidDataUtil,
-    OutlierWarnings } from 'idai-field-core';
+import { Map, flatten, intersect, isArray, isString, nop, set } from 'tsfun';
+import { CategoryForm, ConfigurationDocument, Datastore, Document, FieldDocument, IndexFacade, Labels,
+    ProjectConfiguration, WarningType, ConfigReader, Group, Resource, Field, Tree, InvalidDataUtil, OutlierWarnings,
+    RelationTargetWarnings, DateValidationResult, DateSpecification, Condition, Valuelist,
+    ValuelistUtil, FieldResource } from 'idai-field-core';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
 import { WarningFilter, WarningFilters } from '../../../services/warnings/warning-filters';
@@ -27,29 +27,44 @@ import { SelectNewFieldModalComponent } from './modals/select-new-field-modal.co
 import { SelectNewCategoryModalComponent } from './modals/select-new-category-modal.component';
 import { MoveModalComponent, MoveResult } from '../../widgets/move-modal/move-modal.component';
 import { WarningsService } from '../../../services/warnings/warnings-service';
+import { getSystemTimezone } from '../../../util/timezones';
+import { QrCodeEditorModalComponent } from '../../resources/actions/edit-qr-code/qr-code-editor-modal.component';
+import { ContextMenuProvider } from '../../widgets/context-menu-provider';
+import { WarningsContextMenu } from './context-menu/warnings-context-menu';
+import { WarningsContextMenuAction } from './context-menu/warnings-context-menu.component';
+import { Routing } from '../../../services/routing';
+import { ComponentHelpers } from '../../component-helpers';
 
 
 type WarningSection = {
     type: WarningType;
+    isRelationField?: boolean;
     category?: CategoryForm;
     unconfiguredCategoryName?: string;
     fieldName?: string;
     inputType?: Field.InputType;
     dataLabel?: string;
     outlierValues?: string[];
+    relationTargets?: Array<Document>;
+    dateValidationError?: DateValidationResult;
+    conditionFieldLabel?: string;
+    conditionValuesLabel?: string;
+    geometryTypeLabel?: string;
 }
 
 
 @Component({
     templateUrl: './warnings-modal.html',
     host: {
-        '(window:keydown)': 'onKeyDown($event)'
-    }
+        '(window:keydown)': 'onKeyDown($event)',
+        '(window:click)': 'onClick($event)'
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
  */
-export class WarningsModalComponent {
+export class WarningsModalComponent extends ContextMenuProvider {
 
     public warningFilters: Array<WarningFilter>;
     public getConstraints: () => Map<string>;
@@ -60,6 +75,7 @@ export class WarningsModalComponent {
     public selectedDocument: FieldDocument|undefined;
     public sections: Array<WarningSection> = [];
     public hasConfigurationConflict: boolean;
+    public contextMenu: WarningsContextMenu = new WarningsContextMenu();
 
 
     constructor(private activeModal: NgbActiveModal,
@@ -74,10 +90,18 @@ export class WarningsModalComponent {
                 private configReader: ConfigReader,
                 private labels: Labels,
                 private warningsService: WarningsService,
-                private i18n: I18n) {}
+                private routingService: Routing,
+                changeDetectorRef: ChangeDetectorRef) {
+
+        super(changeDetectorRef);
+    }
 
         
     public getSections = () => this.sections.filter(section => this.isSectionVisible(section));
+
+    public isModalOpened = () => this.menus.getContext() !== MenuContext.WARNINGS;
+
+    public close = () => this.activeModal.dismiss('cancel');
 
 
     public initialize() {
@@ -120,16 +144,40 @@ export class WarningsModalComponent {
     }
 
 
+    public getValueLabel(section: WarningSection): string {
+
+        return this.labels.getValueLabel(
+            CategoryForm.getField(section.category, section.fieldName)?.valuelist,
+            this.selectedDocument.resource[section.fieldName]
+        );
+    }
+
+
+    public getDateLabel(date: DateSpecification): string {
+
+        return DateSpecification.generateLabel(
+            date,
+            getSystemTimezone(),
+            $localize `:@@revisionLabel.timeSuffix:Uhr`,
+            Settings.getLocale(),
+            (term: string) => this.utilTranslations.getTranslation(term),
+            true
+        );
+    }
+
+
     public getIdentifierPrefix(section: WarningSection): string {
 
         return section.category.identifierPrefix;
     }
 
 
-    public getMissingRelationTargetIds(section: WarningSection): string[] {
+    public getRelationTargetIds(section: WarningSection): string[] {
 
         return this.selectedDocument.resource.relations[section.fieldName]?.filter(targetId => {
-            return this.selectedDocument.warnings?.missingRelationTargets?.targetIds.includes(targetId);
+            const warnings: RelationTargetWarnings
+                = this.selectedDocument.warnings?.[section.type] as RelationTargetWarnings;
+            return warnings?.targetIds.includes(targetId);
         }) ?? [];
     }
 
@@ -203,6 +251,7 @@ export class WarningsModalComponent {
         }
 
         AngularUtility.blurActiveElement();
+        this.warningsService.reportWarningsResolved();
         await this.update();
     };
 
@@ -233,6 +282,28 @@ export class WarningsModalComponent {
 
         await this.modals.awaitResult(
             result,
+            () => {
+                this.warningsService.reportWarningsResolved();
+                this.update();
+            },
+            nop
+        );
+
+        AngularUtility.blurActiveElement();
+    }
+
+
+    public async openQrCodeEditorModal() {
+
+        const [result, componentInstance] = this.modals.make<QrCodeEditorModalComponent>(
+            QrCodeEditorModalComponent,
+            MenuContext.QR_CODE_EDITOR
+        );
+        componentInstance.document = this.selectedDocument;
+        await componentInstance.initialize();
+        
+        await this.modals.awaitResult(
+            result,
             () => this.update(),
             nop
         );
@@ -250,6 +321,7 @@ export class WarningsModalComponent {
 
         componentInstance.document = this.selectedDocument;
         componentInstance.warningType = section.type;
+        componentInstance.initialize();
 
         await this.modals.awaitResult(
             result,
@@ -274,6 +346,7 @@ export class WarningsModalComponent {
         componentInstance.category = section.category;
         componentInstance.inputType = section.inputType;
         componentInstance.inputTypeLabel = this.getInputTypeLabel(section);
+        componentInstance.initialize();
 
         await this.modals.awaitResult(
             result,
@@ -297,6 +370,7 @@ export class WarningsModalComponent {
         componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
         componentInstance.category = section.category;
         componentInstance.warningType = section.type;
+        componentInstance.isRelationField = section.isRelationField;
         componentInstance.initialize();
 
         await this.modals.awaitResult(
@@ -321,7 +395,10 @@ export class WarningsModalComponent {
 
         await this.modals.awaitResult(
             result,
-            () => this.update(),
+            () => {
+                this.warningsService.reportWarningsResolved();
+                this.update();
+            },
             nop
         );
 
@@ -365,6 +442,8 @@ export class WarningsModalComponent {
         componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
         componentInstance.category = section.category;
         componentInstance.warningType = section.type;
+        componentInstance.isRelationField = section.isRelationField;
+        componentInstance.initialize();
 
         await this.modals.awaitResult(
             result,
@@ -386,7 +465,8 @@ export class WarningsModalComponent {
         componentInstance.document = this.selectedDocument;
         componentInstance.relationName = section.fieldName;
         componentInstance.relationLabel = this.getFieldOrRelationLabel(section);
-        componentInstance.invalidTargetIds = this.getMissingRelationTargetIds(section);
+        componentInstance.invalidTargetIds = this.getRelationTargetIds(section);
+        componentInstance.warningType = section.type;
 
         await this.modals.awaitResult(
             result,
@@ -398,9 +478,28 @@ export class WarningsModalComponent {
     }
 
 
-    public close() {
+    public onClick(event: MouseEvent, rightClick: boolean = false) {
 
-        this.activeModal.dismiss('cancel');
+        if (!this.contextMenu.position) return;
+
+        if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
+                || (rightClick && target.id && target.id.startsWith('document-picker-resource-')))) {
+            this.contextMenu.close();
+        }
+    }
+
+
+    public async performContextMenuAction(action: WarningsContextMenuAction) {
+
+        switch (action) {
+            case 'view':
+                this.close();
+                await this.routingService.jumpToResource(this.contextMenu.document);
+                break;
+            case 'edit':
+                await this.openDoceditModal();
+                break;
+        }
     }
 
 
@@ -435,9 +534,7 @@ export class WarningsModalComponent {
 
         return {
             name: 'Configuration',
-            label: this.i18n({
-                id: 'navbar.tabs.configuration', value: 'Projektkonfiguration'
-            }),
+            label: $localize `:@@navbar.tabs.configuration:Projektkonfiguration`,
             children: []
         } as any;
     }
@@ -482,6 +579,9 @@ export class WarningsModalComponent {
                 switch (type) {
                     case 'unconfiguredFields':
                     case 'invalidFields':
+                    case 'missingMandatoryFields':
+                    case 'unfulfilledConditionFields':
+                    case 'unallowedCharacterFields':
                         this.sections = this.sections.concat(
                             await this.createSections(
                                 type as WarningType, document, document.warnings[type] as string[]
@@ -489,9 +589,10 @@ export class WarningsModalComponent {
                         );
                         break;
                     case 'missingRelationTargets':
+                    case 'invalidRelationTargets':
                         this.sections = this.sections.concat(await this.createSections(
                             type as WarningType, document,
-                            (document.warnings[type] as MissingRelationTargetWarnings).relationNames
+                            (document.warnings[type] as RelationTargetWarnings).relationNames
                         ));
                         break;
                     case 'outliers':
@@ -523,26 +624,40 @@ export class WarningsModalComponent {
     }
 
 
-    private async createSection(type: WarningType, document: FieldDocument, fieldName?: string): Promise<WarningSection> {
+    private async createSection(type: WarningType, document: FieldDocument,
+                                fieldName?: string): Promise<WarningSection> {
 
-        const section: WarningSection = { type };
+        const category: CategoryForm|undefined = this.projectConfiguration.getCategory(document.resource.category);
+        const section: WarningSection = { type, category };
+
+        if (fieldName) section.isRelationField = this.isRelationField(document, fieldName, category);
 
         if (type === 'missingIdentifierPrefix' || type === 'nonUniqueIdentifier') {
             section.fieldName = Resource.IDENTIFIER;
+        } else if (type === 'invalidProcessState') {
+            section.fieldName = 'state';
+        } else if (type === 'unallowedGeometryType') {
+            section.fieldName = FieldResource.GEOMETRY;
         } else if (fieldName) {
             section.fieldName = fieldName;
         }
         
         if (document.warnings.unconfiguredCategory) {
             section.unconfiguredCategoryName = document.resource.category;
-        } else if (document.resource.category !== 'Configuration') {
-            section.category = this.projectConfiguration.getCategory(document.resource.category);
-            if (fieldName && type !== 'unconfiguredFields' && type !== 'missingRelationTargets') {
-                section.inputType = CategoryForm.getField(section.category, fieldName).inputType;
-            }
+        } else if (document.resource.category !== 'Configuration'
+                && fieldName
+                && !['unconfiguredFields', 'missingRelationTargets', 'invalidRelationTargets'].includes(type)) {
+            section.inputType = CategoryForm.getField(section.category, fieldName).inputType;
         };
 
-        if (type === 'invalidFields' || type === 'unconfiguredFields') {
+        if (type === 'invalidFields') {
+            section.dateValidationError = this.getDateValidationError(document, fieldName);
+        }
+
+        if (section.dateValidationError && section.dateValidationError !== DateValidationResult.INVALID) {
+            section.dataLabel = this.generateDateLabel(document.resource[fieldName]);
+        } else if (type === 'invalidFields' || type === 'unconfiguredFields'
+                || type === 'unfulfilledConditionFields') {
             section.dataLabel = InvalidDataUtil.generateLabel(document.resource[fieldName], this.labels);
         } else if (type === 'missingIdentifierPrefix') {
             section.dataLabel = document.resource.identifier;
@@ -552,10 +667,99 @@ export class WarningsModalComponent {
             const outlierValues: Map<string[]>|string[] = document.warnings.outliers.fields[fieldName];
             section.outlierValues = isArray(outlierValues)
                 ? outlierValues
-                : flatten(Object.values(outlierValues));
+                : set(flatten(Object.values(outlierValues)));
+        }
+
+        if (type === 'unfulfilledConditionFields') {
+            const condition: Condition = CategoryForm.getField(section.category, fieldName).condition;
+            section.conditionFieldLabel = this.generateConditionFieldLabel(condition, section.category);
+            section.conditionValuesLabel = await this.generateConditionValuesLabel(condition, section.category);
+        }
+
+        if (type === 'unallowedGeometryType') {
+            section.geometryTypeLabel = this.utilTranslations.getTranslation(
+                'geometry.' + document.resource.geometry.type
+            );
+        }
+
+        if (section.isRelationField) {
+           section.relationTargets = await this.fetchRelationTargets(document, fieldName, type);
         }
 
         return section;
+    }
+
+
+    private isRelationField(document: FieldDocument, fieldName: string, category?: CategoryForm): boolean {
+
+        const field: Field = category ? CategoryForm.getField(category, fieldName) : undefined;
+
+        return field
+            ? Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(field.inputType)
+            : document.resource.relations[fieldName] !== undefined;
+    }
+
+
+    private async fetchRelationTargets(document: FieldDocument, fieldName: string,
+                                       type: WarningType): Promise<Array<Document>> {
+
+        const targetIds: string[] = type === 'invalidRelationTargets'
+            ? intersect(
+                document.resource.relations[fieldName],
+                document.warnings.invalidRelationTargets.targetIds
+            ) : document.resource.relations[fieldName];
+        
+        if (!isArray(targetIds) || !targetIds.every(targetId => isString(targetId))) return undefined;
+
+        return targetIds
+            ? await this.datastore.getMultiple(targetIds)
+            : [];
+    }
+
+
+    private getDateValidationError(document: FieldDocument, fieldName: string): DateValidationResult|undefined {
+
+        const field: Field = CategoryForm.getField(
+            this.projectConfiguration.getCategory(document.resource.category),
+            fieldName
+        );
+
+        return field.inputType === Field.InputType.DATE
+            ? DateSpecification.validate(document.resource[fieldName], field)
+            : undefined;
+    }
+
+
+    private generateDateLabel(date: DateSpecification): string {
+
+        return DateSpecification.generateLabel(
+            date,
+            getSystemTimezone(),
+            $localize `:@@revisionLabel.timeSuffix:Uhr`,
+            Settings.getLocale(),
+            (term: string) => this.utilTranslations.getTranslation(term)
+        );
+    }
+
+
+    private generateConditionFieldLabel(condition: Condition, category: CategoryForm): string {
+
+        return this.labels.getFieldLabel(category, condition.fieldName);
+    }
+
+    
+    private async generateConditionValuesLabel(condition: Condition, category: CategoryForm): Promise<string> {
+
+        const conditionField: Field = CategoryForm.getField(category, condition.fieldName);
+        const valuelist: Valuelist = ValuelistUtil.getValuelist(
+            conditionField, await this.datastore.get('project')
+        );
+
+        return Condition.generateLabel(
+            condition, 
+            (term: string) => this.utilTranslations.getTranslation(term),
+            valueId => this.labels.getValueLabel(valuelist, valueId)
+        );
     }
 
 
@@ -637,6 +841,7 @@ export class WarningsModalComponent {
         componentInstance.field = field;
         componentInstance.fieldLabel = this.getFieldOrRelationLabel(section);
         componentInstance.outlierValue = outlierValue;
+        await componentInstance.initialize();
 
         let changed: boolean;
 
@@ -657,6 +862,6 @@ export class WarningsModalComponent {
         return this.labels.getFieldLabel(
             this.projectConfiguration.getCategory(this.selectedDocument.resource.category),
             section.fieldName
-        ) ?? this.labels.getRelationLabel(section.fieldName)
+        ) ?? this.labels.getRelationLabel(section.fieldName, this.projectConfiguration.getRelations());
     }
 }

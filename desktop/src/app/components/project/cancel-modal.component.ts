@@ -3,7 +3,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
-    templateUrl: './cancel-modal.html'
+    templateUrl: './cancel-modal.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

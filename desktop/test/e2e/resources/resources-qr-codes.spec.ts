@@ -1,7 +1,9 @@
-import { navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { closeAllMessages, navigateTo, resetApp, start, stop, waitForExist, waitForMessage,
+    waitForNotExist } from '../app';
 import { ConfigurationPage } from '../configuration/configuration.page';
 import { EditConfigurationPage } from '../configuration/edit-configuration.page';
 import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
+import { DoceditTypeRelationsPage } from '../docedit/docedit-type-relations.page';
 import { DoceditPage } from '../docedit/docedit.page';
 import { NavbarPage } from '../navbar.page';
 import { CategoryPickerPage } from '../widgets/category-picker.page';
@@ -18,7 +20,7 @@ const { test, expect } = require('@playwright/test');
  * @author Danilo Guzzo
  * @author Thomas Kleinke
  */
-test.describe('resources/qr-codes --', () => {
+test.describe('resources/qr codes', () => {
 
     test.beforeAll(async () => {
 
@@ -46,6 +48,7 @@ test.describe('resources/qr-codes --', () => {
         await navigateTo('configuration');
         await ConfigurationPage.enableQRCodes('trench', 'pottery', 'find');
         await ConfigurationPage.enableQRCodes('inventory', 'storageplace');
+        await ConfigurationPage.enableQRCodes('types', 'type');
         await NavbarPage.clickCloseNonResourcesTab();
     }
 
@@ -57,6 +60,16 @@ test.describe('resources/qr-codes --', () => {
         await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isStoredIn');
         await DoceditRelationsPage.typeInRelation('isStoredIn', storagePlaceIdentifier);
         await DoceditRelationsPage.clickChooseRelationSuggestion(0);
+        await DoceditPage.clickSaveDocument();
+    }
+
+
+    async function setInstanceOfRelation(identifier: string, typeIdentifier: string) {
+
+        await ResourcesPage.openEditByDoubleClickResource(identifier);
+        await DoceditPage.clickGotoIdentificationTab();
+        await DoceditTypeRelationsPage.clickAddTypeRelationButton('isInstanceOf');
+        await DoceditTypeRelationsPage.clickType(typeIdentifier);
         await DoceditPage.clickSaveDocument();
     }
 
@@ -86,6 +99,18 @@ test.describe('resources/qr-codes --', () => {
         await ResourcesPage.performCreateResource('SP1', 'storageplace', undefined, undefined, false, true);
         await ResourcesPage.performCreateResource('SP2', 'storageplace', undefined, undefined, false, true);
         await addExistingQrCode('SP2', true);
+        await NavbarPage.clickCloseNonResourcesTab();
+    }
+
+
+    async function createTypes() {
+
+        await navigateTo('resources/types');
+        await ResourcesPage.performCreateResource('TK1', 'typecatalog', undefined, undefined, true, true);
+        await ResourcesGridListPage.clickGridElement('TK1');
+        await ResourcesPage.performCreateResource('T1', 'type', undefined, undefined, true, true);
+        await ResourcesPage.performCreateResource('T2', 'type', undefined, undefined, true, true);
+        await addExistingQrCode('T2', true);
         await NavbarPage.clickCloseNonResourcesTab();
     }
 
@@ -141,7 +166,7 @@ test.describe('resources/qr-codes --', () => {
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
         await ResourcesPage.performCreateResource('P2', 'find-pottery');
         await addExistingQrCode('P1');
-        await NavbarPage.clickCloseAllMessages();
+        await closeAllMessages();
 
         await ResourcesPage.clickOpenContextMenu('P2');
         await ResourcesPage.clickContextMenuAddQrCodeButton();
@@ -150,7 +175,7 @@ test.describe('resources/qr-codes --', () => {
         await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
         await QrCodeEditorModalPage.clickCancel();
 
-        expect(await NavbarPage.awaitAlert('Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.'));
+        expect(await waitForMessage('Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.'));
     });
 
 
@@ -163,14 +188,14 @@ test.describe('resources/qr-codes --', () => {
         await QrCodeEditorModalPage.clickConfirmDeletionInModal();
         await waitForExist(await QrCodeEditorModalPage.getPlaceholder());
         await waitForNotExist(await QrCodeEditorModalPage.getCanvas());
-        await NavbarPage.clickCloseAllMessages();
+        await closeAllMessages();
         
         await QrCodeEditorModalPage.clickCancel();
         await ResourcesPage.clickSelectResource('P2');
         await ResourcesSearchBarPage.clickOpenQrScanner();
 
         await waitForNotExist(await ResourcesPage.getQrCodeScannerModalBody());
-        expect(await NavbarPage.awaitAlert('Für diesen QR-Code konnte keine Ressource gefunden werden.'));
+        expect(await waitForMessage('Für diesen QR-Code konnte keine Ressource gefunden werden.'));
     });
 
 
@@ -200,14 +225,30 @@ test.describe('resources/qr-codes --', () => {
         await createStoragePlaces();
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
         await ResourcesPage.clickOpenContextMenu('P1');
-        await ResourcesPage.clickContextMenuScanStoragePlaceButton();
+        await ResourcesPage.clickContextMenuScanResourceButton();
 
-        await NavbarPage.awaitAlert('Für die Ressource P1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
+        await waitForMessage('Für die Ressource P1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
         
         await ResourcesPage.clickSelectResource('P1');
         await FieldsViewPage.clickAccordionTab(1);
-        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in');
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP2');
+    });
+
+
+    test('link type via QR code', async () => {
+        
+        await createTypes();
+        await ResourcesPage.performCreateResource('P1', 'find-pottery');
+        await ResourcesPage.clickOpenContextMenu('P1');
+        await ResourcesPage.clickContextMenuScanResourceButton();
+
+        await waitForMessage('Für die Ressource P1 wurde erfolgreich der Typ T2 gespeichert.');
+        
+        await ResourcesPage.clickSelectResource('P1');
+        await FieldsViewPage.clickAccordionTab(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Typologische Einordnung');
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('T2');
     });
 
 
@@ -218,13 +259,30 @@ test.describe('resources/qr-codes --', () => {
         await setStoredInRelation('P1', 'SP2');
 
         await ResourcesPage.clickOpenContextMenu('P1');
-        await ResourcesPage.clickContextMenuScanStoragePlaceButton();
-        await NavbarPage.awaitAlert('Der Aufbewahrungsort SP2 ist für die Ressource P1 bereits gesetzt.');
+        await ResourcesPage.clickContextMenuScanResourceButton();
+        await waitForMessage('Der Aufbewahrungsort SP2 ist für die Ressource P1 bereits gesetzt.');
         
         await ResourcesPage.clickSelectResource('P1');
         await FieldsViewPage.clickAccordionTab(1);
-        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in');
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP2');
+    });
+
+
+    test('show info message if type is already linked when scanning QR code', async () => {
+        
+        await createTypes();
+        await ResourcesPage.performCreateResource('P1', 'find-pottery');
+        await setInstanceOfRelation('P1', 'T2');
+
+        await ResourcesPage.clickOpenContextMenu('P1');
+        await ResourcesPage.clickContextMenuScanResourceButton();
+        await waitForMessage('Der Typ T2 ist für die Ressource P1 bereits gesetzt.');
+        
+        await ResourcesPage.clickSelectResource('P1');
+        await FieldsViewPage.clickAccordionTab(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Typologische Einordnung');
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('T2');
     });
 
 
@@ -236,14 +294,14 @@ test.describe('resources/qr-codes --', () => {
 
         await ResourcesPage.clickSelectResource('P1');
         await FieldsViewPage.clickAccordionTab(1);
-        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in');
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
 
         await ResourcesPage.clickOpenContextMenu('P1');
-        await ResourcesPage.clickContextMenuScanStoragePlaceButton();
-        await NavbarPage.awaitAlert('Für die Ressource P1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
+        await ResourcesPage.clickContextMenuScanResourceButton();
+        await waitForMessage('Für die Ressource P1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
         
-        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in');
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP2');
     });
 
@@ -255,15 +313,15 @@ test.describe('resources/qr-codes --', () => {
         await setStoredInRelation('FC1', 'SP1');
 
         await ResourcesPage.clickOpenContextMenu('FC1');
-        await ResourcesPage.clickContextMenuScanStoragePlaceButton();
+        await ResourcesPage.clickContextMenuScanResourceButton();
         await ResourcesPage.clickConfirmReplacingStoragePlace();
-        await NavbarPage.awaitAlert('Für die Ressource FC1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
+        await waitForMessage('Für die Ressource FC1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
         
         await ResourcesPage.clickSelectResource('FC1');
         await FieldsViewPage.clickAccordionTab(1);
         const relations = await FieldsViewPage.getRelations(1);
         expect(await relations.count()).toBe(1);
-        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in');
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP2');
     });
 
@@ -275,15 +333,15 @@ test.describe('resources/qr-codes --', () => {
         await setStoredInRelation('FC1', 'SP1');
 
         await ResourcesPage.clickOpenContextMenu('FC1');
-        await ResourcesPage.clickContextMenuScanStoragePlaceButton();
+        await ResourcesPage.clickContextMenuScanResourceButton();
         await ResourcesPage.clickConfirmAddingStoragePlace();
-        await NavbarPage.awaitAlert('Für die Ressource FC1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
+        await waitForMessage('Für die Ressource FC1 wurde erfolgreich der Aufbewahrungsort SP2 gespeichert.');
         
         await ResourcesPage.clickSelectResource('FC1');
         await FieldsViewPage.clickAccordionTab(1);
         const relations = await FieldsViewPage.getRelations(1);
         expect(await relations.count()).toBe(2);
-        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in');
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
         expect(await FieldsViewPage.getRelationValue(1, 1)).toBe('SP2');
     });
@@ -296,27 +354,89 @@ test.describe('resources/qr-codes --', () => {
         await setStoredInRelation('FC1', 'SP1');
 
         await ResourcesPage.clickOpenContextMenu('FC1');
-        await ResourcesPage.clickContextMenuScanStoragePlaceButton();
+        await ResourcesPage.clickContextMenuScanResourceButton();
         await ResourcesPage.clickCancelScanStoragePlaceModal();
         
         await ResourcesPage.clickSelectResource('FC1');
         await FieldsViewPage.clickAccordionTab(1);
         const relations = await FieldsViewPage.getRelations(1);
         expect(await relations.count()).toBe(1);
-        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in')
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Wird aufbewahrt in');
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SP1');
     });
 
 
-    test('prevent adding resource of non storage place category by scanning QR code', async () => {
+    test('replace previously linked type after confirmation in modal', async () => {
+        
+        await createTypes();
+        await ResourcesPage.performCreateResource('F1', 'find');
+        await setInstanceOfRelation('F1', 'T1');
+
+        await ResourcesPage.clickOpenContextMenu('F1');
+        await ResourcesPage.clickContextMenuScanResourceButton();
+        await ResourcesPage.clickConfirmReplacingType();
+        await waitForMessage('Für die Ressource F1 wurde erfolgreich der Typ T2 gespeichert.');
+        
+        await ResourcesPage.clickSelectResource('F1');
+        await FieldsViewPage.clickAccordionTab(1);
+        const relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Typologische Einordnung');
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('T2');
+    });
+
+
+    test('keep previously linked type after confirmation in modal', async () => {
+        
+        await createTypes();
+        await ResourcesPage.performCreateResource('F1', 'find');
+        await setInstanceOfRelation('F1', 'T1');
+
+        await ResourcesPage.clickOpenContextMenu('F1');
+        await ResourcesPage.clickContextMenuScanResourceButton();
+        await ResourcesPage.clickConfirmAddingType();
+        await waitForMessage('Für die Ressource F1 wurde erfolgreich der Typ T2 gespeichert.');
+        
+        await ResourcesPage.clickSelectResource('F1');
+        await FieldsViewPage.clickAccordionTab(1);
+        const relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(2);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Typologische Einordnung');
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('T1');
+        expect(await FieldsViewPage.getRelationValue(1, 1)).toBe('T2');
+    });
+
+
+    test('do not add type if scan type confirmation modal is canceled', async () => {
+        
+        await createTypes();
+        await ResourcesPage.performCreateResource('F1', 'find');
+        await setInstanceOfRelation('F1', 'T1');
+
+        await ResourcesPage.clickOpenContextMenu('F1');
+        await ResourcesPage.clickContextMenuScanResourceButton();
+        await ResourcesPage.clickCancelScanTypeModal();
+        
+        await ResourcesPage.clickSelectResource('F1');
+        await FieldsViewPage.clickAccordionTab(1);
+        const relations = await FieldsViewPage.getRelations(1);
+        expect(await relations.count()).toBe(1);
+        expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Typologische Einordnung');
+        expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('T1');
+    });
+
+
+    test('prevent adding resource of non storage place or type category by scanning QR code', async () => {
         
         await ResourcesPage.performCreateResource('P1', 'find-pottery');
         await ResourcesPage.performCreateResource('P2', 'find-pottery');
         await addExistingQrCode('P2');
 
         await ResourcesPage.clickOpenContextMenu('P1');
-        await ResourcesPage.clickContextMenuScanStoragePlaceButton();
+        await ResourcesPage.clickContextMenuScanResourceButton();
         
-        await NavbarPage.awaitAlert('Die Ressource P2 der Kategorie Keramik ist kein gültiger Aufbewahrungsort.');
+        await waitForMessage(
+            'Die Ressource P2 der Kategorie Keramik ist kein gültiger Typ oder Aufbewahrungsort.'
+        );
     });
 });

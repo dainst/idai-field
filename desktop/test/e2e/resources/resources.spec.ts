@@ -1,4 +1,5 @@
-import { click, getText, navigateTo, pause, resetApp, start, stop, waitForNotExist, waitForExist } from '../app';
+import { click, getText, navigateTo, pause, resetApp, start, stop, waitForNotExist, waitForExist, closeAllMessages,
+    waitForMessage } from '../app';
 import { DoceditPage} from '../docedit/docedit.page';
 import { SearchBarPage } from '../widgets/search-bar.page';
 import { ResourcesPage } from './resources.page';
@@ -18,28 +19,10 @@ const { test, expect } = require('@playwright/test');
 
 
 /**
- * creation
- *   creation with relations
- *   messages
- *     after docedit closed, under various conditions
- * deletion
- *   including relations
- * operations
- *   creation, deletion, editing
- *   update of navbar
- * relations
- *   creation
- *   showing in sidebar
- *   showing in docedit afterwards
- * move
- *   contextMenu/moveModal
- * change category
- * docedit/images
- *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-test.describe('resources --', () => {
+test.describe('resources', () => {
 
     test.beforeAll(async () => {
 
@@ -85,9 +68,9 @@ test.describe('resources --', () => {
         // warn if identifier is missing
         await ResourcesPage.performCreateResource('', 'feature', 'diary', 'p', false, false, false);
 
-        await NavbarPage.awaitAlert('Bitte füllen Sie das Feld', false);
-        await NavbarPage.awaitAlert('Bezeichner', false);
-        await NavbarPage.clickCloseAllMessages();
+        await waitForMessage('Bitte füllen Sie das Feld', false);
+        await waitForMessage('Bezeichner', false);
+        await closeAllMessages();
         await DoceditPage.clickCloseEdit('discard');
     });
 
@@ -106,8 +89,8 @@ test.describe('resources --', () => {
         // same identifier
         await ResourcesPage.performCreateResource('12', undefined, undefined, undefined, false, false, false);
 
-        await NavbarPage.awaitAlert('existiert bereits', false);
-        await NavbarPage.clickCloseAllMessages();
+        await waitForMessage('existiert bereits', false);
+        await closeAllMessages();
         await DoceditPage.clickCloseEdit('discard');
     });
 
@@ -184,7 +167,7 @@ test.describe('resources --', () => {
         expect(fieldName).toBe('Tagebuch');
         const fieldValue = await FieldsViewPage.getFieldValue(0, 1);
         expect(fieldValue).toBe('100');
-        const items = await FieldsViewPage.getFields(1);
+        const items = await FieldsViewPage.getFields(0);
         expect(await items.count()).toBe(2);
     });
 
@@ -249,31 +232,18 @@ test.describe('resources --', () => {
     });
 
 
-    test('show only values of parent resource for campaign field in editor', async () => {
+    test('do not restrict values of campaign field if the category of the parent resource does not include the field',
+            async () => {
 
         await NavbarPage.clickTab('project');
+        await ResourcesPage.performCreateResource('place', 'place');
+        await ResourcesPage.clickHierarchyButton('place');
         await ResourcesPage.performCreateResource('trench', 'operation-trench');
-        await ResourcesPage.clickHierarchyButton('trench');
-        await ResourcesPage.performCreateResource('feature', 'feature');
-        await ResourcesPage.openEditByDoubleClickResource('feature');
-        let checkboxes = await DoceditPage.getCheckboxes('campaign');
-        expect(await checkboxes.count()).toBe(0);
-
-        await DoceditPage.clickCloseEdit();
-        await NavbarPage.clickTab('project');
         await ResourcesPage.openEditByDoubleClickResource('trench');
-        checkboxes = await DoceditPage.getCheckboxes('campaign');
+        const checkboxes = await DoceditPage.getCheckboxes('campaign');
         expect(await checkboxes.count()).toBe(2);
         expect(await getText(checkboxes.nth(0))).toEqual('Testkampagne 1');
         expect(await getText(checkboxes.nth(1))).toEqual('Testkampagne 2');
-
-        await DoceditPage.clickCheckbox('campaign', 0);
-        await DoceditPage.clickSaveDocument();
-        await ResourcesPage.clickHierarchyButton('trench');
-        await ResourcesPage.openEditByDoubleClickResource('feature');
-        checkboxes = await DoceditPage.getCheckboxes('campaign');
-        expect(await checkboxes.count()).toBe(1);
-        expect(await getText(checkboxes.nth(0))).toEqual('Testkampagne 1');
 
         await DoceditPage.clickCloseEdit();
     });
@@ -303,7 +273,9 @@ test.describe('resources --', () => {
         await navigateTo('configuration');
         await waitForExist(await ConfigurationPage.getConfigurationEditor());
         await navigateTo('projectLanguages');
+        await ProjectLanguagesModalPage.clickDeleteLanguage('es');
         await ProjectLanguagesModalPage.clickDeleteLanguage('it');
+        await ProjectLanguagesModalPage.clickDeleteLanguage('pt');
         await ProjectLanguagesModalPage.clickConfirm();
         await ConfigurationPage.changeMultiLanguageSetting('shortDescription', 'Feature');
         await ConfigurationPage.save();
@@ -415,9 +387,9 @@ test.describe('resources --', () => {
         await ResourcesPage.openEditByDoubleClickResource('1');
         await DoceditPage.clickCategorySwitcherButton();
         await DoceditPage.clickCategorySwitcherOption('feature');
-        await NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern ' +
+        await waitForMessage('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern ' +
             'verloren gehen: Mauertyp');
-        await NavbarPage.clickCloseAllMessages();
+        await closeAllMessages();
         await DoceditPage.clickSaveDocument();
 
         expect(await FieldsViewPage.getFieldValue(0, 0)).toEqual('Stratigraphische Einheit');
@@ -495,17 +467,18 @@ test.describe('resources --', () => {
         await pause(2000);
         const label = await NavbarPage.getActiveNavLinkLabel();
         expect(label).toContain('S2');
-        await pause(2000);
         let elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(7);
         await pause(2000);
 
         await ResourcesPage.clickHierarchyButton('SE0');
+        await pause(1000);
         elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(1);
 
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickHierarchyButton('S1');
+        await pause(1000);
         elements = await ResourcesPage.getListItemEls();
         expect(await elements.count()).toBe(0);
     });
@@ -651,7 +624,7 @@ test.describe('resources --', () => {
         await MoveModalPage.clickResourceListItem('A1');
         await waitForNotExist(await MoveModalPage.getModal());
 
-        await NavbarPage.awaitAlert('kann nicht verschoben werden', false);
+        await waitForMessage('kann nicht verschoben werden', false);
     });
 
 
@@ -730,7 +703,7 @@ test.describe('resources --', () => {
 
         await ResourcesPage.performCreateResource('P1', 'profile');
         await ResourcesPage.openEditByDoubleClickResource('SE0');
-        await DoceditPage.clickGotoHierarchyTab();
+        await DoceditPage.clickGotoPositionTab();
         await DoceditRelationsPage.clickAddRelationForGroupWithIndex('isPresentIn');
         await DoceditRelationsPage.typeInRelation('isPresentIn', 'P1');
         await DoceditRelationsPage.clickChooseRelationSuggestion(0);
@@ -742,5 +715,127 @@ test.describe('resources --', () => {
         expect(await relations.count()).toBe(1);
         expect(await FieldsViewPage.getRelationName(1, 0)).toBe('Umfasst stratigraphische Einheiten')
         expect(await FieldsViewPage.getRelationValue(1, 0)).toBe('SE0');
+    });
+
+
+    test('sort values of checkbox field in fields view', async () => {
+
+        await ResourcesPage.performCreateResource('Pottery1', 'find-pottery');
+        await ResourcesPage.openEditByDoubleClickResource('Pottery1');
+        await DoceditPage.clickGotoPropertiesTab();
+        await DoceditPage.clickCheckbox('manufacturing', 2);
+        await DoceditPage.clickCheckbox('manufacturing', 0);
+        await DoceditPage.clickCheckbox('manufacturing', 3);
+        await DoceditPage.clickCheckbox('manufacturing', 1);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.clickSelectResource('Pottery1');
+        await FieldsViewPage.clickAccordionTab(1);
+        expect(await FieldsViewPage.getFieldValue(1, 0, 0)).toBe('Dickwandig');
+        expect(await FieldsViewPage.getFieldValue(1, 0, 1)).toBe('Dünnwandig');
+        expect(await FieldsViewPage.getFieldValue(1, 0, 2)).toBe('Gebrannt');
+        expect(await FieldsViewPage.getFieldValue(1, 0, 3)).toBe('Hart gebrannt');
+    });
+
+
+    test('sort values of checkbox field with valuelist from project document in fields view', async () => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.performCreateResource('Trench1', 'operation-trench');
+        await ResourcesPage.openEditByDoubleClickResource('Trench1');
+        await DoceditPage.clickCheckbox('processor', 1);
+        await DoceditPage.clickCheckbox('processor', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.clickSelectResource('Trench1');
+        expect(await FieldsViewPage.getFieldValue(0, 1, 0)).toBe('Person 1');
+        expect(await FieldsViewPage.getFieldValue(0, 1, 1)).toBe('Person 2');
+    });
+
+
+    test('make value from project document unselectable', async () => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.openEditByDoubleClickResource('S1');
+
+        let checkboxes = await DoceditPage.getCheckboxes('processor');
+        expect(await checkboxes.count()).toBe(2);
+        expect(await getText(checkboxes.nth(0))).toEqual('Person 1');
+        expect(await getText(checkboxes.nth(1))).toEqual('Person 2');
+
+        await DoceditPage.clickCloseEdit();
+
+        await NavbarPage.clickProjectButton();
+        await DoceditPage.clickGotoPropertiesTab();
+        await DoceditPage.clickToggleSelectable('staff', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.openEditByDoubleClickResource('S1');
+
+        checkboxes = await DoceditPage.getCheckboxes('processor');
+        expect(await checkboxes.count()).toBe(1);
+        expect(await getText(checkboxes.nth(0))).toEqual('Person 2');
+
+        await DoceditPage.clickCloseEdit();
+    });
+
+
+    test('still allow removing value in editor after making it unselectable', async () => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.openEditByDoubleClickResource('S1');
+        await DoceditPage.clickCheckbox('processor', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await NavbarPage.clickProjectButton();
+        await DoceditPage.clickGotoPropertiesTab();
+        await DoceditPage.clickToggleSelectable('staff', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.openEditByDoubleClickResource('S1');
+
+        let checkboxes = await DoceditPage.getCheckboxes('processor');
+        expect(await checkboxes.count()).toBe(2);
+        expect(await getText(checkboxes.nth(0))).toEqual('Person 1');
+        expect(await getText(checkboxes.nth(1))).toEqual('Person 2');
+
+        await DoceditPage.clickCheckbox('processor', 0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.openEditByDoubleClickResource('S1');
+
+        checkboxes = await DoceditPage.getCheckboxes('processor');
+        expect(await checkboxes.count()).toBe(1);
+        expect(await getText(checkboxes.nth(0))).toEqual('Person 2');
+
+        await DoceditPage.clickCloseEdit();
+    });
+
+
+    test('deselect a resource whose category has been removed', async () => {
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.performCreateResource('Pottery1', 'find-pottery');
+        await ResourcesPage.clickSelectResource('Pottery1');
+        await waitForExist(FieldsViewPage.getFieldsView());
+
+        await navigateTo('configuration');
+        await ConfigurationPage.clickSelectCategoriesFilter('all');
+        await ConfigurationPage.deleteCategory('Pottery', 'Find', true);
+        await ConfigurationPage.save();
+                
+        await NavbarPage.clickCloseNonResourcesTab();
+        await waitForExist(ResourcesPage.getCreateDocumentButton());
+        await waitForNotExist(FieldsViewPage.getFieldsView());
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickSelectResource('S1');
+        await ResourcesPage.clickHierarchyButton('S1');
+        
+        const navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(await navigationButtons.count()).toBe(1);
+        expect(await getText(navigationButtons.nth(0))).toEqual('S1');
+        await waitForNotExist(FieldsViewPage.getFieldsView());
     });
 });

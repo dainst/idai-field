@@ -1,5 +1,5 @@
 import { filter, flow, isDefined, map } from 'tsfun';
-import { Constraints, Datastore, FieldDocument, Query, Resource } from 'idai-field-core';
+import { Constraints, Datastore, FieldDocument, Query, Resource, SortMode } from 'idai-field-core';
 
 
 /**
@@ -87,7 +87,7 @@ export module LinkedImagesUtil {
 
         const query: Query = {
             constraints: { 'isDepictedIn:links': resourceId },
-            sort: { mode: 'none' }
+            sort: { mode: SortMode.None }
         };
 
         const ids: string[] = datastore.findIds(query).ids;

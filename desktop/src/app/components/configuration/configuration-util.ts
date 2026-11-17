@@ -1,6 +1,6 @@
-import { clone, equal, flatten, isEmpty, not, to } from 'tsfun';
-import { CategoryForm, Field, Named, ProjectConfiguration, Relation } from 'idai-field-core';
-import { validateReferences } from './validation/validate-references';
+import { equal, flatten, isEmpty, to } from 'tsfun';
+import { CategoryForm, Field, Named, ProjectConfiguration, SemanticReference, Relation } from 'idai-field-core';
+import { validateReferences, validateSemanticReferences } from './validation/validate-references';
 
 
 export type InputType = {
@@ -56,6 +56,8 @@ export module ConfigurationUtil {
                     return ['Type', 'TypeCatalog'].includes(category.name);
                 case 'inventory':
                     return category.name === 'StoragePlace';
+                case 'workflow':
+                    return category.name === 'Process';
                 default:
                     return filter.isRecordedInCategory
                         ? Relation.isAllowedRelationDomainCategory(
@@ -63,10 +65,11 @@ export module ConfigurationUtil {
                             category.name,
                             filter.isRecordedInCategory,
                             Relation.Hierarchy.RECORDEDIN
-                        )
+                        ) || category.name === 'Process'
                         : !projectConfiguration.getRelationsForDomainCategory(category.name)
                                 .map(to('name')).includes(Relation.Hierarchy.RECORDEDIN)
-                            && !['Image', 'Type', 'TypeCatalog', 'StoragePlace'].includes(category.name);
+                            && !['Image', 'Type', 'TypeCatalog', 'StoragePlace', 'Process']
+                                .includes(category.name);
             }
         });
     }
@@ -77,21 +80,47 @@ export module ConfigurationUtil {
      */
     export function cleanUpAndValidateReferences(object: any) {
 
-        object.references = object.references.filter(not(isEmpty));
+        object.references = object.references.filter(reference => reference.length);
         validateReferences(object.references);
 
         if (isEmpty(object.references)) delete object.references;
     }
 
 
+    /**
+     * @throws M.CONFIGURATION_ERROR_INVALID_REFERENCE if validation fails
+     */
+    export function cleanUpAndValidateSemanticReferences(object: any) {
+
+        object.semanticReferences = object.semanticReferences.filter(reference => reference.uri?.length);
+        validateSemanticReferences(object.semanticReferences);
+
+        if (isEmpty(object.semanticReferences)) delete object.semanticReferences;
+    }
+
+
     export function isReferencesArrayChanged(object: any, editedObject: any): boolean {
 
         const originalReferences: string[] = object.references
-            ? clone(object.references).filter(not(isEmpty))
+            ? object.references.filter(reference => reference.length)
             : [];
         
         const editedReferences: string[] = editedObject.references
-            ? clone(editedObject.references).filter(not(isEmpty))
+            ? editedObject.references.filter(reference => reference.length)
+            : [];
+
+        return !equal(originalReferences)(editedReferences);
+    }
+
+
+    export function isSemanticReferencesArrayChanged(object: any, editedObject: any): boolean {
+
+        const originalReferences: Array<SemanticReference> = object.semanticReferences
+            ? object.semanticReferences.filter(reference => reference.uri?.length)
+            : [];
+        
+        const editedReferences: Array<SemanticReference> = editedObject.semanticReferences
+            ? editedObject.semanticReferences.filter(reference => reference.uri?.length)
             : [];
 
         return !equal(originalReferences)(editedReferences);

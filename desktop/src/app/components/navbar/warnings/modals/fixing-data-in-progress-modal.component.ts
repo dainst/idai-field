@@ -4,7 +4,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'fixing-data-in-progress-modal',
-    templateUrl: './fixing-data-in-progress-modal.html'
+    templateUrl: './fixing-data-in-progress-modal.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

@@ -1,4 +1,4 @@
-import { click, selectOption } from '../app';
+import { click, getLocator, selectOption } from '../app';
 
 
 /**
@@ -23,5 +23,19 @@ export class SelectModalPage {
     public static clickConfirmButton() {
 
         return click('#confirm-button');
+    }
+
+
+    public static clickCancelButton() {
+
+        return click('#cancel-button');
+    }
+
+
+    // get
+    
+    public static getMultipleSwitch() {
+
+        return getLocator('#multiple-switch .switch');
     }
 }

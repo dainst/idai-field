@@ -106,7 +106,6 @@
             {
               "inputType": "checkboxes",
               "valuelistFromProjectField": "campaigns",
-              "allowOnlyValuesOfParent": true,
               "group": "stem",
               "source": "common",
               "visible": true,
@@ -384,7 +383,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -834,7 +832,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -1601,7 +1598,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -2250,7 +2246,6 @@
             {
               "inputType": "checkboxes",
               "valuelistFromProjectField": "campaigns",
-              "allowOnlyValuesOfParent": true,
               "group": "stem",
               "source": "common",
               "visible": true,
@@ -2683,7 +2678,6 @@
                 "Grave",
                 "Feature"
               ],
-              "sameMainCategoryResource": true,
               "description": {}
             },
             {
@@ -2709,7 +2703,6 @@
                 "Grave",
                 "Feature"
               ],
-              "sameMainCategoryResource": true,
               "description": {}
             },
             {
@@ -2735,7 +2728,6 @@
                 "Grave",
                 "Feature"
               ],
-              "sameMainCategoryResource": true,
               "description": {}
             },
             {
@@ -2761,7 +2753,6 @@
                 "Grave",
                 "Feature"
               ],
-              "sameMainCategoryResource": true,
               "description": {}
             },
             {
@@ -2787,7 +2778,6 @@
                 "Grave",
                 "Feature"
               ],
-              "sameMainCategoryResource": true,
               "description": {}
             },
             {
@@ -2813,7 +2803,6 @@
                 "Grave",
                 "Feature"
               ],
-              "sameMainCategoryResource": true,
               "description": {}
             }
           ],
@@ -2912,7 +2901,6 @@
                 "Grave",
                 "Feature"
               ],
-              "sameMainCategoryResource": true,
               "description": {}
             },
             {
@@ -2938,7 +2926,6 @@
                 "Grave",
                 "Feature"
               ],
-              "sameMainCategoryResource": true,
               "description": {}
             },
             {
@@ -2964,7 +2951,6 @@
                 "Grave",
                 "Feature"
               ],
-              "sameMainCategoryResource": true,
               "description": {}
             }
           ],
@@ -3066,7 +3052,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -3713,7 +3698,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -3739,7 +3723,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -3765,7 +3748,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -3791,7 +3773,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -3817,7 +3798,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -3843,7 +3823,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 }
               ],
@@ -3942,7 +3921,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -3968,7 +3946,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -3994,7 +3971,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 }
               ],
@@ -4097,7 +4073,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -4902,7 +4877,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -4928,7 +4902,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -4954,7 +4927,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -4980,7 +4952,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -5006,7 +4977,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -5032,7 +5002,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 }
               ],
@@ -5131,7 +5100,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -5157,7 +5125,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -5183,7 +5150,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 }
               ],
@@ -5286,7 +5252,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -6057,7 +6022,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -6083,7 +6047,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -6109,7 +6072,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -6135,7 +6097,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -6161,7 +6122,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -6187,7 +6147,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 }
               ],
@@ -6286,7 +6245,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -6312,7 +6270,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -6338,7 +6295,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 }
               ],
@@ -6441,7 +6397,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -7436,7 +7391,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -7462,7 +7416,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -7488,7 +7441,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -7514,7 +7466,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -7540,7 +7491,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -7566,7 +7516,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 }
               ],
@@ -7665,7 +7614,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -7691,7 +7639,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -7717,7 +7664,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 }
               ],
@@ -7820,7 +7766,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -8508,7 +8453,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -8534,7 +8478,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -8560,7 +8503,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -8586,7 +8528,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -8612,7 +8553,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -8638,7 +8578,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 }
               ],
@@ -8737,7 +8676,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -8763,7 +8701,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 },
                 {
@@ -8789,7 +8726,6 @@
                     "Grave",
                     "Feature"
                   ],
-                  "sameMainCategoryResource": true,
                   "description": {}
                 }
               ],
@@ -8876,7 +8812,6 @@
             {
               "inputType": "checkboxes",
               "valuelistFromProjectField": "campaigns",
-              "allowOnlyValuesOfParent": true,
               "group": "stem",
               "source": "common",
               "visible": true,
@@ -9139,7 +9074,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -9403,7 +9337,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -9711,7 +9644,6 @@
             {
               "inputType": "checkboxes",
               "valuelistFromProjectField": "campaigns",
-              "allowOnlyValuesOfParent": true,
               "group": "stem",
               "source": "common",
               "visible": true,
@@ -9779,7 +9711,6 @@
               "range": [
                 "BuildingPart"
               ],
-              "sameMainCategoryResource": true,
               "description": {}
             }
           ],
@@ -9882,7 +9813,6 @@
             {
               "inputType": "checkboxes",
               "valuelistFromProjectField": "campaigns",
-              "allowOnlyValuesOfParent": true,
               "group": "stem",
               "source": "common",
               "visible": true,
@@ -10359,7 +10289,6 @@
             {
               "inputType": "checkboxes",
               "valuelistFromProjectField": "campaigns",
-              "allowOnlyValuesOfParent": true,
               "group": "stem",
               "source": "common",
               "visible": true,
@@ -11198,7 +11127,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -12627,7 +12555,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -14251,7 +14178,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -15602,7 +15528,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -16701,7 +16626,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -17968,7 +17892,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -19194,7 +19117,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -20456,7 +20378,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -21715,7 +21636,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -23193,7 +23113,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -24160,7 +24079,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -25038,7 +24956,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -26084,7 +26001,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -27260,7 +27176,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -28340,7 +28255,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -29373,7 +29287,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -30377,7 +30290,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -31383,7 +31295,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -32392,7 +32303,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -33339,7 +33249,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -34632,7 +34541,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -35739,7 +35647,6 @@
             {
               "inputType": "checkboxes",
               "valuelistFromProjectField": "campaigns",
-              "allowOnlyValuesOfParent": true,
               "group": "stem",
               "source": "common",
               "visible": true,
@@ -36206,7 +36113,6 @@
             {
               "inputType": "checkboxes",
               "valuelistFromProjectField": "campaigns",
-              "allowOnlyValuesOfParent": true,
               "group": "stem",
               "source": "common",
               "visible": true,
@@ -36430,7 +36336,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -36792,7 +36697,6 @@
                 {
                   "inputType": "checkboxes",
                   "valuelistFromProjectField": "campaigns",
-                  "allowOnlyValuesOfParent": true,
                   "group": "stem",
                   "source": "common",
                   "visible": true,
@@ -37002,7 +36906,6 @@
             {
               "inputType": "checkboxes",
               "valuelistFromProjectField": "campaigns",
-              "allowOnlyValuesOfParent": true,
               "group": "stem",
               "source": "common",
               "visible": true,
@@ -37335,7 +37238,6 @@
             {
               "inputType": "checkboxes",
               "valuelistFromProjectField": "campaigns",
-              "allowOnlyValuesOfParent": true,
               "group": "stem",
               "source": "common",
               "visible": true,
@@ -37668,7 +37570,6 @@
             {
               "inputType": "checkboxes",
               "valuelistFromProjectField": "campaigns",
-              "allowOnlyValuesOfParent": true,
               "group": "stem",
               "source": "common",
               "visible": true,

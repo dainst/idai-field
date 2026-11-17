@@ -5,14 +5,19 @@ import { M } from '../../messages/m';
 import { readWldFile, Errors } from '../../image/georeference/wld-import';
 import { downloadWldFile } from '../../image/georeference/wld-export';
 import { Messages } from '../../messages/messages';
-import { MsgWithParams } from '../../messages/msg-with-params';
 import { Menus } from '../../../services/menus';
 import { MenuContext } from '../../../services/menu-context';
+import { AppState } from '../../../services/app-state';
+import { ImageUploader } from '../../image/upload/image-uploader';
+
+const remote = window.require('@electron/remote');
+const path = window.require('path');
 
 
 @Component({
     selector: 'georeference-view',
-    templateUrl: './georeference-view.html'
+    templateUrl: './georeference-view.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -34,10 +39,11 @@ export class GeoreferenceViewComponent {
     constructor(private relationsManager: RelationsManager,
                 private messages: Messages,
                 private modalService: NgbModal,
-                private menuService: Menus) {}
+                private menuService: Menus,
+                private appState: AppState) {}
 
 
-    public exportWldFile = () => downloadWldFile(this.document);
+    public exportWldFile = () => downloadWldFile(this.document, this.appState);
 
 
     public toggle() {
@@ -52,26 +58,54 @@ export class GeoreferenceViewComponent {
     }
 
 
-    public async onSelectFile(event: any) {
+    public async selectFile() {
 
-        const files = event.target.files;
+        const filePath: string = await this.openFileSelectionDialog();
+        if (!filePath) return;
 
-        if (files && files.length > 0) {
-            try {
-                this.document.resource.georeference = await readWldFile(files[0], this.document);
-            } catch (e) {
-                const msgWithParams = (e === Errors.FileReaderError) ? [M.IMAGES_ERROR_FILEREADER, files[0].name]
-                    : (e === Errors.InvalidWldFileError) ? [M.IMAGESTORE_ERROR_INVALID_WORLDFILE, files[0].name]
-                    : [M.MESSAGES_ERROR_UNKNOWN_MESSAGE];
-                this.messages.add(msgWithParams as MsgWithParams);
-                return;
+        try {
+            this.document.resource.georeference = await readWldFile(filePath, this.document);
+        } catch (err) {
+            if (err === Errors.FileReaderError) {
+                this.messages.add([M.IMAGES_ERROR_FILEREADER, path.basename(filePath)]);
+            } else if (err === Errors.InvalidWldFileError) {
+                this.messages.add([M.IMAGESTORE_ERROR_INVALID_WORLDFILE, path.basename(filePath)]);
+            } else {
+                this.messages.add([M.MESSAGES_ERROR_UNKNOWN_MESSAGE]);
             }
+        }
 
-            try {
-                await this.save();
-            } catch(msgWithParams) {
-                this.messages.add(msgWithParams);
+        try {
+            await this.save();
+        } catch(msgWithParams) {
+            this.messages.add(msgWithParams);
+        }
+    }
+
+
+    private async openFileSelectionDialog(): Promise<string> {
+
+        const result: any = await remote.dialog.showOpenDialog(
+            remote.getCurrentWindow(),
+            {
+                properties: ['openFile'],
+                defaultPath: this.appState.getFolderPath('worldfileImport'),
+                buttonLabel: $localize `:@@openFileDialog.select:Auswählen`,
+                filters: [
+                    {
+                        name: 'Worldfile',
+                        extensions: ImageUploader.supportedWorldFileTypes
+                    }
+                ]
             }
+        );
+
+        if (result.filePaths.length) {
+            const filePath: string = result.filePaths[0];
+            await this.appState.setFolderPath(filePath, 'worldfileImport');
+            return filePath;
+        } else {
+            return undefined;
         }
     }
 

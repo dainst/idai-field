@@ -1,7 +1,7 @@
 import { Injectable, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Datastore, ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
-import { createDisplayVariant } from './create-display-variant';
+import { createDisplayVariant } from './manipulation/create-display-variant';
 
 
 @Injectable()
@@ -47,7 +47,7 @@ export class ImageUrlMaker {
         if (!displayData) return ImageUrlMaker.blackImg;
 
         relevantList[imageId] = this.sanitizer.bypassSecurityTrustResourceUrl(
-            URL.createObjectURL(new Blob([displayData]))
+            URL.createObjectURL(new Blob([displayData as any]))
         );
 
         return relevantList[imageId];
@@ -64,7 +64,7 @@ export class ImageUrlMaker {
             this.revokeUrl(imageId, ImageVariant.DISPLAY);
         }
 
-        for (const imageId of Object.keys(this.displayUrls)) {
+        for (const imageId of Object.keys(this.thumbnailUrls)) {
             this.revokeUrl(imageId, ImageVariant.THUMBNAIL);
         }
     }

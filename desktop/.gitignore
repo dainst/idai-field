@@ -49,9 +49,9 @@ speed-measure-plugin*.json
 .history/*
 
 # misc
+/.angular/cache
 /.sass-cache
 /connect.lock
-/coverage
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log
@@ -66,4 +66,6 @@ src/app.css
 src/fonts
 release
 tools
+lib
+test-results
 src/config/Scripts/dist

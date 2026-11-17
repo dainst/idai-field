@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop, to } from 'tsfun';
-import { CategoryForm, ConfigurationDocument, Field, SortUtil, Labels } from 'idai-field-core';
+import { CategoryForm, ConfigurationDocument, Field, Comparator, Labels, ProjectConfiguration,
+    Relation } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { FieldEditorModalComponent } from '../../editor/field/field-editor-modal.component';
@@ -16,7 +17,8 @@ import { Naming } from '../naming';
     templateUrl: './add-field-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -28,6 +30,7 @@ export class AddFieldModalComponent {
     public groupName: string;
     public availableInputTypes: Array<InputType>;
     public permanentlyHiddenFields: string[];
+    public clonedProjectConfiguration: ProjectConfiguration;
     public applyChanges: (configurationDocument: ConfigurationDocument) => Promise<void>;
 
     public searchTerm: string = '';
@@ -41,7 +44,8 @@ export class AddFieldModalComponent {
                 private modals: Modals,
                 private menus: Menus,
                 private labels: Labels,
-                private settingsProvider: SettingsProvider) {}
+                private settingsProvider: SettingsProvider,
+                private comparator: Comparator) {}
 
 
     public initialize() {
@@ -72,7 +76,11 @@ export class AddFieldModalComponent {
 
         if (!this.selectedField) return;
 
-        this.addSelectedField();
+        if (this.selectedField.inputType === Field.InputType.RELATION) {
+            this.createNewField(this.selectedField);
+        } else {
+            this.addSelectedField();
+        }
     }
 
 
@@ -84,17 +92,37 @@ export class AddFieldModalComponent {
 
     public applyFieldNameSearch() {
 
-        this.fields = this.configurationIndex.findFields(
-            this.searchTerm,
-            this.category.source === 'custom' ? this.category.parentCategory.name : this.category.name
-        )
+        this.fields = this.findFieldsFromCategoryAndParentCategory()
             .concat(this.configurationIndex.findFields(this.searchTerm, 'commons'))
+            .concat(this.configurationIndex.findFields(this.searchTerm, 'customRelations'))
             .filter(field => (field.visible || field.editable)
-                && !CategoryForm.getFields(this.category).map(to('name')).includes(field.name))
-            .sort((field1, field2) => SortUtil.alnumCompare(this.labels.get(field1), this.labels.get(field2)));
+                && !CategoryForm.getFields(this.category).map(to('name')).includes(field.name)
+                && (!field.onlySubcategory || this.category.parentCategory))
+            .sort((field1, field2) => this.comparator.alnumCompare(this.labels.get(field1), this.labels.get(field2)));
 
         this.selectedField = this.fields?.[0];
         this.emptyField = this.getEmptyField();
+    }
+
+
+    private findFieldsFromCategoryAndParentCategory(): Array<Field> {
+
+        const parentCategoryFields: Array<Field> = this.category.parentCategory
+            ? this.configurationIndex.findFields(
+                this.searchTerm,
+                this.category.parentCategory.name
+            ) : [];
+
+        if (this.category.source === 'custom') return parentCategoryFields;
+
+        const categoryFields: Array<Field> = this.configurationIndex.findFields(
+            this.searchTerm,
+            this.category.name
+        );
+
+        return categoryFields.concat(parentCategoryFields.filter(field => {
+            return !categoryFields.map(field => field.name).includes(field.name);
+        }));
     }
 
 
@@ -114,7 +142,7 @@ export class AddFieldModalComponent {
     }
 
 
-    private async createNewField() {
+    private async createNewField(template?: Field) {
 
         const [result, componentInstance] = this.modals.make<FieldEditorModalComponent>(
             FieldEditorModalComponent,
@@ -126,17 +154,20 @@ export class AddFieldModalComponent {
         componentInstance.configurationDocument = this.configurationDocument;
         componentInstance.category = this.category;
         componentInstance.field = {
-            name: this.emptyField.name,
-            inputType: 'input',
-            label: {},
-            defaultLabel: {},
-            description: {},
-            defaultDescription: {},
-            source: 'custom'
+            name: template?.name ?? this.emptyField.name,
+            inputType: template?.inputType ?? 'input',
+            label: template?.label ?? {},
+            defaultLabel: template?.defaultLabel ?? {},
+            description: template?.description ?? {},
+            defaultDescription: template?.defaultDescription ?? {},
+            editable: true,
+            visible: true,
+            source: Relation.Workflow.ALL.includes(template?.name) ? 'common' : 'custom'
         };
         componentInstance.groupName = this.groupName;
         componentInstance.availableInputTypes = this.availableInputTypes;
         componentInstance.permanentlyHiddenFields = this.permanentlyHiddenFields;
+        componentInstance.clonedProjectConfiguration = this.clonedProjectConfiguration;
         componentInstance.new = true;
         componentInstance.initialize();
 

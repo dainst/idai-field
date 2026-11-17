@@ -1,10 +1,10 @@
-# FieldHub
+# Field Hub
 
-FieldHub serves as a central synchronisation server for [Field Desktop](../desktop) clients.
+Field Hub serves as a central synchronisation server for [Field Desktop](../desktop) clients.
 
 ## Usage
 
-Please refer to the [wiki](https://github.com/dainst/idai-field/wiki/FieldHub).
+Please refer to the [wiki](https://github.com/dainst/idai-field/wiki/Field-Hub).
 
 ## Development
 
@@ -30,20 +30,20 @@ If you change the default CouchDB credentials in your `.env` file, make sure to 
 Start a dockerized CouchDB:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 Or, if you want to run docker in the background:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Phoenix Server
 
-FieldHub is written in [Elixir](https://elixir-lang.org/) with the [Phoenix Framework](https://www.phoenixframework.org/).
+Field Hub is written in [Elixir](https://elixir-lang.org/) with the [Phoenix Framework](https://www.phoenixframework.org/).
 
-FieldHub tries to follow the Elixir and Phoenix conventions when it comes to naming and directory structure. For detailed guides please consult the official documentation.
+Field Hub tries to follow the Elixir and Phoenix conventions when it comes to naming and directory structure. For detailed guides please consult the official documentation.
 
 ### Project setup
 
@@ -59,7 +59,7 @@ Start the server:
 mix phx.server
 ``` 
 
-FieldHub is now running at http://localhost:4000 as a sync target for Field Desktop. If you want to access the CouchDB directly, you can do so at http://localhost:5984/_utils.
+Field Hub is now running at http://localhost:4000 as a sync target for Field Desktop. If you want to access the CouchDB directly, you can do so at http://localhost:5984/_utils.
 
 Run unit tests with:
 

@@ -10,7 +10,7 @@ export class ImportState implements ImporterOptions {
 
     public sourceType: string = 'file';
     public format: ImporterFormat|undefined;
-    public file: any|undefined;
+    public filePath: string|undefined;
     public url: string|undefined;
     public selectedOperationId: string = '';
     public mergeMode = false;

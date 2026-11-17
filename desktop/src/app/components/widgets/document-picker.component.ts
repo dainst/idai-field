@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import * as tsfun from 'tsfun';
 import { CategoryForm, Query, Datastore, Constraint, Document, ConfigurationDocument } from 'idai-field-core';
 import { Loading } from './loading';
@@ -10,9 +9,19 @@ import { getDocumentSuggestions } from './get-document-suggestions';
 import { scrollTo } from '../../angular/scrolling';
 
 
+export type DocumentPickerClickEvent = {
+    event: MouseEvent;
+    document: Document;
+};
+
+
 @Component({
     selector: 'document-picker',
-    templateUrl: './document-picker.html'
+    templateUrl: './document-picker.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    },
+    standalone: false
 })
 /**
  * @author Sebastian Cuy
@@ -32,11 +41,15 @@ export class DocumentPickerComponent implements OnChanges {
     @Input() waitForUserInput: boolean = true;
     @Input() markSelected: boolean = false;
     @Input() autoSelect: boolean = false;
+    @Input() selectOnRightClick: boolean = false;
+    @Input() allowKeyboardNavigation: boolean = false;
     @Input() showNoQueryMessage: boolean = true;
     @Input() preselectedDocumentId: string;
 
     @Output() documentSelected: EventEmitter<Document> = new EventEmitter<Document>();
     @Output() documentDoubleClicked: EventEmitter<Document> = new EventEmitter<Document>();
+    @Output() documentRightClicked: EventEmitter<DocumentPickerClickEvent>
+        = new EventEmitter<DocumentPickerClickEvent>();
 
     @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
 
@@ -49,8 +62,7 @@ export class DocumentPickerComponent implements OnChanges {
 
     constructor(private datastore: Datastore,
                 private loading: Loading,
-                private messages: Messages,
-                private i18n: I18n) {}
+                private messages: Messages) {}
 
 
     public isLoading = () => this.loading.isLoading('documentPicker');
@@ -64,10 +76,26 @@ export class DocumentPickerComponent implements OnChanges {
     public getHeight = () => this.documents.length * 58;
 
 
-    async ngOnChanges() {
+    async ngOnChanges(changes: SimpleChanges) {
+
+        if (Object.keys(changes).length === 1 && changes['allowKeyboardNavigation'] !== undefined) return;
 
         this.query.categories = this.getAllAvailableCategoryNames();
         await this.updateResultList();
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (!this.isKeyboardNavigationEnabled()) return;
+
+        if (event.key === 'ArrowUp') {
+            this.selectPrevious();
+            await this.scrollToDocument(this.selectedDocument);
+        } else if (event.key === 'ArrowDown') {
+            this.selectNext();
+            await this.scrollToDocument(this.selectedDocument, true);
+        }
     }
 
 
@@ -81,6 +109,13 @@ export class DocumentPickerComponent implements OnChanges {
     public doubleClick(document: Document) {
 
         this.documentDoubleClicked.emit(document);
+    }
+
+
+    public rightClick(event: MouseEvent, document: Document) {
+
+        this.documentRightClicked.emit({ event, document });
+        if (this.selectOnRightClick) this.select(document);
     }
 
 
@@ -160,11 +195,41 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
-    private async scrollToDocument(scrollTarget: Document) {
+    private selectPrevious() {
+
+        if (!this.selectedDocument) return this.selectFirst();
+
+        let index: number = this.documents.indexOf(this.selectedDocument) - 1;
+        if (index < 0) index = this.documents.length - 1;
+        
+        this.select(this.documents[index]);
+    }
+
+
+    private selectNext() {
+
+        if (!this.selectedDocument) return this.selectFirst();
+
+        let index: number = this.documents.indexOf(this.selectedDocument) + 1;
+        if (index >= this.documents.length) index = 0;
+        
+        this.select(this.documents[index]);
+    }
+
+
+    private selectFirst() {
+
+        if (!this.documents.length) return;
+        
+        return this.select(this.documents[0]);
+    }
+
+
+    private async scrollToDocument(scrollTarget: Document, bottomElement: boolean = false) {
 
         await AngularUtility.refresh();
         const index: number = this.documents.indexOf(scrollTarget);
-        await scrollTo(index, this.getElementId(scrollTarget), this.scrollViewport);
+        await scrollTo(index, this.getElementId(scrollTarget), 58, this.scrollViewport, bottomElement);
     }
 
 
@@ -208,7 +273,7 @@ export class DocumentPickerComponent implements OnChanges {
         return {
             resource: {
                 id: 'project',
-                identifier: this.i18n({ id: 'widgets.documentPicker.project', value: 'Projekt' }),
+                identifier: $localize `:@@widgets.documentPicker.project:Projekt`,
                 category: 'Project'
             }
         } as any;
@@ -220,7 +285,7 @@ export class DocumentPickerComponent implements OnChanges {
         return {
             resource: {
                 id: 'configuration',
-                identifier: this.i18n({ id: 'navbar.tabs.configuration', value: 'Projektkonfiguration' }),
+                identifier: $localize `:@@navbar.tabs.configuration:Projektkonfiguration`,
                 category: 'Configuration'
             }
         } as any;
@@ -232,7 +297,7 @@ export class DocumentPickerComponent implements OnChanges {
         return {
             resource: {
                 id: 'inventoryRegister',
-                identifier: this.i18n({ id: 'util.inventoryRegister', value: 'Inventarverzeichnis' }),
+                identifier: $localize `:@@util.inventoryRegister:Inventarverzeichnis`,
                 category: 'InventoryRegister'
             }
         } as any;
@@ -244,7 +309,7 @@ export class DocumentPickerComponent implements OnChanges {
         return this.showProjectOption
             && this.isCategoryOptionVisible(
                 'Project',
-                this.i18n({ id: 'widgets.documentPicker.project', value: 'Projekt' })
+                $localize `:@@widgets.documentPicker.project:Projekt`
             );
     }
 
@@ -254,7 +319,7 @@ export class DocumentPickerComponent implements OnChanges {
         return this.showConfigurationOption
             && this.isCategoryOptionVisible(
                 'Configuration',
-                this.i18n({ id: 'navbar.tabs.configuration', value: 'Projektkonfiguration' })
+                $localize `:@@navbar.tabs.configuration:Projektkonfiguration`
             );
     }
 
@@ -264,7 +329,7 @@ export class DocumentPickerComponent implements OnChanges {
         return this.showInventoryRegisterOption
             && this.isCategoryOptionVisible(
                 'InventoryRegister',
-                this.i18n({ id: 'util.inventoryRegister', value: 'Inventarverzeichnis' })
+                $localize `:@@util.inventoryRegister:Inventarverzeichnis`
             );
     }
 
@@ -288,5 +353,11 @@ export class DocumentPickerComponent implements OnChanges {
                 return !this.showProjectOption || !['Project'].includes(document.resource.category);
             })
         );
+    }
+
+
+    private isKeyboardNavigationEnabled(): boolean {
+
+        return this.allowKeyboardNavigation && !document.getElementById('filter-menu');
     }
 }

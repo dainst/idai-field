@@ -17,7 +17,7 @@ export class ResourcesPage {
 
     public static clickSelectGeometryType(geometryType: string = 'none') {
 
-        return click('#choose-geometry-option-' + geometryType);
+        return click(this.getGeometryTypeOption(geometryType));
     }
 
 
@@ -45,6 +45,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickContextMenuEditWorkflowButton() {
+
+        return click('#context-menu-edit-workflow-button');
+    }
+
+
     public static clickContextMenuAddQrCodeButton() {
 
         return click('#context-menu-add-qr-code-button');
@@ -57,9 +63,9 @@ export class ResourcesPage {
     }
 
 
-    public static clickContextMenuScanStoragePlaceButton() {
+    public static clickContextMenuScanResourceButton() {
 
-        return click('#context-menu-scan-storage-place-button');
+        return click('#context-menu-scan-resource-button');
     }
 
 
@@ -177,6 +183,24 @@ export class ResourcesPage {
     }
 
 
+    public static clickConfirmReplacingType() {
+
+        return click('#replace-type-button');
+    }
+
+
+    public static clickConfirmAddingType() {
+
+        return click('#add-type-button');
+    }
+
+
+    public static clickCancelScanTypeModal() {
+
+        return click('#cancel-scan-type-modal-button');
+    }
+
+
     // get text
 
 
@@ -198,9 +222,16 @@ export class ResourcesPage {
     }
 
 
-    public static async getListModeInputFieldValue(identifier, index) {
+    public static async getListModeIdentifierFieldValue(identifier) {
 
-        const inputField = await ResourcesPage.getListModeInputField(identifier, index);
+        const inputField = await ResourcesPage.getListModeIdentifierField(identifier);
+        return getValue(inputField);
+    }
+
+
+    public static async getListModeShortDescriptionFieldValue(identifier) {
+
+        const inputField = await ResourcesPage.getListModeShortDescriptionField(identifier);
         return getValue(inputField);
     }
 
@@ -261,13 +292,19 @@ export class ResourcesPage {
     }
 
 
-    public static async getListModeInputField(identifier, index) {
+    public static getListModeIdentifierField(identifier) {
 
-        const locator = identifier
-            ? getLocator('#resource-' + identifier + ' input')
-            : getLocator('#new-resource input');
+        return identifier
+            ? getLocator('#resource-' + identifier + ' identifier-input input')
+            : getLocator('#new-resource identifier-input input');
+    }
 
-        return (await locator).nth(index);
+
+    public static getListModeShortDescriptionField(identifier) {
+
+        return identifier
+            ? getLocator('#resource-' + identifier + ' .short-description-input-container input')
+            : getLocator('#new-resource .short-description-input-container input');
     }
 
 
@@ -280,6 +317,12 @@ export class ResourcesPage {
     public static getCategoryOption(categoryName: string) {
 
         return getLocator('#choose-category-option-' + categoryName);
+    }
+
+
+    public static getGeometryTypeOption(geometryType: string) {
+
+        return getLocator('#choose-geometry-option-' + geometryType);
     }
 
 
@@ -341,17 +384,29 @@ export class ResourcesPage {
     }
 
 
+    public static getCreateGeometryContextMenuOption(geometryType) {
+
+        return getLocator('#context-menu-create-' + geometryType + '-button');
+    }
+
+
     // type in
 
-    public static async typeInListModeInputField(identifier: string, index: number, inputText: string) {
+    public static async typeInListModeIdentifierField(identifier: string, inputText: string) {
 
-        return typeIn(await this.getListModeInputField(identifier, index), inputText);
+        return typeIn(await this.getListModeIdentifierField(identifier), inputText);
+    }
+
+
+    public static async typeInListModeShortDescriptionField(identifier: string, inputText: string) {
+
+        return typeIn(await this.getListModeShortDescriptionField(identifier), inputText);
     }
 
 
     public static async typeInNewResourceAndHitEnterInList(inputText: string) {
 
-        const elements = await getLocator('#list .identifier-input');
+        const elements = await getLocator('#list identifier-input input');
         const element = elements.nth(await elements.count() - 1);
         await typeIn(element, inputText);
         await pause(2000);
@@ -400,10 +455,10 @@ export class ResourcesPage {
 
 
     public static async performCreateRelation(identifier: string, targetIdentifier: string,
-                                              relationName: string) {
+                                              relationName: string, timeTab: boolean = false) {
 
         await this.openEditByDoubleClickResource(identifier);
-        await DoceditPage.clickGotoTimeTab();
+        if (timeTab) await DoceditPage.clickGotoTimeTab();
         await DoceditRelationsPage.clickAddRelationForGroupWithIndex(relationName);
         await DoceditRelationsPage.typeInRelation(relationName, targetIdentifier);
         await DoceditRelationsPage.clickChooseRelationSuggestion(0);
@@ -415,6 +470,6 @@ export class ResourcesPage {
 
         await this.performCreateResource('1', 'feature-architecture');
         await this.performCreateResource('2', 'feature-architecture');
-        await this.performCreateRelation('2', '1', 'isBefore');
+        await this.performCreateRelation('2', '1', 'isBefore', true);
     }
 }

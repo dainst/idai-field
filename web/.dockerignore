@@ -1,0 +1,8 @@
+.vscode/
+data/
+
+api/_build
+api/deps
+
+ui/build/
+ui/node_modules

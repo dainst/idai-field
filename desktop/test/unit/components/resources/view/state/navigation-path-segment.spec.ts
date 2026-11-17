@@ -7,7 +7,7 @@ import { NavigationPathSegment } from '../../../../../../src/app/components/reso
  */
 describe('NavigationPathSegment', () => {
 
-    it('consider the first segment valid if the correct isRecordedIn relation is existing', () => {
+    test('consider the first segment valid if the correct isRecordedIn relation is existing', () => {
 
         const document: FieldDocument = fieldDoc('', 'Feature', 'Feature', 'f');
         document.resource.relations.isRecordedIn = ['t'];
@@ -19,7 +19,7 @@ describe('NavigationPathSegment', () => {
     });
 
 
-    it('consider the first segment invalid if the correct isRecordedIn relation is not existing', () => {
+    test('consider the first segment invalid if the correct isRecordedIn relation is not existing', () => {
 
         const document: FieldDocument = fieldDoc('', 'Feature', 'Feature', 'f');
         document.resource.relations.isRecordedIn = ['t2'];
@@ -31,7 +31,7 @@ describe('NavigationPathSegment', () => {
     });
 
 
-    it('consider the first segment valid if the corresponding document is of specified non isRecordedIn category', () => {
+    test('consider the first segment valid if the corresponding document is of specified non isRecordedIn category', () => {
 
         const document: FieldDocument = fieldDoc('', 'TypeCatalog', 'TypeCatalog', 'tc');
         const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
@@ -42,7 +42,7 @@ describe('NavigationPathSegment', () => {
     });
 
 
-    it('consider a following segment valid if the correct liesWithin relation is existing', () => {
+    test('consider a following segment valid if the correct liesWithin relation is existing', () => {
 
         const document1: FieldDocument = fieldDoc('', 'Feature', 'Feature', 'f1');
         const document2: FieldDocument = fieldDoc('', 'Find', 'Find', 'f2');
@@ -59,7 +59,7 @@ describe('NavigationPathSegment', () => {
     });
 
 
-    it('consider a following segment invalid if the correct liesWithin relation is not existing', () => {
+    test('consider a following segment invalid if the correct liesWithin relation is not existing', () => {
 
         const document1: FieldDocument = fieldDoc('', 'Feature', 'Feature', 'f1');
         const document2: FieldDocument = fieldDoc('', 'Find', 'Find', 'f2');
@@ -76,7 +76,7 @@ describe('NavigationPathSegment', () => {
     });
 
 
-    it('consider a segment invalid if the corresponding document is not existing', () => {
+    test('consider a segment invalid if the corresponding document is not existing', () => {
 
         const document1: FieldDocument = fieldDoc('', 'Feature', 'Feature', 'f1');
         const document2: FieldDocument = fieldDoc('', 'Find', 'Find', 'f2');

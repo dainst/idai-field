@@ -31,6 +31,7 @@ export class ImageSyncService {
     };
     private inProcess: { [variant in ImageVariant]?: boolean } = {};
 
+
     constructor(private imageStore: ImageStore,
                 private remoteImageStore: RemoteImageStoreInterface,
                 datastore: PouchdbDatastore) {
@@ -52,6 +53,7 @@ export class ImageSyncService {
      public startSync(preference: FileSyncPreference) {
 
         console.log(`Starting sync for ${preference.variant}.`);
+
         if (!this.isVariantSyncActive(preference.variant)) {
             this.active.push(preference);
         }
@@ -79,6 +81,7 @@ export class ImageSyncService {
 
         if (variant in this.schedules) {
             clearTimeout(this.schedules[variant]);
+            if (this.inProcess[variant]) delete this.inProcess[variant];
         }
 
         this.status[variant] = SyncStatus.Offline;
@@ -98,7 +101,6 @@ export class ImageSyncService {
     private triggerUpdate() {
 
         this.active.forEach(preference => {
-            clearTimeout(this.schedules[preference.variant]);            
             this.scheduleNextSync(preference, this.shortIntervalDuration);
         });
     }
@@ -108,6 +110,7 @@ export class ImageSyncService {
 
         if (!this.isVariantSyncActive(preference.variant)) return;
 
+        if (this.schedules[preference.variant]) clearTimeout(this.schedules[preference.variant]);
         this.schedules[preference.variant] = setTimeout(this.sync.bind(this), duration, preference);
     }
 
@@ -135,7 +138,7 @@ export class ImageSyncService {
             );
 
             const downloadInfo = `(sync ${preference.download ? 'active' : 'inactive'})`;
-            const uploadInfo =  `(sync ${preference.upload ? 'active' : 'inactive'})`;
+            const uploadInfo = `(sync ${preference.upload ? 'active' : 'inactive'})`;
 
             console.log(`Image syncing differences for ${preference.variant}`)
             console.log(` missing locally ${downloadInfo}: ${Object.keys(differences.missingLocally).length}`);
@@ -161,7 +164,7 @@ export class ImageSyncService {
                 if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
                 this.status[preference.variant] = SyncStatus.Pulling;
 
-                await this.imageStore.remove(uuid, activeProject)
+                await this.imageStore.remove(uuid, activeProject);
             }
 
             if (preference.upload) {
@@ -184,11 +187,13 @@ export class ImageSyncService {
                 if (!this.isVariantSyncActive(preference.variant)) return; // Stop if sync was disabled while iterating
                 this.status[preference.variant] = SyncStatus.Pushing;
 
-                await this.remoteImageStore.remove(uuid, activeProject)
+                await this.remoteImageStore.remove(uuid, activeProject);
             }
 
             // Set SyncStatus.Offline if sync was disabled while running sync, otherwise set SyncStatus.InSync
-            this.status[preference.variant] = this.isVariantSyncActive(preference.variant) ? SyncStatus.InSync : SyncStatus.Offline;
+            this.status[preference.variant] = this.isVariantSyncActive(preference.variant)
+                ? SyncStatus.InSync
+                : SyncStatus.Offline;
         } catch (e) {
             this.status[preference.variant] = SyncStatus.Error;
             console.error(e);
@@ -258,6 +263,6 @@ export class ImageSyncService {
 
     private isVariantSyncActive(variant: ImageVariant) {
 
-        return this.active.find(val => val.variant === variant)
+        return this.active.find(val => val.variant === variant);
     }
 }

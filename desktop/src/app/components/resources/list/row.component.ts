@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ViewChild, ChangeDetectorRef, OnChanges, AfterViewChecked,
+    SimpleChanges } from '@angular/core';
 import { isObject, isString, Map, equal, isEmpty, clone } from 'tsfun';
-import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration,
-    Labels, I18N, FieldResource, Valuelist } from 'idai-field-core';
+import { FieldDocument, CategoryForm, Datastore, RelationsManager, ProjectConfiguration, Labels, I18N, FieldResource,
+    Valuelist } from 'idai-field-core';
 import { ResourcesComponent } from '../resources.component';
 import { Validator } from '../../../model/validator';
 import { M } from '../../messages/m';
@@ -10,18 +11,21 @@ import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { NavigationService } from '../navigation/navigation-service';
 import { Messages } from '../../messages/messages';
 import { Language } from '../../../services/languages';
+import { IdentifierInputComponent } from '../../widgets/identifier-input.component';
+import { Validations } from '../../../model/validations';
 
 
 @Component({
     selector: 'row',
-    templateUrl: './row.html'
+    templateUrl: './row.html',
+    standalone: false
 })
 /**
  * @author Fabian Z.
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class RowComponent implements AfterViewInit {
+export class RowComponent implements AfterViewChecked, OnChanges {
 
     @Input() document: FieldDocument;
     @Input() category: CategoryForm;
@@ -30,10 +34,11 @@ export class RowComponent implements AfterViewInit {
     @Input() shortDescriptionValuelist: Valuelist|undefined;
     @Input() shortDescriptionValues: string[];
 
-    @ViewChild('identifierInput', { static: false }) identifierInput: ElementRef;
+    @ViewChild('identifierInput', { static: false }) identifierInput: IdentifierInputComponent;
 
     private initialValues: Map<string|I18N.String|undefined> = {};
     private saving: Promise<void>;
+    private focusTriggered: boolean;
 
 
     constructor(public resourcesComponent: ResourcesComponent,
@@ -81,15 +86,25 @@ export class RowComponent implements AfterViewInit {
     public isNewResource = () => !this.document.resource.id;
 
 
-    ngAfterViewInit() {
+    ngOnChanges(changes: SimpleChanges) {
+        
+        if (changes['document']) this.focusTriggered = false;
+    }
 
+
+    ngAfterViewChecked() {
+        
         this.focusIdentifierInputIfDocumentIsNew();
     }
 
 
-    public async onKeyUp(event: KeyboardEvent, fieldName: string) {
+    public onInput(event: KeyboardEvent, fieldName: string) {
 
         this.setValue(fieldName, event.target['value']);
+    }
+
+
+    public async onKeyUp(event: KeyboardEvent, fieldName: string) {
 
         if (event.key === 'Enter') {
             await this.stopEditing(fieldName, this.document.resource[fieldName]);
@@ -150,7 +165,7 @@ export class RowComponent implements AfterViewInit {
         return isObject(shortDescription)
             ? (shortDescription[this.selectedLanguage.code] ?? '')
             : !this.selectedLanguage || this.selectedLanguage.code === I18N.UNSPECIFIED_LANGUAGE
-                ? (shortDescription ?? '')
+                ? (shortDescription as string ?? '')
                 : '';
     }
 
@@ -165,6 +180,12 @@ export class RowComponent implements AfterViewInit {
     public isDeleteOptionAvailable(): boolean {
 
         return !this.isNewResource();
+    }
+
+
+    public isShortDescriptionMandatory(): boolean {
+
+        return CategoryForm.getField(this.category, FieldResource.SHORTDESCRIPTION)?.mandatory;
     }
 
 
@@ -183,7 +204,7 @@ export class RowComponent implements AfterViewInit {
     private setValueAsString(fieldName: string, newValue: string) {
 
         if (newValue) {
-            this.document.resource[fieldName] = newValue;
+            this.document.resource[fieldName] = newValue.trim();
         } else {
             this.document.resource[fieldName] = '';
         }
@@ -211,16 +232,17 @@ export class RowComponent implements AfterViewInit {
 
     private async save() {
 
-        if (!this.document.resource.identifier || this.document.resource.identifier.trim() === '') {
-            if (!this.isNewResource()) await this.restoreIdentifier(this.document);
+        if (!this.hasMandatoryValues()) {
+            if (!this.isNewResource()) await this.restorePreviousVersion();
             return;
         }
 
         try {
             await this.validator.assertIdentifierIsUnique(this.document);
+            Validations.assertNoUnallowedCharactersUsed(this.document, this.projectConfiguration);
         } catch(msgWithParams) {
             this.messages.add(MessagesConversion.convertMessage(msgWithParams, this.projectConfiguration, this.labels));
-            if (!this.isNewResource()) await this.restoreIdentifier(this.document);
+            if (!this.isNewResource()) await this.restorePreviousVersion();
             this.changeDetectorRef.detectChanges();
             return;
         }
@@ -238,12 +260,21 @@ export class RowComponent implements AfterViewInit {
     }
 
 
-    private async restoreIdentifier(document: FieldDocument): Promise<any> {
+    private hasMandatoryValues(): boolean {
+
+        if (!this.document.resource.identifier) return false;
+        if (this.isShortDescriptionMandatory() && !this.document.resource.shortDescription) return false;
+        
+        return true;
+    }
+
+
+    private async restorePreviousVersion(): Promise<any> {
 
         try {
             Object.assign(
                 this.document,
-                await this.datastore.get(document.resource.id as any, { skipCache: true })
+                await this.datastore.get(this.document.resource.id as any, { skipCache: true })
             );
         } catch(_) {
             this.messages.add([M.DATASTORE_ERROR_NOT_FOUND]);
@@ -253,7 +284,10 @@ export class RowComponent implements AfterViewInit {
 
     private focusIdentifierInputIfDocumentIsNew() {
 
-        if (!this.document.resource.identifier) this.identifierInput.nativeElement.focus();
+        if (!this.document.resource.identifier && !this.focusTriggered) {
+            this.identifierInput.inputFieldElement.nativeElement.focus();
+            this.focusTriggered = true;
+        }
     }
 
 

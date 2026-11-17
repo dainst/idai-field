@@ -25,7 +25,7 @@ defmodule FieldHub.Issues do
   @moduledoc """
   Bundles a suite of evaluation functions that search for issues within projects.
 
-  FieldHub concerns itself only with issues that can be derived from checking the projects' configurations.
+  Field Hub concerns itself only with issues that can be derived from checking the projects' configurations.
   """
 
   @doc """
@@ -255,7 +255,7 @@ defmodule FieldHub.Issues do
   Checks for non unique `identifier` values.
 
   Every document in a Field project should have a unique value in `resource.identifier`. There may be some rare edge cases
-  where two documents get the same identifier when two users create them separately. FieldHub as the central syncing target
+  where two documents get the same identifier when two users create them separately. Field Hub as the central syncing target
   checks for these cases.
 
   __Parameters__

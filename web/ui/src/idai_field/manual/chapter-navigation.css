@@ -1,0 +1,8 @@
+#chapter-navigation {
+    counter-reset: tableOfContentsCounter;
+}
+
+#chapter-navigation li button::before {
+    counter-increment: tableOfContentsCounter;
+    content: counter(tableOfContentsCounter) '. ';
+}

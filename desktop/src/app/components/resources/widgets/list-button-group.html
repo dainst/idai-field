@@ -1,25 +1,25 @@
 <div class="sidebar-list-button-group">
     <div *ngIf="shouldShowQrCodeButton()"
          class="btn btn-outline-primary"
-         (click)="openQrCodeEditor(); $event.stopPropagation();"
-         placement="right"
-         container="body"
          ngbTooltip="QR-Code verwalten"
          i18n-ngbTooltip="@@resources.contextMenu.editQrCode"
-         #tooltip="ngbTooltip"
-         (mousedown)="tooltip.close()">
+         #qrCodeTooltip="ngbTooltip"
+         placement="right"
+         container="body"
+         (click)="openQrCodeEditor(); $event.stopPropagation();"
+         (mousedown)="qrCodeTooltip.close()">
         <span class="mdi mdi-qrcode"></span>
     </div>
 
     <div *ngIf="shouldShowArrowBottomRight()"
          class="btn btn-outline-primary hierarchy-button"
-         (click)="moveInto(); $event.stopPropagation();"
          placement="right"
          container="body"
          ngbTooltip="Untergeordnete Ressourcen anzeigen"
          i18n-ngbTooltip="@@resources.showChildResources.tooltip"
-         #tooltip="ngbTooltip"
-         (mousedown)="tooltip.close()">
+         #arrowBottomRightTooltip="ngbTooltip"
+         (click)="moveInto(); $event.stopPropagation();"
+         (mousedown)="arrowBottomRightTooltip.close()">
         <span [class.arrow-deactivated]="viewFacade.getChildrenCount(document) === 0"
               class="arrow-bottom-right sidebar-list-button-group-inner">
         </span>
@@ -27,31 +27,37 @@
 
     <div *ngIf="shouldShowArrowTopRightForSearchMode()"
          class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
-         (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();"
+         ngbTooltip="Im Kontext der Maßnahme anzeigen"
+         #arrowTopRightForSearchmodeTooltip="ngbTooltip"
+         i18n-ngbTooltip="@@resources.showInOperationContext.tooltip"
          placement="right"
          container="body"
-         ngbTooltip="Im Kontext der Maßnahme anzeigen"
-         i18n-ngbTooltip="@@resources.showInOperationContext.tooltip">
+         (click)="jumpToResourceFromOverviewToOperation(); $event.stopPropagation();"
+         (mousedown)="arrowTopRightForSearchmodeTooltip.close()">
         <span class="arrow-top-right mdi-18px"></span>
     </div>
 
     <div *ngIf="shouldShowArrowUpForSearchMode()"
          class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
-         (click)="jumpToResourceInSameView(); $event.stopPropagation();"
+         ngbTooltip="Im Kontext anzeigen"
+         #arrowUpTooltip="ngbTooltip"
+         i18n-ngbTooltip="@@resources.showInContext.tooltip"
          placement="right"
          container="body"
-         ngbTooltip="Im Kontext anzeigen"
-         i18n-ngbTooltip="@@resources.showInContext.tooltip">
+         (click)="jumpToResourceInSameView(); $event.stopPropagation();"
+         (mousedown)="arrowUpTooltip.close()">
         <span class="arrow-up mdi-16px"></span>
     </div>
 
     <div *ngIf="shouldShowArrowTopRight()"
          class="btn btn-outline-primary hierarchy-button hierarchy-button-overview"
          ngbTooltip="Zur Maßnahme wechseln"
+         #arrowTopRightTooltip="ngbTooltip"
          i18n-ngbTooltip="@@resources.jumpToView.tooltip"
          placement="right"
          container="body"
-         (click)="jumpToView(); $event.stopPropagation();">
+         (click)="jumpToView(); $event.stopPropagation();"
+         (mousedown)="arrowTopRightTooltip.close()">
         <span class="arrow-top-right mdi-18px"></span>
     </div>
 </div>

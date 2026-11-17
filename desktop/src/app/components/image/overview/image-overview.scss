@@ -2,7 +2,6 @@
 @import 'searchbar/image-overview-search-bar';
 
 .image-overview {
-
   .image-grid {
     margin-top: 15px !important;
   }
@@ -53,7 +52,7 @@
   }
 
   .slider-container {
-    padding-top: 14px;
+    padding-top: 11px;
     user-select: none;
     cursor: default;
   }
@@ -80,10 +79,10 @@
   }
 
   .image-grid-container {
-    height: calc(100vh - 101px);
+    height: calc(100vh - 97px);
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0 !important;
-    margin: 0 -15px;
+    margin: 0 -10px;
   }
 }

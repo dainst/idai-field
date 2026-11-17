@@ -1,7 +1,9 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
-import { CategoryForm, Datastore, Resource, FieldDocument, Name, Named, Tree, ProjectConfiguration, 
-    PouchdbDatastore } from 'idai-field-core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output,
+    ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { to, Map } from 'tsfun';
+import { CategoryForm, Datastore, Resource, FieldDocument, Name, Named, Tree, ProjectConfiguration, PouchdbDatastore, 
+    FieldGeometryType } from 'idai-field-core';
 import { ViewFacade } from '../../components/resources/view/view-facade';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
@@ -14,14 +16,15 @@ export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
 
 @Component({
     selector: 'plus-button',
-    templateUrl: './plus-button.html'
+    templateUrl: './plus-button.html',
+    standalone: false
 })
 
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class PlusButtonComponent implements OnChanges {
+export class PlusButtonComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() placement: string = 'bottom'; // top | bottom | left | right
 
@@ -35,13 +38,17 @@ export class PlusButtonComponent implements OnChanges {
     @Input() preselectedGeometryType: string;
     @Input() skipFormAndReturnNewDocument: boolean = false;
     @Input() status: PlusButtonStatus = 'enabled';
+    @Input() defaultFieldValues: Map<any> = {};
 
     @Output() documentRequested: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
 
     @ViewChild('popover', { static: false }) private popover: any;
 
-    public selectedCategory: string|undefined;
-    public toplevelCategoriesArray: Array<CategoryForm>;
+    public selectedCategory: CategoryForm|undefined;
+    public topLevelCategoriesArray: Array<CategoryForm>;
+
+    private clickEventSubscription: Subscription;
+    private changesSubscription: Subscription;
 
 
     constructor(private elementRef: ElementRef,
@@ -50,26 +57,34 @@ export class PlusButtonComponent implements OnChanges {
                 private messages: Messages,
                 private viewFacade: ViewFacade,
                 private datastore: Datastore,
-                private i18n: I18n,
-                pouchdbDatastore: PouchdbDatastore) {
+                private pouchdbDatastore: PouchdbDatastore) {}
 
-        this.resourcesComponent.listenToClickEvents().subscribe(event => {
+
+    public isGeometryCategory = (category: Name) => this.projectConfiguration.isGeometryCategory(category);
+
+
+    ngOnInit() {
+        
+        this.clickEventSubscription = this.resourcesComponent.listenToClickEvents().subscribe(event => {
             this.handleClick(event);
         });
 
-        pouchdbDatastore.changesNotifications().subscribe(() => {
+        this.changesSubscription = this.pouchdbDatastore.changesNotifications().subscribe(() => {
             this.initializeSelectableCategoriesArray(this.projectConfiguration);
         });
     }
 
 
-    public isGeometryCategory = (category: Name) =>
-        this.projectConfiguration.isGeometryCategory(category);
-
-
     ngOnChanges() {
 
         this.initializeSelectableCategoriesArray(this.projectConfiguration);
+    }
+
+
+    ngOnDestroy() {
+        
+        if (this.clickEventSubscription) this.clickEventSubscription.unsubscribe();
+        if (this.changesSubscription) this.changesSubscription.unsubscribe();
     }
 
 
@@ -86,9 +101,12 @@ export class PlusButtonComponent implements OnChanges {
         const newDocument: FieldDocument = <FieldDocument> {
             resource: {
                 relations: this.createRelations(),
-                category: this.selectedCategory
+                category: this.selectedCategory.name
             }
         };
+
+        Object.assign(newDocument.resource, this.defaultFieldValues);
+
         if (this.skipFormAndReturnNewDocument) {
             this.documentRequested.emit(newDocument);
         } else {
@@ -100,17 +118,16 @@ export class PlusButtonComponent implements OnChanges {
     public reset() {
 
         this.selectedCategory = this.getButtonType() === 'singleCategory'
-            ? this.toplevelCategoriesArray[0].name
-            : this.selectedCategory = undefined;
+            ? this.topLevelCategoriesArray[0]
+            : undefined;
     }
 
 
     public getButtonType(): 'singleCategory'|'multipleCategories'|'none' {
 
-        if (this.toplevelCategoriesArray.length === 0) return 'none';
+        if (this.topLevelCategoriesArray.length === 0) return 'none';
 
-        if (this.toplevelCategoriesArray.length === 1
-                && (!this.toplevelCategoriesArray[0].children || this.toplevelCategoriesArray[0].children.length === 0)) {
+        if (this.topLevelCategoriesArray.length === 1 && !this.topLevelCategoriesArray[0].children?.length) {
             return 'singleCategory';
         }
 
@@ -120,11 +137,12 @@ export class PlusButtonComponent implements OnChanges {
 
     public chooseCategory(category: CategoryForm) {
 
-        this.selectedCategory = category.name;
+        this.selectedCategory = category;
 
         if (this.preselectedGeometryType) {
             this.startDocumentCreation();
-        } else if (!this.isGeometryCategory(this.selectedCategory)) {
+        } else if (!this.isGeometryCategory(this.selectedCategory.name)
+                || !CategoryForm.isGeometryEditableOnMap(this.selectedCategory)) {
             this.startDocumentCreation('none');
         }
     }
@@ -136,11 +154,14 @@ export class PlusButtonComponent implements OnChanges {
             case 'enabled':
                 return '';
             case 'disabled-hierarchy':
-                return this.i18n({
-                    id: 'resources.plusButton.tooltip.deactivated',
-                    value: 'Bitte deaktivieren Sie den erweiterten Suchmodus, um neue Ressourcen anlegen zu können.'
-                });
+                return $localize `:@@resources.plusButton.tooltip.deactivated:Bitte deaktivieren Sie den erweiterten Suchmodus, um neue Ressourcen anlegen zu können.`;
         }
+    }
+
+
+    public isAllowedGeometryType(geometryType: FieldGeometryType): boolean {
+        
+        return CategoryForm.isAllowedGeometryType(this.selectedCategory, geometryType);
     }
 
 
@@ -160,21 +181,17 @@ export class PlusButtonComponent implements OnChanges {
 
     private async initializeSelectableCategoriesArray(projectConfiguration: ProjectConfiguration) {
 
-        this.toplevelCategoriesArray = [];
+        this.topLevelCategoriesArray = [];
 
         if (this.preselectedCategory) {
             const category: CategoryForm = projectConfiguration.getCategory(this.preselectedCategory);
-            if (category) {
-                this.toplevelCategoriesArray.push(category);
-            } else {
-                this.messages.add([M.RESOURCES_ERROR_CATEGORY_NOT_FOUND, this.preselectedCategory]);
-            }
+            if (category) this.topLevelCategoriesArray.push(category);
         } else {
             for (let category of Tree.flatten(projectConfiguration.getCategories())) {
                 if (await this.isAllowedCategory(category, projectConfiguration)
                         && (!category.parentCategory
                             || !(await this.isAllowedCategory(category.parentCategory, projectConfiguration)))) {
-                    this.toplevelCategoriesArray.push(category);
+                    this.topLevelCategoriesArray.push(category);
                 }
             }
         }
@@ -204,11 +221,7 @@ export class PlusButtonComponent implements OnChanges {
                 return false;
             }
         } else {
-            const categories: Array<CategoryForm> = this.viewFacade.isInOverview()
-                ? this.projectConfiguration.getConcreteOverviewCategories()
-                : this.viewFacade.isInTypesManagement()
-                    ? this.projectConfiguration.getTypeManagementCategories()
-                    : this.projectConfiguration.getInventoryCategories();
+            const categories: Array<CategoryForm> = this.getCategories();
             if (!categories.map(Named.toName).includes(category.name)) return false;
         }
 
@@ -220,11 +233,31 @@ export class PlusButtonComponent implements OnChanges {
         }
 
         if (category.resourceLimit) {
-            const resourcesCount: number = await this.datastore.findIds({ categories: [category.name] }).totalCount;
+            const parentCategoryName: string = category.parentCategory?.name ?? category.name;
+            const categoryNames: string[] = this.projectConfiguration.getCategoryWithSubcategories(parentCategoryName)
+                .map(to(Named.NAME));
+            const resourcesCount: number = await this.datastore.findIds({ categories: categoryNames }).totalCount;
             if (resourcesCount >= category.resourceLimit) return false;
         }
 
         return true;
+    }
+
+
+    private getCategories(): Array<CategoryForm> {
+
+        if (this.viewFacade.isInOverview()) {
+            return this.projectConfiguration.getConcreteOverviewCategories();
+        } else if (this.viewFacade.isInTypesManagement()) {
+            return this.projectConfiguration.getTypeManagementCategories();
+        } else if (this.viewFacade.isInInventoryManagement()) {
+            return this.projectConfiguration.getInventoryCategories();
+        } else if (this.viewFacade.isInWorkflowManagement()) {
+            return this.projectConfiguration.getCategory('Process').children;
+        } else {
+            console.error('Invalid view:', this.viewFacade.getView());
+            return [];
+        }
     }
 
 

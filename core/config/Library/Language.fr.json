@@ -4,7 +4,8 @@
     "time": "Temps",
     "position": "Position / Contexte",
     "dimension": "Dimensions",
-    "identification": "Identification"
+    "identification": "Identification",
+    "properties": "Propriétés"
   },
   "commons": {
     "dimensionLength": {
@@ -54,14 +55,6 @@
     "diary": {
       "label": "Carnet de fouille",
       "description": "Référence au carnet de fouille"
-    },
-    "beginningDate": {
-      "label": "Date de début",
-      "description": "Date à laquelle l'enregistrement a débuté"
-    },
-    "endDate": {
-      "label": "Date de fin",
-      "description": "Date à laquelle l'enregistrement s'est conclu"
     },
     "date": {
       "label": "Date"
@@ -886,14 +879,6 @@
         }
       }
     },
-    "ProcessUnit": {
-      "label": "Unité de traitement",
-      "fields": {
-        "operationClassification": {
-          "label": "Classification de l'opération"
-        }
-      }
-    },
     "Terracotta": {
       "label": "Terracotta",
       "fields": {
@@ -969,9 +954,6 @@
       "fields": {
         "labNumber": {
           "label": "Numéro de laboratoire"
-        },
-        "weight": {
-          "label": "Poids (en gr.)"
         },
         "sampleType": {
           "label": "Type d'échantillon"
@@ -1110,9 +1092,6 @@
         },
         "storageInventoryNumber": {
           "label": "Numéro d'inventaire"
-        },
-        "weight": {
-          "label": "Poids (en gr.)"
         },
         "condition": {
           "label": "Etat"

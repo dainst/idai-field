@@ -207,7 +207,7 @@ export class TabManager {
 
     private async openTabForRoute(route: string) {
 
-        const {routeName, operationId} = TabUtil.getTabValuesForRoute(route);
+        const { routeName, operationId } = TabUtil.getTabValuesForRoute(route);
 
         if (operationId && operationId !== 'project' && operationId !== 'types'
                 && !this.getTab(routeName, operationId) && routeName === 'resources') {
@@ -226,7 +226,7 @@ export class TabManager {
 
     private updateActiveTab(route: string) {
 
-        const {routeName, operationId} = TabUtil.getTabValuesForRoute(route);
+        const { routeName, operationId } = TabUtil.getTabValuesForRoute(route);
 
         const tab: Tab|undefined = this.tabs.find(tab => {
             return tab.routeName === routeName && tab.operationId === operationId;
@@ -236,7 +236,7 @@ export class TabManager {
             this.activeTab = tab;
             this.activeTab.shown = true;
             this.validateTabSpace();
-        } else if (route === '/resources/project') {
+        } else if (route === '/resources/project' || route === '/') {
             this.activeTab = undefined;
             this.validateTabSpace();
         }

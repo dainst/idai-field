@@ -1,0 +1,8 @@
+<div class="configuration-info-container">
+    <div class="configuration-info-description">{{getDescription()}}</div>
+    <div *ngIf="configurationItem.references"
+         class="configuration-info-references-container"
+         [class.with-description]="getDescription()">
+        <references-info [references]="configurationItem.references"></references-info>
+    </div>
+</div>

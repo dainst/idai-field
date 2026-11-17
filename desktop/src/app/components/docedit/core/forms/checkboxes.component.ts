@@ -1,9 +1,12 @@
-import { Component, Input, OnChanges } from '@angular/core';
-import { Datastore, Valuelist, ValuelistUtil, Labels, Hierarchy, Resource, Field } from 'idai-field-core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
+import { Datastore, Valuelist, ValuelistUtil, Labels, Resource, Field, ValuelistValue } from 'idai-field-core';
+import { ConfigurationInfoProvider } from '../../../widgets/configuration-info-provider';
+
 
 @Component({
     selector: 'form-field-checkboxes',
-    templateUrl: './checkboxes.html'
+    templateUrl: './checkboxes.html',
+    standalone: false
 })
 
 /**
@@ -11,17 +14,22 @@ import { Datastore, Valuelist, ValuelistUtil, Labels, Hierarchy, Resource, Field
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class CheckboxesComponent implements OnChanges {
+export class CheckboxesComponent extends ConfigurationInfoProvider implements OnChanges, OnDestroy {
 
     @Input() resource: Resource
     @Input() fieldContainer: any;
     @Input() field: Field;
 
+    @Output() onChanged: EventEmitter<void> = new EventEmitter<void>();
+
     public valuelist: Valuelist;
 
 
     constructor(private datastore: Datastore,
-                private labels: Labels) {}
+                private labels: Labels) {
+            
+        super();
+    }
 
 
     async ngOnChanges() {
@@ -29,8 +37,14 @@ export class CheckboxesComponent implements OnChanges {
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
             await this.datastore.get('project'),
-            await Hierarchy.getParentResource(id => this.datastore.get(id), this.resource)
+            this.fieldContainer[this.field.name]
         );
+    }
+
+
+    ngOnDestroy() {
+
+        this.removeListeners();
     }
 
 
@@ -39,11 +53,20 @@ export class CheckboxesComponent implements OnChanges {
     public getLabel = (valueId: string) => this.labels.getValueLabel(this.valuelist, valueId);
 
 
+    public hasInfo(valueId: string): boolean {
+        
+        const value: ValuelistValue = this.valuelist?.values[valueId];
+        return value && !!(this.labels.getDescription(value) || value.references?.length);
+    }
+
+
     public toggleCheckbox(item: string) {
 
         if (!this.fieldContainer[this.field.name]) this.fieldContainer[this.field.name] = [];
         if (!this.removeItem(item)) this.fieldContainer[this.field.name].push(item);
         if (this.fieldContainer[this.field.name].length === 0) delete this.fieldContainer[this.field.name];
+
+        this.onChanged.emit();
     }
 
 

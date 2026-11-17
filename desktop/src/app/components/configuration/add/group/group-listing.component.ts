@@ -7,7 +7,8 @@ import { GroupEntry } from '../../../../services/configuration/index/group-index
 
 @Component({
     selector: 'group-listing',
-    templateUrl: './group-listing.html'
+    templateUrl: './group-listing.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

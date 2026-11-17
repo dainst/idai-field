@@ -1,5 +1,5 @@
 import ExifReader from 'exifreader';
-import { ImageManipulation } from './image-manipulation';
+import { imageSize } from 'image-size';
 
 
 /**
@@ -24,7 +24,7 @@ export type ImageMetadata = {
 export async function extendMetadataByFileData(existingMetadata: ImageMetadata, data: Buffer,
                                                parseDraughtsmenFromMetadata: boolean): Promise<ImageMetadata> {
 
-    const { width, height } = await ImageManipulation.getSharpImage(data).metadata();
+    const { width, height } = getDimensions(data);
     const internalMetadata: ExifReader.ExpandedTags = ExifReader.load(data, { expanded: true });
 
     existingMetadata.width = width;
@@ -40,6 +40,20 @@ export async function extendMetadataByFileData(existingMetadata: ImageMetadata, 
 }
 
 
+function getDimensions(data: Buffer): { width: number, height: number } {
+
+    let { width, height, orientation } = imageSize(data as any);
+
+    if (orientation > 4) {
+        let temp: number = width;
+        width = height;
+        height = temp;
+    }
+
+    return { width, height };
+}
+
+
 function getCreator(tags: ExifReader.ExpandedTags): string {
 
     if (tags.exif && tags.exif.Artist) {
@@ -47,7 +61,7 @@ function getCreator(tags: ExifReader.ExpandedTags): string {
     }
 
     if (tags.iptc && tags.iptc['By-line']) {
-        return tags.iptc['By-line'].description;
+        return getIptcTag(tags, 'By-line').description;
     }
 
     if (tags.xmp && 'creator' in tags.xmp) {
@@ -71,7 +85,9 @@ function getCreationDate(tags: ExifReader.ExpandedTags): Date {
 
     if (tags.iptc && 'Time Created' in tags.iptc && 'Date Created' in tags.iptc) {
         // Combine both iptc tags in order to create valid Date.
-        const parsed = new Date(`${tags.iptc['Date Created'].description}T${tags.iptc['Time Created'].description}`);
+        const parsed = new Date(
+            `${getIptcTag(tags, 'Date Created').description}T${getIptcTag(tags, 'Time Created').description}`
+        );
         if (parsed.toString() !== 'Invalid Date') return parsed;
     }
 
@@ -92,4 +108,12 @@ function getCreationDate(tags: ExifReader.ExpandedTags): Date {
     }
 
     return undefined;
+}
+
+
+function getIptcTag(tags: ExifReader.ExpandedTags, tagName: string) {
+
+    return Array.isArray(tags.iptc[tagName]) && tags.iptc[tagName].length
+        ? tags.iptc[0]
+        : tags.iptc[tagName];
 }

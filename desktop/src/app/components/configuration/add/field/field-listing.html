@@ -1,6 +1,6 @@
 <ul class="bg-light listing">
     <li *ngFor="let field of fields"
-        [id]="'select-field-' + field.name"
+        [id]="getFieldId(field)"
         [class.selected]="selectedField === field"
         (click)="select(field)">
         <span class="item-label">{{getLabel(field)}}</span>
@@ -10,7 +10,7 @@
     </li>
     <li *ngIf="isNewFieldOptionShown()"
         id="new-field-button"
-        class="new-entry-button btn btn-success"
+        class="new-entry-button btn btn-success mt-2"
         (click)="select(emptyField)">
         <span class="mdi mdi-plus-circle"></span>
         <div i18n="@@configuration.newField">Neues Feld <code>{{emptyField.name}}</code> erstellen</div>        

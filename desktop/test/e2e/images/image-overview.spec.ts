@@ -1,4 +1,5 @@
-import { click, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { click, closeAllMessages, navigateTo, resetApp, start, stop, waitForExist, waitForMessage,
+    waitForNotExist } from '../app';
 import { ImageOverviewPage } from './image-overview.page';
 import { SearchBarPage } from '../widgets/search-bar.page';
 import { DoceditPage } from '../docedit/docedit.page';
@@ -9,7 +10,7 @@ import { NavbarPage } from '../navbar.page';
 const { test, expect } = require('@playwright/test');
 
 
-test.describe('images --', function() {
+test.describe('image overview', () => {
 
     const resourceId1 = 'tf1';
     const resourceId2 = 'si0';
@@ -229,8 +230,8 @@ test.describe('images --', function() {
         await DoceditPage.typeInInputField('identifier', 'I1');
         await DoceditPage.clickSaveDocument(false, false);
 
-        await NavbarPage.awaitAlert('existiert bereits', false);
-        await NavbarPage.clickCloseAllMessages();
+        await waitForMessage('existiert bereits', false);
+        await closeAllMessages();
 
         await DoceditPage.clickCloseEdit('discard');
         await ImageViewPage.clickCloseButton();

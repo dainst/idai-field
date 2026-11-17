@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, Input, OnChanges } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, Input, OnChanges, OnDestroy,
+    ChangeDetectorRef } from '@angular/core';
 import { to } from 'tsfun';
 import { FieldDocument } from 'idai-field-core';
 import { ResourcesComponent } from '../../resources.component';
@@ -18,15 +19,17 @@ import { WarningsService } from '../../../../services/warnings/warnings-service'
     selector: 'sidebar-list',
     templateUrl: './sidebar-list.html',
     host: {
-        '(window:contextmenu)': 'handleClick($event, true)'
-    }
+        '(window:contextmenu)': 'handleClick($event, true)',
+        '(window:resize)': 'closeContextMenu()'
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class SidebarListComponent extends BaseList implements AfterViewInit, OnChanges {
+export class SidebarListComponent extends BaseList implements AfterViewInit, OnChanges, OnDestroy {
 
     @Input() selectedDocument: FieldDocument;
 
@@ -34,17 +37,20 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     public contextMenu: ResourcesContextMenu = new ResourcesContextMenu();
 
+    public readonly itemSize: number = 59;
+
     private lastSelectedDocument: FieldDocument|undefined;
 
 
-    constructor(private navigationService: NavigationService,
+    constructor(public resourcesComponent: ResourcesComponent,
+                private navigationService: NavigationService,
                 private warningsService: WarningsService,
-                resourcesComponent: ResourcesComponent,
+                changeDetectorRef: ChangeDetectorRef,
                 loading: Loading,
                 viewFacade: ViewFacade,
                 menuService: Menus) {
 
-        super(resourcesComponent, viewFacade, loading, menuService);
+        super(viewFacade, loading, menuService, changeDetectorRef);
 
         this.navigationService.moveIntoNotifications().subscribe(async () => {
             await this.viewFacade.deselect();
@@ -56,6 +62,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         this.viewFacade.navigationPathNotifications().subscribe(() => {
             this.contextMenu.close();
             this.sidebarElement.nativeElement.focus();
+            if (!this.selectedDocument) this.scrollToLastSelectedSegmentResource();
         });
     }
 
@@ -69,8 +76,14 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     ngOnChanges() {
 
         this.resourcesComponent.additionalSelectedDocuments = [];
-        this.lastSelectedDocument = undefined;
-        this.scrollTo(this.selectedDocument);
+        this.scrollTo(this.selectedDocument, this.isScrolledToBottomElement());
+        this.lastSelectedDocument = this.selectedDocument;
+    }
+
+
+    ngOnDestroy() {
+
+        this.removeListeners();
     }
 
 
@@ -156,8 +169,11 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
             case 'edit-qr-code':
                 await this.resourcesComponent.editQRCode(this.selectedDocument);
                 break;
-            case 'scan-storage-place':
-                await this.resourcesComponent.scanStoragePlace(this.contextMenu.documents as Array<FieldDocument>);
+            case 'scan-resource':
+                await this.resourcesComponent.scanResource(this.contextMenu.documents as Array<FieldDocument>);
+                break;
+            case 'edit-workflow':
+                await this.resourcesComponent.editWorkflow(this.contextMenu.documents);
                 break;
             case 'edit-geometry':
                 await this.viewFacade.setSelectedDocument(this.selectedDocument.resource.id);
@@ -185,7 +201,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
         if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
                 || rightClick && target.id && target.id.startsWith('resource-'))) {
-            this.contextMenu.close();
+            this.closeContextMenu();
         }
     }
 
@@ -239,5 +255,25 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 ? undefined
                 : navigationPath.segments[newSegmentIndex].document
         );
+    }
+
+
+    private isScrolledToBottomElement(): boolean {
+
+        if (!this.lastSelectedDocument || !this.selectedDocument) return false;
+
+        const documents: Array<FieldDocument> = this.viewFacade.getDocuments();
+        
+        const lastSelectedDocumentIndex: number = documents.findIndex(document => {
+            return document.resource.id === this.lastSelectedDocument.resource.id; }
+        );
+        const selectedDocumentIndex: number = documents.findIndex(document => {
+            return document.resource.id === this.selectedDocument.resource.id; }
+        );
+
+        const indexDifference: number = selectedDocumentIndex - lastSelectedDocumentIndex;
+        const numberOfDisplayedItems: number = Math.floor(this.scrollViewport.getViewportSize() / this.itemSize);
+
+        return indexDifference > 0 && indexDifference <= numberOfDisplayedItems;
     }
 }

@@ -11,7 +11,8 @@ import { scrollTo } from '../../../../angular/scrolling';
 
 @Component({
     selector: 'valuelist-listing',
-    templateUrl: './valuelist-listing.html'
+    templateUrl: './valuelist-listing.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -30,6 +31,8 @@ export class ValuelistListingComponent implements OnChanges {
     @Output() onOpenEditor = new EventEmitter<Valuelist>();
 
     @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
+
+    public readonly itemSize: number = 40;
 
 
     constructor(private labels: Labels,
@@ -96,6 +99,6 @@ export class ValuelistListingComponent implements OnChanges {
         if (!this.scrollViewport) return;
 
         const index = this.filteredValuelists.findIndex(valuelist => valuelist.id === valuelistId);
-        scrollTo(index, 'valuelist-' + valuelistId.replace(':', '-'), this.scrollViewport);
+        scrollTo(index, 'valuelist-' + valuelistId.replace(':', '-'), this.itemSize, this.scrollViewport);
     }
 }

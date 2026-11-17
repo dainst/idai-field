@@ -1,7 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef } from '@angular/core';
-import { Datastore, ImageDocument, ImageVariant } from 'idai-field-core';
+import { Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef, OnInit, OnDestroy,
+    ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { FileInfo, ImageDocument, ImageStore, ImageVariant } from 'idai-field-core';
 import { constructGrid } from './construct-grid';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
+import { ImageToolLauncher } from '../../../services/imagestore/image-tool-launcher';
+import { SettingsProvider } from '../../../services/settings/settings-provider';
 
 
 const DROPAREA = 'droparea';
@@ -9,14 +13,15 @@ const DROPAREA = 'droparea';
 
 @Component({
     selector: 'image-grid',
-    templateUrl: './image-grid.html'
+    templateUrl: './image-grid.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class ImageGridComponent implements OnChanges {
+export class ImageGridComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() nrOfColumns: number = 1;
     @Input() documents: Array<ImageDocument>;
@@ -27,6 +32,7 @@ export class ImageGridComponent implements OnChanges {
     @Input() showIdentifier = true;
     @Input() showShortDescription = true;
     @Input() showGeoIcon = false;
+    @Input() showNoOriginalImageIcon = false;
     @Input() showTooltips = false;
     @Input() showDropArea = false;
     @Input() compressDropArea = false;
@@ -37,15 +43,19 @@ export class ImageGridComponent implements OnChanges {
     @Output() onDoubleClick = new EventEmitter<any>();
 
     public rows = [];
-    public resourceIdentifiers: { [id: string]: string } = {};
 
     private calcGridTimeout: any;
     private calcGridPromise: Promise<void>|undefined;
 
+    private downloadSubscription: Subscription;
+
 
     constructor(private element: ElementRef,
-                private datastore: Datastore,
-                private imageUrlMaker: ImageUrlMaker) {}
+                private imageUrlMaker: ImageUrlMaker,
+                private imageToolLauncher: ImageToolLauncher,
+                private imageStore: ImageStore,
+                private settingsProvider: SettingsProvider,
+                private changeDetectorRef: ChangeDetectorRef) {}
 
 
     public async handleClick(document: ImageDocument, event: MouseEvent) {
@@ -58,37 +68,36 @@ export class ImageGridComponent implements OnChanges {
     }
 
 
+    ngOnInit() {
+        
+        this.downloadSubscription = this.imageToolLauncher.downloadNotifications()
+            .subscribe(() => this.loadImages(this.rows));
+    }
+
+
+    ngOnDestroy() {
+        
+        if (this.downloadSubscription) this.downloadSubscription.unsubscribe();
+    }
+
+
     async ngOnChanges(changes: SimpleChanges) {
 
         if (!changes['documents']) return;
 
         if (this.showDropArea) this.insertStubForDropArea();
-        this.calcGrid();
+        await this.triggerGridCalculation();
     }
 
 
-    public async onCellMouseEnter(doc: ImageDocument) {
-
-        if (!this.showLinkBadges) return;
-
-        for (const depictsRelId of doc.resource.relations.depicts) {
-
-            if (!this.resourceIdentifiers[depictsRelId]) {
-                const target = await this.datastore.get(depictsRelId);
-                this.resourceIdentifiers[depictsRelId] = target.resource.identifier;
-            }
-        }
-    }
-
-
-    public async calcGrid() {
+    public async triggerGridCalculation() {
 
         if (this.calcGridTimeout) clearTimeout(this.calcGridTimeout);
 
         this.calcGridTimeout = setTimeout(async () => {
             this.calcGridPromise = this.calcGridPromise
-                ? this.calcGridPromise.then(() => this._calcGrid())
-                : this._calcGrid();
+                ? this.calcGridPromise.then(() => this.calculateGrid())
+                : this.calculateGrid();
 
             await this.calcGridPromise;
 
@@ -98,8 +107,8 @@ export class ImageGridComponent implements OnChanges {
     }
 
 
-    private async _calcGrid() {
-
+    private async calculateGrid() {
+        
         if (!this.documents) return;
 
         const rows = constructGrid(
@@ -111,10 +120,16 @@ export class ImageGridComponent implements OnChanges {
 
         await this.loadImages(rows);
         this.rows = rows;
+
+        this.changeDetectorRef.detectChanges();
     }
 
 
     private async loadImages(rows: any) {
+
+        const fileInfos: { [uuid: string]: FileInfo } = await this.imageStore.getFileInfos(
+            this.settingsProvider.getSettings().selectedProject, [ImageVariant.ORIGINAL]
+        );
 
         for (const row of rows) {
             for (const cell of row) {
@@ -126,6 +141,9 @@ export class ImageGridComponent implements OnChanges {
                 ) continue;
 
                 cell.imgSrc = await this.imageUrlMaker.getUrl(cell.document.resource.id, ImageVariant.THUMBNAIL);
+                cell.hasOriginalImage = fileInfos[cell.document.resource.id]?.variants.find(variant => {
+                    return variant.name === ImageVariant.ORIGINAL;
+                }) !== undefined;
             }
         }
     }
@@ -150,7 +168,7 @@ export class ImageGridComponent implements OnChanges {
                 originalFilename: '',
                 width: 1,
                 height: this.compressDropArea ? 0.2 : 1,
-                relations: { depicts: [] }
+                relations: {}
             }
         } as any].concat(this.documents);
     }

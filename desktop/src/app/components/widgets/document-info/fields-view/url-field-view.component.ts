@@ -4,7 +4,8 @@ import { validateUrl } from 'idai-field-core';
 
 @Component({
     selector: 'url-field-view',
-    templateUrl: './url-field-view.html'
+    templateUrl: './url-field-view.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

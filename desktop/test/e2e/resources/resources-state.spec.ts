@@ -24,7 +24,7 @@ const { test, expect } = require('@playwright/test');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-test.describe('resources/state --', () => {
+test.describe('resources/state', () => {
 
     test.beforeAll(async () => {
 
@@ -254,6 +254,7 @@ test.describe('resources/state --', () => {
         await SearchConstraintsPage.clickSelectDropdownValue('Brandschicht');
         await SearchConstraintsPage.clickAddConstraintButton();
         await SearchBarPage.clickSearchBarInputField();
+        await SearchBarPage.typeInSearchField('S');
 
         await waitForExist(await ResourcesSearchBarPage.getSuggestionsBox());
         const suggestions = await ResourcesSearchBarPage.getSuggestions();
@@ -514,7 +515,7 @@ test.describe('resources/state --', () => {
         await ResourcesPage.performCreateResource('c4', 'feature');
         await ResourcesPage.clickHierarchyButton('c4');
         await ResourcesPage.performCreateResource('c5', 'feature');
-        await ResourcesPage.performCreateRelation('c5', 'c3', 'isContemporaryWith');
+        await ResourcesPage.performCreateRelation('c5', 'c3', 'isContemporaryWith', true);
 
         await ResourcesPage.clickSelectResource('c5');
         await FieldsViewPage.clickAccordionTab(1);

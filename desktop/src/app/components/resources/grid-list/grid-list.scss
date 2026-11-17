@@ -15,8 +15,8 @@ grid-list {
   #grid-list {
     height: calc(100vh - #{$navbar-height + $toolbar-height});
     margin-top: 2px;
-    margin-left: -15px;
-    margin-right: -15px;
+    margin-left: -12px;
+    margin-right: -12px;
     border-top: 1px solid #e9ecef;
 
     loading-icon {
@@ -27,6 +27,12 @@ grid-list {
       &.with-main-document {
         left: calc(50% + 109px);
       }
+    }
+
+    .grid-list-warning {
+      position: absolute;
+      padding: 10px;
+      margin: 35vh 16.6vw 0;
     }
 
     #grid-elements-container {
@@ -71,11 +77,11 @@ grid-list {
         position: relative;
 
         #plus-button-container {
+          position: absolute;
+          bottom: -6px;
+          left: calc(50% - 21px);
           height: 63px;
           padding-top: 10px;
-          position: absolute;
-          bottom: 0;
-          left: calc(50% - 21px);
 
           #create-document-button .circular-button {
             margin: auto auto auto auto;

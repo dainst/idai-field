@@ -7,7 +7,8 @@ import { SearchBarComponent } from '../../../widgets/search-bar.component';
     templateUrl: './image-overview-search-bar.html',
     host: {
         '(document:click)': 'handleClick($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

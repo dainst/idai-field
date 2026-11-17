@@ -9,10 +9,8 @@ import { Edges } from './edges-builder';
  */
 export module DotBuilder {
 
-    export function build(projectConfiguration: ProjectConfiguration,
-                          groups: { [group: string]: Array<Document> },
-                          edges: { [id: string]: Edges },
-                          curvedLineMode = true): string {
+    export function build(projectConfiguration: ProjectConfiguration, groups: { [group: string]: Array<Document> },
+                          edges: { [id: string]: Edges }, curvedLineMode = true): string {
 
         const documents: Array<Document> = getDocuments(groups);
 
@@ -31,8 +29,7 @@ export module DotBuilder {
     }
 
 
-    function createSameRankEdgesDefinitions(documents: Array<Document>,
-                                            edges: { [id: string]: Edges }): string {
+    function createSameRankEdgesDefinitions(documents: Array<Document>, edges: { [id: string]: Edges }): string {
 
         if (!hasSameRankEdges(edges)) return '';
 
@@ -51,8 +48,7 @@ export module DotBuilder {
     }
 
 
-    function createAboveEdgesDefinitions(documents: Array<Document>,
-                                         edges: { [id: string]: Edges }): string {
+    function createAboveEdgesDefinitions(documents: Array<Document>, edges: { [id: string]: Edges }): string {
 
         const result: string = documents
             .map(createAboveEdgesDefinition(documents, edges))
@@ -63,8 +59,7 @@ export module DotBuilder {
     }
 
 
-    function createRootDocumentMinRankDefinition(documents: Array<Document>,
-                                                 edges: { [id: string]: Edges }): string {
+    function createRootDocumentMinRankDefinition(documents: Array<Document>, edges: { [id: string]: Edges }): string {
 
         const rootDocuments = documents.filter(isRootDocument(documents, edges));
 
@@ -80,7 +75,7 @@ export module DotBuilder {
     function createNodeDefinitions(projectConfiguration: ProjectConfiguration,
                                    groups: { [group: string]: Array<Document> }): string {
 
-        return 'node [style=filled, fontname="Open SansVariable"] '
+        return 'node [style=filled, fontname="Open Sans Variable"] '
             + Object
                 .keys(groups)
                 .map(group => createNodeDefinitionsForGroup(
@@ -90,8 +85,8 @@ export module DotBuilder {
     }
 
 
-    function createNodeDefinitionsForGroup(projectConfiguration: ProjectConfiguration,
-                                           group: string, documents: Array<Document>): string {
+    function createNodeDefinitionsForGroup(projectConfiguration: ProjectConfiguration, group: string,
+                                           documents: Array<Document>): string {
 
         const nodeDefinitions: string =
             documents
@@ -102,7 +97,7 @@ export module DotBuilder {
             ? nodeDefinitions
             : 'subgraph "cluster ' + group + '" '
                 + '{label="' + group + '" '
-                + 'fontname="Open SansVariable" '
+                + 'fontname="Open Sans Variable" '
                 + 'color=grey '
                 + 'bgcolor=aliceblue '
                 + 'style=dashed '
@@ -125,7 +120,7 @@ export module DotBuilder {
 
             const documentEdges: Edges = edges[document.resource.id];
 
-            if (isEmpty(documentEdges.aboveIds) || !isEmpty(documentEdges.belowIds)) return false;
+            if (!documentEdges.aboveIds.length || documentEdges.belowIds.length) return false;
 
             processedDocuments.push(document.resource.id);
 
@@ -144,8 +139,8 @@ export module DotBuilder {
     }
 
 
-    function isNonRootDocument(documents: Array<Document>,
-                               processedDocuments: string[], edges: { [id: string]: Edges }) {
+    function isNonRootDocument(documents: Array<Document>, processedDocuments: string[],
+                               edges: { [id: string]: Edges }) {
 
         return (targetId: string) => {
 
@@ -165,7 +160,7 @@ export module DotBuilder {
         const updatedProcessedSameRankTargetIds: string[] =
             copy(processedSameRankTargetIds).concat(document.resource.id);
 
-        if (isEmpty(targetIds)) return [undefined, copy(updatedProcessedSameRankTargetIds)];
+        if (!targetIds.length) return [undefined, copy(updatedProcessedSameRankTargetIds)];
 
         return [createEdgesDefinitions(targetIds, documents, document)
             + ' '
@@ -205,8 +200,7 @@ export module DotBuilder {
     }
 
 
-    function createAboveEdgesDefinition(documents: Array<Document>,
-                                        edges: { [id: string]: Edges }) {
+    function createAboveEdgesDefinition(documents: Array<Document>, edges: { [id: string]: Edges }) {
 
         return (document: Document): string|undefined => {
 

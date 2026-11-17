@@ -1,6 +1,7 @@
 import { Geometry } from 'geojson';
 import { isObject, to, clone } from 'tsfun';
-import { Dating, Dimension, Literature, OptionalRange, I18N, Field as FieldDefinition } from 'idai-field-core';
+import { Dating, Measurement, Literature, OptionalRange, I18N, Field as FieldDefinition,
+    DateSpecification } from 'idai-field-core';
 import { getLabel } from '../shared/languages';
 import { ResultDocument } from './result';
 
@@ -41,18 +42,21 @@ export interface FieldGroup {
 }
 
 
-export interface DimensionWithLabeledMeasurementPosition extends Omit<Dimension, 'measurementPosition'> {
+export interface DimensionWithLabeledMeasurementPosition extends Omit<Measurement, 'measurementPosition'> {
     measurementPosition?: LabeledValue;
 }
 
 
-export function convertMeasurementPosition(dimension: Dimension): Dimension {
-    
-    if (!isObject(dimension) || !dimension.measurementPosition) return dimension;
+export function convertMeasurementSubfieldValue(measurement: Measurement,
+                                                inputType: FieldDefinition.InputType): Measurement {
 
-    const result: Dimension = clone(dimension);
-    result.measurementPosition = isLabeledValue(dimension.measurementPosition)
-        ? getLabel(dimension.measurementPosition)
+    const subfieldName: string = Measurement.getValuelistSubfieldName(inputType);
+    
+    if (!isObject(measurement) || !measurement[subfieldName]) return measurement;
+
+    const result: Measurement = clone(measurement);
+    result[subfieldName] = isLabeledValue(measurement[subfieldName])
+        ? getLabel(measurement[subfieldName])
         : undefined;
 
     return result;
@@ -63,7 +67,8 @@ export type FieldValue =
     string
     | LabeledValue
     | boolean
-    | Dimension
+    | DateSpecification
+    | Measurement
     | DimensionWithLabeledMeasurementPosition
     | Dating
     | Literature

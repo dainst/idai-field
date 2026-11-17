@@ -13,12 +13,12 @@
         <div *ngIf="!item.isCategoryHeader">
             <span class="mdi mdi-script-text-outline"></span>
             <code>{{item.form.libraryId}}</code>
-            <div *ngIf="item.form.createdBy" class="badge badge-primary">{{item.form.createdBy}}</div>
+            <div *ngIf="item.form.createdBy" class="badge bg-primary">{{item.form.createdBy}}</div>
         </div>
     </li>
     <li *ngIf="isNewCategoryOptionShown()"
         id="new-category-button"
-        class="new-entry-button btn btn-success"
+        class="new-entry-button btn btn-success mt-2"
         (click)="selectForm(emptyForm)">
         <span class="mdi mdi-plus-circle"></span>
         <div i18n="@@configuration.newCategory">Neue Kategorie <code>{{emptyForm.libraryId}}</code> erstellen</div>

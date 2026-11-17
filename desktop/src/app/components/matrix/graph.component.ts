@@ -1,7 +1,6 @@
 import { Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, Renderer2,
     ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
 import { Subscription } from 'rxjs';
 import { GraphManipulation } from './graph-manipulation';
@@ -11,7 +10,8 @@ import { MatrixSelection, MatrixSelectionChange } from './matrix-selection';
 
 @Component({
     selector: 'graph',
-    templateUrl: './graph.html'
+    templateUrl: './graph.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

@@ -1,0 +1,281 @@
+defmodule FieldPublication.FileService do
+  alias FieldPublication.Publication
+
+  @file_store_path Application.compile_env(:field_publication, :file_store_directory_root)
+  @custom_assets_path "#{@file_store_path}/custom_assets/"
+  @custom_images_path "#{@custom_assets_path}/images"
+
+  @moduledoc """
+  This module handles interaction with data served from the application's file system. This is
+  currently means all image data variants.
+  """
+  def initial_setup() do
+    File.mkdir_p!("#{@custom_assets_path}/images")
+  end
+
+  def custom_assets_path(), do: @custom_assets_path
+
+  def list_uploaded_logos() do
+    @custom_images_path
+    |> File.ls!()
+    |> Enum.map(fn file_name -> {file_name, "#{@custom_images_path}/#{file_name}"} end)
+  end
+
+  def store_admin_image_upload(input_path, target_file_name) do
+    target_path = "#{@custom_images_path}/#{target_file_name}"
+
+    if File.exists?(target_path) do
+      {:error, :exists}
+    else
+      File.cp(input_path, target_path)
+    end
+  end
+
+  def delete_admin_image_upload(file_name) do
+    "#{@custom_images_path}/#{file_name}"
+    |> File.rm()
+  end
+
+  def get_raw_data_path(project_identifier) when is_binary(project_identifier) do
+    "#{@file_store_path}/raw/#{project_identifier}"
+  end
+
+  def get_raw_image_data_path(project_identifier) when is_binary(project_identifier) do
+    "#{get_raw_data_path(project_identifier)}/image"
+  end
+
+  def get_raw_image_data_path(project_identifier, uuid)
+      when is_binary(project_identifier) and is_binary(uuid) do
+    "#{get_raw_image_data_path(project_identifier)}/#{uuid}"
+  end
+
+  def get_web_images_path(project_identifier) do
+    "#{@file_store_path}/web_images/#{project_identifier}"
+  end
+
+  def get_web_images_path(project_identifier, uuid) do
+    "#{get_web_images_path(project_identifier)}/#{uuid}.tif"
+  end
+
+  def get_iiif_cache_path(project_identifier) when is_binary(project_identifier) do
+    Path.join([
+      @file_store_path,
+      "iiif_cache",
+      project_identifier
+    ])
+  end
+
+  def get_map_tiles_base_path(project_identifier) do
+    "#{@file_store_path}/map_tiles/#{project_identifier}"
+  end
+
+  def get_map_tiles_base_path(project_identifier, uuid) do
+    "#{get_map_tiles_base_path(project_identifier)}/#{uuid}"
+  end
+
+  def initialize!(project_identifier) do
+    # TODO: Add missing?
+    [
+      get_raw_image_data_path(project_identifier),
+      get_web_images_path(project_identifier),
+      get_map_tiles_base_path(project_identifier)
+    ]
+    |> Enum.map(&File.mkdir_p!/1)
+  end
+
+  def create_map_tiles_subdirectory(project_identifier, uuid, z_index, x_index) do
+    path = "#{get_map_tiles_base_path(project_identifier)}/#{uuid}/#{z_index}/#{x_index}"
+    File.mkdir_p!(path)
+  end
+
+  def delete(project_identifier) do
+    # TODO: Add missing?
+    [
+      get_raw_data_path(project_identifier),
+      get_web_images_path(project_identifier),
+      get_map_tiles_base_path(project_identifier)
+    ]
+    |> Enum.map(&File.rm_rf/1)
+    |> Enum.reduce_while([], fn result, acc ->
+      case result do
+        {:error, _, _} = error ->
+          {:halt, error}
+
+        {:ok, path_list} ->
+          {:cont, acc ++ path_list}
+      end
+    end)
+    |> case do
+      {:error, _, _} = error ->
+        error
+
+      path_list ->
+        {:ok, path_list}
+    end
+  end
+
+  def write_raw_data(project_identifier, uuid, data, :image) do
+    File.write!("#{get_raw_data_path(project_identifier)}/image/#{uuid}", data)
+  end
+
+  def read_raw_data(project_identifier, uuid, :image) do
+    File.read!("#{get_raw_data_path(project_identifier)}/image/#{uuid}")
+  end
+
+  def raw_data_file_exists?(project_identifier, uuid, :image) do
+    File.exists?("#{get_raw_data_path(project_identifier)}/image/#{uuid}")
+  end
+
+  def list_raw_data_files(project_identifier) do
+    File.ls!(get_raw_data_path(project_identifier))
+    |> Enum.map(fn directory ->
+      {String.to_existing_atom(directory),
+       File.ls!("#{get_raw_data_path(project_identifier)}/#{directory}")}
+    end)
+    |> Enum.into(%{})
+  end
+
+  def list_web_image_files(project_identifier) do
+    File.ls!(get_web_images_path(project_identifier))
+  end
+
+  def list_tile_image_directories(project_identifier) do
+    File.ls!(get_map_tiles_base_path(project_identifier))
+  end
+
+  def write_geometry_collections(
+        %Publication{} = publication,
+        collection
+      ) do
+    path = publication_geometry_path(publication)
+    compressed_path = publication_geometry_path(publication, true)
+
+    with :ok <- path |> Path.dirname() |> File.mkdir_p(),
+         :ok <- compressed_path |> Path.dirname() |> File.mkdir_p() do
+      content = JSON.encode!(collection)
+
+      File.write!(path, content)
+      File.write!(compressed_path, content |> ExBrotli.compress!())
+
+      %{
+        json: path,
+        compressed: compressed_path
+      }
+    else
+      error ->
+        error
+    end
+  end
+
+  def delete_geometry_collections(%Publication{} = publication) do
+    %{
+      json:
+        publication
+        |> publication_geometry_path()
+        |> File.rm(),
+      compressed:
+        publication
+        |> publication_geometry_path()
+        |> File.rm()
+    }
+  end
+
+  def geo_data_path(%Publication{
+        project_identifier: project_identifier,
+        draft_date: draft_date
+      }) do
+    Path.join([
+      @file_store_path,
+      "geo_data",
+      project_identifier,
+      Date.to_string(draft_date)
+    ])
+  end
+
+  def geo_vector_data_path(
+        %Publication{epsg_code: default_code} = publication,
+        epsg_code,
+        compression
+      )
+      when (is_number(epsg_code) or (is_nil(epsg_code) and is_nil(default_code))) and
+             compression in [:br, :gzip, :none] do
+    compression_suffix =
+      case compression do
+        :br ->
+          ".br"
+
+        :gzip ->
+          ".gz"
+
+        :none ->
+          ""
+      end
+
+    file_name =
+      if is_number(epsg_code) do
+        "vector_geometries_EPSG-#{epsg_code}.geojson#{compression_suffix}"
+      else
+        "vector_geometries_custom-crs.geojson#{compression_suffix}"
+      end
+
+    path =
+      Path.join([
+        geo_data_path(publication),
+        file_name
+      ])
+
+    if File.exists?(path) do
+      {:ok, path}
+    else
+      {:error, :not_found}
+    end
+  end
+
+  def publication_geometry_path(%Publication{} = publication, compressed? \\ false) do
+    Path.join([
+      preprocessed_json(publication),
+      "geo_collections.json#{if compressed?, do: ".br"}"
+    ])
+  end
+
+  def write_hierarchy(
+        %Publication{} = publication,
+        hierarchy
+      ) do
+    path = publication_hierarchy_path(publication)
+
+    with :ok <- path |> Path.dirname() |> File.mkdir_p() do
+      content = JSON.encode!(hierarchy)
+
+      File.write(path, content)
+    else
+      error ->
+        error
+    end
+  end
+
+  def delete_hierarchy(%Publication{} = publication) do
+    publication
+    |> publication_hierarchy_path()
+    |> File.rm()
+  end
+
+  def publication_hierarchy_path(%Publication{} = publication) do
+    Path.join([
+      preprocessed_json(publication),
+      "hierarchy.json"
+    ])
+  end
+
+  defp preprocessed_json(%Publication{
+         project_identifier: project_identifier,
+         draft_date: draft_date
+       }) do
+    Path.join([
+      @file_store_path,
+      "json",
+      project_identifier,
+      Date.to_string(draft_date)
+    ])
+  end
+end

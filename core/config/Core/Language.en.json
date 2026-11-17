@@ -9,6 +9,18 @@
     },
     "shortDescription": {
       "label": "Short description"
+    },
+    "includesStratigraphicalUnits": {
+      "label": "Includes stratigraphical units"
+    },
+    "hasChildren": {
+      "label": "Child resources"
+    },
+    "isSubjectOf": {
+      "label": "Subject of"
+    },
+    "isResultOf": {
+      "label": "Result of"
     }
   },
   "categories": {
@@ -31,6 +43,9 @@
         },
         "width": {
           "label": "Width"
+        },
+        "originalFilename": {
+          "label": "Original filename"
         }
       }
     }
@@ -113,6 +128,12 @@
     },
     "isStoragePlaceOf": {
       "label": "Is storage place of"
+    },
+    "isCarriedOutOn": {
+      "label": "Carried out on"
+    },
+    "resultsIn": {
+      "label": "Results in"
     }
   }
 }

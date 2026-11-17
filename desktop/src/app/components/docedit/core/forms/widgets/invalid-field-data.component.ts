@@ -4,7 +4,8 @@ import { Field, FieldsViewField, Resource, Labels, InvalidDataUtil } from 'idai-
 
 @Component({
     selector: 'invalid-field-data',
-    templateUrl: './invalid-field-data.html'
+    templateUrl: './invalid-field-data.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -16,6 +17,7 @@ export class InvalidFieldDataComponent implements OnChanges {
 
     public fieldsViewField: FieldsViewField;
     public fieldDataLabel: string;
+    public ready: boolean = false;
 
 
     constructor(private labels: Labels) {}
@@ -24,6 +26,7 @@ export class InvalidFieldDataComponent implements OnChanges {
     async ngOnChanges() {
 
         this.fieldDataLabel = InvalidDataUtil.generateLabel(this.resource[this.field.name], this.labels);
+        this.ready = true;
     }
 
 

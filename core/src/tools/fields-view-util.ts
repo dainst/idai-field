@@ -1,22 +1,25 @@
-import { aFlow, is, isArray, isObject, isString, Map, Mapping, on } from 'tsfun';
+import { is, isArray, isObject, isString, Map, on } from 'tsfun';
 import { ProjectConfiguration } from '../services/project-configuration';
 import { Datastore } from '../datastore/datastore';
-import { Dating } from '../model/dating';
-import { Dimension } from '../model/dimension';
-import { Document } from '../model/document';
+import { Dating } from '../model/input-types/dating';
+import { Measurement } from '../model/input-types/measurement';
+import { Document } from '../model/document/document';
 import { BaseGroup, Group } from '../model/configuration/group';
-import { Literature } from '../model/literature';
-import { OptionalRange } from '../model/optional-range';
-import { Resource } from '../model/resource';
+import { Literature } from '../model/input-types/literature';
+import { OptionalRange } from '../model/input-types/optional-range';
+import { Resource } from '../model/document/resource';
 import { Valuelist } from '../model/configuration/valuelist';
 import { CategoryForm } from '../model/configuration/category-form';
 import { BaseField, Field, Subfield } from '../model/configuration/field';
-import { Constraints } from '../model/query';
+import { Constraints } from '../model/datastore/query';
 import { Named } from './named';
 import { Labels } from '../services';
 import { I18N } from './i18n';
-import { Composite } from '../model';
+import { Composite, Condition } from '../model';
 import { StringUtils } from './string-utils';
+import { ValuelistUtil } from './valuelist-util';
+import { DateSpecification } from '../model/input-types/date-specification';
+import { Comparator } from '../services/comparator';
 
 
 export interface FieldsViewGroup extends BaseGroup {
@@ -38,6 +41,7 @@ export interface FieldsViewSubfield {
     definition: BaseField,
     label: string;
     type: FieldsViewFieldType;
+    valuelist?: Valuelist;
 }
 
 
@@ -58,24 +62,25 @@ export module FieldsViewGroup {
  */
 export module FieldsViewUtil {
 
-
     export async function getGroupsForResource(resource: Resource, projectConfiguration: ProjectConfiguration,
-                                               datastore: Datastore, labels: Labels): Promise<Array<FieldsViewGroup>> {
+                                               datastore: Datastore, labels: Labels,
+                                               comparator: Comparator): Promise<Array<FieldsViewGroup>> {
 
-        const relationTargets: Map<Array<Document>> = await Resource.getRelationTargetDocuments(resource, datastore);
-        await addDerivedRelationTargetDocuments(relationTargets, projectConfiguration, resource, datastore);
-
-        const result = await aFlow(
-            projectConfiguration.getCategory(resource.category).groups,
-            createFieldsViewGroups(resource, projectConfiguration, relationTargets, labels)
+        const relationTargets: Map<Array<Document>> = await Resource.getRelationTargetDocuments(
+            resource, datastore, comparator
         );
-
-        return result; 
+        await addDerivedRelationTargetDocuments(relationTargets, projectConfiguration, resource, datastore);
+        
+        return createFieldsViewGroups(
+            projectConfiguration.getCategory(resource.category).groups, resource,
+            projectConfiguration, relationTargets, labels, datastore
+        );
     }
 
 
-    export function getLabel(field: FieldsViewSubfield, fieldContent: any, labels: Labels,
-                             getTranslation: (key: string) => string, formatDecimal: (value: number) => string) {
+    export function getLabel(field: FieldsViewSubfield, fieldContent: any, labels: Labels, timezone: string,
+                             locale: string, timeSuffix: string, getTranslation: (key: string) => string,
+                             formatDecimal: (value: number) => string) {
 
         const entries: any = isArray(fieldContent) ? fieldContent : [fieldContent];
 
@@ -84,6 +89,9 @@ export module FieldsViewUtil {
                 return FieldsViewUtil.getObjectLabel(
                     entry,
                     field,
+                    timezone,
+                    locale,
+                    timeSuffix,
                     getTranslation,
                     formatDecimal,
                     labels
@@ -95,22 +103,37 @@ export module FieldsViewUtil {
     }
 
 
-    export function getObjectLabel(object: any,  field: FieldsViewSubfield, getTranslation: (key: string) => string,
+    export function getObjectLabel(object: any,  field: FieldsViewSubfield, timezone: string, locale: string,
+                                   timeSuffix: string, getTranslation: (key: string) => string,
                                    formatDecimal: (value: number) => string, labels: Labels): string|null {
 
-        if (field?.definition?.inputType === Field.InputType.DATING) {
+        
+        if (field?.definition.inputType === Field.InputType.DATE) {
+            const label: string = DateSpecification.generateLabel(
+                object,
+                timezone,
+                timeSuffix,
+                locale,
+                getTranslation
+            );
+            return label ? StringUtils.prepareStringForHTML(label) : null;
+        } else if (field?.definition?.inputType === Field.InputType.DATING) {
             return object.label ?? Dating.generateLabel(
                 object,
                 getTranslation,
                 (value: I18N.String|string) => labels.getFromI18NString(value)
             );
-        } else if (field?.definition?.inputType === Field.InputType.DIMENSION && field?.definition?.valuelist) {
-            return object.label ?? Dimension.generateLabel(
+        } else if (Field.InputType.MEASUREMENT_INPUT_TYPES.includes(field?.definition?.inputType)
+                && (field.valuelist || field.definition.inputType === Field.InputType.VOLUME)) {
+            return object.label ?? Measurement.generateLabel(
                 object,
+                field.definition.inputType,
                 formatDecimal,
                 getTranslation,
                 (value: I18N.String|string) => labels.getFromI18NString(value),
-                labels.getValueLabel(field.definition.valuelist, object.measurementPosition)
+                labels.getValueLabel(
+                    field.valuelist, object[Measurement.getValuelistSubfieldName(field.definition.inputType)]
+                )
             );
         } else if (field?.definition?.inputType === Field.InputType.LITERATURE) {
             return Literature.generateLabel(
@@ -120,12 +143,15 @@ export module FieldsViewUtil {
             return OptionalRange.generateLabel(
                 object,
                 getTranslation,
-                (value: string) => labels.getValueLabel(field.definition.valuelist, value)
+                (value: string) => labels.getValueLabel(field.valuelist, value)
             );
         } else if (field?.definition?.inputType === Field.InputType.COMPOSITE) {
             return Composite.generateLabel(
                 object,
                 (field.definition as Field).subfields,
+                timezone,
+                timeSuffix,
+                locale,
                 getTranslation,
                 (labeledValue: I18N.LabeledValue) => labels.get(labeledValue),
                 (value: I18N.String|string) => labels.getFromI18NString(value),
@@ -140,8 +166,11 @@ export module FieldsViewUtil {
     }
 
 
-    export function makeField(field: Field, fieldContent: any, projectConfiguration: ProjectConfiguration,
-                              relationTargets: Map<Array<Document>>, labels: Labels): FieldsViewField {
+    export async function makeField(field: Field, fieldContent: any, projectConfiguration: ProjectConfiguration,
+                                    relationTargets: Map<Array<Document>>, labels: Labels,
+                                    datastore: Datastore): Promise<FieldsViewField> {
+        
+        const valuelist: Valuelist = ValuelistUtil.getValuelist(field, await datastore.get('project'));
 
         switch (field.inputType) {
             case Field.InputType.RELATION:
@@ -157,8 +186,9 @@ export module FieldsViewUtil {
                 return {
                     definition: field,
                     label: labels.get(field),
-                    value: getFieldValue(fieldContent, field, labels, projectConfiguration),
+                    value: getFieldValue(fieldContent, field, valuelist, labels, projectConfiguration),
                     type: getFieldType(field.inputType),
+                    valuelist,
                     subfields: makeSubfields(field.subfields, labels)
                 };
         }
@@ -196,19 +226,41 @@ async function addDerivedRelationTargetDocuments(targetDocuments: Map<Array<Docu
 }
 
 
-function getFieldValue(fieldContent: any, field: Field, labels: Labels,
+function getFieldValue(fieldContent: any, field: Field, valuelist: Valuelist, labels: Labels,
                        projectConfiguration: ProjectConfiguration): any {
 
-    return isArray(fieldContent)
-        ? fieldContent.map((fieldContent: any) =>
-            field.subfields && isObject(fieldContent)
-                ? getCompositeFieldValue(fieldContent, labels, field.subfields)
-                : getValue(fieldContent, labels, field.valuelist)
-            
-        )
-        : field.name === Resource.CATEGORY
+    if (isArray(fieldContent)) {
+        return getArrayFieldValue(fieldContent, field, valuelist, labels);
+    } else {
+        return field.name === Resource.CATEGORY
             ? labels.get(projectConfiguration.getCategory(fieldContent))
-            : getValue(fieldContent, labels, field.valuelist);
+            : getValue(fieldContent, labels, valuelist);
+    }
+}
+
+
+function getArrayFieldValue(fieldContent: any, field: Field, valuelist: Valuelist, labels: Labels) {
+
+    const entries: any[] = field.inputType === Field.InputType.CHECKBOXES
+            && fieldContent.every(entry => isString(entry))
+        ? getSortedValues(fieldContent, valuelist, labels)
+        : fieldContent;
+
+    return entries.map((entryContent: any) =>
+        field.subfields && isObject(entryContent)
+            ? getCompositeFieldValue(entryContent, labels, field.subfields)
+            : getValue(entryContent, labels, valuelist)
+    );
+}
+
+
+function getSortedValues(values: string[], valuelist: Valuelist, labels: Labels): string[] {
+
+    const order: string[] = labels.orderKeysByLabels(valuelist);
+
+    return values.slice().sort((valueA: string, valueB: string) => {
+        return order.indexOf(valueA) - order.indexOf(valueB);
+    });
 }
 
 
@@ -228,10 +280,10 @@ function getFieldType(inputType: Field.InputType): FieldsViewFieldType {
 function getValue(fieldContent: any, labels: Labels, valuelist?: Valuelist): any {
 
     return valuelist
-            ? labels.getValueLabel(valuelist, fieldContent)
-            : isString(fieldContent)
-                ? StringUtils.prepareStringForHTML(fieldContent)
-                : fieldContent;
+        ? labels.getValueLabel(valuelist, fieldContent)
+        : isString(fieldContent)
+            ? StringUtils.prepareStringForHTML(fieldContent)
+            : fieldContent;
 }
 
 
@@ -250,38 +302,49 @@ function getCompositeFieldValue(fieldContent: any, labels: Labels, subfields: Ar
 }
 
 
-function createFieldsViewGroups(resource: Resource, projectConfiguration: ProjectConfiguration,
-                                relationTargets: Map<Array<Document>>, labels: Labels): Mapping {
+async function createFieldsViewGroups(groups: Array<Group>, resource: Resource,
+                                      projectConfiguration: ProjectConfiguration,
+                                      relationTargets: Map<Array<Document>>, labels: Labels,
+                                      datastore: Datastore): Promise<Array<FieldsViewGroup>> {
 
-    return function(groups: Array<Group>) {
+    const result: Array<FieldsViewGroup> = [];
 
-        return groups.map(group => {
-            return createFieldsViewGroup(group, resource, projectConfiguration, relationTargets, labels);
-        }).filter(group => group.fields.length);
-    };
+    for (let group of groups) {
+        const fieldsViewGroup: FieldsViewGroup = await createFieldsViewGroup(
+            group, resource, projectConfiguration, relationTargets, labels, datastore
+        );
+        if (fieldsViewGroup.fields.length) result.push(fieldsViewGroup);
+    }
+
+    return result;
 }
 
 
-function createFieldsViewGroup(group: Group, resource: Resource, projectConfiguration: ProjectConfiguration,
-                               relationTargets: Map<Array<Document>>, labels: Labels) {
+async function createFieldsViewGroup(group: Group, resource: Resource, projectConfiguration: ProjectConfiguration,
+                                     relationTargets: Map<Array<Document>>, labels: Labels,
+                                     datastore: Datastore): Promise<FieldsViewGroup> {
 
-    const fields: Array<FieldsViewField> = group.fields
-        .filter(field => field.visible)
-        .map(field => {
-            const fieldContent: any = getFieldContent(resource, field.name);
-            if ((fieldContent !== undefined && fieldContent !== '')
-                    || field.inputType === Field.InputType.DERIVED_RELATION) {
-                return FieldsViewUtil.makeField(
-                    field, fieldContent, projectConfiguration, relationTargets, labels
-                );
-            }
-        }).filter(field => field !== undefined && (!field.targets || field.targets.length > 0));
+    const fields: Array<FieldsViewField> = [];
+    const categoryFields: Array<Field> = CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
+    
+    for (let field of group.fields) {
+        if (!field.visible || !Condition.isFulfilled(field.condition, resource, categoryFields, 'field')) continue;
+        const fieldContent: any = getFieldContent(resource, field.name);
+        if ((fieldContent !== undefined && fieldContent !== '')
+                || field.inputType === Field.InputType.DERIVED_RELATION) {
+            fields.push(
+                await FieldsViewUtil.makeField(
+                    field, fieldContent, projectConfiguration, relationTargets, labels, datastore
+                )
+            );
+        }
+    }
 
     return {
         name: group.name,
         label: group.label,
         defaultLabel: group.defaultLabel,
-        fields
+        fields: fields.filter(field => field !== undefined && (!field.targets || field.targets.length > 0))
     };
 }
 

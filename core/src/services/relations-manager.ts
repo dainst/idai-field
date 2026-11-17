@@ -1,15 +1,16 @@
 import { append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract } from 'tsfun';
-import { Document } from '../model/document';
+import { Document } from '../model/document/document';
 import { Relation } from '../model/configuration/relation';
 import { Datastore } from '../datastore/datastore';
 import { ConnectedDocs } from './utilities/connected-docs'
-import { NewDocument } from '../model/document';
+import { NewDocument } from '../model/document/document';
 import { ProjectConfiguration } from './project-configuration'
 import { ON_RESOURCE_ID } from '../constants';
-import { Query } from '../model/query'
-import RECORDED_IN = Relation.Hierarchy.RECORDEDIN;
+import { Query } from '../model/datastore/query'
 import { childrenOf } from '../basic-index-configuration';
 import { Name, Named } from '../tools/named';
+
+const RECORDED_IN: string = Relation.Hierarchy.RECORDEDIN;
 
 
 /**
@@ -46,7 +47,8 @@ export class RelationsManager {
                         revisionsToSquash: Document[] = []): Promise<Document> {
 
         const persistedDocument = await this.updateWithConnections(
-            document as Document, oldVersion, revisionsToSquash);
+            document as Document, oldVersion, revisionsToSquash
+        );
 
         await this.fixIsRecordedInInLiesWithinDocs(persistedDocument);
         return persistedDocument;
@@ -65,29 +67,32 @@ export class RelationsManager {
      *   [DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR] - if document has a resource id, but does not exist in the db
      *   [DatastoreErrors.GENERIC_DELETE_ERROR] - if cannot delete for another reason
      */
-    public async remove(document: Document,
-                        options?: { descendants?: true, descendantsToKeep?: Array<Document>}) {
+    public async remove(document: Document, options?: { descendants?: true, descendantsToKeep?: Array<Document>}) {
 
         if (options?.descendants !== true) {
-            if (options?.descendantsToKeep !== undefined) throw 'illegal arguments - relationsManager.remove called with descendantsToKeep but descendants option not set';
+            if (options?.descendantsToKeep !== undefined) {
+                throw 'illegal arguments - relationsManager.remove called with descendantsToKeep'
+                    + ' but descendants option not set';
+            }
             await this.removeWithConnectedDocuments(document);
             return;
         }
 
-        const descendants = (await this.datastore.find(childrenOf(document.resource.id))).documents;
+        const descendants: Array<Document> = (await this.datastore.find(childrenOf(document.resource.id))).documents;
 
-        const documentsToBeDeleted =
-            flow(descendants,
-                subtract(ON_RESOURCE_ID, options.descendantsToKeep ?? []),
-                append(document));
+        const documentsToBeDeleted: Array<Document> = flow(
+            descendants,
+            subtract(ON_RESOURCE_ID, options.descendantsToKeep ?? []),
+            append(document)
+        );
 
-        for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
+        for (let document of documentsToBeDeleted) {
+            await this.removeWithConnectedDocuments(document);
+        }
     }
 
 
-    private async updateWithConnections(document: Document,
-                                        oldVersion: Document,
-                                        revisionsToSquash: Array<Document>) {
+    private async updateWithConnections(document: Document, oldVersion: Document, revisionsToSquash: Array<Document>) {
 
         const revs = revisionsToSquash.map(_ => _._rev).filter(isDefined);
         const updated = await this.persistIt(document, revs);
@@ -114,11 +119,9 @@ export class RelationsManager {
         if (isUndefinedOrEmpty(document.resource.relations[RECORDED_IN])) return;
 
         const findResult = await this.findLiesWithinDocs(document.resource.id);
-        const docsToCorrect =
-            findResult
-                .documents
-                .filter(on(['resource', 'relations', RECORDED_IN], isArray))
-                .filter(isNot(on(['resource', 'relations', RECORDED_IN], sameset)(document) as any));
+        const docsToCorrect = findResult.documents
+            .filter(on(['resource', 'relations', RECORDED_IN], isArray))
+            .filter(isNot(on(['resource', 'relations', RECORDED_IN], sameset)(document) as any));
 
         for (let docToCorrect of docsToCorrect) {
             const cloned = Document.clone(docToCorrect);
@@ -128,8 +131,7 @@ export class RelationsManager {
     }
 
 
-    private persistIt(document: Document|NewDocument,
-                      squashRevisionIds: string[]): Promise<Document> {
+    private persistIt(document: Document|NewDocument, squashRevisionIds: string[]): Promise<Document> {
 
         return document.resource.id
             ? this.datastore.update(
@@ -149,7 +151,8 @@ export class RelationsManager {
                 }
             }
         };
-        return this.datastore.find(query);
+
+        return this.datastore.find(query, { includeResourcesWithoutValidParent: true });
     }
 
 

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { to } from 'tsfun';
 import { ProjectConfiguration, RelationsManager, ImageStore, CategoryForm, Document, Datastore,
-    Name, Relation } from 'idai-field-core';
+    Name, Relation, Named } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { FieldConverter } from './field-converter';
 import { buildImportCatalog } from './import/import-catalog';
@@ -14,7 +14,6 @@ import { CsvParser } from './parser/csv-parser';
 import { GazGeojsonParserAddOn } from './parser/gaz-geojson-parser-add-on';
 import { GeojsonParser } from './parser/geojson-parser';
 import { NativeJsonlParser } from './parser/native-jsonl-parser';
-import { ShapefileParser } from './parser/shapefile-parser';
 import { CatalogFilesystemReader } from './reader/catalog-filesystem-reader';
 import { FilesystemReader } from './reader/filesystem-reader';
 import { HttpReader } from './reader/http-reader';
@@ -24,7 +23,7 @@ import { Settings } from '../../services/settings/settings';
 import { ImageRelationsManager } from '../../services/image-relations-manager';
 
 
-export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
+export type ImporterFormat = 'native'|'geojson'|'geojson-gazetteer'|'shapefile'|'csv'|'catalog';
 
 export type ImporterReport = { errors: any[], successfulImports: number, ignoredIdentifiers: string[] };
 
@@ -38,7 +37,7 @@ export interface ImporterOptions {
     selectedCategory?: CategoryForm|undefined;
     separator: string;
     sourceType: string;
-    file?: any|undefined;
+    filePath?: string|undefined;
     url?: string|undefined;
     ignoreUnconfiguredFields?: boolean;
 }
@@ -75,9 +74,14 @@ export module Importer {
     }
 
 
-    export function importIntoOperationAvailable(options: ImporterOptions) {
+    export function importIntoOperationAvailable(options: ImporterOptions,
+                                                 projectConfiguration: ProjectConfiguration) {
 
-        return (options.format === 'native' || options.format === 'csv') && !options.mergeMode;
+        return (options.format === 'native' || options.format === 'csv')
+            && !options.mergeMode
+            && (!options.selectedCategory ||
+                projectConfiguration.getRegularCategories().map(to(Named.NAME))
+                    .includes(options.selectedCategory.name));
     }
 
 
@@ -88,19 +92,19 @@ export module Importer {
      */
     export async function doImport(services: ImporterServices, context: ImporterContext,
                                    generateId: () => string, options: ImporterOptions,
-                                   documents: Array<Document>, typeCategoryNames: string[]): Promise<ImporterReport> {
+                                   documents: Array<Document>, typeCategoryNames: string[],
+                                   imageCategoryNames: string[]): Promise<ImporterReport> {
 
         if (options.format === 'catalog') {
             const { errors, successfulImports } =
-                await (buildImportCatalog(services, context.settings, typeCategoryNames))(documents);
+                await (buildImportCatalog(services, context.settings, typeCategoryNames, imageCategoryNames))(documents);
             return { errors: errors, successfulImports: successfulImports, ignoredIdentifiers: [] };
         }
 
         const operationCategoryNames = context.operationCategories;
         const validator = new ImportValidator(context.projectConfiguration, services.datastore);
         const inverseRelationsMap = Relation.makeInverseRelationsMap(context.projectConfiguration.getRelations());
-        const sameOperationRelations = context.projectConfiguration.getRelations()
-            .filter(relation => relation.sameMainCategoryResource).map(to('name'));
+
         const preprocessDocument = FieldConverter.preprocessDocument(context.projectConfiguration);
         const postprocessDocument = FieldConverter.postprocessDocument(context.projectConfiguration);
         const find = findByIdentifier(services.datastore);
@@ -112,7 +116,8 @@ export module Importer {
                 importFunction = buildImportDocuments(
                     { validator },
                     {
-                        operationCategories: operationCategoryNames, inverseRelationsMap, sameOperationRelations,
+                        operationCategories: operationCategoryNames,
+                        inverseRelationsMap,
                         settings: context.settings
                     },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
@@ -123,7 +128,8 @@ export module Importer {
                 importFunction = buildImportDocuments(
                     { validator },
                     {
-                        operationCategories: operationCategoryNames, inverseRelationsMap, sameOperationRelations,
+                        operationCategories: operationCategoryNames,
+                        inverseRelationsMap,
                         settings: context.settings
                     },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
@@ -133,7 +139,8 @@ export module Importer {
                 importFunction = buildImportDocuments(
                     { validator },
                     {
-                        operationCategories: operationCategoryNames, inverseRelationsMap, sameOperationRelations,
+                        operationCategories: operationCategoryNames,
+                        inverseRelationsMap,
                         settings: context.settings
                     },
                     { find, get, generateId, preprocessDocument, postprocessDocument },
@@ -170,9 +177,8 @@ export module Importer {
 
         const selectedCategory = options.format === 'csv' ? options.selectedCategory : undefined;
         const separator = options.format === 'csv' ? options.separator : undefined;
-        const operationId_ = options.mergeMode ? '' : options.selectedOperationId;
 
-        const parse = createParser(options.format, operationId_, selectedCategory, separator);
+        const parse = createParser(options.format, selectedCategory, separator);
         const documents: Document[] = [];
 
         (await parse(fileContent)).forEach((resultDocument: Document) => documents.push(resultDocument));
@@ -193,29 +199,27 @@ export module Importer {
                           options: ImporterOptions): Reader|undefined {
 
         if (options.sourceType !== 'file') return new HttpReader(options.url, http);
-        if (options.format === 'shapefile') return new ShapefileFilesystemReader(options.file);
-        if (options.format === 'catalog') return new CatalogFilesystemReader(options.file, settings, imagestore);
-        return new FilesystemReader(options.file);
+        if (options.format === 'shapefile') return new ShapefileFilesystemReader(options.filePath);
+        if (options.format === 'catalog') return new CatalogFilesystemReader(options.filePath, settings, imagestore);
+        return new FilesystemReader(options.filePath);
     }
 
 
-    function createParser(format: ImporterFormat, operationId: string, selectedCategory?: CategoryForm,
-                          separator?: string): any {
+    function createParser(format: ImporterFormat, selectedCategory?: CategoryForm, separator?: string): any {
 
         switch (format) {
             case 'csv':
                 if (!selectedCategory) throw 'Selected category must be set for csv import';
                 if (!separator) throw 'Separator must be set for csv import';
-                return CsvParser.build(selectedCategory, operationId, separator);
+                return CsvParser.build(selectedCategory, separator);
             case 'geojson-gazetteer':
                 return GeojsonParser.getParse(
                     GazGeojsonParserAddOn.preValidateAndTransformFeature,
                     GazGeojsonParserAddOn.postProcess
                 );
             case 'geojson':
-                return GeojsonParser.getParse(undefined, undefined);
             case 'shapefile':
-                return ShapefileParser.parse;
+                return GeojsonParser.getParse();
             case 'native':
                 return NativeJsonlParser.parse;
             case 'catalog':

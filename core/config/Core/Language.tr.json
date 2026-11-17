@@ -9,6 +9,18 @@
     },
     "shortDescription": {
       "label": "Kısa açıklama"
+    },
+    "includesStratigraphicalUnits": {
+      "label": "Stratigrafik Birimler içerir"
+    },
+    "hasChildren": {
+      "label": "Alt Girdiler"
+    },
+    "isResultOf": {
+      "label": "Bunun oluşumu"
+    },
+    "isSubjectOf": {
+      "label": "Öznesi"
     }
   },
   "categories": {
@@ -31,6 +43,9 @@
         },
         "width": {
           "label": "Eni"
+        },
+        "originalFilename": {
+          "label": "Orijinal dosya adı"
         }
       }
     }
@@ -107,6 +122,18 @@
     },
     "bondsWith": {
       "label": "ile bağlı"
+    },
+    "isStoragePlaceOf": {
+      "label": "Depolama yeri-"
+    },
+    "isStoredIn": {
+      "label": "-de saklanır"
+    },
+    "resultsIn": {
+      "label": "Çıktıları"
+    },
+    "isCarriedOutOn": {
+      "label": "Buna ilişkin uygulandı"
     }
   }
 }

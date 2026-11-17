@@ -2,13 +2,17 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, Datastore, Document, Field, InvalidDataUtil, Labels } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
+import { AngularUtility } from '../../../../angular/angular-utility';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
     templateUrl: './convert-field-data-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -23,12 +27,16 @@ export class ConvertFieldDataModalComponent {
     public inputTypeLabel: string;
 
     public convertAll: boolean;
+    public countAffected: number;
+    
+    private affectedDocuments: Array<Document>;
 
 
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
                 private datastore: Datastore,
-                private labels: Labels) {}
+                private labels: Labels,
+                private menuService: Menus) {}
 
 
     public getCategoryLabel = () => this.labels.get(this.category);
@@ -38,7 +46,21 @@ export class ConvertFieldDataModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
+    }
+
+
+    public async initialize() {
+
+        const findResult = await this.datastore.find({
+            categories: [this.category.name],
+            constraints: { ['invalidFields:contain']: this.fieldName }
+        }, { includeResourcesWithoutValidParent: true });
+        
+        this.countAffected = findResult.totalCount;
+        this.affectedDocuments = findResult.documents.filter(document => this.isConvertible(document));
     }
 
 
@@ -53,6 +75,8 @@ export class ConvertFieldDataModalComponent {
     public async performConversion() {
 
         const fixingDataInProgressModal: NgbModalRef = this.openFixingDataInProgressModal();
+
+        await AngularUtility.refresh();
         
         if (this.convertAll) {
             await this.convertMultiple();
@@ -86,14 +110,9 @@ export class ConvertFieldDataModalComponent {
 
     private async convertMultiple() {
 
-        const documents = (await this.datastore.find({
-            categories: [this.category.name],
-            constraints: { ['invalidFields:contain']: this.fieldName }
-        })).documents.filter(document => this.isConvertible(document));
+        this.affectedDocuments.forEach(document => this.convert(document));
 
-        documents.forEach(document => this.convert(document));
-
-        await this.datastore.bulkUpdate(documents);
+        await this.datastore.bulkUpdate(this.affectedDocuments);
     }
 
 

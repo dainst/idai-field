@@ -10,8 +10,7 @@
         <div id="configuration-toolbar" class="row">
             <div id="categories-filter" class="dropdown"
                  ngbDropdown placement="bottom-left" role="group">
-
-                <button class="btn btn-outline-primary" ngbDropdownToggle>
+                <button id="categories-filter-button" class="btn btn-outline-primary" ngbDropdownToggle>
                     <span *ngIf="selectedCategoriesFilter"
                         id="selected-categories-filter-label">
                         {{selectedCategoriesFilter.label}}
@@ -68,6 +67,11 @@
                                 (click)="setCategoriesFilter(categoriesFilterOptions[7])">
                             {{categoriesFilterOptions[7].label}}
                         </button>
+                        <button [id]="'categories-filter-selection-button-' + categoriesFilterOptions[8].name"
+                                class="dropdown-item categories-filter-selection-button"
+                                (click)="setCategoriesFilter(categoriesFilterOptions[8])">
+                            {{categoriesFilterOptions[8].label}}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -80,7 +84,7 @@
                 </button>
             </div>
         </div>
-        <div id="project-configuration-content" class="row">
+        <div id="project-configuration-content" class="row" [class.no-selected-category]="!selectedCategory">
             <div class="col-2 sidebar">
                 <div id="category-picker-container">
                     <category-picker *ngIf="filteredTopLevelCategoriesArray"

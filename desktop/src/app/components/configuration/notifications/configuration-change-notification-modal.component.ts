@@ -4,7 +4,8 @@ import { reload } from '../../../services/reload';
 
 
 @Component({
-    templateUrl: './configuration-change-notification-modal.html'
+    templateUrl: './configuration-change-notification-modal.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

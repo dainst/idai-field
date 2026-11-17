@@ -1,20 +1,20 @@
 import { Observable, Observer } from 'rxjs';
 import { filter, flow, forEach, includedIn, isDefined, lookup, on, separate, to, values } from 'tsfun';
 import { Field } from '../model/configuration/field';
-import { Document } from '../model/document';
-import { Query } from '../model/query';
-import { Resource } from '../model/resource';
+import { Document } from '../model/document/document';
+import { Query } from '../model/datastore/query';
+import { Resource } from '../model/document/resource';
 import { ProjectConfiguration } from '../services';
-import { Tree } from '../tools/forest';
 import { Named } from '../tools/named';
 import { ObserverUtil } from '../tools/observer-util';
-import { adjustIsChildOf } from './adjust-is-child-of';
 import { ConstraintIndex } from './constraint-index';
 import { FulltextIndex } from './fulltext-index';
 import { getFieldsToIndex } from './get-fields-to-index';
 import { getSortedIds } from './get-sorted-ids';
 import { IndexItem, TypeResourceIndexItem } from './index-item';
 import { performQuery } from './perform-query';
+import { Relation } from '../model';
+import { Comparator } from '../services/comparator';
 
 
 const CONFIGURATION = 'Configuration';
@@ -35,6 +35,7 @@ export class IndexFacade {
     constructor(private constraintIndex: ConstraintIndex,
                 private fulltextIndex: FulltextIndex,
                 private projectConfiguration: ProjectConfiguration,
+                private comparator: Comparator,
                 private showWarnings: boolean) {}
 
 
@@ -57,11 +58,15 @@ export class IndexFacade {
     }
 
 
+    /**
+     * This does not notify observers of IndexFacade notifications. notifyObservers has to be called after all changes
+     * to the index have been completed.
+     */
     public putToSingleIndex(document: Document, constraintIndexName: string) {
 
-        const adjustedDocument: Document = adjustIsChildOf(document);
-        ConstraintIndex.put(this.constraintIndex, adjustedDocument, false, constraintIndexName);
-        ObserverUtil.notify(this.observers, adjustedDocument);
+        IndexFacade.setChildOfRelation(document);
+        ConstraintIndex.put(this.constraintIndex, document, false, constraintIndexName);
+        IndexFacade.removeChildOfRelation(document);
     }
 
 
@@ -121,6 +126,12 @@ export class IndexFacade {
         return ConstraintIndex.getCount(this.constraintIndex, constraintIndexName, matchTerm);
     }
 
+    
+    public getCategoryCount(categoryName: string): number {
+
+        return FulltextIndex.getCategoryCount(this.fulltextIndex, categoryName);
+    }
+
 
     public getDescendantIds(constraintIndexName: string, matchTerm: string): string[] {
 
@@ -134,56 +145,65 @@ export class IndexFacade {
     }
 
 
+    public notifyObservers() {
+
+        ObserverUtil.notify(this.observers, undefined);
+    }
+
+
     private getSortedResult(query: Query, queryResult: Array<Resource.Id>): Array<Resource.Id> {
 
         if (query.sort && query.sort.mode === 'none') {
             return queryResult;
         } else {
             const indexItems = queryResult.map(lookup(this.indexItems));
-            return getSortedIds(indexItems, query, this.projectConfiguration.getTypeCategories().map(to(Named.NAME)));
+            return getSortedIds(
+                indexItems, query, this.projectConfiguration.getTypeCategories().map(to(Named.NAME)), this.comparator
+            );
         }
     }
 
 
     private _put(document: Document, skipRemoval: boolean, notify: boolean) {
 
-        // TODO migrate everything to isChildOf, then get rid of this adjustments
-        const doc = adjustIsChildOf(document);
+        IndexFacade.setChildOfRelation(document);
 
-        const item = this.getIndexItem(doc);
-        if (!item || doc.resource.category === CONFIGURATION) return;
+        const isWorkflowCategory: boolean = this.projectConfiguration.getWorkflowCategories().map(to(Named.NAME))
+            .includes(document.resource.category);
 
-        item.identifier = document.resource.identifier;
+        const item: IndexItem = this.getIndexItem(document, isWorkflowCategory);
+        if (!item || document.resource.category === CONFIGURATION) return;
 
-        if (this.projectConfiguration.getTypeCategories().map(to(Named.NAME)).includes(doc.resource.category)) {
+        IndexItem.update(item, document, isWorkflowCategory);
+
+        if (this.projectConfiguration.getTypeCategories().map(to(Named.NAME)).includes(document.resource.category)) {
             IndexFacade.updateTypeItem(item as TypeResourceIndexItem);
         } else {
             if (!skipRemoval) {
-                IndexFacade.deleteAssociatedTypeItem(this.indexItems, doc);
+                IndexFacade.deleteAssociatedTypeItem(this.indexItems, document);
             }
-            IndexFacade.createAssociatedTypeItem(this.indexItems, doc);
+            IndexFacade.createAssociatedTypeItem(this.indexItems, document);
         }
 
-        ConstraintIndex.put(this.constraintIndex, doc, skipRemoval);
+        ConstraintIndex.put(this.constraintIndex, document, skipRemoval);
         FulltextIndex.put(
-            this.fulltextIndex, doc,
-            getFieldsToIndex(
-                Named.arrayToMap(Tree.flatten(this.projectConfiguration.getCategories())),
-                doc.resource.category
-            ),
+            this.fulltextIndex, document,
+            getFieldsToIndex(this.projectConfiguration.getCategory(document.resource.category)),
             skipRemoval
         );
 
-        if (notify) ObserverUtil.notify(this.observers, doc);
+        IndexFacade.removeChildOfRelation(document);
+
+        if (notify) ObserverUtil.notify(this.observers, document);
     }
 
 
-    private getIndexItem(document: Document) {
+    private getIndexItem(document: Document, addDate: boolean) {
 
         const existingItem = this.indexItems[document.resource.id];
         const indexItem = existingItem !== undefined
             ? existingItem
-            : IndexItem.from(document, this.showWarnings);
+            : IndexItem.from(document, this.showWarnings, addDate);
         if (!existingItem && indexItem) this.indexItems[document.resource.id] = indexItem;
         return indexItem;
     }
@@ -222,5 +242,21 @@ export class IndexFacade {
         if (!item.instances) { // keep existing instances on update
             item.instances = {};
         }
+    }
+
+
+    private static setChildOfRelation(document: Document) {
+
+        if (Resource.hasRelations(document.resource, Relation.Hierarchy.LIESWITHIN)) {
+            document.resource.relations['isChildOf'] = [document.resource.relations.liesWithin[0]];
+        } else if (Resource.hasRelations(document.resource, Relation.Hierarchy.RECORDEDIN)) {
+            document.resource.relations['isChildOf'] = [document.resource.relations.isRecordedIn[0]];
+        }
+    }
+
+
+    private static removeChildOfRelation(document: Document) {
+
+        delete document.resource.relations['isChildOf'];
     }
 }

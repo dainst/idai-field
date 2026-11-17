@@ -1,0 +1,24 @@
+semantic-references-input {
+  .reference-input-container {
+    width: calc(100% - 240px);
+
+    .reference-input {
+      position: relative;
+      border-right: none;
+    }
+  }
+
+  select {
+    width: 200px;
+  }
+
+  .btn-danger {
+    height: 33.5px;
+
+    .mdi {  
+      position: relative;
+      bottom: 2px;
+      right: 1px;
+    }
+  }
+}

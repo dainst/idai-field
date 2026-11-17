@@ -66,13 +66,13 @@ defmodule Api.Worker.Enricher.Labels do
     get_value_with_label(field_name, field_value, category_definition, field_definition)
   end
   defp get_value_with_label(field_name, dimension, category_definition, field_definition = %{ inputType: "dimension" }) do
-    position = dimension["measurementPosition"]
-    label = if is_nil(position) do nil else get_label(field_name, position, category_definition, field_definition) end
-    if !is_nil(label) do
-      put_in(dimension["measurementPosition"], %{ name: position, label: label })
-    else
-      dimension
-    end
+    get_value_with_label(field_name, dimension, category_definition, field_definition, 'measurementPosition')
+  end
+  defp get_value_with_label(field_name, dimension, category_definition, field_definition = %{ inputType: "weight" }) do
+    get_value_with_label(field_name, dimension, category_definition, field_definition, 'measurementDevice')
+  end
+  defp get_value_with_label(field_name, dimension, category_definition, field_definition = %{ inputType: "volume" }) do
+    get_value_with_label(field_name, dimension, category_definition, field_definition, 'measurementTechnique')
   end
   defp get_value_with_label(field_name, range_value = %{ "value" => value }, category_definition, field_definition = %{ inputType: "dropdownRange" }) when is_binary(value) do
     range_value
@@ -89,6 +89,15 @@ defmodule Api.Worker.Enricher.Labels do
       %{ name: field_value, label: label }
     else
       field_value
+    end
+  end
+  defp get_value_with_label(field_name, measurement, category_definition, field_definition, subfield_name) do
+    value_id = measurement[subfield_name]
+    label = if is_nil(value_id) do nil else get_label(field_name, value_id, category_definition, field_definition) end
+    if !is_nil(label) do
+      put_in(measurement[subfield_name], %{ name: value_id, label: label })
+    else
+      measurement
     end
   end
 

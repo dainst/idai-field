@@ -1,8 +1,7 @@
-import { Document } from '../../src/model/document';
+import { Document } from '../../src/model/document/document';
 import { AppConfigurator } from '../../src/configuration/app-configurator';
 import { ConfigLoader } from '../../src/configuration/boot/config-loader';
 import { ConfigReader } from '../../src/configuration/boot/config-reader';
-import { DocumentConverter } from '../../src/datastore/document-converter';
 import { Datastore } from '../../src/datastore/datastore';
 import { DocumentCache } from '../../src/datastore/document-cache';
 import { PouchdbDatastore } from '../../src/datastore/pouchdb/pouchdb-datastore';
@@ -13,6 +12,7 @@ import { Lookup, makeLookup, Name } from '../../src/tools';
 import { RelationsManager, Template } from '../../src/model';
 import { createDocuments, makeExpectDocuments, NiceDocs } from '../test-helpers';
 import { basicIndexConfiguration } from '../../src/basic-index-configuration';
+import { Comparator } from '../../src/services/comparator';
 
 import PouchDB = require('pouchdb-node');
 
@@ -39,7 +39,8 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
 
     const pouchdbDatastore = new PouchdbDatastore(
         (name: string) => new PouchDB(name),
-        new IdGenerator());
+        new IdGenerator()
+    );
 
     const projectDocument = {
         _id: 'project',
@@ -86,22 +87,23 @@ export async function createCoreApp(user: Name = 'testuser', db: Name = 'testdb'
         configurationDocument
     );
 
-    const createdConstraintIndex = ConstraintIndex.make(basicIndexConfiguration, Tree.flatten(projectConfiguration.getCategories()));
+    const createdConstraintIndex = ConstraintIndex.make(
+        basicIndexConfiguration, Tree.flatten(projectConfiguration.getCategories())
+    );
 
     const createdFulltextIndex = {};
     const createdIndexFacade = new IndexFacade(
         createdConstraintIndex,
         createdFulltextIndex,
         projectConfiguration,
+        new Comparator('de'),
         false
     );
 
-    const documentConverter = new DocumentConverter(projectConfiguration);
     const datastore = new Datastore(
         pouchdbDatastore,
         createdIndexFacade,
         documentCache,
-        documentConverter,
         projectConfiguration,
         () => user
     );

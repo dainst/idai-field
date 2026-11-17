@@ -4,19 +4,18 @@ import { Reader } from './reader';
 import { ReaderErrors } from './reader-errors';
 import { APP_DATA, CATALOG_IMAGES, CATALOG_JSONL, TEMP } from '../../export/catalog/catalog-exporter';
 import { Settings } from '../../../../app/services/settings/settings';
-import { getAsynchronousFs } from '../../../../app/services/getAsynchronousFs';
 
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const fs = window.require('fs');
+const remote = window.require('@electron/remote');
+const ipcRenderer = window.require('electron')?.ipcRenderer;
 
-const UTF8 = 'utf-8';
 
 /**
  * @author Daniel de Oliveira
  */
 export class CatalogFilesystemReader implements Reader {
 
-    constructor(private file: any,
+    constructor(private filePath: string,
                 private settings: Settings,
                 private imagestore: ImageStore) {}
 
@@ -36,7 +35,7 @@ export class CatalogFilesystemReader implements Reader {
             if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir);
 
             try {
-                await getAsynchronousFs().extractZip(this.file.path, tmpDir);
+                await ipcRenderer.invoke('extractZip', this.filePath, tmpDir);
 
                 const idGenerator = new IdGenerator();
                 const replacementMap: Map<string> = {};
@@ -55,7 +54,7 @@ export class CatalogFilesystemReader implements Reader {
                     }
                 }
 
-                let jsonlString = fs.readFileSync(tmpDir + CATALOG_JSONL, UTF8);
+                let jsonlString = fs.readFileSync(tmpDir + CATALOG_JSONL, 'utf-8');
                 for (let imageId of Object.keys(replacementMap)) {
                     jsonlString = jsonlString.replace(new RegExp(imageId, 'g'), replacementMap[imageId]);
                 }

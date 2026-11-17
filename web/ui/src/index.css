@@ -1,12 +1,5 @@
 @import url('./open-sans.css');
 
-@font-face {
-  font-family: 'Cargan';
-  src: local('Cargan-Light'), url(./fonts/Cargan-Light.woff2) format('woff2'), url(./fonts/Cargan-Light.woff) format('woff');
-  font-weight: 300;
-  font-style: normal;
-}
-
 :root {
   --main-bg-color: #eceeef;
   --main-bg-color-hover: #efefef;
@@ -14,7 +7,7 @@
   --main-link-color: #5882c2;
   --main-link-color-hover: #375d97;
   --font-body: 'Open Sans', sans-serif;
-  --font-headings: 'Cargan', serif;
+  --font-headings: 'Open Sans', sans-serif;
 }
 
 body {

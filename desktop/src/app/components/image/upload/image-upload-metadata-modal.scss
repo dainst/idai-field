@@ -35,6 +35,11 @@
 
     .form-check-label {
       font-size: 14px;
+
+      span {
+        position: relative;
+        bottom: 1px;
+      }
     }
   }
 

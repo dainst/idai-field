@@ -13,10 +13,7 @@ config :field_hub, FieldHubWeb.Endpoint,
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [
     ip: {0, 0, 0, 0},
-    port: 4000,
-    protocol_options: [
-      idle_timeout: :infinity
-    ]
+    port: 4000
   ],
   check_origin: false,
   code_reloader: true,
@@ -56,7 +53,6 @@ config :field_hub, FieldHubWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
       ~r"lib/field_hub_web/(live|views)/.*(ex)$",
       ~r"lib/field_hub_web/templates/.*(eex)$"
     ]

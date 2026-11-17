@@ -3,19 +3,13 @@ import { FieldDocument } from '../../../../../core/index';
 import { ResourcesStateManager } from '../../../../src/app/components/resources/view/resources-state-manager';
 import { ViewFacade } from '../../../../src/app/components/resources/view/view-facade';
 import { TabManager } from '../../../../src/app/services/tabs/tab-manager';
-import { createApp } from '../subsystem-helper';
-import PouchDB =  require('pouchdb-node');
+import { cleanUp, createApp } from '../subsystem-helper';
 
 
 /**
- * This is a subsystem test.
- * The use of mocks is intentionally reduced.
- * The subsystem gets assembled in the ViewFacade's constructor.
- *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-
 describe('ViewFacade/Subsystem', () => {
 
     let viewFacade: ViewFacade;
@@ -45,7 +39,7 @@ describe('ViewFacade/Subsystem', () => {
      */
 
 
-    beforeEach(async done => {
+    beforeEach(async () => {
 
         const result = await createApp();
 
@@ -55,20 +49,17 @@ describe('ViewFacade/Subsystem', () => {
         stateSerializer = result.stateSerializer;
         tabManager = result.tabManager;
 
-        spyOn(console, 'debug'); // suppress console.debug
-
         trenchDocument1 = fieldDoc('trench1', 'trench1', 'Trench', 't1');
         trenchDocument2 = fieldDoc('trench2','trench2','Trench','t2');
+
+        featureDocument1 = fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
         findDocument1 = fieldDoc('Find 1', 'find1', 'Find', 'find1');
         findDocument1.resource.processor = 'person';
         findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         findDocument2 = fieldDoc('Find 2', 'find2', 'Find', 'find2');
         findDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-        featureDocument1 = fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
-        featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-        featureDocument1.resource.relations['includes'] = [findDocument1.resource.id,
-            findDocument2.resource.id];
         findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
         findDocument2.resource.relations['liesWithin'] = [featureDocument1.resource.id];
 
@@ -77,28 +68,35 @@ describe('ViewFacade/Subsystem', () => {
 
         await datastore.create(trenchDocument1);
         await datastore.create(trenchDocument2);
-        await datastore.create(findDocument1);
-        await datastore.create(findDocument2);
         await datastore.create(featureDocument1);
         await datastore.create(featureDocument2);
+        await datastore.create(findDocument1);
+        await datastore.create(findDocument2);
 
-        changesStream = jasmine.createSpyObj('changesStream', ['notifications']);
-        changesStream.notifications.and.returnValue({
-            subscribe: () => {}
-        });
+        changesStream = {
+            notifications: jest.fn().mockReturnValue({
+                subscribe: () => {}
+            })
+        };
 
-        loading = jasmine.createSpyObj('loading', ['start', 'stop']);
-        done();
+        loading = {
+            start: jest.fn(),
+            stop: jest.fn()
+        };
+
     });
 
 
-    afterEach(done => new PouchDB('test').destroy().then(() => { done(); }), 5000);
+    afterEach(async () =>{
+        
+        await cleanUp();
+    });
 
 
-    it('reload view states on startup', async done => {
+    test('reload view states on startup', async () => {
 
         resourcesStateManager.loaded = false;
-        stateSerializer.load.and.returnValue(
+        stateSerializer.load.mockReturnValue(
             Promise.resolve({
                 overviewState: {
                     mode: 'list',
@@ -115,8 +113,7 @@ describe('ViewFacade/Subsystem', () => {
             })
         );
 
-        await tabManager.openTab('resources', 't2', 'trench2',
-            'Trench');
+        await tabManager.openTab('resources', 't2', 'trench2', 'Trench');
 
         await viewFacade.selectView('project');
         expect(viewFacade.getActiveLayersIds()).toEqual(['layerId1']);
@@ -128,12 +125,10 @@ describe('ViewFacade/Subsystem', () => {
 
         await viewFacade.selectView('t2');
         expect(viewFacade.getMode()).toEqual('map');
-
-        done();
     });
 
 
-    it('keep only map layer ids when deactivating view', async done => {
+    test('keep only map layer ids when deactivating view', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setSearchString('test');
@@ -150,14 +145,12 @@ describe('ViewFacade/Subsystem', () => {
         expect(viewFacade.getSelectedDocument()).toBeUndefined();
         expect(viewFacade.getMode()).toEqual('map');
         expect(viewFacade.getActiveLayersIds()).toEqual(['layer1']);
-
-        done();
     });
 
 
-    it('search -- show only resources of the selected category', async done => {
+    test('search -- show only resources of the selected category', async () => {
 
-        const findDocument3 = fieldDoc('Find 3','find3','Find', 'find3');
+        const findDocument3 = fieldDoc('Find 3','find3', 'Find', 'find3');
         findDocument3.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         await datastore.create(findDocument3);
 
@@ -169,11 +162,10 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.setFilterCategories(['Find']);
         expect(viewFacade.getDocuments().length).toBe(1);
         expect(viewFacade.getDocuments()[0].resource.id).toEqual('find3');
-        done();
     });
 
 
-    it('ViewContext -- keep filter when switching views', async done => {
+    test('ViewContext -- keep filter when switching views', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setFilterCategories(['Feature']);
@@ -181,11 +173,10 @@ describe('ViewFacade/Subsystem', () => {
         expect(viewFacade.getFilterCategories()).toEqual([]);
         await viewFacade.selectView('t1');
         expect(viewFacade.getFilterCategories()).toEqual(['Feature']);
-        done();
     });
 
 
-    it('ViewContext -- keep filter when move into', async done => {
+    test('ViewContext -- keep filter when move into', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setFilterCategories(['Feature']);
@@ -193,11 +184,10 @@ describe('ViewFacade/Subsystem', () => {
         expect(viewFacade.getFilterCategories()).toEqual([]);
         await viewFacade.moveInto(undefined);
         expect(viewFacade.getFilterCategories()).toEqual(['Feature']);
-        done();
     });
 
 
-    it('ViewContext -- keep filter on switching mode', async done => {
+    test('ViewContext -- keep filter on switching mode', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setFilterCategories(['Feature']);
@@ -205,11 +195,10 @@ describe('ViewFacade/Subsystem', () => {
         expect(viewFacade.getFilterCategories()).toEqual(['Feature']);
         viewFacade.setMode('map');
         expect(viewFacade.getFilterCategories()).toEqual(['Feature']);
-        done();
     });
 
 
-    it('ViewContext -- keep query string when switching views', async done => {
+    test('ViewContext -- keep query string when switching views', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setSearchString('abc');
@@ -217,11 +206,10 @@ describe('ViewFacade/Subsystem', () => {
         expect(viewFacade.getSearchString()).toEqual('');
         await viewFacade.selectView('t1');
         expect(viewFacade.getSearchString()).toEqual('abc');
-        done();
     });
 
 
-    it('ViewContext -- keep query string when move into', async done => {
+    test('ViewContext -- keep query string when move into', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setSearchString('abc');
@@ -229,11 +217,10 @@ describe('ViewFacade/Subsystem', () => {
         expect(viewFacade.getSearchString()).toEqual('');
         await viewFacade.moveInto(undefined);
         expect(viewFacade.getSearchString()).toEqual('abc');
-        done();
     });
 
 
-    it('ViewContext -- keep query string on switching mode', async done => {
+    test('ViewContext -- keep query string on switching mode', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setSearchString('abc');
@@ -241,11 +228,10 @@ describe('ViewFacade/Subsystem', () => {
         expect(viewFacade.getSearchString()).toEqual('abc');
         viewFacade.setMode('map');
         expect(viewFacade.getSearchString()).toEqual('abc');
-        done();
     });
 
 
-    it('ViewContext -- keep custom constraints when switching views', async done => {
+    test('ViewContext -- keep custom constraints when switching views', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setExtendedSearchMode(true);
@@ -255,11 +241,10 @@ describe('ViewFacade/Subsystem', () => {
         expect(viewFacade.getCustomConstraints()).toEqual({});
         await viewFacade.selectView('t1');
         expect(viewFacade.getCustomConstraints()).toEqual({ 'processor:contain': 'person' });
-        done();
     });
 
 
-    it('ViewContext -- keep custom constraints on switching mode', async done => {
+    test('ViewContext -- keep custom constraints on switching mode', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setExtendedSearchMode(true);
@@ -269,23 +254,22 @@ describe('ViewFacade/Subsystem', () => {
         expect(viewFacade.getCustomConstraints()).toEqual({ 'processor:contain': 'person' });
         viewFacade.setMode('map');
         expect(viewFacade.getCustomConstraints()).toEqual({ 'processor:contain': 'person' });
-        done();
     });
 
 
-    it('ViewContext -- use different view context when bypassing hierarchy', async done => {
+    test('ViewContext -- use different view context when bypassing hierarchy', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setSearchString('abc');
         await viewFacade.setExtendedSearchMode(true);
         expect(viewFacade.getSearchString()).toEqual('');
+
         await viewFacade.setExtendedSearchMode(false);
         expect(viewFacade.getSearchString()).toEqual('abc');
-        done();
     });
 
 
-    it('ViewState -- restore mode when switching views', async done => {
+    test('ViewState -- restore mode when switching views', async () => {
 
         await viewFacade.selectView('t1');
         await tabManager.openTab('resources', 't1', 'trench1',
@@ -304,142 +288,104 @@ describe('ViewFacade/Subsystem', () => {
 
         await viewFacade.selectView('t2');
         expect(viewFacade.getMode()).toEqual('map');
-
-        done();
     });
 
-    /*
-    it('reload predefined layer ids on startup in test/demo project', async done => {
 
-        resourcesState = new ResourcesStateManager(
-            fieldDocumentDatastore,
-            stateSerializer,
-            new OperationViews(viewsList),
-            [],
-            'test',
-            false
-        );
-        resourcesState.loaded = false;
-
-        viewFacade = new viewFacade(
-            projectConfiguration,
-            fieldDocumentDatastore,
-            changesStream,
-            resourcesState,
-            loading
-        );
-
-        await viewFacade.selectView('excavation');
-        await viewFacade.selectOperation(trenchDocument1.resource.id);
-        expect(viewFacade.getActiveLayersIds()).toEqual(['o25']);
-        done();
-    });*/
-
-
-    it('overview: populate document list', async done => {
+    test('overview: populate document list', async () => {
 
         await viewFacade.selectView('project');
         expect(viewFacade.getDocuments().length).toBe(2);
+
         const identifiers = viewFacade.getDocuments().map(document => document.resource.identifier);
         expect(identifiers).toContain('trench1');
         expect(identifiers).toContain('trench2');
-        done();
     });
 
 
-    it('overview: search', async done => {
+    test('overview: search', async () => {
 
         await viewFacade.selectView('project');
         await viewFacade.setSearchString('trench2');
         expect(viewFacade.getDocuments().length).toBe(1);
         expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('trench2');
-        done();
     });
 
 
-    it('overview: show all resources in extended search mode', async done => {
+    test('overview: show all resources in extended search mode', async () => {
 
         await viewFacade.selectView('project');
         await viewFacade.setExtendedSearchMode(true);
         expect(viewFacade.getDocuments().length).toBe(6);
-        done();
     });
 
 
-    it('operation view: populate document list', async done => {
+    test('operation view: populate document list', async () => {
 
         await viewFacade.selectView('t1');
         const documents: Array<Document> = viewFacade.getDocuments();
         expect(documents.length).toBe(2);
         expect(documents[0].resource.id).toEqual(featureDocument1.resource.id);
         expect(documents[1].resource.id).toEqual(featureDocument2.resource.id);
-        done();
     });
 
 
-    it('operation view: update children count map when populating document list', async done => {
+    test('operation view: update children count map when populating document list', async () => {
 
         await viewFacade.selectView('t1');
         expect(viewFacade.getChildrenCount(featureDocument1)).toBe(2);
         expect(viewFacade.getChildrenCount(featureDocument2)).toBe(0);
-        done();
     });
 
 
-    it('operation view: search', async done => {
+    test('operation view: search', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setSearchString('feature2');
         expect(viewFacade.getDocuments().length).toBe(1);
         expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('feature2');
-        done();
     });
 
 
-    it('operation view: invalidate query after selecting document if necessary', async done => {
+    test('operation view: invalidate query after selecting document if necessary', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setSearchString('feature1');
         await viewFacade.setSelectedDocument(featureDocument2.resource.id);
         expect(viewFacade.getSearchString()).toEqual('');
         expect(viewFacade.getDocuments().length).toBe(2);
-        done();
     });
 
 
-    it('operation view: do not invalidate query after selecting document if not necessary', async done => {
+    test('operation view: do not invalidate query after selecting document if not necessary', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setSearchString('feature1');
         await viewFacade.setSelectedDocument(featureDocument1.resource.id);
         expect(viewFacade.getSearchString()).toEqual('feature1');
         expect(viewFacade.getDocuments().length).toBe(1);
-        done();
     });
 
 
-    it('operation view: do not deselect if query matches selection', async done => {
+    test('operation view: do not deselect if query matches selection', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.moveInto(featureDocument1);
         await viewFacade.setSelectedDocument(findDocument1.resource.id);
         await viewFacade.setSearchString('find1');
         expect(viewFacade.getSelectedDocument().resource.id).toBe(findDocument1.resource.id);
-        done();
     });
 
 
-    it('operation view: deselect if query does not match selection', async done => {
+    test('operation view: deselect if query does not match selection', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setSelectedDocument(findDocument1.resource.id);
         await viewFacade.setSearchString('find2');
         expect(viewFacade.getSelectedDocument()).toBe(undefined);
-        done();
     });
 
 
-    it('deselect on switching views', async done => {
+    test('deselect on switching views', async () => {
 
         await viewFacade.selectView('project');
         await viewFacade.setSelectedDocument(trenchDocument1.resource.id);
@@ -447,11 +393,10 @@ describe('ViewFacade/Subsystem', () => {
 
         await viewFacade.selectView('t1');
         expect(viewFacade.getSelectedDocument()).toEqual(undefined);
-        done();
     });
 
 
-    it('operation view: restore previous selection while navigation through hierarchy', async () => {
+    test('operation view: restore previous selection while navigation through hierarchy', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.moveInto(featureDocument1);
@@ -465,19 +410,20 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('operation view: restore previous selection on view change', async () => {
+    test('operation view: restore previous selection on view change', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setSelectedDocument(featureDocument2.resource.id);
 
         await viewFacade.selectView('project');
         expect(viewFacade.getSelectedDocument()).toBeUndefined();
+
         await viewFacade.selectView('t1');
         expect(viewFacade.getSelectedDocument().resource.id).toBe(featureDocument2.resource.id);
     });
 
 
-    it('operation view: show only documents with liesWithin relation to a specific resource', async done => {
+    test('operation view: show only documents with liesWithin relation to a specific resource', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.moveInto(featureDocument1);
@@ -492,12 +438,10 @@ describe('ViewFacade/Subsystem', () => {
         expect(documents.length).toBe(2);
         expect(documents[0].resource.id).toEqual(featureDocument1.resource.id);
         expect(documents[1].resource.id).toEqual(featureDocument2.resource.id);
-
-        done();
     });
 
 
-    it('operation view: search with custom constraint filter', async done => {
+    test('operation view: search with custom constraint filter', async () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setExtendedSearchMode(true);
@@ -511,7 +455,23 @@ describe('ViewFacade/Subsystem', () => {
 
         await viewFacade.setCustomConstraints({ 'processor:contain': 'wrongPerson' });
         expect(viewFacade.getDocuments().length).toBe(0);
+    });
 
-        done();
+
+    test('keep new document placeholder when populating document list', async () => {
+
+        const newDocument: FieldDocument = fieldDoc('newFeature', 'newFeature', 'Feature', 'nf');
+        delete newDocument._id;
+        delete newDocument.resource.id;
+
+        await viewFacade.selectView('t1');
+        await viewFacade.addNewDocument(newDocument);
+        await viewFacade.populateDocumentList();
+
+        const documents: Array<Document> = viewFacade.getDocuments();
+        expect(documents.length).toBe(3);
+        expect(documents[0].resource.id).toBeUndefined();
+        expect(documents[1].resource.id).toEqual(featureDocument1.resource.id);
+        expect(documents[2].resource.id).toEqual(featureDocument2.resource.id);
     });
 });

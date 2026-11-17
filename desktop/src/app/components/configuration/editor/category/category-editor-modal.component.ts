@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, Map, to } from 'tsfun';
 import { ConfigurationDocument, I18N, CustomLanguageConfigurations, CategoryForm, CustomFormDefinition, 
-    Field, Labels, PrintedField, Named, ProjectConfiguration } from 'idai-field-core';
+    Field, Labels, PrintedField, Named, ProjectConfiguration, CustomFieldDefinition, Relation } from 'idai-field-core';
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
@@ -17,7 +16,8 @@ import { M } from '../../../messages/m';
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:keyup)': 'onKeyUp($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -31,16 +31,13 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
     private currentColor: string;
 
-    protected changeMessage = this.i18n({
-        id: 'configuration.categoryChanged', value: 'Die Kategorie wurde geändert.'
-    });
+    protected changeMessage = $localize `:@@configuration.categoryChanged:Die Kategorie wurde geändert.`;
 
 
     constructor(activeModal: NgbActiveModal,
                 modals: Modals,
                 menuService: Menus,
                 messages: Messages,
-                private i18n: I18n,
                 private labels: Labels) {
 
         super(activeModal, modals, menuService, messages);
@@ -62,12 +59,12 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             this.clonedConfigurationDocument.resource.forms[this.category.name] = {
                 color: this.category.color,
                 parent: this.category.parentCategory.name,
-                fields: {},
+                fields: CategoryEditorModalComponent.getFieldDefinitions(this.category),
                 groups: CategoryForm.getGroupsConfiguration(
                     this.category,
                     ConfigurationDocument.getPermanentlyHiddenFields(this.category)
                 )
-            }
+            };
         } else {
             if (!this.getClonedFormDefinition().color) {
                 this.getClonedFormDefinition().color = this.currentColor;
@@ -78,6 +75,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
         this.printableFields = this.getPrintableFields();
 
         if (!this.getClonedFormDefinition().references) this.getClonedFormDefinition().references = [];
+        if (!this.getClonedFormDefinition().semanticReferences) this.getClonedFormDefinition().semanticReferences = [];
     }
 
 
@@ -89,6 +87,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
                 this.getClonedFormDefinition().resourceLimit
             );
             ConfigurationUtil.cleanUpAndValidateReferences(this.getClonedFormDefinition());
+            ConfigurationUtil.cleanUpAndValidateSemanticReferences(this.getClonedFormDefinition());
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }
@@ -128,6 +127,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             || this.getClonedFormDefinition().color.toLowerCase() !== this.currentColor.toLowerCase()
             || this.hasScanCodesConfigurationChanged()
             || ConfigurationUtil.isReferencesArrayChanged(this.getCustomFormDefinition(),
+                this.getClonedFormDefinition())
+            || ConfigurationUtil.isSemanticReferencesArrayChanged(this.getCustomFormDefinition(),
                 this.getClonedFormDefinition());
     }
 
@@ -214,7 +215,8 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
     public isResourceLimitAvailable(): boolean {
         
         return !this.category.isAbstract
-            && (this.category.name === 'Place' || this.category.parentCategory?.name === 'Operation');
+            && (this.category.name === 'Place'
+                || this.category.parentCategory?.name === 'Operation');
     }
 
 
@@ -318,10 +320,7 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
             case 'isRecordedIn':
                 return this.labels.get(this.clonedProjectConfiguration.getCategory('Operation'));
             case 'liesWithin':
-                return this.i18n({
-                    id: 'qrCode.printedFields.liesWithin',
-                    value: 'Übergeordnete Ressource'
-                });
+                return $localize `:@@qrCode.printedFields.liesWithin:Übergeordnete Ressource`;
             default:
                 return this.labels.getFieldLabel(this.category, fieldName);
         }
@@ -332,26 +331,14 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
         if ((option === 'scanCodes' && !this.isScanCodesOptionEnabled()
                 || option === 'autoCreation' && this.category.parentCategory?.scanCodes?.autoCreate)) {
-            return this.i18n({
-                id: 'configuration.cannotDisableParentOption',
-                value: 'Diese Option ist für die Oberkategorie aktiviert und kann für die aktuelle Kategorie nicht ausgeschaltet werden.'
-            });
+            return $localize `:@@configuration.cannotDisableParentOption:Diese Option ist für die Oberkategorie aktiviert und kann für die aktuelle Kategorie nicht ausgeschaltet werden.`;
         } else if ((option === 'autoCreation' && !this.isScanCodeAutoCreationOptionEnabled())
                 || ['printedField', 'printedFieldLabel'].includes(option) && !this.isScanCodeUsageActivated()) {
-            return this.i18n({
-                id: 'configuration.autoCreationOptionDisabled',
-                value: 'Aktivieren Sie die Option "QR-Codes zur Identifikation verwenden", um diese Option zu verwenden.'
-            });
+            return $localize `:@@configuration.autoCreationOptionDisabled:Aktivieren Sie die Option "QR-Codes zur Identifikation verwenden", um diese Option zu verwenden.`;
         } else if (['printedField', 'printedFieldLabel'].includes(option) && !this.isPrintedFieldsSlotEnabled(index)) {
-            return this.i18n({
-                id: 'configuration.printedFieldSlotDisabled',
-                value: 'Dieses Feld wurde für die Oberkategorie ausgewählt und kann für die aktuelle Kategorie nicht bearbeitet werden.'
-            });
+            return $localize `:@@configuration.printedFieldSlotDisabled:Dieses Feld wurde für die Oberkategorie ausgewählt und kann für die aktuelle Kategorie nicht bearbeitet werden.`;
         } else if (option === 'printedFieldLabel' && !this.isPrintedFieldsSlotActivated(index)){
-            return this.i18n({
-                id: 'configuration.printedFieldUnselected',
-                value: 'Wählen Sie ein Feld aus, um diese Option zu verwenden.'
-            });
+            return $localize `:@@configuration.printedFieldUnselected:Wählen Sie ein Feld aus, um diese Option zu verwenden.`;
         } else {
             return '';
         }
@@ -459,6 +446,25 @@ export class CategoryEditorModalComponent extends ConfigurationEditorModalCompon
 
         return !equal(clonedScanCodes)(customScanCodes)
             || !equal(this.printedFields)(this.getPrintedFields());
+    }
+
+
+    private static getFieldDefinitions(category: CategoryForm): Map<CustomFieldDefinition> {
+
+        const result: Map<CustomFieldDefinition> = {};
+
+        category.groups.forEach(group => {
+            group.fields.filter(field => !ConfigurationUtil.isParentField(category, field))
+                .forEach(field => {
+                    const fieldDefinition: CustomFieldDefinition = {
+                        inputType: field.inputType
+                    };
+                    if ((field as Relation).range) fieldDefinition.range = (field as Relation).range;
+                    result[field.name] = fieldDefinition;
+            })
+        });
+
+        return result;
     }
 
 

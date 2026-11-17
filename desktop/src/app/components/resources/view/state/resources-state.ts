@@ -1,5 +1,5 @@
 import { flow, forEach, keys, lookup, map, values } from 'tsfun';
-import { FieldDocument } from 'idai-field-core';
+import { FieldDocument, SortMode } from 'idai-field-core';
 import { ViewState } from './view-state';
 import { NavigationPath } from './navigation-path';
 import { ViewContext } from './view-context';
@@ -15,6 +15,7 @@ export interface ResourcesState { // 'the' resources state
     overviewState: ViewState;
     typesManagementState: ViewState;
     inventoryState: ViewState;
+    workflowState: ViewState;
     operationViewStates: { [operationId: string]: ViewState };
     view: 'project' | string; // <- active view state
     activeDocumentViewTab: string|undefined;
@@ -22,7 +23,6 @@ export interface ResourcesState { // 'the' resources state
 
 
 export module ResourcesState {
-
 
     export function getQueryString(state: ResourcesState) {
 
@@ -45,6 +45,12 @@ export module ResourcesState {
         return getViewState(state).bypassHierarchy
             ? getViewState(state).customConstraints
             : {};
+    }
+
+
+    export function getSortMode(state: ResourcesState): SortMode {
+
+        return getViewState(state).sortMode;
     }
 
 
@@ -134,6 +140,12 @@ export module ResourcesState {
     }
 
 
+    export function setSortMode(state: ResourcesState, sortMode: SortMode) {
+
+        getViewState(state).sortMode = sortMode;
+    }
+
+
     export function setSelectedDocument(state: ResourcesState,
                                         document: FieldDocument|undefined) {
 
@@ -203,6 +215,17 @@ export module ResourcesState {
                 searchContext: ViewContext.empty(),
                 customConstraints: {}
             },
+            workflowState: {
+                operation: undefined,
+                mode: 'workflow',
+                bypassHierarchy: true,
+                expandAllGroups: false,
+                limitSearchResults: true,
+                navigationPath: NavigationPath.empty(),
+                searchContext: ViewContext.empty(),
+                customConstraints: {},
+                sortMode: SortMode.DateDescending
+            },
             operationViewStates: {
                 't1': {
                     operation: undefined,
@@ -227,6 +250,7 @@ export module ResourcesState {
             overviewState: ViewState.build(),
             typesManagementState: ViewState.build('grid'),
             inventoryState: ViewState.build('grid'),
+            workflowState: ViewState.build('workflow', SortMode.DateDescending, true),
             operationViewStates: {},
             view: 'project',
             activeDocumentViewTab: undefined
@@ -279,6 +303,8 @@ export module ResourcesState {
                 return state.typesManagementState;
             case 'inventory':
                 return state.inventoryState;
+            case 'workflow':
+                return state.workflowState;
             default:
                 return state.operationViewStates[state.view];
         }

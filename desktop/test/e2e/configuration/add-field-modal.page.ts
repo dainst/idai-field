@@ -36,7 +36,7 @@ export class AddFieldModalPage {
 
     public static getSelectFieldButton(fieldName: string) {
 
-        return getLocator('#select-field-' + fieldName);
+        return getLocator('#select-field-' + fieldName.replace(':', '-'));
     }
 
 

@@ -1,6 +1,7 @@
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from '../resources/resources.page';
-import { getText, navigateTo, pause, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { closeAllMessages, getText, navigateTo, pause, resetApp, start, stop, waitForExist, waitForMessage,
+    waitForNotExist } from '../app';
 import { ConfigurationPage } from './configuration.page';
 import { AddCategoryFormModalPage } from './add-category-form-modal.page';
 import { EditConfigurationPage } from './edit-configuration.page';
@@ -11,6 +12,9 @@ import { AddGroupModalPage } from './add-group-modal.page';
 import { ManageValuelistsModalPage } from './manage-valuelists-modal.page';
 import { DoceditCompositeEntryModalPage } from '../docedit/docedit-composite-entry-modal.page';
 import { MoveModalPage } from '../widgets/move-modal.page';
+import { DoceditRelationsPage } from '../docedit/docedit-relations.page';
+import { FieldsViewPage } from '../widgets/fields-view.page';
+import { DeleteFieldModalPage } from './delete-field-modal.page';
 
 const { test, expect } = require('@playwright/test');
 
@@ -18,11 +22,10 @@ const { test, expect } = require('@playwright/test');
 /**
  * @author Thomas Kleinke
  */
-test.describe('configuration --', () => {
+test.describe('configuration', () => {
 
     async function createSubfieldAndValuelist(subfieldName: string, valuelistName: string, valueName: string) {
 
-        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
         await EditConfigurationPage.typeInNewSubfield(subfieldName);
         await EditConfigurationPage.clickCreateSubfield();
         await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
@@ -34,6 +37,19 @@ test.describe('configuration --', () => {
         await EditConfigurationPage.clickAddValue();
         await EditConfigurationPage.clickConfirmValue();
         await EditConfigurationPage.clickConfirmValuelist();
+        await EditConfigurationPage.clickConfirmSubfield();
+    }
+
+
+    async function createSubfieldWithExistingValuelist(subfieldName: string, valuelistName: string) {
+
+        await EditConfigurationPage.typeInNewSubfield(subfieldName);
+        await EditConfigurationPage.clickCreateSubfield();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput(valuelistName);
+        await ManageValuelistsModalPage.clickSelectValuelist(valuelistName);
+        await ManageValuelistsModalPage.clickConfirmSelection();
         await EditConfigurationPage.clickConfirmSubfield();
     }
 
@@ -109,48 +125,6 @@ test.describe('configuration --', () => {
         await ResourcesPage.clickCreateResource();
         await waitForExist(await CategoryPickerPage.getCategory('Feature'));
         await waitForNotExist(await CategoryPickerPage.getCategory('Floor', 'Feature'));
-    });
-
-
-    test('delete category with existing resources & show warning for liesWithin resources', async () => {
-
-        await NavbarPage.clickCloseNonResourcesTab();
-        await ResourcesPage.clickSwitchHierarchyMode();
-        await waitForExist(await ResourcesPage.getListItemEl('SE4'));
-        
-        await navigateTo('configuration');
-        await ConfigurationPage.clickSelectCategoriesFilter('all');
-        await ConfigurationPage.deleteCategory('Grave', 'Feature', true);
-        await waitForNotExist(await CategoryPickerPage.getCategory('Grave', 'Feature'));
-        await ConfigurationPage.save();
-        
-        await NavbarPage.clickCloseNonResourcesTab();
-        await waitForExist(await ResourcesPage.getListItemEl('SE3'));
-        await waitForNotExist(await ResourcesPage.getListItemEl('SE4'));
-        await ResourcesPage.clickHierarchyButton('SE4-F1');
-        await NavbarPage.awaitAlert('Die Ressource kann nicht aufgerufen werden, da sie einer Ressource der nicht '
-            + 'konfigurierten Kategorie "Grave" untergeordnet ist.', false);
-    });
-
-
-    test('delete operation category with existing resources & show warning for isRecordedIn resources', async () => {
-
-        await NavbarPage.clickCloseNonResourcesTab();
-        await ResourcesPage.clickSwitchHierarchyMode();
-        await waitForExist(await ResourcesPage.getListItemEl('S1'));
-        
-        await navigateTo('configuration');
-        await ConfigurationPage.clickSelectCategoriesFilter('all');
-        await ConfigurationPage.deleteCategory('Trench', 'Operation', true);
-        await waitForNotExist(await CategoryPickerPage.getCategory('Trench', 'Operation'));
-        await ConfigurationPage.save();
-        
-        await NavbarPage.clickCloseNonResourcesTab();
-        await waitForExist(await ResourcesPage.getListItemEl('A1'));
-        await waitForNotExist(await ResourcesPage.getListItemEl('S1'));
-        await ResourcesPage.clickHierarchyButton('SE0');
-        await NavbarPage.awaitAlert('Die Ressource kann nicht aufgerufen werden, da sie einer Maßnahme der nicht '
-            + 'konfigurierten Kategorie "Trench" angehört.', false);
     });
 
 
@@ -474,7 +448,7 @@ test.describe('configuration --', () => {
         await ConfigurationPage.clickSelectGroup('dimension');
         await ConfigurationPage.clickOpenContextMenuForField('dimensionDiameter');
         await ConfigurationPage.clickContextMenuDeleteOption();
-        await ConfigurationPage.clickConfirmFieldDeletionButton();
+        await DeleteFieldModalPage.clickConfirm();
         await waitForNotExist(ConfigurationPage.getField('dimensionDiameter'));
 
         // Do not inherit removed custom field in subcategory
@@ -560,7 +534,7 @@ test.describe('configuration --', () => {
         await AddGroupModalPage.typeInSearchFilterInput('newGroup');
         await AddGroupModalPage.clickSelectGroup('test:newGroup');
         await AddGroupModalPage.clickConfirmSelection();
-        await waitForExist(await ConfigurationPage.getGroup('test:newGroup'));
+        await waitForExist(await ConfigurationPage.getActiveGroup('test:newGroup'));
 
         await ConfigurationPage.clickAddFieldButton();
         await AddFieldModalPage.clickSelectField('dimensionDiameter');
@@ -813,6 +787,355 @@ test.describe('configuration --', () => {
     });
 
 
+    test('set field conditions', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickSelectGroup('properties');
+
+        await ConfigurationPage.clickOpenContextMenuForField('featureForm');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectConditionField('hasDisturbance', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('comparison');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectConditionField('featureForm', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('featureBorders');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectConditionField('description', 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickSelectField('featureForm');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Störung: Ja');
+
+        await ConfigurationPage.clickSelectField('comparison');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Form der stratigraphischen Einheit: annähernd');
+
+        await ConfigurationPage.clickSelectField('featureBorders');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Beschreibung: Feld ausgefüllt');
+
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.openEditByDoubleClickResource('SE0');
+        await DoceditPage.clickSelectGroup('properties');
+        
+        await waitForExist(await DoceditPage.getField('hasDisturbance'));
+        await waitForNotExist(await DoceditPage.getField('featureForm'));
+        await waitForNotExist(await DoceditPage.getField('comparison'));
+        await waitForNotExist(await DoceditPage.getField('featureBorders'));
+
+        await DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
+        await waitForExist(await DoceditPage.getField('featureForm'));
+
+        await DoceditPage.clickCheckbox('featureForm', 0);
+        await waitForExist(await DoceditPage.getField('comparison'));
+
+        await DoceditPage.typeInTextField('description', 'Test');
+        await waitForExist(await DoceditPage.getField('featureBorders'));
+
+        await DoceditPage.clickCloseEdit('discard');
+    });
+
+
+    test('change field condition of library field', async () => {
+
+        await ConfigurationPage.clickCreateSubcategory('Process');
+        await AddCategoryFormModalPage.clickSelectForm('Sampling:default');
+        await AddCategoryFormModalPage.clickConfirmSelection();
+        await CategoryPickerPage.clickSelectCategory('Feature', undefined, 'is-carried-out-on-target-container');
+        await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
+        await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
+
+        await ConfigurationPage.clickSelectGroup('properties');
+        await ConfigurationPage.clickSelectField('horizontalSamplingStrategy');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Art der Probenentnahme: Horizontal');
+
+        await ConfigurationPage.clickOpenContextMenuForField('horizontalSamplingStrategy');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectConditionField('state', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 2, 'field');
+        await EditConfigurationPage.clickConfirm();
+        
+        await ConfigurationPage.clickSelectField('horizontalSamplingStrategy');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Status: Abgeschlossen');
+
+        await ConfigurationPage.save();
+    });
+
+
+    test('remove field condition of library field', async () => {
+
+        await ConfigurationPage.clickCreateSubcategory('Process');
+        await AddCategoryFormModalPage.clickSelectForm('Sampling:default');
+        await AddCategoryFormModalPage.clickConfirmSelection();
+        await CategoryPickerPage.clickSelectCategory('Feature', undefined, 'is-carried-out-on-target-container');
+        await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
+        await ConfigurationPage.clickNextInAddProcessSubcategoryModal();
+
+        await ConfigurationPage.clickSelectGroup('properties');
+        await ConfigurationPage.clickSelectField('horizontalSamplingStrategy');
+        expect(await ConfigurationPage.getConditionLabelText()).toEqual('Art der Probenentnahme: Horizontal');
+
+        await ConfigurationPage.clickOpenContextMenuForField('horizontalSamplingStrategy');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectConditionField('', 'field');
+        await EditConfigurationPage.clickConfirm();
+        
+        await ConfigurationPage.clickSelectField('horizontalSamplingStrategy');
+        await pause(1000);
+        waitForNotExist(await ConfigurationPage.getFieldConditionLabel());
+
+        await ConfigurationPage.save();
+    });
+
+
+    test('prevent setting self-referencing conditions', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickSelectGroup('properties');
+
+        await ConfigurationPage.clickOpenContextMenuForField('featureForm');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        let availableConditionFields: string[] = await EditConfigurationPage.getConditionSelectValues('field');
+        expect(availableConditionFields).not.toContain('Form der stratigraphischen Einheit');
+        expect(availableConditionFields).toContain('Störung');
+        expect(availableConditionFields).toContain('Grenzen der stratigraphischen Einheit');
+
+        await EditConfigurationPage.clickSelectConditionField('hasDisturbance', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('hasDisturbance');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        availableConditionFields = await EditConfigurationPage.getConditionSelectValues('field');
+        expect(availableConditionFields).not.toContain('Form der stratigraphischen Einheit');
+        expect(availableConditionFields).not.toContain('Störung');
+        expect(availableConditionFields).toContain('Grenzen der stratigraphischen Einheit');
+
+        await EditConfigurationPage.clickSelectConditionField('featureBorders', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('featureBorders');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        availableConditionFields = await EditConfigurationPage.getConditionSelectValues('field');
+        expect(availableConditionFields).not.toContain('Form der stratigraphischen Einheit');
+        expect(availableConditionFields).not.toContain('Störung');
+        expect(availableConditionFields).not.toContain('Grenzen der stratigraphischen Einheit');
+
+        await EditConfigurationPage.clickCancel();
+        await ConfigurationPage.save();
+    });
+
+
+    test('do not allow deleting a field that is configured as a condition for another field', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('conditionField');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('boolean', 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('field');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickSelectConditionField('test:conditionField', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('test:conditionField');
+        await ConfigurationPage.clickContextMenuDeleteOption();
+        
+        expect(await DeleteFieldModalPage.getModalText()).toEqual('Das Feld test:conditionField kann '
+            + 'nicht gelöscht werden, solange es als Bedingungsfeld für das Feld test:field konfiguriert ist.');
+
+        await DeleteFieldModalPage.clickCancel();
+        await ConfigurationPage.save();
+    });
+
+
+    test('do not allow deleting a field that is configured as a condition for a subcategory field', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('conditionField');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('boolean', 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('field');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickSelectConditionField('test:conditionField', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickOpenContextMenuForField('test:conditionField');
+        await ConfigurationPage.clickContextMenuDeleteOption();
+        
+        expect(await DeleteFieldModalPage.getModalText()).toEqual('Das Feld test:conditionField kann '
+            + 'nicht gelöscht werden, solange es als Bedingungsfeld für das Feld test:field der Unterkategorie '
+            + '"Erdbefund" konfiguriert ist.');
+
+        await DeleteFieldModalPage.clickCancel();
+        await ConfigurationPage.save();
+    });
+
+
+    test('do not allow changing the input type of a boolean field that is configured as a condition for another field',
+            async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('conditionField');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('boolean', 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('field');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickSelectConditionField('test:conditionField', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('test:conditionField');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        await EditConfigurationPage.clickInputTypeSelectOption('text', 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForMessage('Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für '
+            + 'das Feld "test:field" konfiguriert wurde.');
+
+        await EditConfigurationPage.clickCancel(true);
+        await ConfigurationPage.save();
+    });
+
+
+    test('do not allow changing the input type of a boolean field that is configured as a condition for a '
+            + 'subcategory field', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('conditionField');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('boolean', 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('field');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickSelectConditionField('test:conditionField', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickOpenContextMenuForField('test:conditionField');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        await EditConfigurationPage.clickInputTypeSelectOption('text', 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForMessage('Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für '
+            + 'das Feld "test:field" der Unterkategorie "Erdbefund" konfiguriert wurde.');
+
+        await EditConfigurationPage.clickCancel(true);
+        await ConfigurationPage.save();
+    });
+
+
+    test('do not allow changing the valuelist of a field that is configured as a condition for another field',
+            async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('conditionField');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'field');
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('periods-default-1');
+        await ManageValuelistsModalPage.clickSelectValuelist('periods-default-1');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('field');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickSelectConditionField('test:conditionField', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickOpenContextMenuForField('test:conditionField');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        await EditConfigurationPage.clickSwapValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('orientation-default-1');
+        await ManageValuelistsModalPage.clickSelectValuelist('orientation-default-1');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForMessage('Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als '
+            + 'Bedingungsfeld für das Feld "test:field" konfiguriert wurde.');
+
+        await EditConfigurationPage.clickCancel(true);
+        await ConfigurationPage.save();
+    });
+
+
+    test('do not allow changing the valuelist of a field that is configured as a condition for a '
+            + 'subcategory field', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('conditionField');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'field');
+        await EditConfigurationPage.clickAddValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('periods-default-1');
+        await ManageValuelistsModalPage.clickSelectValuelist('periods-default-1');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirm();
+
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('field');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickSelectConditionField('test:conditionField', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 0, 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickOpenContextMenuForField('test:conditionField');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        await EditConfigurationPage.clickSwapValuelist();
+        await ManageValuelistsModalPage.typeInSearchFilterInput('orientation-default-1');
+        await ManageValuelistsModalPage.clickSelectValuelist('orientation-default-1');
+        await ManageValuelistsModalPage.clickConfirmSelection();
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForMessage('Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als '
+            + 'Bedingungsfeld für das Feld "test:field" der Unterkategorie "Erdbefund" konfiguriert wurde.');
+
+        await EditConfigurationPage.clickCancel(true);
+        await ConfigurationPage.save();
+    });
+
+
     test('create composite field', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Place');
@@ -868,8 +1191,8 @@ test.describe('configuration --', () => {
         await EditConfigurationPage.typeInNewSubfield('subfield2');
         await EditConfigurationPage.clickCreateSubfield();
         await EditConfigurationPage.clickInputTypeSelectOption('dropdown', 'subfield');
-        await EditConfigurationPage.clickSelectConditionSubfield('subfield1');
-        await EditConfigurationPage.clickSelectConditionValue('boolean', 0);
+        await EditConfigurationPage.clickSelectConditionField('subfield1', 'subfield');
+        await EditConfigurationPage.clickSelectConditionValue('boolean', 0, 'subfield');
         await EditConfigurationPage.clickAddValuelist();
         await ManageValuelistsModalPage.typeInSearchFilterInput('periods-default-1');
         await ManageValuelistsModalPage.clickSelectValuelist('periods-default-1');
@@ -879,9 +1202,9 @@ test.describe('configuration --', () => {
         await EditConfigurationPage.typeInNewSubfield('subfield3');
         await EditConfigurationPage.clickCreateSubfield();
         await EditConfigurationPage.clickInputTypeSelectOption('input', 'subfield');
-        await EditConfigurationPage.clickSelectConditionSubfield('subfield2');
-        await EditConfigurationPage.clickSelectConditionValue('valuelist', 3);
-        await EditConfigurationPage.clickSelectConditionValue('valuelist', 4);
+        await EditConfigurationPage.clickSelectConditionField('subfield2', 'subfield');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 3, 'subfield');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 4, 'subfield');
         await EditConfigurationPage.clickConfirmSubfield();
 
         await EditConfigurationPage.clickConfirm();
@@ -921,6 +1244,7 @@ test.describe('configuration --', () => {
         await ConfigurationPage.clickAddFieldButton();
         await AddFieldModalPage.typeInSearchFilterInput('compositeField');
         await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
         await createSubfieldAndValuelist('subfield1', 'new-valuelist-1', 'value1a');
         await createSubfieldAndValuelist('subfield2', 'new-valuelist-2', 'value2a');
         await EditConfigurationPage.clickConfirm();
@@ -964,6 +1288,7 @@ test.describe('configuration --', () => {
         await ConfigurationPage.clickAddFieldButton();
         await AddFieldModalPage.typeInSearchFilterInput('compositeField');
         await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
         await createSubfieldAndValuelist('subfield1', 'new-valuelist', 'value1');
         
         await EditConfigurationPage.typeInNewSubfield('subfield2');
@@ -983,6 +1308,251 @@ test.describe('configuration --', () => {
         expect(await ConfigurationPage.getValue(1)).toEqual('value2');
 
         await EditConfigurationPage.clickConfirmSubfield();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+    });
+
+
+    test('remove subfield with valuelist while editing composite field', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('compositeField');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('composite', 'field');
+        await createSubfieldWithExistingValuelist('subfield1', 'provenance-default-1');
+        await EditConfigurationPage.clickDeleteSubfield(0);
+        await createSubfieldWithExistingValuelist('subfield2', 'periods-default-1');
+        await createSubfieldWithExistingValuelist('subfield3', 'colors-default-1');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource('P1', 'place');
+        await ResourcesPage.openEditByDoubleClickResource('P1');
+        await DoceditPage.clickCreateCompositeEntry('test-compositeField');
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(0, 'Archaisch'));
+        await waitForExist(await DoceditCompositeEntryModalPage.getSubfieldSelectOption(1, 'beige'));
+        
+        await DoceditCompositeEntryModalPage.clickSelectSubfieldSelectOption(0, 'Archaisch');
+        await DoceditCompositeEntryModalPage.clickCancel();
+        await DoceditPage.clickCloseEdit();
+    });
+
+
+    test('create relation with inverse relation', async () => {
+
+        await ConfigurationPage.createRelation('Place', 'relation1', 'Relation 1', ['Trench'], ['Operation']);
+        await ConfigurationPage.createRelation(
+            'Trench', 'relation2', 'Relation 2', ['Place'], [undefined], 'Operation'
+        );
+        
+        await ConfigurationPage.clickOpenContextMenuForField('test:relation2');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectInverseRelation('test:relation1');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.performCreateResource('P1', 'place');
+        await ResourcesPage.performCreateResource('T1', 'operation-trench');
+        await ResourcesPage.openEditByDoubleClickResource('P1');
+        await DoceditRelationsPage.clickAddRelationForGroupWithIndex('test:relation1');
+        await DoceditRelationsPage.typeInRelation('test:relation1', 'T1');
+        await DoceditRelationsPage.clickChooseRelationSuggestion(0);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.clickSelectResource('P1');
+        expect(await FieldsViewPage.getRelationName(0, 1)).toBe('Relation 1');
+        expect(await FieldsViewPage.getRelationValue(0, 0)).toBe('T1');
+
+        await ResourcesPage.clickSelectResource('T1');
+        expect(await FieldsViewPage.getRelationName(0, 1)).toBe('Relation 2');
+        expect(await FieldsViewPage.getRelationValue(0, 0)).toBe('P1');
+    });
+
+
+    test('add & remove inverse relations automatically', async () => {
+
+        async function expectInverseRelation(categoryName: string, relationName: string, inverseRelationLabel?: string,
+                                             supercategoryName?: string) {
+
+            await CategoryPickerPage.clickSelectCategory(categoryName, supercategoryName);
+            await ConfigurationPage.clickSelectField(relationName);
+
+            if (inverseRelationLabel) {
+                expect(await ConfigurationPage.getInverseRelationLabel(relationName)).toBe(inverseRelationLabel); 
+            } else {
+                await waitForNotExist(await ConfigurationPage.getInverseRelation(relationName));
+            }
+        };
+
+        await ConfigurationPage.createRelation(
+            'Place', 'relation1', 'Relation 1', ['Trench', 'Feature', 'Sample'], ['Operation', undefined, undefined]
+        );
+        await ConfigurationPage.createRelation(
+            'Trench', 'relation2', 'Relation 2', ['Place', 'Find'], [undefined, undefined], 'Operation'
+        );
+        await ConfigurationPage.addRelation('Feature', 'test:relation2', ['Place', 'Find'], [undefined, undefined]);
+        await ConfigurationPage.addRelation('Find', 'test:relation1', ['Trench', 'Feature'], ['Operation', undefined]);
+        await ConfigurationPage.addRelation('Sample', 'test:relation2', ['Place'], [undefined]);
+
+        await ConfigurationPage.clickOpenContextMenuForField('test:relation2');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectInverseRelation('test:relation1');
+        await EditConfigurationPage.clickConfirm();
+
+        await expectInverseRelation('Place', 'test:relation1', 'Relation 2');
+        await expectInverseRelation('Trench', 'test:relation2', 'Relation 1', 'Operation');
+        await expectInverseRelation('Feature', 'test:relation2', 'Relation 1');
+        await expectInverseRelation('Find', 'test:relation1', 'Relation 2');
+        await expectInverseRelation('Sample', 'test:relation2', 'Relation 1');
+
+        await ConfigurationPage.clickOpenContextMenuForField('test:relation2');
+        await ConfigurationPage.clickContextMenuEditOption();
+        await EditConfigurationPage.clickSelectInverseRelation('');
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await expectInverseRelation('Place', 'test:relation1', undefined);
+        await expectInverseRelation('Trench', 'test:relation2', undefined, 'Operation');
+        await expectInverseRelation('Feature', 'test:relation2', undefined);
+        await expectInverseRelation('Find', 'test:relation1', undefined);
+        await expectInverseRelation('Sample', 'test:relation2', undefined);
+    });
+
+
+    test('show only suitable relations in inverse relation dropdown', async () => {
+
+        await ConfigurationPage.createRelation('Place', 'relation1', 'Relation 1', ['Trench'], ['Operation']);
+        await ConfigurationPage.createRelation(
+            'Trench', 'relation2', 'Relation 2', ['Feature'], [undefined], 'Operation'
+        );
+        
+        await ConfigurationPage.clickOpenContextMenuForField('test:relation2');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        let options = await EditConfigurationPage.getInverseRelationOptions();
+        expect(await options.count()).toBe(1);
+        expect(await getText(await options.nth(0))).toBe('Keine Gegenrelation');
+
+        await CategoryPickerPage.clickSelectCategory('Place', undefined, 'target-category-picker-container');
+
+        options = await EditConfigurationPage.getInverseRelationOptions();
+        expect(await options.count()).toBe(1);
+        expect(await getText(await options.nth(0))).toBe('Keine Gegenrelation');
+
+        await CategoryPickerPage.clickSelectCategory('Feature', undefined, 'target-category-picker-container');
+
+        options = await EditConfigurationPage.getInverseRelationOptions();
+        expect(await options.count()).toBe(2);
+        expect(await getText(await options.nth(0))).toBe('Keine Gegenrelation');
+        expect(await getText(await options.nth(1))).toBe('Relation 1');
+
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+    });
+
+
+    test('prevent creation of relation without target categories', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('relation');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickInputTypeSelectOption('relation', 'field');
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForMessage('Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.');
+        await closeAllMessages();
+
+        await EditConfigurationPage.clickCancel(true);
+        await AddFieldModalPage.clickCancel();
+    });
+
+
+    test('prevent creating geometry on map', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickSelectGroup('position');
+        await ConfigurationPage.clickOpenContextMenuForField('geometry');
+        await ConfigurationPage.clickContextMenuEditOption();
+        
+        await EditConfigurationPage.clickToggleEditableOnMapSlider();
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        await ResourcesPage.clickSelectCategory('Place');
+        await DoceditPage.typeInInputField('identifier', 'P1');
+        await DoceditPage.clickSaveDocument();
+        
+        await ResourcesPage.clickOpenContextMenu('P1');
+
+        await waitForExist(await ResourcesPage.getContextMenu());
+        await waitForNotExist(await ResourcesPage.getCreateGeometryContextMenuOption('point'));
+        await waitForNotExist(await ResourcesPage.getCreateGeometryContextMenuOption('polyline'));
+        await waitForNotExist(await ResourcesPage.getCreateGeometryContextMenuOption('polygon'));
+    });
+
+
+    test('disable geometry type', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickSelectGroup('position');
+        await ConfigurationPage.clickOpenContextMenuForField('geometry');
+        await ConfigurationPage.clickContextMenuEditOption();
+        
+        await EditConfigurationPage.clickGeometryTypeCheckbox(1); // Disable 'MultiPolygon'
+        await EditConfigurationPage.clickGeometryTypeCheckbox(0); // Disable 'Polygon'
+        await EditConfigurationPage.clickConfirm();
+        await ConfigurationPage.save();
+
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickCreateResource();
+        await ResourcesPage.clickSelectCategory('Place');
+
+        await waitForExist(await ResourcesPage.getGeometryTypeOption('none'));
+        await waitForExist(await ResourcesPage.getGeometryTypeOption('point'));
+        await waitForExist(await ResourcesPage.getGeometryTypeOption('polyline'));
+        await waitForNotExist(await ResourcesPage.getGeometryTypeOption('polygon'));
+
+        await ResourcesPage.clickSelectGeometryType('none');
+        await DoceditPage.typeInInputField('identifier', 'P1');
+        await DoceditPage.clickSaveDocument();
+        
+        await ResourcesPage.clickOpenContextMenu('P1');
+
+        await waitForExist(await ResourcesPage.getCreateGeometryContextMenuOption('point'));
+        await waitForExist(await ResourcesPage.getCreateGeometryContextMenuOption('polyline'));
+        await waitForNotExist(await ResourcesPage.getCreateGeometryContextMenuOption('polygon'));
+    });
+
+
+    test('do not allow disabling single geometry type without also disabling corresponding multi type', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Place');
+        await ConfigurationPage.clickSelectGroup('position');
+        await ConfigurationPage.clickOpenContextMenuForField('geometry');
+        await ConfigurationPage.clickContextMenuEditOption();
+        
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(0)).toBeDisabled();
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(1)).not.toBeDisabled();
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(2)).toBeDisabled();
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(3)).not.toBeDisabled();
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(4)).toBeDisabled();
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(5)).not.toBeDisabled();
+
+        await EditConfigurationPage.clickGeometryTypeCheckbox(1); // Disallow 'MultiPolygon'
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(0)).not.toBeDisabled();
+
+        await EditConfigurationPage.clickGeometryTypeCheckbox(3); // Disallow 'MultiPolyline'
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(2)).not.toBeDisabled();
+
+        await EditConfigurationPage.clickGeometryTypeCheckbox(5); // Disallow 'MultiPoint'
+        await expect(await EditConfigurationPage.getGeometryTypeCheckbox(4)).not.toBeDisabled();
+
         await EditConfigurationPage.clickCancel();
     });
 });

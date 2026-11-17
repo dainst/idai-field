@@ -1,10 +1,14 @@
 image-overview-search-bar {
-  input {
+  .search-bar-input {
     width: calc(100% - 90px) !important;
+    border-right: none !important;
   }
 }
 
 .images-filter-popover {
+    max-width: 500px !important;
+    width: auto !important;
+
   .arrow {
     right: 13px !important;
   }

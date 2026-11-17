@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FileStat, FilesystemAdapterInterface } from 'idai-field-core';
-import { getAsynchronousFs } from '../getAsynchronousFs';
+import { getAsynchronousFs } from '../get-asynchronous-fs';
 
 
 /**

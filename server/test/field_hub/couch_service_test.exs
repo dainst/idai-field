@@ -7,8 +7,8 @@ defmodule FieldHub.CouchServiceTest do
 
   use ExUnit.Case
 
-  @project "test"
-  @user_name "test_user"
+  @project "couch_service_test"
+  @user_name @project
   @user_password "test_password"
 
   @valid_credentials %Credentials{name: @user_name, password: @user_password}
@@ -42,6 +42,10 @@ defmodule FieldHub.CouchServiceTest do
 
     extra_project = "couch_test_extra_project"
 
+    on_exit(fn ->
+      TestHelper.remove_test_db_and_user(extra_project, extra_project)
+    end)
+
     databases = CouchService.get_all_databases()
     assert is_list(databases)
     initial_count = Enum.count(databases)
@@ -52,12 +56,10 @@ defmodule FieldHub.CouchServiceTest do
     assert is_list(databases)
     assert initial_count + 1 == Enum.count(databases)
     assert extra_project in databases
-
-    TestHelper.remove_test_db_and_user(extra_project, extra_project)
   end
 
   test "get_all_databases/0 does not return internal databases or databases without application user" do
-    # Without the app user (see config.exs) added to the database, this database is considered outside of FieldHub:
+    # Without the app user (see config.exs) added to the database, this database is considered outside of Field Hub:
     # `FieldHub.Project.create/1` would additionally call `CouchService.update_user_role_in_project/3`.
     outside_project = "outside_field_hub"
 
@@ -73,7 +75,7 @@ defmodule FieldHub.CouchServiceTest do
   end
 
   test "get_docs/2 returns a project's documents with the given UUIDs" do
-    %HTTPoison.Response{status_code: 200, body: body} =
+    %Tesla.Env{status: 200, body: body} =
       CouchService.get_docs(@project, ["o25", "o26"])
 
     assert %{
@@ -139,11 +141,11 @@ defmodule FieldHub.CouchServiceTest do
                  }
                }
              ]
-           } = Jason.decode!(body)
+           } = body
   end
 
   test "get_docs/2 returns error for unknown uuids" do
-    %HTTPoison.Response{status_code: 200, body: body} =
+    %Tesla.Env{status: 200, body: body} =
       CouchService.get_docs(@project, ["o25", "unknown"])
 
     assert %{
@@ -154,7 +156,7 @@ defmodule FieldHub.CouchServiceTest do
                },
                %{"error" => "not_found", "key" => "unknown"}
              ]
-           } = Jason.decode!(body)
+           } = body
   end
 
   test "get_docs_by_category/2 returns a project's documents matching the given types" do
@@ -174,5 +176,20 @@ defmodule FieldHub.CouchServiceTest do
                }
              }
            ] = CouchService.get_docs_by_category(@project, ["Image", "Drawing"]) |> Enum.to_list()
+  end
+
+  test "get_last_n_changes/1 returns the correct amount of changes last changes" do
+    assert [
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" => _},
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" => _},
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" => _},
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" => _},
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" => _}
+           ] = CouchService.get_last_n_changes(@project, 5)
+
+    assert [
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" => _},
+             %{"changes" => [%{"rev" => _}], "id" => _, "seq" => _, "doc" => _}
+           ] = CouchService.get_last_n_changes(@project, 2)
   end
 end

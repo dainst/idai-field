@@ -19,8 +19,6 @@ const commonFieldGroups = {
     dimensionThickness: Groups.DIMENSION,
     dimensionVerticalExtent: Groups.POSITION,
     dimensionOther: Groups.DIMENSION,
-    beginningDate: Groups.STEM,
-    endDate: Groups.STEM,
     processor: Groups.STEM,
     campaign: Groups.STEM,
     description: Groups.PROPERTIES,

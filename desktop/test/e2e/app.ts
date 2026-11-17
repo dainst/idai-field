@@ -63,6 +63,8 @@ export async function getUrl(): Promise<string> {
 
 export async function navigateTo(menu) {
 
+    await pause(100);
+
     return window.evaluate((menuOption) => {
         require('@electron/remote').getCurrentWindow().webContents
             .send('menuItemClicked', menuOption);
@@ -79,7 +81,8 @@ export async function resetApp() {
 export async function sendMessageToAppController(message: string) {
 
     await window.evaluate(value => require('@electron/remote').getCurrentWindow().webContents.send(value), message);
-    return waitForExist("//span[@class='message-content' and contains(text(), 'Erfolgreich ausgeführt')]", 120000);
+    await waitForExist("//span[@class='message-content' and contains(text(), 'Erfolgreich ausgeführt')]", 120000);
+    await closeAllMessages();
 }
 
 
@@ -219,7 +222,7 @@ export async function getSearchableSelectOption(element, optionValueLabel) {
     await scrollTo(element);
     await click(element);
     
-    return getLocator('.ng-dropdown-panel .ng-option span:has-text("' + optionValueLabel + '")');
+    return getLocator('.ng-dropdown-panel .ng-option div:has-text("' + optionValueLabel + '")');
 }
 
 
@@ -245,10 +248,39 @@ export async function getValue(element) {
 }
 
 
-export async function uploadInFileInput(element, filePath) {
+export function getMessageText(index: number) {
 
-    if (isString(element)) element = await getLocator(element);
-    return element.setInputFiles(filePath);
+    return getText('#message-' + index);
+}
+
+
+export function waitForMessage(text: string, matchExactly: boolean = true) {
+
+    if (matchExactly) {
+        return waitForExist("//span[@class='message-content' and normalize-space(text())='" + text + "']");
+    } else {
+        return waitForExist("//span[@class='message-content' and contains(text(),'" + text + "')]");
+    }
+}
+
+
+export async function closeAllMessages() {
+
+    await waitForExist((await getLocator('.alert button')).nth(0));
+    const elements = await getLocator('.alert button');
+    for (let i = 0; i < await elements.count(); i++) {
+        await elements.nth(i).click();
+    }
+}
+
+
+export async function selectFile(element, filePath) {
+
+    await electronApp.evaluate(({ dialog }, path) => {
+        dialog.showOpenDialog = (_, __) => Promise.resolve({ filePaths: [path] });
+    }, filePath);
+
+    return click(element);
 }
 
 

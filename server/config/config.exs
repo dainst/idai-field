@@ -14,7 +14,11 @@ import Config
 # Configures the endpoint
 config :field_hub, FieldHubWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: FieldHubWeb.ErrorView, accepts: ~w(html json), layout: false],
+  adapter: Bandit.PhoenixAdapter,
+  render_errors: [
+    formats: [html: FieldHubWeb.ErrorHTML, json: FieldHubWeb.ErrorJSON],
+    layout: false
+  ],
   pubsub_server: FieldHub.PubSub,
   live_view: [signing_salt: "upiryQ4e"]
 
@@ -28,7 +32,6 @@ config :field_hub,
   couchdb_user_password: "app_user_password",
   valid_file_variants: [:thumbnail_image, :original_image],
   file_index_cache_name: :file_info,
-  file_max_size: 1_000_000_000,
   user_tokens_cache_name: :user_tokens,
   max_project_identifier_length: 30
 
@@ -49,7 +52,10 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
-config :reverse_proxy_plug, :http_client, ReverseProxyPlug.HTTPClient.Adapters.HTTPoison
+
+config :tesla, adapter: Tesla.Adapter.Mint
+config :reverse_proxy_plug, :http_client, ReverseProxyPlug.HTTPClient.Adapters.Tesla
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

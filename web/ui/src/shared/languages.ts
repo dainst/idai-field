@@ -3,6 +3,7 @@ import { I18N } from 'idai-field-core';
 import { I18nString, LabeledValue } from '../api/document';
 
 export const USER_INTERFACE_LANGUAGES = ['en', 'de'];
+export const MANUAL_LANGUAGES = ['en', 'de', 'tr'];
 
 export const LANGUAGES: string[] = initializeLanguages();
 
@@ -10,6 +11,12 @@ export const LANGUAGES: string[] = initializeLanguages();
 export function getUserInterfaceLanguage(): string {
 
     return LANGUAGES.find(language => USER_INTERFACE_LANGUAGES.includes(language));
+}
+
+
+export function getManualLanguage(): string {
+
+    return LANGUAGES.find(language => MANUAL_LANGUAGES.includes(language));
 }
 
 

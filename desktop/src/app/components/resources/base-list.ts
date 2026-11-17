@@ -1,7 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { FieldDocument } from 'idai-field-core';
-import { ResourcesComponent } from './resources.component';
+import { Document } from 'idai-field-core';
 import { Loading } from '../widgets/loading';
 import { PlusButtonStatus } from './plus-button.component';
 import { NavigationPath } from '../../components/resources/view/state/navigation-path';
@@ -9,40 +8,71 @@ import { ViewFacade } from '../../components/resources/view/view-facade';
 import { MenuContext } from '../../services/menu-context';
 import { Menus } from '../../services/menus';
 import { scrollTo } from '../../angular/scrolling';
+import { NavigationPathSegment } from './view/state/navigation-path-segment';
+import { AngularUtility } from '../../angular/angular-utility';
+import { ContextMenuProvider } from '../widgets/context-menu-provider';
 
 
 @Component({
-   template: ''
+    template: '',
+    standalone: false
 })
 /**
  * @author Philipp Gerth
  * @author Thomas Kleinke
  */
-export class BaseList {
+export class BaseList extends ContextMenuProvider implements AfterViewChecked {
 
     @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
 
     public navigationPath: NavigationPath;
+    public waitingForScroll: boolean = false;
+    
+    public readonly itemSize: number;
+
+    private scrollTarget: Document;
+    private scrollToBottomElement: boolean = false;
+    private scrollOnlyIfInvisible: boolean = false;
+    private lastSelectedSegment: NavigationPathSegment;
 
 
-    constructor(public resourcesComponent: ResourcesComponent,
-                public viewFacade: ViewFacade,
+    constructor(public viewFacade: ViewFacade,
                 protected loading: Loading,
-                protected menuService: Menus) {
+                protected menuService: Menus,
+                changeDetectorRef: ChangeDetectorRef) {
+
+        super(changeDetectorRef);
 
         this.navigationPath = this.viewFacade.getNavigationPath();
-        this.viewFacade.navigationPathNotifications().subscribe(path => this.navigationPath = path);
+
+        this.viewFacade.navigationPathNotifications().subscribe(path => {
+            if (this.navigationPath) this.lastSelectedSegment = NavigationPath.getSelectedSegment(this.navigationPath);
+            this.navigationPath = path;
+        });
+
+        this.viewFacade.populateDocumentsNotifications().subscribe(async () => {
+            await AngularUtility.refresh();
+            this.scrollTarget = undefined;
+        });
     }
 
 
-    public getCurrentFilterCategory()  {
+    ngAfterViewChecked() {
+        
+        if (this.scrollTarget && this.scrollViewport) {
+            this.performScrolling();
+        }
+    }
+
+
+    public getCurrentFilterCategory(): string {
 
         const filterCategories = this.viewFacade.getFilterCategories();
         return filterCategories && filterCategories.length > 0 ? filterCategories[0] : undefined;
     }
 
 
-    public getSelectedSegmentDoc() {
+    public getSelectedSegmentDocument(): Document {
 
         const segment = NavigationPath.getSelectedSegment(this.navigationPath);
         return segment ? segment.document : undefined;
@@ -51,7 +81,7 @@ export class BaseList {
 
     public isPlusButtonShown(): boolean {
 
-        return this.menuService.getContext() !== MenuContext.GEOMETRY_EDIT
+        return ![MenuContext.GEOMETRY_EDIT, MenuContext.GEOMETRY_EDIT_MODAL].includes(this.menuService.getContext())
             && this.viewFacade.isReady()
             && !this.loading.isLoading();
     }
@@ -65,17 +95,46 @@ export class BaseList {
     }
 
 
-    protected scrollTo(doc: FieldDocument|undefined) {
+    protected scrollToLastSelectedSegmentResource() {
 
-        if (!doc) return;
+        if (this.lastSelectedSegment) this.scrollTo(this.lastSelectedSegment.document, false, false, true);
+    }
 
-        const index = this.viewFacade.getDocuments()
-            .findIndex(document => document.resource.id === doc.resource.id);
 
-        if (!this.scrollViewport) {
-            setTimeout(() => this.scrollTo(doc), 100);
-        } else {
-            scrollTo(index, 'resource-' + doc.resource.identifier, this.scrollViewport);   
-        }
+    protected scrollTo(scrollTarget: Document, scrollToBottomElement: boolean = false,
+                       scrollOnlyIfInvisible: boolean = true, waitForScroll: boolean = false) {
+
+        if (!scrollTarget) return;
+                        
+        if (waitForScroll) this.waitingForScroll = true;
+        this.scrollTarget = scrollTarget;
+        this.scrollToBottomElement = scrollToBottomElement;
+        this.scrollOnlyIfInvisible = scrollOnlyIfInvisible;
+
+        // Set waitingForScroll to false automatically after 200 milliseconds as a fallback for the case 
+        // that the scroll target has been deleted via synchronization
+        if (waitForScroll) setTimeout(() => this.waitingForScroll = false, 200);
+    }
+
+
+    private performScrolling() {
+
+        const index: number = this.viewFacade.getDocuments()
+            .findIndex(document => document.resource.id === this.scrollTarget.resource.id);
+        if (index === -1) return;
+
+        scrollTo(
+            index,
+            'resource-' + this.scrollTarget.resource.identifier,
+            this.itemSize,
+            this.scrollViewport,
+            this.scrollToBottomElement,
+            this.scrollOnlyIfInvisible
+        );
+
+        this.scrollTarget = undefined;
+        this.scrollToBottomElement = false;
+
+        setTimeout(() => this.waitingForScroll = false, 0);
     }
 }

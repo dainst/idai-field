@@ -12,9 +12,13 @@ export function mergeGroupsConfigurations(parentGroups: Array<BaseGroupDefinitio
         const parentGroup: BaseGroupDefinition|undefined = result.find(group => group.name === childGroup.name);
 
         if (parentGroup) {
-            parentGroup.fields = parentGroup.fields.concat(
-                childGroup.fields.filter(fieldName => !parentGroup.fields.includes(fieldName))
-            );
+            if (parentGroup.fields.every(fieldName => childGroup.fields.includes(fieldName))) {
+                parentGroup.fields = parentGroup.fields.filter(fieldName => !childGroup.fields.includes(fieldName))
+                    .concat(childGroup.fields);
+            } else {
+                parentGroup.fields = parentGroup.fields
+                    .concat(childGroup.fields.filter(fieldName => !parentGroup.fields.includes(fieldName)));
+            }
         } else {
             result.push(clone(childGroup));
         }

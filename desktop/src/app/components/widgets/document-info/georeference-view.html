@@ -14,8 +14,8 @@
 </ng-template>
 
 <div *ngIf="document.resource.georeference || !readonly" class="card">
-    <div class="card-header">
-        <button class="btn btn-block"
+    <div class="card-header d-grid">
+        <button class="btn"
                 i18n="@@imageView.georeferenceView.georeferenceData"
                 (click)="toggle()">Georeferenzdaten</button>
     </div>
@@ -45,12 +45,9 @@
                 <div id="worldfile-upload" class="btn btn-link"  ngbTooltip="World-File laden"
                      data-toggle="tooltip" title=""
                      i18n-ngbTooltip="@@imageView.georeferenceView.tooltips.loadWorldfile"
-                     container="body">
+                     container="body"
+                     (click)="selectFile()">
                     <span class="mdi mdi-file-import"></span>
-                    <input #worldfileInput type="file"
-                           name="files[]"
-                           id="file"
-                           (change)="onSelectFile($event)">
                 </div>
             </div>
         </div>

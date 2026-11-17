@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { isArray } from 'tsfun';
 import { Document, Datastore, NewImageDocument, ProjectConfiguration, RelationsManager, 
-    ImageStore, ImageGeoreference, ImageDocument, CategoryForm, formatDate } from 'idai-field-core';
-import { readWldFile } from '../georeference/wld-import';
+    ImageStore, ImageGeoreference, ImageDocument, CategoryForm, formatDate, Field,
+    DateConfiguration } from 'idai-field-core';
+import { Errors, readWldFile } from '../georeference/wld-import';
 import { ExtensionUtil } from '../../../util/extension-util';
 import { MenuContext } from '../../../services/menu-context';
 import { Menus } from '../../../services/menus';
@@ -11,16 +12,23 @@ import { M } from '../../messages/m';
 import { ImageUploadMetadataModalComponent } from './image-upload-metadata-modal.component';
 import { UploadModalComponent } from './upload-modal.component';
 import { UploadStatus } from './upload-status';
-import { ImageManipulationErrors } from '../../../services/imagestore/image-manipulation';
+import { ImageManipulationErrors } from '../../../services/imagestore/manipulation/image-manipulation';
 import { ImageMetadata, extendMetadataByFileData } from '../../../services/imagestore/file-metadata';
 import { getGeoreferenceFromGeotiff } from '../georeference/geotiff-import';
-import { createDisplayVariant } from '../../../services/imagestore/create-display-variant';
+import { createDisplayVariant } from '../../../services/imagestore/manipulation/create-display-variant';
 import { ImagesState } from '../overview/view/images-state';
+import { getAsynchronousFs } from '../../../services/get-asynchronous-fs';
+import { getSystemTimezone } from '../../../util/timezones';
+import { Validations } from '../../../model/validations';
+import { ValidationErrors } from '../../../model/validation-errors';
+
+const path = window.require('path');
 
 
 export interface ImageUploadResult {
 
     uploadedImages: number;
+    uploadedWorldFiles: number;
     messages: string[][];
 }
 
@@ -49,54 +57,70 @@ export class ImageUploader {
 
 
     /**
-     * @param event The event containing the images to upload (can be drag event or event from file input element)
      * @param depictsRelationTarget If this parameter is set, each of the newly created image documents will contain
      *  a depicts relation to the specified document.
      */
-    public async startUpload(event: Event, depictsRelationTarget?: Document): Promise<ImageUploadResult> {
+    public async startUpload(filePaths: string[], depictsRelationTarget?: Document, metadata?: ImageMetadata,
+                             parseDraughtsmen?: boolean, checkOriginalFilename?: boolean,
+                             calledViaRestApi: boolean = false): Promise<ImageUploadResult> {
 
-        let uploadResult: ImageUploadResult = { uploadedImages: 0, messages: [] };
+        let uploadResult: ImageUploadResult = { uploadedImages: 0, uploadedWorldFiles: 0, messages: [] };
 
         if (!this.imagestore.getAbsoluteRootPath()) {
             uploadResult.messages.push([M.IMAGESTORE_ERROR_INVALID_PATH_WRITE]);
             return uploadResult;
         }
 
-        const files = ImageUploader.getFiles(event);
-        const message: string[]|undefined = this.checkForUnsupportedFileTypes(files);
+        const message: string[]|undefined = this.checkForUnsupportedFileTypes(filePaths);
         if (message) uploadResult.messages.push(message);
 
-        const imageFiles = files.filter(file =>
-            ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(file.name)));
-        if (imageFiles.length) {
-            const metadata: ImageMetadata|undefined = await this.selectMetadata(imageFiles.length, depictsRelationTarget);
-            if (!metadata) return uploadResult;
+        const imageFilePaths: string[] = filePaths.filter(filePath =>
+            ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(path.basename(filePath))));
+        if (imageFilePaths.length) {
+            if (!metadata) {
+                metadata = await this.selectMetadata(imageFilePaths.length, depictsRelationTarget);
+                if (!metadata) return uploadResult;
+            }
 
-            this.menuService.setContext(MenuContext.MODAL);
-            const uploadModalRef = this.modalService.open(
-                UploadModalComponent, { backdrop: 'static', keyboard: false, animation: false }
-            );
+            let menuContext: MenuContext;
+            let uploadModalRef: NgbModalRef;
+
+            if (!calledViaRestApi) {
+                menuContext = this.menuService.getContext();
+                this.menuService.setContext(MenuContext.MODAL);
+                uploadModalRef = this.modalService.open(
+                    UploadModalComponent, { backdrop: 'static', keyboard: false, animation: false }
+                );
+            }
+
+            this.uploadStatus.running = true;
+
             uploadResult = await this.uploadImageFiles(
-                imageFiles, metadata, uploadResult, depictsRelationTarget
+                filePaths, metadata, uploadResult, depictsRelationTarget, parseDraughtsmen, checkOriginalFilename
             );
-            uploadModalRef.close();
-            this.menuService.setContext(MenuContext.DEFAULT);
+    
+            if (!calledViaRestApi) {
+                uploadModalRef.close();
+                this.menuService.setContext(menuContext);
+            }
         }
 
-        const wldFiles = files.filter(file =>
-            ImageUploader.supportedWorldFileTypes.includes(ExtensionUtil.getExtension(file.name)));
-        if (wldFiles.length) {
-            uploadResult.messages = uploadResult.messages.concat(await this.uploadWldFiles(wldFiles));
+        const wldFilePaths: string[] = filePaths.filter(filePath =>
+            ImageUploader.supportedWorldFileTypes.includes(ExtensionUtil.getExtension(path.basename(filePath))));
+        if (wldFilePaths.length) {
+            await this.uploadWldFiles(wldFilePaths, uploadResult);
         }
+
+        this.uploadStatus.running = false;
 
         return uploadResult;
     }
 
 
-    private checkForUnsupportedFileTypes(files: Array<File>): string[]|undefined {
+    private checkForUnsupportedFileTypes(filePaths: string[]): string[]|undefined {
 
         const supportedFileTypes = ImageUploader.supportedImageFileTypes.concat(ImageUploader.supportedWorldFileTypes);
-        const result = ExtensionUtil.reportUnsupportedFileTypes(files, supportedFileTypes);
+        const result = ExtensionUtil.reportUnsupportedFileTypes(filePaths, supportedFileTypes);
         if (result[1]) {
             return [
                 M.IMAGESTORE_DROP_AREA_ERROR_UNSUPPORTED_EXTENSIONS,
@@ -111,8 +135,7 @@ export class ImageUploader {
     private async selectMetadata(fileCount: number,
                                  depictsRelationTarget?: Document): Promise<ImageMetadata|undefined> {
 
-        this.projectConfiguration.getCategory('Image');
-
+        const menuContext: MenuContext = this.menuService.getContext();
         this.menuService.setContext(MenuContext.MODAL);
         const modal: NgbModalRef = this.modalService.open(
             ImageUploadMetadataModalComponent, { backdrop: 'static', keyboard: false, animation: false }
@@ -126,31 +149,34 @@ export class ImageUploader {
         } catch (err) {
             return undefined;
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.menuService.setContext(menuContext);
         }
     }
 
 
-    private async uploadImageFiles(files: Array<File>, metadata: ImageMetadata, uploadResult: ImageUploadResult,
-                                   depictsRelationTarget?: Document): Promise<ImageUploadResult> {
+    private async uploadImageFiles(filePaths: string[], metadata: ImageMetadata, uploadResult: ImageUploadResult,
+                                   depictsRelationTarget?: Document, parseDraughtsmen?: boolean,
+                                   checkOriginalFilename?: boolean): Promise<ImageUploadResult> {
 
-        if (!files) return uploadResult;
+        if (!filePaths) return uploadResult;
 
-        this.uploadStatus.setTotalImages(files.length);
+        this.uploadStatus.setTotalImages(filePaths.length);
         this.uploadStatus.setHandledImages(0);
 
         const duplicateFilenames: string[] = [];
 
-        for (const file of files) {
-            if (ExtensionUtil.ofUnsupportedExtension(file, ImageUploader.supportedImageFileTypes)) {
+        for (const filePath of filePaths) {
+            if (ExtensionUtil.ofUnsupportedExtension(path.basename(filePath), ImageUploader.supportedImageFileTypes)) {
                 this.uploadStatus.setTotalImages(this.uploadStatus.getTotalImages() - 1);
             } else {
                 try {
-                    const result = await this.findImageByFilename(file.name);
-                    if (result.totalCount > 0) {
-                        duplicateFilenames.push(file.name);
+                    const existingImageDocuments: Array<ImageDocument> = await this.findImageByFilename(
+                        path.basename(filePath), checkOriginalFilename
+                    );
+                    if (existingImageDocuments.length > 0) {
+                        duplicateFilenames.push(path.basename(filePath));
                     } else {
-                        await this.uploadFile(file, metadata, depictsRelationTarget);
+                        await this.uploadFile(filePath, metadata, depictsRelationTarget, parseDraughtsmen);
                     }
                     this.uploadStatus.setHandledImages(this.uploadStatus.getHandledImages() + 1);
                 } catch (e) {
@@ -170,68 +196,100 @@ export class ImageUploader {
     }
 
 
-    private async uploadWldFiles(files: File[]) {
+    private async uploadWldFiles(filePaths: string[], uploadResult: ImageUploadResult) {
 
         const messages: string[][] = [];
         const unmatchedWldFiles = [];
 
-        outer: for (const file of files) {
+        outer: for (const filePath of filePaths) {
             for (const extension of ImageUploader.supportedImageFileTypes) {
-                const candidateName = ExtensionUtil.replaceExtension(file.name, extension);
-                const result = await this.findImageByFilename(candidateName);
-                if (result.totalCount > 0) {
+                const candidateName = ExtensionUtil.replaceExtension(path.basename(filePath), extension);
+                const imageDocuments: Array<ImageDocument> = await this.findImageByFilename(candidateName);
+                if (imageDocuments.length) {
                     try {
-                        await this.saveWldFile(file, result.documents[0]);
+                        await this.saveWldFile(filePath, imageDocuments[0]);
+                        uploadResult.uploadedWorldFiles++;
                         continue outer;
-                    } catch (e) {
-                        messages.push(e);
+                    } catch (err) {
+                        if (err === Errors.FileReaderError) {
+                            messages.push([M.IMAGES_ERROR_FILEREADER, path.basename(filePath)]);
+                        } else if (err === Errors.InvalidWldFileError) {
+                            messages.push([M.IMAGESTORE_ERROR_INVALID_WORLDFILE, path.basename(filePath)]);
+                        } else {
+                            messages.push(err);
+                        }
+                        continue outer;
                     }
                 }
             }
-            unmatchedWldFiles.push(file.name);
+            unmatchedWldFiles.push(path.basename(filePath));
         }
 
-        if (unmatchedWldFiles.length > 0) messages.push([M.IMAGES_ERROR_UNMATCHED_WLD_FILES, unmatchedWldFiles.join(', ')]);
+        if (unmatchedWldFiles.length > 0) {
+            messages.push([M.IMAGES_ERROR_UNMATCHED_WLD_FILES, unmatchedWldFiles.join(', ')]);
+        }
 
-        const matchedFiles = files.length - unmatchedWldFiles.length;
-        if (matchedFiles === 1) messages.push([M.IMAGES_SUCCESS_WLD_FILE_UPLOADED, matchedFiles.toString()]);
-        if (matchedFiles > 1) messages.push([M.IMAGES_SUCCESS_WLD_FILES_UPLOADED, matchedFiles.toString()]);
+        const matchedFiles: number = filePaths.length - unmatchedWldFiles.length;
+        if (uploadResult.uploadedWorldFiles === 1) {
+            messages.push([M.IMAGES_SUCCESS_WLD_FILE_UPLOADED, matchedFiles.toString()]);
+        } else if (uploadResult.uploadedWorldFiles > 1) {
+            messages.push([M.IMAGES_SUCCESS_WLD_FILES_UPLOADED, matchedFiles.toString()]);
+        }
 
-        return messages;
+        uploadResult.messages = uploadResult.messages.concat(messages);
     }
 
 
-    private async saveWldFile(file: File, document: Document) {
+    private async saveWldFile(filePath: string, document: Document) {
 
-        document.resource.georeference = await readWldFile(file, document);
+        document.resource.georeference = await readWldFile(filePath, document);
         await this.relationsManager.update(document);
     }
 
 
-    private findImageByFilename(filename: string): Promise<Datastore.FindResult> {
+    private async findImageByFilename(filename: string,
+                                      checkOriginalFilename: boolean = false): Promise<Array<ImageDocument>> {
 
-        return this.datastore.find({
-            constraints: {
-                'identifier:match' : filename
+        const result: Array<ImageDocument> = (await this.datastore.find({
+            constraints: { 'identifier:match': filename }
+        })).documents as Array<ImageDocument>;
+        
+        if (!checkOriginalFilename) return result;
+        
+        const originalFilenameMatches: Array<ImageDocument> = (await this.datastore.find({
+            constraints: { 'originalFilename:match': filename }
+        })).documents as Array<ImageDocument>;
+
+        for (let documentToAdd of originalFilenameMatches) {
+            if (!result.find(document => document.resource.id === documentToAdd.resource.id)) {
+                result.push(documentToAdd);
             }
-        });
+        }
+
+        return result;
     }
 
 
-    private async uploadFile(file: File, metadata: ImageMetadata, depictsRelationTarget?: Document): Promise<any> {
+    private async uploadFile(filePath: string, metadata: ImageMetadata, depictsRelationTarget?: Document,
+                             parseDraughtsmen?: boolean): Promise<any> {
 
-        const buffer: Buffer = await this.readFile(file);
+        const buffer: Buffer = await this.readFile(filePath);
+        const fileName: string = path.basename(filePath);
         
         let document: ImageDocument;
         
         try {
-            document = await this.createImageDocument(file.name, buffer, metadata, depictsRelationTarget);
+            document = await this.createImageDocument(
+                fileName, buffer, metadata, depictsRelationTarget, parseDraughtsmen
+            );
         } catch (err) {
             if (isArray(err) && err[0] === ImageManipulationErrors.MAX_INPUT_PIXELS_EXCEEDED) {
-                throw [M.IMAGESTORE_ERROR_UPLOAD_PIXEL_LIMIT_EXCEEDED, file.name, err[1]];
+                throw [M.IMAGESTORE_ERROR_UPLOAD_PIXEL_LIMIT_EXCEEDED, path.basename(filePath), err[1]];
+            } else if (isArray(err) && err[0] === ValidationErrors.UNALLOWED_CHARACTERS) {
+                throw [M.IMAGES_ERROR_UNALLOWED_CHARACTER_IN_FILENAME, fileName];
             } else {
                 console.error(err);
-                throw [M.IMAGESTORE_ERROR_UPLOAD, file.name];
+                throw [M.IMAGESTORE_ERROR_UPLOAD, path.basename(filePath)];
             }
         }
 
@@ -241,41 +299,30 @@ export class ImageUploader {
             await createDisplayVariant(document, this.imagestore, buffer);
         } catch (err) {
             console.error(err);
-            throw [M.IMAGESTORE_ERROR_WRITE, file.name];
+            throw [M.IMAGESTORE_ERROR_WRITE, path.basename(filePath)];
         }
     }
 
 
-    private async readFile(file: File): Promise<Buffer> {
+    private async readFile(filePath: string): Promise<Buffer> {
 
-        return new Promise<any>((resolve, reject) => {
-            const reader = new FileReader();
-
-            reader.onloadend = (() => {
-                const buffer: Buffer = Buffer.from(reader.result);
-                resolve(buffer);
-            });
-
-            reader.onerror = () => {
-                return (error: any) => {
-                    console.error(error);
-                    reject([M.IMAGES_ERROR_FILEREADER, file.name]);
-                };
-            };
-
-            reader.readAsArrayBuffer(file);
-        });
+        try {
+            return Buffer.from(await getAsynchronousFs().readFile(filePath));
+        } catch (err) {
+            console.error(err);
+            throw [M.IMAGES_ERROR_FILEREADER, path.basename(filePath)];
+        }
     }
 
 
     private async createImageDocument(fileName: string, buffer: Buffer, metadata: ImageMetadata,
-                                      depictsRelationTarget?: Document): Promise<any> {
+                                      depictsRelationTarget?: Document, parseDraughtsmen?: boolean): Promise<any> {
                                         
+        if (parseDraughtsmen === undefined) parseDraughtsmen = this.imagesState.getParseFileMetadata('draughtsmen');
+        
         // Try to extend metadata set explicitely by the user with metadata contained within the image file
         // itself (exif/xmp/iptc).
-        const extendedMetadata: ImageMetadata = await extendMetadataByFileData(
-            metadata, buffer, this.imagesState.getParseFileMetadata('draughtsmen')
-        );
+        const extendedMetadata: ImageMetadata = await extendMetadataByFileData(metadata, buffer, parseDraughtsmen);
 
         const document: NewImageDocument = {
             resource: {
@@ -289,6 +336,8 @@ export class ImageUploader {
                 }
             }
         };
+
+        Validations.assertNoUnallowedCharactersUsed(document, this.projectConfiguration);
 
         await this.setOptionalMetadata(document, extendedMetadata);
 
@@ -309,28 +358,22 @@ export class ImageUploader {
 
         const category: CategoryForm = this.projectConfiguration.getCategory(extendedMetadata.category);
 
-        if (CategoryForm.getField(category, 'date') && extendedMetadata.date) {
-            document.resource.date = formatDate(extendedMetadata.date);
+        const dateField: Field = CategoryForm.getField(category, 'date');
+        const draughtsmenField: Field = CategoryForm.getField(category, 'draughtsmen');
+
+        if (dateField && extendedMetadata.date) {
+            document.resource.date = {
+                value: formatDate(
+                    extendedMetadata.date,
+                    undefined,
+                    getSystemTimezone(),
+                    dateField.dateConfiguration.dataType === DateConfiguration.DataType.DATE ? 'date' : 'shortTime'
+                ),
+                isRange: false
+            };
         }
-        if (CategoryForm.getField(category, 'draughtsmen') && extendedMetadata.draughtsmen?.length) {
+        if (draughtsmenField && extendedMetadata.draughtsmen?.length) {
             document.resource.draughtsmen = extendedMetadata.draughtsmen;
         }
-    }
-
-
-    private static getFiles(e: Event): Array<File> {
-
-        const event = e as any;
-
-        if (!event) return [];
-        let files = [];
-
-        if (event.dataTransfer) {
-            if (event.dataTransfer.files) files = event.dataTransfer.files;
-        } else if (event.srcElement) {
-            if (event.srcElement.files) files = event.srcElement.files;
-        }
-
-        return Array.from(files);
     }
 }

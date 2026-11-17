@@ -1,8 +1,8 @@
 import { sameset, update } from 'tsfun';
 import { Datastore } from '../src/datastore/datastore';
 import { CategoryForm, FeatureDocument, Field, FieldDocument, Relation } from '../src/model';
-import { Document, toResourceId } from '../src/model/document';
-import { Resource } from '../src/model/resource';
+import { Document, toResourceId } from '../src/model/document/document';
+import { Resource } from '../src/model/document/resource';
 import { Tree } from '../src/tools/forest';
 import { Lookup } from '../src/tools/utils';
 
@@ -11,7 +11,7 @@ export function createMockProjectConfiguration(): any {
 
     const projectConfiguration = jasmine.createSpyObj(
         'projectConfiguration',
-        ['getCategory', 'getCategories', 'getTypeCategories']
+        ['getCategory', 'getCategories', 'getTypeCategories', 'getWorkflowCategories']
     );
 
     const defaultCategoryConfiguration = {
@@ -39,10 +39,12 @@ export function createMockProjectConfiguration(): any {
         { item: update('name', 'category2', defaultCategoryConfiguration), trees: [] },
         { item: update('name', 'category3', defaultCategoryConfiguration), trees: [] },
         { item: update('name', 'Find', defaultCategoryConfiguration), trees: [] },
-        { item: update('name', 'Type', defaultCategoryConfiguration), trees: [] }
+        { item: update('name', 'Type', defaultCategoryConfiguration), trees: [] },
+        { item: update('name', 'Process', defaultCategoryConfiguration), trees: [] },
     ]);
 
     projectConfiguration.getTypeCategories.and.returnValue([{ name: 'Type' }]);
+    projectConfiguration.getWorkflowCategories.and.returnValue([{ name: 'Process' }]);
 
     return projectConfiguration;
 }
@@ -123,20 +125,24 @@ export function createDocuments(documents: NiceDocs, project?: string) {
     const documentsLookup: Lookup<FieldDocument> = {}
     const relationsLookup = {};
 
-    for (const [id, type, _] of documents) {
-        const d = doc('', 'identifier' + id, type, id) as FieldDocument;
+    for (const [id, category, _] of documents) {
+        const d = doc('', 'identifier' + id, category, id) as FieldDocument;
         if (project) d.project = project;
-        if (type !== 'Image') d.resource.relations = { isRecordedIn: [] };
+        if (category !== 'Image') d.resource.relations = { isRecordedIn: [] };
         relationsLookup[id] = d.resource.relations;
         documentsLookup[id] = d;
     }
-    for (const [id, type, targets] of documents) {
+    for (const [id, category, targets] of documents) {
         if (targets) {
-            if (type === 'Image') relationsLookup[id][Relation.Image.DEPICTS] = targets;
+            if (category === 'Image') {
+                relationsLookup[id][Relation.Image.DEPICTS]
+                    = (relationsLookup[id][Relation.Image.DEPICTS] ?? []).concat(targets);
+            }
             
             for (const target of targets) {
-                relationsLookup[target][type === 'Image' ? Relation.Image.ISDEPICTEDIN : Relation.Hierarchy.LIESWITHIN] = [id];
-                if (type === 'Trench') {
+                const relation = category === 'Image' ? Relation.Image.ISDEPICTEDIN : Relation.Hierarchy.LIESWITHIN;
+                relationsLookup[target][relation] = (relationsLookup[target][relation] ?? []).concat([id]);
+                if (category === 'Trench') {
                     relationsLookup[target][Relation.Hierarchy.RECORDEDIN] = [id];
                     delete relationsLookup[target][Relation.Hierarchy.LIESWITHIN];
                 }
@@ -178,6 +184,7 @@ export const createCategory = (name: string): Tree<CategoryForm> => ({
                 ]
             }
         ],
+        originalGroups: [],
         mustLieWithin: undefined
     },
     trees: []

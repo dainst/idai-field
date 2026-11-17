@@ -49,6 +49,12 @@ export module WarningFilters {
                 type: 'invalidFields'
             },
             {
+                label: translations.getTranslation('warnings.missingMandatoryFields'),
+                constraintName: 'missingMandatoryFields:exist',
+                count: 0,
+                type: 'missingMandatoryFields'
+            },
+            {
                 label: translations.getTranslation('warnings.outlierValues'),
                 constraintName: 'outliers:exist',
                 count: 0,
@@ -61,10 +67,28 @@ export module WarningFilters {
                 type: 'missingRelationTargets'
             },
             {
+                label: translations.getTranslation('warnings.invalidRelationTargets'),
+                constraintName: 'invalidRelationTargets:exist',
+                count: 0,
+                type: 'invalidRelationTargets'
+            },
+            {
                 label: translations.getTranslation('warnings.missingOrInvalidParent'),
                 constraintName: 'missingOrInvalidParent:exist',
                 count: 0,
                 type: 'missingOrInvalidParent'
+            },
+            {
+                label: translations.getTranslation('warnings.unfulfilledConditionFields'),
+                constraintName: 'unfulfilledConditionFields:exist',
+                count: 0,
+                type: 'unfulfilledConditionFields'
+            },
+            {
+                label: translations.getTranslation('warnings.unallowedCharacterFields'),
+                constraintName: 'unallowedCharacterFields:exist',
+                count: 0,
+                type: 'unallowedCharacterFields'
             },
             {
                 label: translations.getTranslation('warnings.missingIdentifierPrefixes'),
@@ -79,10 +103,28 @@ export module WarningFilters {
                 type: 'nonUniqueIdentifier'
             },
             {
+                label: translations.getTranslation('warnings.nonUniqueQrCodes'),
+                constraintName: 'nonUniqueQrCode:exist',
+                count: 0,
+                type: 'nonUniqueQrCode'
+            },
+            {
                 label: translations.getTranslation('warnings.resourceLimitExceeded'),
                 constraintName: 'resourceLimitExceeded:exist',
                 count: 0,
                 type: 'resourceLimitExceeded'
+            },
+            {
+                label: translations.getTranslation('warnings.invalidProcessState'),
+                constraintName: 'invalidProcessState:exist',
+                count: 0,
+                type: 'invalidProcessState'
+            },
+            {
+                label: translations.getTranslation('warnings.unallowedGeometryType'),
+                constraintName: 'unallowedGeometryType:exist',
+                count: 0,
+                type: 'unallowedGeometryType'
             }
         ];
 
@@ -95,7 +137,7 @@ export module WarningFilters {
     export async function hasConfigurationConflict(datastore: Datastore): Promise<boolean> {
 
         try {
-            const configurationDocument: Document = await datastore.get('configuration', { conflicts: true });
+            const configurationDocument: Document = await datastore.get('configuration');
             return configurationDocument._conflicts !== undefined;
         } catch (_) {
             // No configuration document in database

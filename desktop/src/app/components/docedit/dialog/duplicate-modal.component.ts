@@ -1,5 +1,8 @@
-import {Component} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MIN_NUMBER_OF_DUPLICATES } from '../duplication-util';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 
 @Component({
@@ -7,9 +10,9 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
     templateUrl: './duplicate-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
-
 /**
  * @author Thomas Kleinke
  */
@@ -20,10 +23,9 @@ export class DuplicateModalComponent {
     public numberOfDuplicates: number|undefined;
     public newDocument: boolean;
 
-    private readonly minNumberOfDuplicates: number = 1;
 
-
-    constructor(public activeModal: NgbActiveModal) {}
+    constructor(public activeModal: NgbActiveModal,
+                private menuService: Menus) {}
 
 
     public initialize(newDocument: boolean) {
@@ -35,15 +37,17 @@ export class DuplicateModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 
     public getMinNumberOfDuplicates(): number {
 
         return this.newDocument
-            ? this.minNumberOfDuplicates + 1
-            : this.minNumberOfDuplicates;
+            ? MIN_NUMBER_OF_DUPLICATES + 1
+            : MIN_NUMBER_OF_DUPLICATES;
     }
 
 

@@ -1,0 +1,24 @@
+{
+  "default": {
+    "label": ""
+  },
+  "minimalExcavation": {
+    "label": "Configuration de base (fouille)"
+  },
+  "minimalBuilding": {
+    "label": "Configuration de base (Relevé de construction)"
+  },
+  "minimalSurvey": {
+    "label": "Configuration de base (prospection)"
+  },
+  "archaeoDox": {
+    "label": "archaeoDox",
+    "languageConfiguration": {
+      "relations": {
+        "isPresentIn": {
+          "label": "Est inclus dans le dessin du profil/de la surface"
+        }
+      }
+    }
+  }
+}

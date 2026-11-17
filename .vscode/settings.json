@@ -2,6 +2,5 @@
   "files.watcherExclude": {
     "**/node_modules/*/**": true
   },
-  "elixirLS.projectDir": "server"
+  "js/ts.tsdk.path": "desktop/node_modules/typescript/lib"
 }
-

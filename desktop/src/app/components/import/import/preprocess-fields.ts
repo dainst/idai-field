@@ -1,7 +1,10 @@
 import { detach } from 'tsfun';
-import { Document, Resource } from 'idai-field-core';
+import { Document, ImageResource, Resource } from 'idai-field-core';
 import { trimFields } from '../../../util/trim-fields';
 import { removeNullProperties } from './remove-null-properties';
+
+
+const FIELDS_TO_IGNORE = [ImageResource.WIDTH, ImageResource.HEIGHT, ImageResource.ORIGINAL_FILENAME];
 
 
 /**
@@ -25,6 +28,8 @@ export function preprocessFields(documents: Array<Document>,
 function preprocessFieldsForResource(removeNulls: boolean) { return (document: Document) => {
 
     trimFields(document.resource);
+
+    FIELDS_TO_IGNORE.forEach(fieldName => delete document.resource[fieldName]);
 
     if (removeNulls) {
         const relations = document.resource.relations;

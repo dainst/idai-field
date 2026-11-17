@@ -9,7 +9,8 @@ import { Message } from './message';
  */
 @Component({
     selector: 'messages',
-    templateUrl: './messages.html'
+    templateUrl: './messages.html',
+    standalone: false
 })
 
 export class MessagesComponent implements OnDestroy {

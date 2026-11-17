@@ -6,8 +6,9 @@ import { reloadAndSwitchToHomeRoute } from '../services/reload';
 import { SettingsService } from '../services/settings/settings-service';
 import { Menus } from '../services/menus';
 import { MenuModalLauncher } from '../services/menu-modal-launcher';
+import { MenuContext } from '../services/menu-context';
 
-const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
+const ipcRenderer = window.require('electron')?.ipcRenderer;
 
 
 @Injectable()
@@ -38,6 +39,8 @@ export class MenuNavigator {
 
     public async onMenuItemClicked(menuItem: string, projectIdentifier?: string) {
 
+        if (![MenuContext.DEFAULT, MenuContext.CONFIGURATION].includes(this.menuService.getContext())) return;
+
         switch(menuItem) {
             case 'openProject':
                 await this.settingsService.selectProject(projectIdentifier);
@@ -64,6 +67,7 @@ export class MenuNavigator {
             case 'projectLanguages':
             case 'valuelists':
             case 'importConfiguration':
+            case 'exportConfiguration':
                 await this.zone.run(() => ObserverUtil.notify(this.configurationMenuObservers, menuItem));
                 break;
             default:

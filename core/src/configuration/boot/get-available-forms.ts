@@ -15,10 +15,8 @@ import { mergeGroupsConfigurations } from './merge-groups-configurations';
  * @author Thomas Kleinke
  */
 export function getAvailableForms(categories: Map<TransientCategoryDefinition>,
-                                  libraryForms: Map<LibraryFormDefinition>,
-                                  builtInFields: Map<Field>,
-                                  commonFields: Map<Field>,
-                                  relations: Array<Relation>,
+                                  libraryForms: Map<LibraryFormDefinition>, builtInFields: Map<Field>,
+                                  commonFields: Map<Field>, relations: Array<Relation>,
                                   selectedForms: string[]): Map<TransientFormDefinition> {
 
     const builtInForms: Map<TransientFormDefinition> = map(getMinimalForm(categories), categories);
@@ -97,6 +95,7 @@ function setGroups(form: TransientFormDefinition, forms: Array<TransientFormDefi
                    selectedForms: string[]): TransientFormDefinition|undefined {
 
     const clonedForm: TransientFormDefinition = clone(form);
+    clonedForm.originalGroups = clone(clonedForm.groups);
     if (!clonedForm.parent) return clonedForm;
         
     const parentForm = getParentForm(clonedForm, forms, selectedForms);

@@ -2,6 +2,7 @@ import { fieldDoc, FieldDocument } from 'idai-field-core';
 import { ResourcesStateManager } from '../../../../../src/app/components/resources/view/resources-state-manager';
 import { ResourcesState } from '../../../../../src/app/components/resources/view/state/resources-state';
 
+
 /**
  * @author Daniel de Oliveira
  */
@@ -24,19 +25,28 @@ describe('ResourcesStateManager', () => {
 
     beforeEach(() => {
 
-        mockDatastore = jasmine.createSpyObj('datastore', ['get']);
-        mockDatastore.get.and.returnValue({ resource: { identifier: 'test' }});
+        mockDatastore = {
+            get: jest.fn().mockReturnValue({ resource: { identifier: 'test' } })
+        };
+
+        mockProjectConfiguration = {
+            getCategoryForest: jest.fn(),
+            getInventoryCategories: jest.fn().mockReturnValue([]),
+            getCategoryWithSubcategories: jest.fn().mockReturnValue([{ name: 'Place' }])
+        };
         
-        mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration',
-            ['getCategoryForest', 'getInventoryCategories']);
-        mockProjectConfiguration.getInventoryCategories.and.returnValue([]);
+        mockIndexFacade = {
+            getCount: jest.fn(getCount)
+        };
 
-        mockIndexFacade = jasmine.createSpyObj('indexFacade', ['getCount']);
-        mockIndexFacade.getCount.and.callFake(getCount);
-
-        const mockSerializer = jasmine.createSpyObj('serializer', ['store']);
-        const mockTabManager
-            = jasmine.createSpyObj('tabManager', ['openTab', 'isOpen']);
+        const mockSerializer: any = {
+            store: jest.fn()
+        };
+        
+        const mockTabManager: any = {
+            openTab: jest.fn(),
+            isOpen: jest.fn()
+        };
 
         resourcesStateManager = new ResourcesStateManager(
             mockDatastore,
@@ -54,7 +64,7 @@ describe('ResourcesStateManager', () => {
     });
 
 
-    it('repair navigation path if a relation is changed', async done => {
+    test('repair navigation path if a relation is changed', async () => {
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
@@ -75,15 +85,15 @@ describe('ResourcesStateManager', () => {
 
         await resourcesStateManager.moveInto(featureDocument1);
 
-        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).selectedSegmentId).toEqual(featureDocument1.resource.id);
+        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).selectedSegmentId)
+            .toEqual(featureDocument1.resource.id);
         expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments.length).toEqual(1);
-        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
-
-        done();
+        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments[0].document.resource.id)
+            .toEqual(featureDocument1.resource.id);
     });
 
 
-    it('updateNavigationPathForDocument', async done => {
+    test('updateNavigationPathForDocument', async () => {
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
@@ -104,19 +114,19 @@ describe('ResourcesStateManager', () => {
         await resourcesStateManager.moveInto(findDocument1);
         await resourcesStateManager.moveInto(featureDocument1);
 
-        mockDatastore.get.and.returnValue(Promise.resolve(featureDocument2));
+        mockDatastore.get.mockReturnValue(Promise.resolve(featureDocument2));
 
         await resourcesStateManager.updateNavigationPathForDocument(findDocument2);
 
-        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).selectedSegmentId).toEqual(featureDocument2.resource.id);
+        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).selectedSegmentId)
+            .toEqual(featureDocument2.resource.id);
         expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments.length).toEqual(1);
-        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments[0].document.resource.id).toEqual(featureDocument2.resource.id);
-
-        done();
+        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments[0].document.resource.id)
+            .toEqual(featureDocument2.resource.id);
     });
 
 
-    it('updateNavigationPathForDocument - is correct navigation path', async done => {
+    test('updateNavigationPathForDocument - is correct navigation path', async () => {
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
@@ -137,14 +147,14 @@ describe('ResourcesStateManager', () => {
 
         expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).selectedSegmentId).toEqual(undefined);
         expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments.length).toEqual(2);
-        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
-        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments[1].document.resource.id).toEqual(findDocument1.resource.id);
-
-        done();
+        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments[0].document.resource.id)
+            .toEqual(featureDocument1.resource.id);
+        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments[1].document.resource.id)
+            .toEqual(findDocument1.resource.id);
     });
 
 
-    it('step into', async done => {
+    test('step into', async () => {
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
@@ -157,13 +167,12 @@ describe('ResourcesStateManager', () => {
 
         expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).selectedSegmentId).toEqual(featureDocument1.resource.id);
         expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments.length).toEqual(1);
-        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
-
-        done();
+        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments[0].document.resource.id)
+            .toEqual(featureDocument1.resource.id);
     });
 
 
-    it('step out', async done => {
+    test('step out', async () => {
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
@@ -177,13 +186,12 @@ describe('ResourcesStateManager', () => {
 
         expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).selectedSegmentId).toEqual(undefined);
         expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments.length).toEqual(1);
-        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
-
-        done();
+        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments[0].document.resource.id)
+            .toEqual(featureDocument1.resource.id);
     });
 
 
-    it('repair navigation path if a document is deleted', async done => {
+    test('repair navigation path if a document is deleted', async () => {
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
@@ -205,13 +213,12 @@ describe('ResourcesStateManager', () => {
 
         expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).selectedSegmentId).toEqual(undefined);
         expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments.length).toEqual(1);
-        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
-
-        done();
+        expect(ResourcesState.getNavigationPath(resourcesStateManager.get()).segments[0].document.resource.id)
+            .toEqual(featureDocument1.resource.id);
     });
 
 
-    it('set category filters and q', async done => {
+    test('set category filters and q', async () => {
 
         const trenchDocument1 = fieldDoc('trench1', 'trench1', 'Trench', 't1');
         const featureDocument1 = fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
@@ -229,12 +236,10 @@ describe('ResourcesStateManager', () => {
 
         expect(ResourcesState.getCategoryFilters(resourcesStateManager.get())).toEqual(['Find']);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('abc');
-
-        done();
     });
 
 
-    it('delete category filter and q of segment', async done => {
+    test('delete category filter and q of segment', async () => {
 
         const trenchDocument1 = fieldDoc('trench1', 'trench1', 'Trench', 't1');
 
@@ -244,12 +249,10 @@ describe('ResourcesStateManager', () => {
         resourcesStateManager.setQueryString('');
         expect(ResourcesState.getCategoryFilters(resourcesStateManager.get())).toEqual(undefined);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('');
-
-        done();
     });
 
 
-    it('delete category filter and q of non segment', async done => {
+    test('delete category filter and q of non segment', async () => {
 
         const trenchDocument1 = fieldDoc('trench1', 'trench1', 'Trench', 't1');
 
@@ -259,7 +262,5 @@ describe('ResourcesStateManager', () => {
         resourcesStateManager.setQueryString('');
         expect(ResourcesState.getCategoryFilters(resourcesStateManager.get())).toEqual(undefined);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('');
-
-        done();
     });
 });

@@ -45,17 +45,17 @@ export abstract class ConfigurationEditorModalComponent {
     public getClonedProjectLanguages = () => this.clonedConfigurationDocument.resource.projectLanguages;
 
 
-    public getClonedFormDefinition(): CustomFormDefinition {
+    public getClonedFormDefinition(category: CategoryForm = this.category): CustomFormDefinition {
 
         return this.clonedConfigurationDocument.resource
-            .forms[this.category.libraryId ?? this.category.name];
+            .forms[category.libraryId ?? category.name];
     }
 
 
-    public getCustomFormDefinition(): CustomFormDefinition {
+    public getCustomFormDefinition(category: CategoryForm = this.category): CustomFormDefinition {
 
         return this.configurationDocument.resource
-            .forms[this.category.libraryId ?? this.category.name];
+            .forms[category.libraryId ?? category.name];
     }
 
 
@@ -80,7 +80,9 @@ export abstract class ConfigurationEditorModalComponent {
 
     public initialize() {
 
-        this.clonedConfigurationDocument = Document.clone(this.configurationDocument);
+        if (!this.clonedConfigurationDocument) {
+            this.clonedConfigurationDocument = Document.clone(this.configurationDocument);
+        }
 
         this.label = this.getLabel();
         this.description = this.getDescription();

@@ -1,7 +1,6 @@
-import { Field, ProjectConfiguration, Forest } from 'idai-field-core';
+import { Field, ProjectConfiguration, Forest, DateConfiguration, CategoryForm, FieldResource } from 'idai-field-core';
 import { ValidationErrors } from '../../../../src/app/model/validation-errors';
 import { Validations } from '../../../../src/app/model/validations';
-import InputType = Field.InputType;
 
 
 /**
@@ -11,105 +10,164 @@ import InputType = Field.InputType;
  */
 describe('Validations', () => {
 
-    const projectConfiguration = new ProjectConfiguration({
-        forms: Forest.build(
-            [[{
-                name: 'T',
-                groups: [{
-                    name: 'stem', fields: [
-                        { name: 'id' },
-                        { name: 'identifier' },
-                        { name: 'category' },
-                        { name: 'optional' },
-                        { name: 'mandatory', mandatory: true },
-                        { name: 'number1', label: 'number1', inputType: 'float' },
-                        { name: 'number2', label: 'number2', inputType: 'float' },
-                        { name: 'number3', label: 'number3', inputType: 'float' },
-                        { name: 'url1', label: 'url1', inputType: 'url' },
-                        { name: 'url2', label: 'url2', inputType: 'url' },
-                        { name: 'url3', label: 'url3', inputType: 'url' },
-                        { name: 'dating1', label: 'dating1', inputType: 'dating' },
-                        { name: 'dating2', label: 'dating2', inputType: 'dating' },
-                        { name: 'dating3', label: 'dating3', inputType: 'dating' },
-                        { name: 'dating4', label: 'dating4', inputType: 'dating' },
-                        { name: 'dating5', label: 'dating5', inputType: 'dating' },
-                        { name: 'dating6', label: 'dating6', inputType: 'dating' },
-                        { name: 'dating7', label: 'dating7', inputType: 'dating' },
-                        { name: 'dating8', label: 'dating8', inputType: 'dating' },
-                        { name: 'dating9', label: 'dating9', inputType: 'dating' },
-                        { name: 'dimension1', label: 'dimension1', inputType: 'dimension' },
-                        { name: 'dimension2', label: 'dimension2', inputType: 'dimension' },
-                        { name: 'dimension3', label: 'dimension3', inputType: 'dimension' },
-                        { name: 'dimension4', label: 'dimension4', inputType: 'dimension' },
-                        { name: 'dimension5', label: 'dimension5', inputType: 'dimension' },
-                        { name: 'dimension6', label: 'dimension6', inputType: 'dimension' },
-                        { name: 'dimension7', label: 'dimension7', inputType: 'dimension' },
-                        { name: 'dimension8', label: 'dimension8', inputType: 'dimension' },
-                        { name: 'dimension9', label: 'dimension9', inputType: 'dimension' },
-                        { name: 'dimension10', label: 'dimension10', inputType: 'dimension'},
-                        { name: 'dimension11', label: 'dimension11', inputType: 'dimension', inputTypeOptions: { validation: { permissive: true }} },
-                        { name: 'dimension12', label: 'dimension12', inputType: 'dimension' },
-                        { name: 'literature1', label: 'literature1', inputType: 'literature' },
-                        { name: 'literature2', label: 'literature2', inputType: 'literature' },
-                        { name: 'literature3', label: 'literature3', inputType: 'literature' },
-                        { name: 'literature4', label: 'literature4', inputType: 'literature' },
-                        { name: 'literature5', label: 'literature5', inputType: 'literature' },
-                        { name: 'period1', label: 'period1', inputType: InputType.DROPDOWNRANGE },
-                        { name: 'period2', label: 'period2', inputType: InputType.DROPDOWNRANGE },
-                        { name: 'period3', label: 'period3', inputType: InputType.DROPDOWNRANGE },
-                        { name: 'period4', label: 'period4', inputType: InputType.DROPDOWNRANGE },
-                        {
-                            name: 'composite1', label: 'composite1', inputType: 'composite',
-                            subfields: [
-                                { name: 'subfield1', inputType: 'boolean' }, { name: 'subfield2', inputType: 'int' }
-                            ]
-                        },
-                        {
-                            name: 'composite2', label: 'composite2', inputType: 'composite',
-                            subfields: [
-                                { name: 'subfield1', inputType: 'boolean' },
-                                { name: 'subfield2', inputType: 'int' }
-                            ]
-                        },
-                        {
-                            name: 'composite3', label: 'composite2', inputType: 'composite',
-                            subfields: [
-                                { name: 'subfield1', inputType: 'boolean' },
-                                { name: 'subfield2', inputType: 'int' }
-                            ]
-                        },
-                        {
-                            name: 'composite4', label: 'composite2', inputType: 'composite',
-                            subfields: [
-                                { name: 'subfield1', inputType: 'boolean' },
-                                { name: 'subfield2', inputType: 'int' }
-                            ]
-                        },
-                        {
-                            name: 'composite5', label: 'composite2', inputType: 'composite',
-                            subfields: [
-                                { name: 'subfield1', inputType: 'boolean' },
-                                {
-                                    name: 'subfield2', inputType: 'int',
-                                    condition: { subfieldName: 'subfield1', values: true }
-                                }
-                            ]
-                        },
-                        { name: 'beginningDate', label: 'beginningDate', inputType: 'date' },
-                        { name: 'endDate', label: 'endDate', inputType: 'date' },
-                        { name: 'shortInput', label: 'shortInput', inputType: 'input', maxCharacters: 10 },
-                        { name: 'isBelow', label: 'isBelow', inputType: 'relation' }
-                    ]
+    let projectConfiguration: ProjectConfiguration;
 
-            }]}, []],
-            [{
-                name: 'T2',
-                groups: [{ name: 'stem', fields: [
-                    { name: 'id' },
-                    { name: 'category' }
-                ]}]
-            }, []],
-            [{
+
+    beforeEach(() => {
+
+        projectConfiguration = new ProjectConfiguration({
+            forms: Forest.build(
+                [[{
+                    name: 'T',
+                    groups: [{
+                        name: 'stem', fields: [
+                            { name: 'id' },
+                            { name: 'identifier', inputType: 'identifier' },
+                            { name: 'category' },
+                            { name: 'geometry', inputType: 'geometry' },
+                            { name: 'optional' },
+                            { name: 'mandatory', mandatory: true },
+                            { name: 'number1', label: 'number1', inputType: 'float' },
+                            { name: 'number2', label: 'number2', inputType: 'float' },
+                            { name: 'number3', label: 'number3', inputType: 'float' },
+                            { name: 'url1', label: 'url1', inputType: 'url' },
+                            { name: 'url2', label: 'url2', inputType: 'url' },
+                            { name: 'url3', label: 'url3', inputType: 'url' },
+                            { name: 'dating1', label: 'dating1', inputType: 'dating' },
+                            { name: 'dating2', label: 'dating2', inputType: 'dating' },
+                            { name: 'dating3', label: 'dating3', inputType: 'dating' },
+                            { name: 'dating4', label: 'dating4', inputType: 'dating' },
+                            { name: 'dating5', label: 'dating5', inputType: 'dating' },
+                            { name: 'dating6', label: 'dating6', inputType: 'dating' },
+                            { name: 'dating7', label: 'dating7', inputType: 'dating' },
+                            { name: 'dating8', label: 'dating8', inputType: 'dating' },
+                            { name: 'dating9', label: 'dating9', inputType: 'dating' },
+                            { name: 'dimension1', label: 'dimension1', inputType: 'dimension' },
+                            { name: 'dimension2', label: 'dimension2', inputType: 'dimension' },
+                            { name: 'dimension3', label: 'dimension3', inputType: 'dimension' },
+                            { name: 'dimension4', label: 'dimension4', inputType: 'dimension' },
+                            { name: 'dimension5', label: 'dimension5', inputType: 'dimension' },
+                            { name: 'dimension6', label: 'dimension6', inputType: 'dimension' },
+                            { name: 'dimension7', label: 'dimension7', inputType: 'dimension' },
+                            { name: 'dimension8', label: 'dimension8', inputType: 'dimension' },
+                            { name: 'dimension9', label: 'dimension9', inputType: 'dimension' },
+                            { name: 'dimension10', label: 'dimension10', inputType: 'dimension'},
+                            { name: 'dimension11', label: 'dimension11', inputType: 'dimension',
+                                inputTypeOptions: { validation: { permissive: true }} },
+                            { name: 'dimension12', label: 'dimension12', inputType: 'dimension' },
+                            { name: 'literature1', label: 'literature1', inputType: 'literature' },
+                            { name: 'literature2', label: 'literature2', inputType: 'literature' },
+                            { name: 'literature3', label: 'literature3', inputType: 'literature' },
+                            { name: 'literature4', label: 'literature4', inputType: 'literature' },
+                            { name: 'literature5', label: 'literature5', inputType: 'literature' },
+                            { name: 'period1', label: 'period1', inputType: Field.InputType.DROPDOWNRANGE },
+                            { name: 'period2', label: 'period2', inputType: Field.InputType.DROPDOWNRANGE },
+                            { name: 'period3', label: 'period3', inputType: Field.InputType.DROPDOWNRANGE },
+                            { name: 'period4', label: 'period4', inputType: Field.InputType.DROPDOWNRANGE },
+                            {
+                                name: 'date1', label: 'date1', inputType: 'date',
+                                dateConfiguration: {
+                                    dataType: DateConfiguration.DataType.OPTIONAL,
+                                    inputMode: DateConfiguration.InputMode.OPTIONAL
+                                }
+                            },
+                            {
+                                name: 'date2', label: 'date2', inputType: 'date',
+                                dateConfiguration: {
+                                    dataType: DateConfiguration.DataType.OPTIONAL,
+                                    inputMode: DateConfiguration.InputMode.SINGLE
+                                }
+                            },
+                            {
+                                name: 'date3', label: 'date3', inputType: 'date',
+                                dateConfiguration: {
+                                    dataType: DateConfiguration.DataType.OPTIONAL,
+                                    inputMode: DateConfiguration.InputMode.RANGE
+                                }
+                            },
+                            {
+                                name: 'date4', label: 'date4', inputType: 'date',
+                                dateConfiguration: {
+                                    dataType: DateConfiguration.DataType.DATE,
+                                    inputMode: DateConfiguration.InputMode.OPTIONAL
+                                }
+                            },
+                            {
+                                name: 'date5', label: 'date5', inputType: 'date',
+                                dateConfiguration: {
+                                    dataType: DateConfiguration.DataType.DATE_TIME,
+                                    inputMode: DateConfiguration.InputMode.OPTIONAL
+                                }
+                            },
+                            {
+                                name: 'date6', label: 'date6', inputType: 'date',
+                                dateConfiguration: {
+                                    dataType: DateConfiguration.DataType.OPTIONAL,
+                                    inputMode: DateConfiguration.InputMode.OPTIONAL
+                                }
+                            },
+                            {
+                                name: 'date7', label: 'date7', inputType: 'date',
+                                dateConfiguration: {
+                                    dataType: DateConfiguration.DataType.OPTIONAL,
+                                    inputMode: DateConfiguration.InputMode.OPTIONAL
+                                }
+                            },
+                            {
+                                name: 'composite1', label: 'composite1', inputType: 'composite',
+                                subfields: [
+                                    { name: 'subfield1', inputType: 'boolean' }, { name: 'subfield2', inputType: 'int' }
+                                ]
+                            },
+                            {
+                                name: 'composite2', label: 'composite2', inputType: 'composite',
+                                subfields: [
+                                    { name: 'subfield1', inputType: 'boolean' },
+                                    { name: 'subfield2', inputType: 'int' }
+                                ]
+                            },
+                            {
+                                name: 'composite3', label: 'composite2', inputType: 'composite',
+                                subfields: [
+                                    { name: 'subfield1', inputType: 'boolean' },
+                                    { name: 'subfield2', inputType: 'int' }
+                                ]
+                            },
+                            {
+                                name: 'composite4', label: 'composite2', inputType: 'composite',
+                                subfields: [
+                                    { name: 'subfield1', inputType: 'boolean' },
+                                    { name: 'subfield2', inputType: 'int' }
+                                ]
+                            },
+                            {
+                                name: 'composite5', label: 'composite2', inputType: 'composite',
+                                subfields: [
+                                    { name: 'subfield1', inputType: 'boolean' },
+                                    {
+                                        name: 'subfield2', inputType: 'int',
+                                        condition: { subfieldName: 'subfield1', values: true }
+                                    }
+                                ]
+                            },
+                            { name: 'shortInput', label: 'shortInput', inputType: 'input', maxCharacters: 10 },
+                            { name: 'isBelow', label: 'isBelow', inputType: 'relation' },
+                            { name: 'boolean', label: 'boolean', inputType: 'boolean' },
+                            { 
+                                name: 'conditional', label: 'conditional', inputType: 'input',
+                                condition: { fieldName: 'boolean', values: true }
+                            }
+                        ]
+
+                }]}, []],
+                [{
+                    name: 'T2',
+                    groups: [{ name: 'stem', fields: [
+                        { name: 'id' },
+                        { name: 'category' }
+                    ]}]
+                }, []],
+                [{
                     name: 'T3',
                     groups: [{ name: 'stem', fields: [
                         { name: 'id' },
@@ -117,48 +175,53 @@ describe('Validations', () => {
                         { name: 'dating' },
                         { name: 'period', inputType: 'dropdownRange' }
                     ]}]
-                }, []]
+                }, []],
+                [{
+                    name: 'Image',
+                    groups: [{ name: 'stem', fields: [
+                        { name: 'id' },
+                        { name: 'category' }
+                    ]}]
+                }, []],
             ] as any),
-        categories: {},
-        relations: [
-            {
-                name: 'isRelatedTo',
-                domain: ['T'],
-                range: ['T'],
-                inverse: 'NO-INVERSE',
-                editable: false,
-                visible: false,
-                inputType: 'relation'
-            },
-            {
-                name: 'isDepictedIn',
-                domain: ['T'],
-                range: ['T2'],
-                inverse: 'NO-INVERSE',
-                editable: false,
-                visible: false,
-                inputType: 'relation'
-            },
-            {
-                name: 'isRecordedIn',
-                domain: ['T'],
-                range: ['T2'],
-                inverse: 'NO-INVERSE',
-                editable: false,
-                visible: false,
-                inputType: 'relation'
-            }
-        ],
-        commonFields: {},
-        valuelists: {},
-        projectLanguages: []
+            categories: {},
+            relations: [
+                {
+                    name: 'isRelatedTo',
+                    domain: ['T'],
+                    range: ['T'],
+                    inverse: 'NO-INVERSE',
+                    editable: false,
+                    visible: false,
+                    inputType: 'relation'
+                },
+                {
+                    name: 'isDepictedIn',
+                    domain: ['T'],
+                    range: ['T2'],
+                    inverse: 'NO-INVERSE',
+                    editable: false,
+                    visible: false,
+                    inputType: 'relation'
+                },
+                {
+                    name: 'isRecordedIn',
+                    domain: ['T'],
+                    range: ['T2'],
+                    inverse: 'NO-INVERSE',
+                    editable: false,
+                    visible: false,
+                    inputType: 'relation'
+                }
+            ],
+            commonFields: {},
+            valuelists: {},
+            projectLanguages: []
+        });
     });
 
 
-    it('validate defined fields', () => {
-
-        const datastore = jasmine.createSpyObj('datastore', ['find']);
-        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
+    test('validate defined fields', () => {
 
         const doc = {
             resource: {
@@ -175,10 +238,7 @@ describe('Validations', () => {
     });
 
 
-    it('validate defined fields - exclude period, periodEnd if dating defined for category', () => {
-
-        const datastore = jasmine.createSpyObj('datastore', ['find']);
-        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
+    test('validate defined fields - exclude period, periodEnd if dating defined for category', () => {
 
         const doc = {
             resource: {
@@ -195,10 +255,7 @@ describe('Validations', () => {
     });
 
 
-    it('validate defined fields - do not allow non-relation fields with the same name as relation fields', () => {
-
-        const datastore = jasmine.createSpyObj('datastore', ['find']);
-        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
+    test('validate defined fields - do not allow non-relation fields with the same name as relation fields', () => {
 
         const doc = {
             resource: {
@@ -215,10 +272,25 @@ describe('Validations', () => {
     });
 
 
-    it('should report nothing when omitting optional property', () => {
+    test('validate defined fields - detect default image fields as valid', () => {
 
-        const datastore = jasmine.createSpyObj('datastore',['find']);
-        datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'Image',
+                originalFilename: 'a',
+                georeference: 'b',
+                featureVectors: 'c',
+                relations: {},
+            }
+        };
+
+        const undefinedFields = Validations.validateDefinedFields(doc.resource as any, projectConfiguration);
+        expect(undefinedFields.length).toBe(0);
+    });
+
+
+    test('should report nothing when omitting optional property', () => {
 
         const doc = {
             resource: {
@@ -229,16 +301,15 @@ describe('Validations', () => {
             }
         };
 
-
         try {
             Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
         } catch (errWithParams) {
-            fail(errWithParams);
+            throw new Error(errWithParams);
         }
     });
 
 
-    it('should report error when omitting mandatory property', () => {
+    test('should report error when omitting mandatory field', () => {
 
         const doc = {
             resource: {
@@ -250,14 +321,14 @@ describe('Validations', () => {
 
         try {
             Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
         }
     });
 
 
-    it('should report error when leaving mandatory property empty', () => {
+    test('should report error when leaving mandatory field empty', () => {
 
         const doc = {
             resource: {
@@ -270,14 +341,79 @@ describe('Validations', () => {
 
         try {
             Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
         }
     });
 
 
-    it('should report invalid numeric field', () => {
+    test('should report error when omitting mandatory relation field', () => {
+
+        const projectConfiguration = new ProjectConfiguration({
+            forms: Forest.build(
+                [[{
+                    name: 'T',
+                    groups: [{
+                        name: 'stem', fields: [
+                            { name: 'id' },
+                            { name: 'identifier' },
+                            { name: 'category' },
+                            { name: 'mandatoryRelation', inputType: 'relation', mandatory: true }
+                        ]
+                }]}, []]
+            ] as any),
+            categories: {},
+            relations: [
+                {
+                    name: 'mandatoryRelation',
+                    domain: ['T'],
+                    range: ['T'],
+                    editable: false,
+                    visible: false,
+                    inputType: 'relation'
+                }
+            ],
+            commonFields: {},
+            valuelists: {},
+            projectLanguages: []
+        });
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                relations: {}
+            }
+        };
+
+        try {
+            Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatoryRelation']);
+        }
+
+        doc.resource.relations['mandatoryRelation'] = ['2'];
+        Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
+    });
+
+
+    test('should not report error when omitting mandatory field if it is allowed to be empty via parameter', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                relations: {},
+            }
+        };
+
+        Validations.assertNoFieldsMissing(doc as any, projectConfiguration, ['mandatory']);
+    });
+
+
+    test('should report invalid numeric field', () => {
 
         const doc = {
             resource: {
@@ -291,14 +427,14 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfNumericalValues(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1']);
         }
     });
 
 
-    it('should report invalid numeric fields', () => {
+    test('should report invalid numeric fields', () => {
 
         const doc = {
             resource: {
@@ -313,14 +449,14 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfNumericalValues(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);
         }
     });
 
 
-    it('should report only newly entered invalid numeric fields', () => {
+    test('should report only newly entered invalid numeric fields', () => {
 
         const previousVersion: any = {
             resource: {
@@ -349,14 +485,14 @@ describe('Validations', () => {
         try {
             Validations.assertCorrectnessOfNumericalValues(currentVersion, projectConfiguration, true,
                 previousVersion);
-            fail();
+                throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number2, number3']);
         }
     });
 
 
-    it('should report invalid URL field', () => {
+    test('should report invalid URL field', () => {
 
         const doc = {
             resource: {
@@ -370,14 +506,14 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfUrls(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1']);
         }
     });
 
 
-    it('should report invalid URL fields', () => {
+    test('should report invalid URL fields', () => {
 
         const doc = {
             resource: {
@@ -392,14 +528,14 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfUrls(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url1, url2']);
         }
     });
 
 
-    it('should only report newly entered invalid URL fields', () => {
+    test('should only report newly entered invalid URL fields', () => {
 
         const previousVersion: any = {
             resource: {
@@ -427,14 +563,14 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfUrls(currentVersion, projectConfiguration, previousVersion);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_URLS, 'T', 'url2, url3']);
         }
     });
 
 
-    it('should report invalid dating fields', () => {
+    test('should report invalid dating fields', () => {
 
         const doc = {
             resource: {
@@ -469,7 +605,7 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfDatingValues(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [
@@ -482,7 +618,7 @@ describe('Validations', () => {
     });
 
 
-    it('should only report newly entered invalid dating fields', () => {
+    test('should only report newly entered invalid dating fields', () => {
 
         const previousVersion: any = {
             resource: {
@@ -511,7 +647,7 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfDatingValues(currentVersion, projectConfiguration, previousVersion);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [
@@ -524,7 +660,7 @@ describe('Validations', () => {
     });
 
 
-    it('should report invalid dimension fields', async done => {
+    test('should report invalid dimension fields', async () => {
 
         const doc = {
             resource: {
@@ -545,7 +681,7 @@ describe('Validations', () => {
                 dimension6: [{ inputValue: 15, inputRangeEndValue: '25', inputUnit: 'mm' }],
                 // No array
                 dimension7: 'Dimension',
-                // Invalid input value
+                // Invalid input unit
                 dimension8: [{ inputValue: 15, inputUnit: 'invalid' }],
                 // Invalid field
                 dimension9: [{ inputValue: 50.25, inputUnit: 'mm', invalidField: 'asdf' }],
@@ -561,21 +697,21 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfDimensionValues(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [
                     ValidationErrors.INVALID_DIMENSION_VALUES,
                     'T',
-                    'dimension3, dimension4, dimension5, dimension6, dimension7, dimension8, dimension9, dimension10, dimension12'
+                    'dimension3, dimension4, dimension5, dimension6, dimension7, dimension8, dimension9, '
+                        + 'dimension10, dimension12'
                 ]
             );
         }
-        done();
     });
 
 
-    it('should only report newly entered invalid dimension fields', async done => {
+    test('should only report newly entered invalid dimension fields', async () => {
 
         const previousVersion: any = {
             resource: {
@@ -603,7 +739,7 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfDimensionValues(currentVersion, projectConfiguration, previousVersion);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [
@@ -613,11 +749,10 @@ describe('Validations', () => {
                 ]
             );
         }
-        done();
     });
 
 
-    it('should report invalid dropdownRange fields', () => {
+    test('should report invalid dropdownRange fields', () => {
 
         const doc = {
             resource: {
@@ -637,7 +772,7 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfOptionalRangeValues(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [
@@ -650,7 +785,176 @@ describe('Validations', () => {
     });
 
 
-    it('should report invalid literature fields', async done => {
+    test('should report invalid date fields', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                // Correct range date
+                date1: { value: '01.10.2022', endValue: '02.10.2022', isRange: true },
+                // Correct single date
+                date2: { value: '01.10.2022 10:11', isRange: false },
+                // No object
+                date3: 'abc',
+                // End value for non-range date
+                date4: { endValue: '01.10.2022', isRange: false },
+                // Empty object
+                date5: {},
+                // NaN value
+                date6: { value: 'abc', isRange: false },
+                // NaN end value
+                date7: { value: '01.10.2022', endValue: 'abc', isRange: true },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDates(doc as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_DATES,
+                    'T',
+                    'date3, date4, date5, date6, date7'
+                ]
+            );
+        }
+    });
+
+
+    test('should report invalid date fields: range not allowed', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                date2: { value: '10.04.2020', endValue: '11.04.2020', isRange: true },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDates(doc as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_DATE_RANGE_NOT_ALLOWED,
+                    'T',
+                    'date2'
+                ]
+            );
+        }
+    });
+
+
+    test('should report invalid date fields: single not allowed', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                date3: { value: '10.04.2020', isRange: false },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDates(doc as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_DATE_SINGLE_NOT_ALLOWED,
+                    'T',
+                    'date3'
+                ]
+            );
+        }
+    });
+
+    
+    test('should report invalid date fields: time not allowed', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                date4: { value: '10.04.2020 10:11', isRange: false },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDates(doc as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_DATE_TIME_NOT_ALLOWED,
+                    'T',
+                    'date4'
+                ]
+            );
+        }
+    });
+
+
+    test('should report invalid date fields: time not set', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                date5: { value: '10.04.2020', isRange: false },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDates(doc as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_DATE_TIME_NOT_SET,
+                    'T',
+                    'date5'
+                ]
+            );
+        }
+    });
+
+
+    test('should report invalid date fields: end date before beginning date', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                date1: { value: '10.04.2020', endValue: '09.04.2020', isRange: true },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfDates(doc as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE,
+                    'T',
+                    'date1'
+                ]
+            );
+        }
+    });
+
+
+    test('should report invalid literature fields', async () => {
 
         const doc = {
             resource: {
@@ -673,17 +977,16 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfLiteratureValues(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.INVALID_LITERATURE_VALUES, 'T', 'literature3, literature4, literature5']
             );
         }
-        done();
     });
 
 
-    it('should report invalid composite fields', async done => {
+    test('should report invalid composite fields', async () => {
 
         const doc = {
             resource: {
@@ -706,17 +1009,16 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfCompositeValues(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.INVALID_COMPOSITE_VALUES, 'T', 'composite2, composite3, composite4, composite5']
             );
         }
-        done();
     });
 
 
-    it('should only report newly entered invalid composite fields', async done => {
+    test('should only report newly entered invalid composite fields', async () => {
 
         const previousVersion: any = {
             resource: {
@@ -744,17 +1046,16 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfCompositeValues(currentVersion, projectConfiguration, previousVersion);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.INVALID_COMPOSITE_VALUES, 'T', 'composite2, composite3']
             );
         }
-        done();
     });
 
 
-    it('should only report newly entered invalid literature fields', async done => {
+    test('should only report newly entered invalid literature fields', async () => {
 
         const previousVersion: any = {
             resource: {
@@ -782,70 +1083,16 @@ describe('Validations', () => {
 
         try {
             Validations.assertCorrectnessOfLiteratureValues(currentVersion, projectConfiguration, previousVersion);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.INVALID_LITERATURE_VALUES, 'T', 'literature2, literature3']
             );
         }
-        done();
     });
 
 
-    it('should report incorrect beginning and end dates', () => {
-
-        const correctDocument1 = {
-            resource: {
-                id: '1',
-                identifier: '',
-                category: 'T',
-                beginningDate: '01.01.2020',
-                endDate: '01.01.2020',
-                relations: {}
-            }
-        };
-
-        const correctDocument2 = {
-            resource: {
-                id: '1',
-                identifier: '',
-                category: 'T',
-                beginningDate: '01.01.2020',
-                endDate: '02.01.2020',
-                relations: {}
-            }
-        };
-
-        const incorrectDocument = {
-            resource: {
-                id: '1',
-                identifier: '',
-                category: 'T',
-                beginningDate: '01.01.2020',
-                endDate: '31.12.2019',
-                relations: {}
-            }
-        };
-
-        try {
-            Validations.assertCorrectnessOfBeginningAndEndDates(correctDocument1);
-            Validations.assertCorrectnessOfBeginningAndEndDates(correctDocument2);
-        } catch (errWithParams) {
-            fail();
-        }
-
-        try {
-            Validations.assertCorrectnessOfBeginningAndEndDates(incorrectDocument);
-            fail();
-        } catch (errWithParams) {
-            expect(errWithParams).toEqual(
-                [ValidationErrors.END_DATE_BEFORE_BEGINNING_DATE, 'T']
-            );
-        }
-    });
-
-
-    it('should report fields with too many characters', async done => {
+    test('should report fields with too many characters', async () => {
 
         const doc = {
             resource: {
@@ -859,12 +1106,318 @@ describe('Validations', () => {
 
         try {
             Validations.assertMaxCharactersRespected(doc as any, projectConfiguration);
-            fail();
+            throw new Error('Test failure');
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.MAX_CHARACTERS_EXCEEDED, 'T', 'shortInput', 10]
             );
         }
-        done();
+    });
+
+
+    test('should report fields with unallowed characters', async () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                identifier: 'identifier;with;semicolons',
+                category: 'T',
+                mandatory: 'm',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertNoUnallowedCharactersUsed(document as any, projectConfiguration);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [ValidationErrors.UNALLOWED_CHARACTERS, 'T', 'identifier']
+            );
+        }
+    });
+
+
+    test('should report fields with unfulfilled condition', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                boolean: false,
+                conditional: 'ABC',
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateConditionalFields(document.resource as any, projectConfiguration))
+            .toEqual(['conditional']);
+    });
+
+
+    test('should report invalid workflow relations', async () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'A',
+                relations: { isCarriedOutOn: ['1', '2'], resultsIn: ['2', '3'] }
+            }
+        };
+
+        try {
+            Validations.assertWorkflowRelations(document as any);
+            throw new Error('Test failure');
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_WORKFLOW_RELATION_TARGETS]);
+        }
+    });
+
+
+    test('should report invalid point geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'Point', coordinates: 12.5 },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
+            .toEqual([ValidationErrors.INVALID_COORDINATES, 'Point']);
+    });
+
+
+    test('should report invalid line string geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'LineString', coordinates: [10.5, 25.3] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
+            .toEqual([ValidationErrors.INVALID_COORDINATES, 'LineString']);
+    });
+
+
+    test('should report invalid polygon geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'Polygon', coordinates: [10.5, 25.3] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
+            .toEqual([ValidationErrors.INVALID_COORDINATES, 'Polygon']);
+    });
+
+
+    test('should report invalid multi point geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiPoint', coordinates: [10.5, 25.3] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
+            .toEqual([ValidationErrors.INVALID_COORDINATES, 'MultiPoint']);
+    });
+
+
+    test('should report invalid multi line string geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiLineString', coordinates: [10.5, 25.3] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
+            .toEqual([ValidationErrors.INVALID_COORDINATES, 'MultiLineString']);
+    });
+
+
+    test('should report invalid multi polygon geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiPolygon', coordinates: [[[10.5, 25.3], [10.7, 25.4], [11.5, 26.6]]] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
+            .toEqual([ValidationErrors.INVALID_COORDINATES, 'MultiPolygon']);
+    });
+
+
+    test('should not report valid point geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'Point', coordinates: [10.5, 25.3] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
+    });
+
+
+    test('should not report valid line string geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'LineString', coordinates: [[10.5, 25.3], [10.7, 25.4], [11.5, 26.6]] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
+    });
+
+
+    test('should not report valid polygon geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'Polygon', coordinates: [[[10.5, 25.3], [10.7, 25.4], [11.5, 26.6], [10.5, 25.3]]] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
+    });
+
+
+    test('should not report valid multi point geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiPoint', coordinates: [[10.5, 25.3], [11.0, 30.4]] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
+    });
+
+
+    test('should not report valid multi line string geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiLineString', coordinates: [
+                    [[10.5, 25.3], [10.7, 25.4], [11.5, 26.6]],
+                    [[11.5, 26.3], [11.7, 26.4], [12.5, 27.6]]
+                ] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
+    });
+
+
+    test('should not report valid multi polygon geometry', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiPolygon', coordinates: [
+                    [[[10.5, 25.3], [10.7, 25.4], [11.5, 26.6], [10.5, 25.3]]],
+                    [[[11.5, 26.3], [11.7, 26.4], [12.5, 27.6], [11.5, 26.3]]]
+                ] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
+    });
+
+
+    test('should report geometry of unallowed geometry type', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiPoint', coordinates: [[10.5, 25.3], [11.0, 30.4]] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+        
+        const geometryField: Field = CategoryForm.getField(
+            projectConfiguration.getCategory('T'), FieldResource.GEOMETRY
+        );
+        geometryField.geometryTypes = ['Point'];
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration))
+            .toEqual([ValidationErrors.UNALLOWED_GEOMETRY_TYPE, 'T', 'MultiPoint']);
+    });
+
+
+    test('should not report geometry of allowed geometry type', () => {
+
+        const document = {
+            resource: {
+                id: '1',
+                category: 'T',
+                mandatory: 'm',
+                geometry: { type: 'MultiPoint', coordinates: [[10.5, 25.3], [11.0, 30.4]] },
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+        
+        const geometryField: Field = CategoryForm.getField(
+            projectConfiguration.getCategory('T'), FieldResource.GEOMETRY
+        );
+        geometryField.geometryTypes = ['MultiPoint'];
+
+        expect(Validations.validateGeometry(document as any, projectConfiguration)).toBeNull();
     });
 });

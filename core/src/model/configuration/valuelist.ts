@@ -1,13 +1,14 @@
 import { clone, Map } from 'tsfun';
 import { I18N } from '../../tools/i18n';
 import { ValuelistValue } from './valuelist-value';
+import { SemanticReference } from './semantic-reference';
 
 
 export type ValuelistId = string;
 
 export type Valuelists = {
     [fieldName: string]: ValuelistId|Map<ValuelistId>
-}
+};
 
 
 /**
@@ -23,6 +24,7 @@ export interface Valuelist {
     createdBy?: string;
     creationDate?: string;
     references?: string[];
+    semanticReferences?: Array<SemanticReference>;
 
     extendedValuelist?: string;
     hidden?: string[];

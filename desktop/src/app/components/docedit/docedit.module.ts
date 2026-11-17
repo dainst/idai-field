@@ -17,20 +17,19 @@ import { EditFormGroup } from './core/edit-form-group.component';
 import { EditFormComponent } from './core/edit-form.component';
 import { BooleanComponent } from './core/forms/boolean.component';
 import { CheckboxesComponent } from './core/forms/checkboxes.component';
-import { DateComponent } from './core/forms/date.component';
-import { DatingComponent } from './core/forms/dating.component';
-import { DimensionComponent } from './core/forms/dimension.component';
+import { DateComponent } from './core/forms/date/date.component';
+import { DatingEntryModalComponent } from './core/forms/array-field/dating-entry-modal.component';
+import { MeasurementEntryModalComponent } from './core/forms/array-field/measurement-entry-modal.component';
 import { DropdownRangeComponent } from './core/forms/dropdown-range.component';
 import { DropdownComponent } from './core/forms/dropdown.component';
 import { GeometryComponent } from './core/forms/geometry.component';
 import { InputComponent } from './core/forms/input.component';
-import { LiteratureComponent } from './core/forms/literature.component';
+import { ObjectArrayComponent } from './core/forms/array-field/object-array.component';
 import { MultiInputComponent } from './core/forms/multi-input.component';
 import { RadioComponent } from './core/forms/radio.component';
 import { TypeRelationPickerComponent } from './core/forms/type-relation/type-relation-picker.component';
 import { TypeRelationComponent } from './core/forms/type-relation/type-relation.component';
 import { TypeRowComponent } from './core/forms/type-relation/type-row.component';
-import { NgbDateDEParserFormatter } from './core/forms/widgets/date-formatter.component';
 import { EmptyValuelistInfoComponent } from './core/forms/widgets/empty-valuelist-info.component';
 import { OutliersComponent } from './core/forms/widgets/outliers.component';
 import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.component';
@@ -40,33 +39,30 @@ import { RevisionSelectorComponent } from './tabs/revision-selector.component';
 import { DoceditConflictsTabComponent } from './tabs/docedit-conflicts-tab.component';
 import { CategorySwitcherButtonComponent } from './widgets/category-switcher-button.component';
 import { ImagePickerComponent } from './widgets/image-picker.component';
-import { RelationPickerGroupComponent } from './widgets/relationpicker/relation-picker-group.component';
-import { RelationPickerComponent } from './widgets/relationpicker/relation-picker.component';
 import { InvalidFieldDataComponent } from './core/forms/widgets/invalid-field-data.component';
 import { MultiLanguageTextFieldComponent } from './core/forms/widgets/multi-language-text-field.component';
 import { SimpleInputComponent } from './core/forms/simple-input.component';
 import { SimpleMultiInputComponent } from './core/forms/simple-multi-input.component';
-import { IdentifierComponent } from './core/forms/identifier.component';
-import { CompositeComponent } from './core/forms/composite/composite.component';
-import { CompositeEntryModalComponent } from './core/forms/composite/composite-entry-modal.component';
+import { CompositeComponent } from './core/forms/array-field/composite/composite.component';
+import { CompositeEntryModalComponent } from './core/forms/array-field/composite/composite-entry-modal.component';
+import { ValuelistMultiInputComponent } from './core/forms/valuelist-multi-input.component';
+import { LiteratureEntryModalComponent } from './core/forms/array-field/literature-entry-modal.component';
+import { DateValueComponent } from './core/forms/date/date-value.component';
+import { TimeInputComponent } from './core/forms/date/time-input.component';
+import { DateParserFormatter } from './core/forms/date/date-parser-formatter';
 
 
 @NgModule({
     providers: [
         {
             provide: DocumentHolder,
-            useFactory: (projectConfiguration: ProjectConfiguration,
-                         relationsManager: RelationsManager,
-                         validator: Validator,
-                         datastore: Datastore,
-                         idGenerator: IdGenerator) => {
-
-                return new DocumentHolder(projectConfiguration, relationsManager,
-                    validator, datastore, idGenerator);
+            useFactory: (projectConfiguration: ProjectConfiguration, relationsManager: RelationsManager, validator: Validator, datastore: Datastore, idGenerator: IdGenerator) => {
+                return new DocumentHolder(projectConfiguration, relationsManager, validator, datastore, idGenerator);
             },
             deps: [ProjectConfiguration, RelationsManager, Validator, Datastore, IdGenerator]
         },
-        { provide: NgbDateParserFormatter, useClass: NgbDateDEParserFormatter }
+        { provide: NgbDateParserFormatter, useClass: DateParserFormatter },
+        DateParserFormatter
     ],
     imports: [
         BrowserModule,
@@ -89,9 +85,7 @@ import { CompositeEntryModalComponent } from './core/forms/composite/composite-e
         ImagePickerComponent,
         EditFormComponent,
         EditFormFieldComponent,
-        RelationPickerComponent,
         EditFormGroup,
-        RelationPickerGroupComponent,
         CheckboxesComponent,
         BooleanComponent,
         DropdownComponent,
@@ -99,19 +93,22 @@ import { CompositeEntryModalComponent } from './core/forms/composite/composite-e
         SimpleInputComponent,
         MultiInputComponent,
         SimpleMultiInputComponent,
+        ValuelistMultiInputComponent,
         RadioComponent,
-        DatingComponent,
+        DatingEntryModalComponent,
         DateComponent,
+        DateValueComponent,
+        TimeInputComponent,
         TypeRelationComponent,
         TypeRowComponent,
         TypeRelationPickerComponent,
-        DimensionComponent,
+        MeasurementEntryModalComponent,
         DropdownRangeComponent,
         GeometryComponent,
         OutliersComponent,
         EmptyValuelistInfoComponent,
-        LiteratureComponent,
-        IdentifierComponent,
+        ObjectArrayComponent,
+        LiteratureEntryModalComponent,
         InvalidFieldDataComponent,
         MultiLanguageTextFieldComponent,
         CompositeComponent,
@@ -121,15 +118,6 @@ import { CompositeEntryModalComponent } from './core/forms/composite/composite-e
         DoceditComponent,
         RevisionSelectorComponent,
         MultiLanguageTextFieldComponent
-    ],
-    entryComponents: [
-        DoceditComponent,
-        ConflictDeletedModalComponent,
-        TypeRelationPickerComponent,
-        ImagePickerComponent,
-        DuplicateModalComponent,
-        DeleteModalComponent,
-        CompositeEntryModalComponent
     ]
 })
 

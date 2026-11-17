@@ -14,9 +14,10 @@ import { QrCodeService } from '../../service/qr-code-service';
 import { UtilTranslations } from '../../../../util/util-translations';
 import { PrintSettingsModalComponent } from './print-settings/print-settings-modal.component';
 import { PrintSettings } from './print-settings/print-settings';
+import { Settings } from '../../../../services/settings/settings';
 
 
-const QRCode = require('qrcode');
+const QRCode = window.require('qrcode');
 
 
 type PrintedField = {
@@ -29,7 +30,8 @@ type PrintedField = {
     templateUrl: './qr-code-editor-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Danilo Guzzo
@@ -194,7 +196,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
         for (let field of this.category.scanCodes.printedFields) {
             const relationTarget: Document|undefined = await this.getRelationTarget(field.name);
-            const contentLabel: string = this.getFieldContentLabel(field.name, relationTarget);
+            const contentLabel: string = await this.getFieldContentLabel(field.name, relationTarget);
             if (contentLabel) {
                 printedFields.push({
                     label: field.printLabel ? this.getFieldLabel(field.name, relationTarget) : '',
@@ -221,7 +223,7 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
     }
 
 
-    private getFieldContentLabel(fieldName: string, relationTarget?: Document): string|undefined {
+    private async getFieldContentLabel(fieldName: string, relationTarget?: Document): Promise<string|undefined> {
 
         if (fieldName === Resource.CATEGORY) {
             return this.labels.get(this.category);
@@ -231,13 +233,17 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
         const field: Field = CategoryForm.getField(this.category, fieldName);
         const fieldContent: any = this.document.resource[fieldName];
-        const fieldsViewField: FieldsViewField
-            = FieldsViewUtil.makeField(field, fieldContent, this.projectConfiguration, {}, this.labels);
+        const fieldsViewField: FieldsViewField = await FieldsViewUtil.makeField(
+            field, fieldContent, this.projectConfiguration, {}, this.labels, this.datastore
+        );
 
         return FieldsViewUtil.getLabel(
             fieldsViewField,
             fieldContent,
             this.labels,
+            Intl.DateTimeFormat().resolvedOptions().timeZone,
+            Settings.getLocale(),
+            $localize `:@@revisionLabel.timeSuffix:Uhr`,
             (key: string) => this.utilTranslations.getTranslation(key),
             (value: number) => this.decimalPipe.transform(value)
         );
@@ -275,14 +281,17 @@ export class QrCodeEditorModalComponent implements AfterViewInit {
 
         this.saving = true;
 
+        const editedDocument: FieldDocument = Document.clone(this.document);
+
         if (newCode) {
-            this.document.resource.scanCode = newCode;
+            editedDocument.resource.scanCode = newCode;
         } else {
-            delete this.document.resource.scanCode;
+            delete editedDocument.resource.scanCode;
         }
 
         try {
-            await this.datastore.update(this.document);
+            await this.datastore.update(editedDocument);
+            await AngularUtility.refresh();
             if (newCode) this.renderCode();
             return true;
         } catch (errWithParams) {

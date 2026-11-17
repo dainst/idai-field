@@ -4,7 +4,8 @@ import { FieldDocument, FieldsViewField, FieldsViewGroup, Labels } from 'idai-fi
 
 @Component({
     selector: 'field-view',
-    templateUrl: './field-view.html'
+    templateUrl: './field-view.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -29,6 +30,7 @@ export class FieldViewComponent {
 
         this.onJumpToResource.emit(document);
     }
+
 
     public getSubfields(field: FieldsViewField, entry: any) {
 

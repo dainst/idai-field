@@ -1,4 +1,5 @@
-import { click, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { click, closeAllMessages, getMessageText, navigateTo, resetApp, start, stop, waitForExist,
+    waitForNotExist } from '../app';
 import { NavbarPage } from '../navbar.page';
 import { ResourcesPage } from './resources.page';
 import { DoceditPage } from '../docedit/docedit.page';
@@ -12,7 +13,7 @@ import { MoveModalPage } from '../widgets/move-modal.page';
 const { test, expect } = require('@playwright/test');
 
 
-test.describe('resources/list --', () => {
+test.describe('resources/list', () => {
 
     test.beforeAll(async () => {
 
@@ -41,10 +42,10 @@ test.describe('resources/list --', () => {
 
         await ResourcesPage.clickCreateResource();
         await ResourcesPage.clickSelectCategory('feature-architecture');
-        expect(await ResourcesPage.getListModeInputFieldValue(undefined, 0)).toEqual('');
+        expect(await ResourcesPage.getListModeIdentifierFieldValue(undefined)).toEqual('');
 
         await ResourcesPage.typeInNewResourceAndHitEnterInList('1');
-        expect(await ResourcesPage.getListModeInputFieldValue('1', 0)).toEqual('1');
+        expect(await ResourcesPage.getListModeIdentifierFieldValue('1')).toEqual('1');
     });
 
 
@@ -74,8 +75,8 @@ test.describe('resources/list --', () => {
         await ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
         await ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
 
-        await ResourcesPage.typeInListModeInputField('1', 1, 'Changed resource 1');
-        await click(await ResourcesPage.getListModeInputField('2', 0));
+        await ResourcesPage.typeInListModeShortDescriptionField('1', 'Changed resource 1');
+        await click(await ResourcesPage.getListModeIdentifierField('2'));
 
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickHierarchyButton('S1');
@@ -94,7 +95,7 @@ test.describe('resources/list --', () => {
         await NavbarPage.clickTab('project');
         await ResourcesPage.clickHierarchyButton('S1');
 
-        expect(await ResourcesPage.getListModeInputFieldValue('child1', 0)).toEqual('child1');
+        expect(await ResourcesPage.getListModeIdentifierFieldValue('child1')).toEqual('child1');
     });
 
 
@@ -104,13 +105,13 @@ test.describe('resources/list --', () => {
         await ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
         await ResourcesPage.performCreateResourceInList('3', 'feature-architecture');
 
-        await ResourcesPage.typeInListModeInputField('2', 0, '1');
-        await click(await ResourcesPage.getListModeInputField('3', 0));
+        await ResourcesPage.typeInListModeIdentifierField('2', '1');
+        await click(await ResourcesPage.getListModeIdentifierField('3'));
 
-        expect(await NavbarPage.getMessageText()).toContain('existiert bereits');
-        expect(await ResourcesPage.getListModeInputFieldValue('2', 0)).toEqual('2');
+        expect(await getMessageText(0)).toContain('existiert bereits');
+        expect(await ResourcesPage.getListModeIdentifierFieldValue('2')).toEqual('2');
 
-        await NavbarPage.clickCloseAllMessages();
+        await closeAllMessages();
     });
 
 
@@ -119,13 +120,13 @@ test.describe('resources/list --', () => {
         await ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
         await ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
 
-        await ResourcesPage.typeInListModeInputField('1', 0, '');
-        await click(await ResourcesPage.getListModeInputField('2', 0));
-        expect(await ResourcesPage.getListModeInputFieldValue('1', 0)).toEqual('1');
+        await ResourcesPage.typeInListModeIdentifierField('1', '');
+        await click(await ResourcesPage.getListModeIdentifierField('2'));
+        expect(await ResourcesPage.getListModeIdentifierFieldValue('1')).toEqual('1');
 
-        await ResourcesPage.typeInListModeInputField('1', 0, '  ');
-        await click(await ResourcesPage.getListModeInputField('2', 0));
-        expect(await ResourcesPage.getListModeInputFieldValue('1', 0)).toEqual('1');
+        await ResourcesPage.typeInListModeIdentifierField('1', '  ');
+        await click(await ResourcesPage.getListModeIdentifierField('2'));
+        expect(await ResourcesPage.getListModeIdentifierFieldValue('1')).toEqual('1');
     });
 
 
@@ -135,8 +136,8 @@ test.describe('resources/list --', () => {
         await DoceditPage.typeInInputField('shortDescription', 'Test');
         await DoceditPage.clickSaveDocument();
 
-        expect(await ResourcesPage.getListModeInputFieldValue('SE0', 0)).toEqual('SE0');
-        expect(await ResourcesPage.getListModeInputFieldValue('SE0', 1)).toEqual('Test');
+        expect(await ResourcesPage.getListModeIdentifierFieldValue('SE0')).toEqual('SE0');
+        expect(await ResourcesPage.getListModeShortDescriptionFieldValue('SE0')).toEqual('Test');
     });
 
 

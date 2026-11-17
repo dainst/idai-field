@@ -1,10 +1,10 @@
 import { clone } from 'tsfun';
 import { Component, Renderer2 } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Datastore, Field, ProjectConfiguration, Labels } from 'idai-field-core';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { SearchConstraintsComponent } from '../../widgets/search-constraints.component';
 import { ResourcesSearchBarComponent } from './resources-search-bar.component';
+import { Menus } from '../../../services/menus';
 
 
 @Component({
@@ -12,7 +12,8 @@ import { ResourcesSearchBarComponent } from './resources-search-bar.component';
     templateUrl: '../../widgets/search-constraints.html',
     host: {
         '(document:click)': 'handleClick($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -25,11 +26,11 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
                 projectConfiguration: ProjectConfiguration,
                 datastore: Datastore,
                 renderer: Renderer2,
-                i18n: I18n,
                 private viewFacade: ViewFacade,
+                menuService: Menus,
                 labels: Labels) {
 
-        super(resourcesSearchBarComponent, projectConfiguration, datastore, renderer, labels, i18n);
+        super(resourcesSearchBarComponent, projectConfiguration, datastore, renderer, menuService, labels);
 
         this.initializeDefaultFields();
 
@@ -43,45 +44,21 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
         switch (field.name) {
             case 'isChildOf':
-                return this.i18n({
-                    id: 'resources.searchBar.constraints.hasChildren',
-                    value: 'Untergeordnete Ressourcen'
-                });
+                return $localize `:@@resources.searchBar.constraints.hasChildren:Untergeordnete Ressourcen`;
             case 'geometry':
-                return this.i18n({
-                    id: 'resources.searchBar.constraints.geometry',
-                    value: 'Geometrie'
-                });
+                return $localize `:@@resources.searchBar.constraints.geometry:Geometrie`;
             case 'isDepictedIn':
-                return this.i18n({
-                    id: 'resources.searchBar.constraints.linkedImages',
-                    value: 'Verknüpfte Bilder'
-                });
+                return $localize `:@@resources.searchBar.constraints.linkedImages:Verknüpfte Bilder`;
             case 'isSameAs':
-                return this.i18n({
-                    id: 'resources.searchBar.constraints.isSameAs',
-                    value: 'Verknüpfte identische Ressourcen'
-                });
+                return $localize `:@@resources.searchBar.constraints.isSameAs:Verknüpfte identische Ressourcen`;
             case 'isInstanceOf':
-                return this.i18n({
-                    id: 'resources.searchBar.constraints.isInstanceOf',
-                    value: 'Verknüpfte Typen'
-                });
+                return $localize `:@@resources.searchBar.constraints.isInstanceOf:Verknüpfte Typen`;
             case 'hasInstance':
-                return this.i18n({
-                    id: 'resources.searchBar.constraints.hasInstance',
-                    value: 'Verknüpfte Funde'
-                });
+                return $localize `:@@resources.searchBar.constraints.hasInstance:Verknüpfte Funde`;
             case 'isStoragePlaceOf':
-                return this.i18n({
-                    id: 'resources.searchBar.constraints.isStoragePlaceOf',
-                    value: 'Verknüpfte Objekte'
-                });
+                return $localize `:@@resources.searchBar.constraints.isStoragePlaceOf:Verknüpfte Objekte`;
             case 'isStoredIn':
-                return this.i18n({
-                    id: 'resources.searchBar.constraints.isStoredIn',
-                    value: 'Verknüpfter Aufbewahrungsort'
-                });
+                return $localize `:@@resources.searchBar.constraints.isStoredIn:Verknüpfter Aufbewahrungsort`;
             default:
                 return super.getFieldLabel(field);
         }
@@ -92,13 +69,15 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
         this.defaultFields = [];
 
+        if (this.viewFacade.isInWorkflowManagement()) return;
+
         this.defaultFields.push({
             name: 'isChildOf',
             inputType: 'default',
             constraintIndexed: true
         });
 
-        if (!this.viewFacade.isInTypesManagement()) {
+        if (!this.viewFacade.isInTypesManagement() && !this.viewFacade.isInInventoryManagement()) {
             this.defaultFields.push({
                 name: 'geometry',
                 inputType: 'default',

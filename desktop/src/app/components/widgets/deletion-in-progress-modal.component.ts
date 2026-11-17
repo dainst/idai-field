@@ -4,7 +4,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'deletion-in-progress-modal',
-    templateUrl: './deletion-in-progress-modal.html'
+    templateUrl: './deletion-in-progress-modal.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

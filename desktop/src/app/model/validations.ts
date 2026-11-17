@@ -1,8 +1,15 @@
-import { is, isArray, isString, and, isObject } from 'tsfun';
-import { Dating, Dimension, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
+import { is, isArray, isString, and, isObject, to, equal, intersect } from 'tsfun';
+import { Dating, Measurement, Literature, Document, NewDocument, NewResource, Resource, OptionalRange,
     CategoryForm, Tree, FieldGeometry, ProjectConfiguration, Named, Field, Relation, validateFloat,
-    validateUnsignedFloat, validateUnsignedInt, parseDate, validateUrl, validateInt, Composite } from 'idai-field-core';
+    validateUnsignedFloat, validateUnsignedInt, validateUrl, validateInt, Composite,  DateSpecification,
+    DateValidationResult, Condition, FieldGeometryType, FieldResource } from 'idai-field-core';
 import { ValidationErrors } from './validation-errors';
+
+
+type InvalidDateInfo = {
+    fieldName: string;
+    dateValidationResult: DateValidationResult;
+}
 
 
 export module Validations {
@@ -44,23 +51,20 @@ export module Validations {
     }
 
 
-    export function assertCorrectnessOfUrls(document: Document|NewDocument,
-                                            projectConfiguration: ProjectConfiguration,
+    export function assertCorrectnessOfUrls(document: Document|NewDocument, projectConfiguration: ProjectConfiguration,
                                             previousDocumentVersion?: Document) {
 
         const previousInvalidFields: string[] = previousDocumentVersion
-            ?  Validations.validateDatesOrUrls(
+            ?  Validations.validateUrls(
                 previousDocumentVersion.resource,
                 projectConfiguration,
-                validateUrl,
-                Field.InputType.URL
+                validateUrl
             ) : [];
 
-        const invalidFields: string[] = Validations.validateDatesOrUrls(
+        const invalidFields: string[] = Validations.validateUrls(
             document.resource,
             projectConfiguration,
-            validateUrl,
-            Field.InputType.URL
+            validateUrl
         );
 
         const newInvalidFields: string[] = getNewInvalidFields(
@@ -81,31 +85,38 @@ export module Validations {
                                              projectConfiguration: ProjectConfiguration,
                                              previousDocumentVersion?: Document) {
 
-        const previousInvalidFields: string[] = previousDocumentVersion
-            ?  Validations.validateDatesOrUrls(
+        const previousInvalidFields: Array<InvalidDateInfo> = previousDocumentVersion
+            ?  Validations.validateDates(
                 previousDocumentVersion.resource,
-                projectConfiguration,
-                (value: string) => !isNaN(parseDate(value)?.getTime()),
-                Field.InputType.DATE
+                projectConfiguration
             )
             : [];
 
-        const invalidFields: string[] = Validations.validateDatesOrUrls(
+        const invalidFields: Array<InvalidDateInfo> = Validations.validateDates(
             document.resource,
-            projectConfiguration,
-            (value: string) => !isNaN(parseDate(value)?.getTime()),
-            Field.InputType.DATE
+            projectConfiguration
         );
 
-        const newInvalidFields: string[] = getNewInvalidFields(
+        const newInvalidFields: Array<InvalidDateInfo> = getNewInvalidDateFields(
             invalidFields, previousInvalidFields, document, previousDocumentVersion
         );
 
-        if (newInvalidFields.length > 0) {
+        if (!newInvalidFields.length) return;
+
+        const genericInvalidFields: Array<InvalidDateInfo> = newInvalidFields
+            .filter(field => field.dateValidationResult === DateValidationResult.INVALID);
+
+        if (genericInvalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_DATES,
                 document.resource.category,
-                newInvalidFields.join(', ')
+                genericInvalidFields.map(info => info.fieldName).join(', ')
+            ];
+        } else {
+            throw [
+                getDateError(newInvalidFields[0].dateValidationResult),
+                document.resource.category,
+                newInvalidFields[0].fieldName
             ];
         }
     }
@@ -176,7 +187,42 @@ export module Validations {
             Field.InputType.DIMENSION,
             ValidationErrors.INVALID_DIMENSION_VALUES,
             (dimension: any, _: Field, options?: any) =>
-                Dimension.isDimension(dimension) && Dimension.isValid(dimension, options),
+                Measurement.isMeasurement(dimension)
+                    && Measurement.isValid(dimension, Field.InputType.DIMENSION, options),
+            previousDocumentVersion
+        );
+    }
+
+
+    export function assertCorrectnessOfWeightValues(document: Document|NewDocument,
+                                                    projectConfiguration: ProjectConfiguration,
+                                                    previousDocumentVersion?: Document) {
+
+        assertValidityOfObjectArrays(
+            document,
+            projectConfiguration,
+            Field.InputType.WEIGHT,
+            ValidationErrors.INVALID_WEIGHT_VALUES,
+            (dimension: any, _: Field, options?: any) =>
+                Measurement.isMeasurement(dimension)
+                    && Measurement.isValid(dimension, Field.InputType.WEIGHT, options),
+            previousDocumentVersion
+        );
+    }
+
+
+    export function assertCorrectnessOfVolumeValues(document: Document|NewDocument,
+                                                    projectConfiguration: ProjectConfiguration,
+                                                    previousDocumentVersion?: Document) {
+
+        assertValidityOfObjectArrays(
+            document,
+            projectConfiguration,
+            Field.InputType.VOLUME,
+            ValidationErrors.INVALID_VOLUME_VALUES,
+            (dimension: any, _: Field, options?: any) =>
+                Measurement.isMeasurement(dimension)
+                    && Measurement.isValid(dimension, Field.InputType.VOLUME, options),
             previousDocumentVersion
         );
     }
@@ -212,11 +258,9 @@ export module Validations {
     }
 
 
-    function assertValidityOfObjectArrays(document: Document|NewDocument,
-                                          projectConfiguration: ProjectConfiguration,
-                                          inputType: 'dating'|'dimension'|'literature'|'composite',
-                                          error: string,
-                                          isValid: (object: any, field: Field, option?: any) => boolean,
+    function assertValidityOfObjectArrays(document: Document|NewDocument, projectConfiguration: ProjectConfiguration,
+                                          inputType: 'dating'|'dimension'|'weight'|'volume'|'literature'|'composite',
+                                          error: string, isValid: (object: any, field: Field, option?: any) => boolean,
                                           previousDocumentVersion?: Document) {
 
         const previousInvalidFields: string[] = previousDocumentVersion
@@ -244,29 +288,15 @@ export module Validations {
     }
 
 
-    export function assertCorrectnessOfBeginningAndEndDates(document: Document|NewDocument) {
-
-        if (!document.resource.beginningDate || !document.resource.endDate) return;
-
-        const beginningDate: Date = parseDate(document.resource.beginningDate);
-        const endDate: Date = parseDate(document.resource.endDate, true);
-
-        if (beginningDate && endDate && beginningDate > endDate) {
-            throw [
-                ValidationErrors.END_DATE_BEFORE_BEGINNING_DATE,
-                document.resource.category
-            ];
-        }
-    }
-
-
     /**
      * @throws [MISSING_PROPERTY]
      */
-    export function assertNoFieldsMissing(document: Document|NewDocument,
-                                          projectConfiguration: ProjectConfiguration): void {
+    export function assertNoFieldsMissing(document: Document|NewDocument, projectConfiguration: ProjectConfiguration,
+                                          allowEmptyFields: string[] = []): void {
 
-        const missingProperties = Validations.getMissingProperties(document.resource, projectConfiguration);
+        const missingProperties: string[] = Validations.getMissingProperties(
+            document.resource, projectConfiguration, allowEmptyFields
+        );
 
         if (missingProperties.length > 0) {
             throw [
@@ -294,6 +324,21 @@ export module Validations {
     }
 
 
+    export function assertNoUnallowedCharactersUsed(document: Document|NewDocument,
+                                                    projectConfiguration: ProjectConfiguration): void {
+
+        const result: string[] = Validations.validateCharacters(document.resource, projectConfiguration);
+
+        if (result.length) {
+            throw [
+                ValidationErrors.UNALLOWED_CHARACTERS,
+                document.resource.category,
+                result.join(', ')
+            ];
+        }
+    }
+
+
     export function assertMapLayerRelations(document: Document|NewDocument) {
 
         const invalidRelationTargets: string[] = Validations.validateMapLayerRelations(document.resource);
@@ -307,64 +352,28 @@ export module Validations {
     }
 
 
-    export function validateStructureOfGeometries(geometry: FieldGeometry): Array<string>|null {
+    export function assertWorkflowRelations(document: Document|NewDocument) {
 
-        if (!geometry) return null;
+        const carriedOutOnTargetIds: string[] = document.resource.relations[Relation.Workflow.IS_CARRIED_OUT_ON] ?? [];
+        const resultsInTargetIds: string[] = document.resource.relations[Relation.Workflow.RESULTS_IN] ?? [];
 
-        if (!geometry.type) return [ValidationErrors.MISSING_GEOMETRY_TYPE];
-        if (!geometry.coordinates) return [ValidationErrors.MISSING_COORDINATES];
-
-        switch(geometry.type) {
-            case 'Point':
-                if (!Validations.validatePointCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'Point'];
-                }
-                break;
-            case 'MultiPoint':
-                if (!Validations.validateMultiPointCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPoint'];
-                }
-                break;
-            case 'LineString':
-                if (!Validations.validatePolylineCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'LineString'];
-                }
-                break;
-            case 'MultiLineString':
-                if (!Validations.validateMultiPolylineCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'MultiLineString'];
-                }
-                break;
-            case 'Polygon':
-                if (!Validations.validatePolygonCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'Polygon'];
-                }
-                break;
-            case 'MultiPolygon':
-                if (!Validations.validateMultiPolygonCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPolygon'];
-                }
-                break;
-            default:
-                return [ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, geometry.type];
+        if (intersect(carriedOutOnTargetIds)(resultsInTargetIds).length) {
+            throw [ValidationErrors.INVALID_WORKFLOW_RELATION_TARGETS];
         }
-
-        return null;
     }
 
 
-    export function getMissingProperties(resource: Resource|NewResource,
-                                         projectConfiguration: ProjectConfiguration) {
+    export function getMissingProperties(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration,
+                                         allowEmptyFields: string[]): string[] {
 
         const missingFields: string[] = [];
         const fieldDefinitions: Array<Field>
             = CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
 
         for (let fieldDefinition of fieldDefinitions) {
-            if (CategoryForm.isMandatoryField(projectConfiguration.getCategory(resource.category), fieldDefinition.name)) {
-                if (resource[fieldDefinition.name] === undefined || resource[fieldDefinition.name] === '') {
-                    missingFields.push(fieldDefinition.name);
-                }
+            if (allowEmptyFields.includes(fieldDefinition.name)) continue;
+            if (fieldDefinition.mandatory && !Field.isFilled(fieldDefinition, resource as Resource)) {
+                missingFields.push(fieldDefinition.name);
             }
         }
 
@@ -395,6 +404,23 @@ export module Validations {
     }
 
 
+    export function validateCharacters(resource: Resource|NewResource,
+                                       projectConfiguration: ProjectConfiguration): string[] {
+
+        const result: string[] = [];
+
+        const fieldDefinitions: Array<Field>
+            = CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
+
+        for (let fieldDefinition of fieldDefinitions) {
+            const fieldValue = resource[fieldDefinition.name];
+            if (Field.hasUnallowedCharacters(fieldValue, fieldDefinition)) result.push(fieldDefinition.name);
+        }
+
+        return result;
+    }
+
+
     /**
      *
      * @param resource
@@ -405,9 +431,8 @@ export module Validations {
                                      projectConfiguration: ProjectConfiguration): boolean {
 
         if (!resource.category) return false;
-        return Tree.flatten(projectConfiguration
-            .getCategories())
-            .some(Named.onName(is(resource.category)));
+        return Tree.flatten(projectConfiguration.getCategories())
+            .find(category => category.name === resource.category) !== undefined;
     }
 
 
@@ -425,6 +450,11 @@ export module Validations {
             { name: 'id' } as Field,
             { name: 'scanCode' } as Field
         ];
+        if (projectConfiguration.getImageCategories().map(to(Named.NAME)).includes(resource.category)) {
+            defaultFields.push({ name: 'originalFilename' } as Field);
+            defaultFields.push({ name: 'georeference' } as Field);
+            defaultFields.push({ name: 'featureVectors' } as Field);
+        }
 
         const definedFields: Array<Field> = projectFields.concat(defaultFields);
         const invalidFields: string[] = [];
@@ -434,12 +464,33 @@ export module Validations {
                 let fieldFound: boolean = false;
                 for (let definedField of definedFields) {
                     if (definedField.name === resourceField
-                            && !Field.InputType.RELATION_INPUT_TYPES.includes(definedField.inputType)) {
+                            && !Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(definedField.inputType)) {
                         fieldFound = true;
                         break;
                     }
                 }
                 if (!fieldFound) invalidFields.push(resourceField);
+            }
+        }
+
+        return invalidFields;
+    }
+
+
+    export function validateConditionalFields(resource: Resource|NewResource,
+                                              projectConfiguration: ProjectConfiguration): string[] {
+
+        const invalidFields: string[] = [];
+        const category: CategoryForm = projectConfiguration.getCategory(resource.category);
+        if (!category) return [];
+        
+        for (let fieldName in resource) {
+            if (resource.hasOwnProperty(fieldName)) {
+                const field: Field = CategoryForm.getField(category, fieldName);
+                if (!field?.condition) continue;
+                if (!Condition.isFulfilled(field.condition, resource, CategoryForm.getFields(category), 'field')) {
+                    invalidFields.push(fieldName);
+                }
             }
         }
 
@@ -453,8 +504,7 @@ export module Validations {
     export function validateDefinedRelations(resource: Resource|NewResource,
                                              projectConfiguration: ProjectConfiguration): string[] {
 
-        const fields: Array<Relation> = projectConfiguration
-            .getRelationsForDomainCategory(resource.category);
+        const fields: Array<Relation> = projectConfiguration.getRelationsForDomainCategory(resource.category);
         const invalidFields: Array<any> = [];
 
         for (let relationField in resource.relations) {
@@ -500,20 +550,44 @@ export module Validations {
     }
 
 
-    export function validateDatesOrUrls(resource: Resource|NewResource,
-                                        projectConfiguration: ProjectConfiguration,
-                                        validationFunction: (value: string) => boolean,
-                                        inputType: string): string[] {
+    export function validateUrls(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration,
+                                 validationFunction: (value: string) => boolean): string[] {
 
         const projectFields: Array<Field> =
             CategoryForm.getFields(projectConfiguration.getCategory(resource.category));
         const invalidFields: string[] = [];
 
         projectFields.filter(fieldDefinition => {
-            return fieldDefinition.inputType === inputType;
+            return fieldDefinition.inputType === Field.InputType.URL;
         }).forEach(fieldDefinition => {
             const value = resource[fieldDefinition.name];
             if (value && !validationFunction(value)) invalidFields.push(fieldDefinition.name);
+        });
+
+        return invalidFields;
+    }
+
+
+    export function validateDates(resource: Resource|NewResource,
+                                  projectConfiguration: ProjectConfiguration): Array<InvalidDateInfo> {
+
+        const category: CategoryForm = projectConfiguration.getCategory(resource.category);
+        const projectFields: Array<Field> = CategoryForm.getFields(category);
+        const invalidFields: Array<InvalidDateInfo> = [];
+
+        projectFields.filter(fieldDefinition => {
+            return fieldDefinition.inputType === Field.InputType.DATE;
+        }).forEach(fieldDefinition => {
+            const value = resource[fieldDefinition.name];
+            if (!value) return;
+
+            const dateValidationResult: DateValidationResult = DateSpecification.validate(value, fieldDefinition);
+            if (dateValidationResult !== DateValidationResult.VALID) {
+                invalidFields.push({
+                    fieldName: fieldDefinition.name,
+                    dateValidationResult
+                });
+            }
         });
 
         return invalidFields;
@@ -564,7 +638,7 @@ export module Validations {
 
     export function validatePointCoordinates(coordinates: number[]): boolean {
 
-        if (coordinates.length < 2 || coordinates.length > 3) return false;
+        if (!isArray(coordinates) || coordinates.length < 2 || coordinates.length > 3) return false;
         if (isNaN(coordinates[0])) return false;
         if (isNaN(coordinates[1])) return false;
         if (coordinates.length === 3 && isNaN(coordinates[2])) return false;
@@ -575,31 +649,34 @@ export module Validations {
 
     export function validateMultiPointCoordinates(coordinates: number[][]): boolean {
 
-        return coordinates.length !== 0
+        return isArray(coordinates)
+            && coordinates.length !== 0
             && coordinates.every(validatePointCoordinates);
     }
 
 
     export function validatePolylineCoordinates(coordinates: number[][]): boolean {
 
-        return coordinates.length >= 2
+        return isArray(coordinates)
+            && coordinates.length >= 2
             && coordinates.every(validatePointCoordinates);
     }
 
 
     export function validateMultiPolylineCoordinates(coordinates: number[][][]): boolean {
 
-        return coordinates.length !== 0
+        return isArray(coordinates)
+            && coordinates.length !== 0
             && coordinates.every(validatePolylineCoordinates);
     }
 
 
     export function validatePolygonCoordinates(coordinates: number[][][]): boolean {
 
-        if (coordinates.length === 0) return false;
+        if (!isArray(coordinates) || coordinates.length === 0) return false;
 
         for (let i in coordinates) {
-            if (coordinates[i].length < 3) return false;
+            if (!isArray(coordinates[i]) || coordinates[i].length < 3) return false;
 
             for (let j in coordinates[i]) {
                 if (!validatePointCoordinates(coordinates[i][j])) return false;
@@ -612,7 +689,8 @@ export module Validations {
 
     export function validateMultiPolygonCoordinates(coordinates: number[][][][]): boolean {
 
-        return coordinates.length !== 0
+        return isArray(coordinates)
+            && coordinates.length !== 0
             && coordinates.every(validatePolygonCoordinates);
     }
 
@@ -629,7 +707,7 @@ export module Validations {
 
     export function validateObjectArrayFields(resource: Resource|NewResource,
                                               projectConfiguration: ProjectConfiguration,
-                                              inputType: 'dating'|'dimension'|'literature'|'composite',
+                                              inputType: 'dating'|'dimension'|'weight'|'volume'|'literature'|'composite',
                                               isValid: (object: any, field: Field, option?: any) => boolean): string[] {
 
         return validateFields(resource, projectConfiguration, inputType, (fieldContent: any, field: Field, options) =>
@@ -639,8 +717,7 @@ export module Validations {
     }
 
 
-    export function validateFields(resource: Resource|NewResource,
-                                   projectConfiguration: ProjectConfiguration,
+    export function validateFields(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration,
                                    inputType: string,
                                    isValid: (object: any, field: Field, options?: any) => boolean): string[] {
 
@@ -652,6 +729,73 @@ export module Validations {
     }
 
 
+    export function validateGeometry(document: Document|NewDocument,
+                                     projectConfiguration: ProjectConfiguration): string[]|null {
+
+        const errorWithParams: string[]|null = validateGeometryStructure(document.resource.geometry);
+        if (errorWithParams) return errorWithParams;
+
+        const category: CategoryForm = projectConfiguration.getCategory(document.resource.category);
+        const geometryField: Field = CategoryForm.getField(category, FieldResource.GEOMETRY);
+        if (document.resource.geometry && !geometryField) {
+            return [ValidationErrors.GEOMETRY_NOT_ALLOWED, category.name];
+        }
+
+        const allowedGeometryTypes: Array<FieldGeometryType> = geometryField?.geometryTypes;
+        if (allowedGeometryTypes && !allowedGeometryTypes?.includes(document.resource.geometry.type)) {
+            return [ValidationErrors.UNALLOWED_GEOMETRY_TYPE, category.name, document.resource.geometry.type];
+        }
+
+        return null;
+    }
+
+
+    function validateGeometryStructure(geometry: FieldGeometry): string[]|null {
+
+        if (!geometry) return null;
+
+        if (!geometry.type) return [ValidationErrors.MISSING_GEOMETRY_TYPE];
+        if (!geometry.coordinates) return [ValidationErrors.MISSING_COORDINATES];
+
+        switch(geometry.type) {
+            case 'Point':
+                if (!Validations.validatePointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'Point'];
+                }
+                break;
+            case 'MultiPoint':
+                if (!Validations.validateMultiPointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPoint'];
+                }
+                break;
+            case 'LineString':
+                if (!Validations.validatePolylineCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'LineString'];
+                }
+                break;
+            case 'MultiLineString':
+                if (!Validations.validateMultiPolylineCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiLineString'];
+                }
+                break;
+            case 'Polygon':
+                if (!Validations.validatePolygonCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'Polygon'];
+                }
+                break;
+            case 'MultiPolygon':
+                if (!Validations.validateMultiPolygonCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPolygon'];
+                }
+                break;
+            default:
+                return [ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, geometry.type];
+        }
+
+        return null;
+    }
+
+
     function getNewInvalidFields(invalidFields: string[], previousInvalidFields: string[],
                                  document: Document|NewDocument, previousDocumentVersion?: Document): string[] {
 
@@ -659,5 +803,33 @@ export module Validations {
             return !previousInvalidFields.includes(field)
                 || document.resource[field] !== previousDocumentVersion?.resource[field];
         });
+    }
+
+
+    function getNewInvalidDateFields(invalidFields: Array<InvalidDateInfo>,
+                                     previousInvalidFields: Array<InvalidDateInfo>, document: Document|NewDocument,
+                                     previousDocumentVersion?: Document): Array<InvalidDateInfo> {
+
+        return invalidFields.filter(info => {
+            return !previousInvalidFields.find(previousInfo => info.fieldName === previousInfo.fieldName)
+                || !equal(document.resource[info.fieldName])(previousDocumentVersion?.resource[info.fieldName]);
+        });
+    }
+
+
+    function getDateError(dateValidationResult: DateValidationResult): string {
+
+        switch (dateValidationResult) {
+            case DateValidationResult.RANGE_NOT_ALLOWED:
+                return ValidationErrors.INVALID_DATE_RANGE_NOT_ALLOWED;
+            case DateValidationResult.SINGLE_NOT_ALLOWED:
+                return ValidationErrors.INVALID_DATE_SINGLE_NOT_ALLOWED;
+            case DateValidationResult.TIME_NOT_ALLOWED:
+                return ValidationErrors.INVALID_DATE_TIME_NOT_ALLOWED;
+            case DateValidationResult.TIME_NOT_SET:
+                return ValidationErrors.INVALID_DATE_TIME_NOT_SET;
+            case DateValidationResult.END_DATE_BEFORE_BEGINNING_DATE:
+                return ValidationErrors.INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE
+        }
     }
 }

@@ -12,39 +12,35 @@ defmodule FieldHub.CLI do
 
   @moduledoc """
   Bundles functions to be called from the command line.
-
-  While it is possible to call every function using eval, in release builds eval will not start other applications. For most of the following functions
-  a running HTTPoison application (process) is expected to be running, the functions therefore make sure to start HTTPoison.
-
-  See https://hexdocs.pm/mix/1.12/Mix.Tasks.Release.html#module-one-off-commands-eval-and-rpc.
   """
 
   @doc """
   Run basic setup for the whole application.
   """
   def setup() do
-    HTTPoison.start()
     Logger.info("Starting setup.")
 
     Logger.info(" Initializing CouchDB in 'single node' mode at '#{CouchService.base_url()}'.")
     # See https://docs.couchdb.org/en/3.2.0/setup/single-node.html
 
+    wait_for_couchdb()
+
     {users, replicator} = CouchService.initial_setup()
 
     case users do
-      %{status_code: 412} ->
-        Logger.info(" System database '_users' already exists.")
+      %{status: 412} ->
+        Logger.info("  System database '_users' already exists.")
 
-      %{status_code: code} when 199 < code and code < 300 ->
-        Logger.info(" Created system database `_users`.")
+      %{status: code} when 199 < code and code < 300 ->
+        Logger.info("  Created system database `_users`.")
     end
 
     case replicator do
-      %{status_code: 412} ->
-        Logger.info(" System database '_replicator' already exists.")
+      %{status: 412} ->
+        Logger.info("  System database '_replicator' already exists.")
 
-      %{status_code: code} when 199 < code and code < 300 ->
-        Logger.info(" Created system database `_replicator`.")
+      %{status: code} when 199 < code and code < 300 ->
+        Logger.info("  Created system database `_replicator`.")
     end
 
     app_user = Application.get_env(:field_hub, :couchdb_user_name)
@@ -64,7 +60,7 @@ defmodule FieldHub.CLI do
     tmp_file = "#{@file_directory_root}/.field_hub_test_file"
 
     with :ok <- File.mkdir_p(@file_directory_root),
-         :ok <- File.write("#{@file_directory_root}/.field_hub_test_file", []) do
+         :ok <- File.write(tmp_file, []) do
       File.rm(tmp_file)
       Logger.info(" Application is allowed write in file directory '#{@file_directory_root}'.")
     else
@@ -75,6 +71,25 @@ defmodule FieldHub.CLI do
     end
 
     Logger.info("Setup finished.")
+  end
+
+  defp wait_for_couchdb(retries \\ 5)
+
+  defp wait_for_couchdb(retries) when retries > 0 do
+    CouchService.ping_couch()
+    |> case do
+      {:ok, %{status: 200}} ->
+        :ok
+
+      _ ->
+        Process.sleep(5000)
+        wait_for_couchdb(retries - 1)
+    end
+  end
+
+  defp wait_for_couchdb(_retries) do
+    Logger.error("Unable to connect to CouchDB.")
+    :error
   end
 
   @doc """
@@ -95,8 +110,6 @@ defmodule FieldHub.CLI do
   - `password` the default user's password.
   """
   def create_project(project_identifier, password) do
-    HTTPoison.start()
-
     Logger.info("Creating project #{project_identifier}.")
 
     response = Project.create(project_identifier)
@@ -141,7 +154,7 @@ defmodule FieldHub.CLI do
 
   By default will only delete the database and will leave the files in your file system intact:
 
-  The reason being that databases are always fully synchronized, but files are not necessarily. Your FieldHub
+  The reason being that databases are always fully synchronized, but files are not necessarily. Your Field Hub
   installation may be the only node in your project's syncing network that still retains certain high
   resolution images of colleagues that have left the project.
 
@@ -150,8 +163,6 @@ defmodule FieldHub.CLI do
   - `delete_files` (optional) set true to also delete (image) files.
   """
   def delete_project(project_identifier, delete_files \\ false) do
-    HTTPoison.start()
-
     Project.delete(project_identifier, delete_files)
     |> case do
       %{database: :unknown_project, file_store: _file_store} = result ->
@@ -199,8 +210,6 @@ defmodule FieldHub.CLI do
   - `password` the user's password.
   """
   def create_user(user_name, password) do
-    HTTPoison.start()
-
     User.create(user_name, password)
     |> case do
       :created ->
@@ -218,8 +227,6 @@ defmodule FieldHub.CLI do
   - `user_name` the user's name.
   """
   def delete_user(user_name) do
-    HTTPoison.start()
-
     User.delete(user_name)
     |> case do
       :deleted ->
@@ -238,8 +245,6 @@ defmodule FieldHub.CLI do
   - `user_password` the user's password.
   """
   def set_password(user_name, user_password) do
-    HTTPoison.start()
-
     User.update_password(user_name, user_password)
     |> case do
       :updated ->
@@ -258,8 +263,6 @@ defmodule FieldHub.CLI do
   - `project_identifier` the project's name.
   """
   def add_user_as_project_admin(user_name, project_identifier) do
-    HTTPoison.start()
-
     Project.update_user(user_name, project_identifier, :admin)
     |> case do
       :set ->
@@ -285,8 +288,6 @@ defmodule FieldHub.CLI do
   - `project_identifier` the project's name.
   """
   def add_user_as_project_member(user_name, project_identifier) do
-    HTTPoison.start()
-
     Project.update_user(user_name, project_identifier, :member)
     |> case do
       :set ->
@@ -312,8 +313,6 @@ defmodule FieldHub.CLI do
   - `project_identifier` the project's name.
   """
   def remove_user_from_project(user_name, project_identifier) do
-    HTTPoison.start()
-
     Project.update_user(user_name, project_identifier, :none)
     |> case do
       :unset ->
@@ -346,8 +345,6 @@ defmodule FieldHub.CLI do
   end
 
   def get_project_statistics(project_identifier) do
-    HTTPoison.start()
-
     project_identifier
     |> Project.evaluate_project()
     |> print_statistics()
@@ -360,8 +357,6 @@ defmodule FieldHub.CLI do
   - `project_identifier` the project's name.
   """
   def get_project_issues(project_identifier) do
-    HTTPoison.start()
-
     project_identifier
     |> Issues.evaluate_all()
     |> print_issues()

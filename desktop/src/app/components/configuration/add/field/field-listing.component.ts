@@ -6,7 +6,8 @@ import { getSearchResultLabel } from '../getSearchResultLabel';
 
 @Component({
     selector: 'field-listing',
-    templateUrl: './field-listing.html'
+    templateUrl: './field-listing.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -26,6 +27,8 @@ export class FieldListingComponent {
 
 
     public select = (field: Field) => this.onFieldSelected.emit(field);
+
+    public getFieldId = (field: Field) => 'select-field-' + field.name.replace(':', '-');
 
     public getLabel = (value: any) => this.labels.get(value);
 

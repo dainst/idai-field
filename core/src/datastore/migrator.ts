@@ -1,9 +1,12 @@
-import { isArray, isObject } from 'tsfun';
-import { Document } from '../model/document';
-import { OptionalRange } from '../model/optional-range';
+import { isArray, isNumber, isObject, isString } from 'tsfun';
+import { Document } from '../model/document/document';
+import { OptionalRange } from '../model/input-types/optional-range';
 import { CategoryForm } from '../model/configuration/category-form';
-import { Field } from '../model/configuration/field';
+import { Field, Subfield } from '../model/configuration/field';
 import { ProjectConfiguration } from '../services';
+import { DateSpecification } from '../model/input-types/date-specification';
+import { Measurement } from '../model/input-types/measurement';
+import { FieldGeometry } from '../model/document/field-geometry';
 
 
 export const singleToMultipleValuesFieldNames: string[] = [
@@ -28,7 +31,12 @@ export module Migrator {
         migrateGeneralFieldsAndRelations(document);
         migratePeriodFields(document);
         migrateSingleToMultipleValues(document);
+        migrateWeightFields(document);
         migrateDatings(document, projectConfiguration);
+        migrateDates(document, projectConfiguration);
+        migrateProjectValuelistFields(document);
+        fixGeometry(document);
+        removeAmbiguousHierarchicalRelations(document);
     }
 
 
@@ -71,7 +79,22 @@ export module Migrator {
     }
 
 
+    function migrateWeightFields(document: Document) {
+
+        if (document.resource.weight !== undefined && isNumber(document.resource.weight)) {
+            const weight: Measurement = {
+                inputValue: document.resource.weight,
+                inputUnit: 'g',
+                isImprecise: false
+            };
+            Measurement.addNormalizedValues(weight);
+            document.resource.weight = [weight];
+        }
+    }
+
+
     function migrateDatings(document: Document, projectConfiguration: ProjectConfiguration) {
+
         const category: CategoryForm = projectConfiguration.getCategory(document);
         if (!category) return;
 
@@ -84,5 +107,110 @@ export module Migrator {
                     if (dating.type === 'exact') dating.type = 'single';
                 })
             });
+    }
+
+
+    function migrateProjectValuelistFields(document: Document) {
+
+        if (document.resource.category !== 'Project') return;
+
+        const fieldNames: string[] = ['staff', 'campaigns'];
+
+        for (let fieldName of fieldNames) {
+            const fieldData: any = document.resource[fieldName];
+            if (isArray(fieldData) && fieldData.every(element => isString(element))) {
+                document.resource[fieldName] = fieldData.map(value => {
+                    return { value, selectable: true };
+                });
+            }
+        }
+    }
+
+
+    function migrateDates(document: Document, projectConfiguration: ProjectConfiguration) {
+
+        migrateBeginningAndEndDates(document);
+        migrateDatesByInputType(document, projectConfiguration);
+    }
+
+
+    function migrateBeginningAndEndDates(document: Document) {
+
+        const beginningDate: string = document.resource.beginningDate;
+        const endDate: string = document.resource.endDate;
+
+        if ((!beginningDate || !isString(beginningDate)) && (!endDate || !isString(endDate))) return;
+
+        const date: DateSpecification = { isRange: true };
+        if (beginningDate && isString(beginningDate)) date['value'] = beginningDate;
+        if (endDate && isString(endDate)) date['endValue'] = endDate;
+        document.resource.date = date;
+
+        delete document.resource.beginningDate;
+        delete document.resource.endDate;
+    }
+
+
+    function migrateDatesByInputType(document: Document, projectConfiguration: ProjectConfiguration) {
+
+        const category: CategoryForm = projectConfiguration.getCategory(document);
+        if (!category) return;
+
+        const fields: Array<Field> = CategoryForm.getFields(category);
+
+        fields.filter(field => field.inputType === Field.InputType.DATE)
+            .forEach(field => {
+                const migratedDate: DateSpecification = getMigratedDate(document.resource[field.name]);
+                if (migratedDate) document.resource[field.name] = migratedDate;
+            });
+
+        fields.filter(field => field.inputType === Field.InputType.COMPOSITE)
+            .forEach(field => {
+                field.subfields.filter(subfield => subfield.inputType === Field.InputType.DATE)
+                    .forEach(subfield => migrateSubfieldDate(document, field, subfield));
+            });
+    }
+
+
+    function migrateSubfieldDate(document: Document, field: Field, subfield: Subfield) {
+
+        const compositeEntries: any[] = document.resource[field.name];
+        if (!compositeEntries || !isArray(compositeEntries)) return;
+
+        compositeEntries.forEach(entry => {
+            const migratedDate: DateSpecification = getMigratedDate(entry[subfield.name]);
+            if (migratedDate) entry[subfield.name] = migratedDate;
+        });
+    }
+
+
+    function getMigratedDate(date: any): DateSpecification {
+
+        if (!date || !isString(date)) return undefined;
+        
+        return { value: date, isRange: false };
+    }
+
+
+    function fixGeometry(document: Document) {
+
+        if (document.resource.geometry) {
+            FieldGeometry.closeRings(document.resource.geometry);
+        }
+    }
+
+
+    /**
+     * If more than one parent resource is set via liesWithin/isRecordedIn relations, the relation targets are
+     * removed from both relations so that no parent resource is set at all. This leads to a warning which
+     * allows users to set a new parent resource.
+     */
+    function removeAmbiguousHierarchicalRelations(document: Document) {
+
+        if (document.resource.relations.liesWithin?.length > 1
+                || document.resource.relations.isRecordedIn?.length > 1) {
+            document.resource.relations.liesWithin = [];
+            document.resource.relations.isRecordedIn = [];
+        }
     }
 }

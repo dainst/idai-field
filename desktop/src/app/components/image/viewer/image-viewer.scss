@@ -1,9 +1,29 @@
 image-viewer {
   #image-container {
+    position: relative;
     height: 100%;
     background-color: #000;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+
+    &.panning-disabled {
+      cursor: default;
+    }
+
+    &.panning {
+      cursor: grabbing;
+    }
+
+    #image-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+    }
 
     img {
+      position: relative;
       max-width: 100%;
       max-height: 100%;
       object-fit: scale-down;
@@ -11,18 +31,54 @@ image-viewer {
       -webkit-user-drag: none;
     }
 
-    .align-items-center {
-      position: relative;
-      height: 100%;
+    #image {
+      will-change: transform;
+      z-index: 1001;
+    }
+
+    #preload-image {
+      z-index: 999;
+    }
+
+    zoom-buttons {
+      position: absolute;
+      top: 7px;
+      left: 7px;
+      z-index: 1003;
+    }
+
+    #download-image-button,
+    #export-image-button {
+      position: absolute;
+      right: 7px;
+      top: 7px;
+      z-index: 1003;
+    }
+
+    #no-original-image-icon {
+      position: absolute;
+      right: 13px;
+      top: 6px;
+      font-size: 26px;
+      color: #ddd;
+      z-index: 1003;
+    }
+
+    .alert,
+    loading-icon {
+      position: absolute;
+      left: 50%;
+      z-index: 1003;
     }
 
     .alert {
-      position: absolute;
       top: 10px;
+      transform: translateX(-50%);
     }
 
     loading-icon {
-      position: absolute;
+      top: 50%;
+      transform: translateX(-20px) translateY(25px);
     }
   }
 }

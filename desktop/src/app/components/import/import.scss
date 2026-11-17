@@ -10,6 +10,10 @@
     transition: none !important;
   }
 
+  #path-input-group {
+    margin-bottom: -8px;
+  }
+
   .import-info {
     font-size: 14px;
     margin-bottom: 12px;
@@ -23,6 +27,16 @@
       position: relative;
       top: 1px;
     }
+  }
+
+  .form-check-label {
+    margin-bottom: 0;
+    padding-left: 0 !important;
+  }
+
+  input[type=checkbox],
+  input[type=radio] {
+    margin-right: 8px;
   }
 
   #back-to-import-button {

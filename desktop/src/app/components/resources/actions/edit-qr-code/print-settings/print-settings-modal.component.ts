@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { PrintSettings } from './print-settings';
 import { AngularUtility } from '../../../../../angular/angular-utility';
 import { PrintSettingsProfile } from './print-settings-profile';
@@ -13,7 +12,8 @@ import { CreatePrintSettingsProfileModalComponent } from './create-print-setting
     templateUrl: './print-settings-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -25,7 +25,6 @@ export class PrintSettingsModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private i18n: I18n,
                 private modalService: NgbModal,
                 private menus: Menus) {}
 
@@ -69,7 +68,7 @@ export class PrintSettingsModalComponent {
     public getProfileLabel(profile: PrintSettingsProfile): string {
 
         return profile.name === ''
-            ? this.i18n({ id: 'resources.printSettingsModal.default', value: 'Standard' })
+            ? $localize `:@@resources.printSettingsModal.default:Standard`
             : profile.name;
     }
 

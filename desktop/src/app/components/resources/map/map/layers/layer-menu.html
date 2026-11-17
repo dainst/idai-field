@@ -13,7 +13,16 @@
                 <div *ngFor="let layerGroup of layerGroups; index as i"
                         [id]="'layer-group-' + i"
                         class="layer-group">
-                    <span class="layer-group-heading">{{getLayerGroupLabel(layerGroup)}}</span>
+                    <span class="layer-group-heading"
+                          [class.with-download-button]="isDownloadImagesButtonVisible(layerGroup)">
+                            {{getLayerGroupLabel(layerGroup)}}
+                    </span>
+                    <span *ngIf="isDownloadImagesButtonVisible(layerGroup)"
+                          class="mdi mdi-cloud-download layer-menu-button layer-menu-default-layer-button
+                                 download-layer-images-button"
+                          ngbTooltip="{{getDownloadTooltip(layerGroup)}}"
+                          placement="top" container="body"
+                          (click)="downloadImages(layerGroup)"></span>
                     <span *ngIf="i === 0 && !isInEditing(layerGroup)" id="layer-menu-edit-button"
                           class="mdi mdi-pencil layer-menu-button layer-group-edit-button"
                           ngbTooltip="Kartenhintergründe bearbeiten"
@@ -33,8 +42,7 @@
                           placement="left" container="body"
                           (click)="saveGroup()"></span>
                     <form>
-                        <fieldset class="form-group"
-                                  cdkDropList [cdkDropListData]="layerGroup.layers"
+                        <fieldset cdkDropList [cdkDropListData]="layerGroup.layers"
                                   (cdkDropListDropped)="onDrop($event)">
                             <div *ngIf="isNoLayersInfoVisible(layerGroup)"
                                  i18n="@@resources.map.layerMenu.noLayersInfo"
@@ -45,7 +53,7 @@
                             <div *ngFor="let layer of layerGroup.layers; index as j"
                                 class="layer-entry"
                                 cdkDrag cdkDragLockAxis="y"
-                                cdkDragBoundary=".form-group"
+                                cdkDragBoundary="fieldset"
                                 [cdkDragDisabled]="!isInEditing(layerGroup)"
                                 (cdkDragStarted)="dragging = true"
                                 (cdkDragEnded)="dragging = false"
@@ -102,13 +110,14 @@
                             </div>
                         </fieldset>
                     </form>
-                    <div *ngIf="isInEditing(layerGroup)"
-                            class="btn btn-block btn-outline-success layer-menu-add-button"
-                            ngbTooltip="Kartenhintergrund hinzufügen"
-                            i18n-ngbTooltip="@@resources.map.layerMenu.addLayer"
-                            placement="bottom" container="body"
-                            (click)="addLayers(layerGroup)">
-                        <span class="mdi mdi-plus-circle"></span>
+                    <div *ngIf="isInEditing(layerGroup)" class="d-grid">
+                        <div class="btn btn-outline-success layer-menu-add-button"
+                                ngbTooltip="Kartenhintergrund hinzufügen"
+                                i18n-ngbTooltip="@@resources.map.layerMenu.addLayer"
+                                placement="bottom" container="body"
+                                (click)="addLayers(layerGroup)">
+                            <span class="mdi mdi-plus-circle"></span>
+                        </div>
                     </div>
                 </div>
             </div>

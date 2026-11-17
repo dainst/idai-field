@@ -1,0 +1,27 @@
+<select *ngIf="isOptionalRange()" class="form-control"
+     (change)="selectRange($event.target.value)">
+     <option i18n="@@docedit.forms.date.select.single" value="single"
+             [selected]="!rangeMode">Einzeldatum</option>
+     <option i18n="@@docedit.forms.date.select.range" value="range"
+             [selected]="rangeMode">Datumsbereich</option>
+</select>
+
+<div class="date-container">
+     <span *ngIf="rangeMode" class="range-labels">
+          <div class="range-label"
+               i18n="@@docedit.forms.date.from">Von:</div>
+          <div class="range-label"
+               i18n="@@docedit.forms.date.to">Bis:</div>
+     </span>
+
+     <div class="date-values-container">
+          <date-value [value]="getValue()"
+                      [field]="field"
+                      (onChanged)="updateValue($event)"></date-value>
+          
+          <date-value *ngIf="rangeMode"
+                      [value]="getEndValue()"
+                      [field]="field"
+                      (onChanged)="updateEndValue($event)"></date-value>
+     </div>
+</div>

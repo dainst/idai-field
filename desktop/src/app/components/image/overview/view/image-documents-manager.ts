@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { clone } from 'tsfun';
 import { Datastore, ImageDocument } from 'idai-field-core';
 import { ImagesState } from './images-state';
@@ -7,6 +8,7 @@ import { ImagesState } from './images-state';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
+@Injectable()
 export class ImageDocumentsManager {
 
     public selected: Array<ImageDocument> = [];
@@ -77,8 +79,7 @@ export class ImageDocumentsManager {
     private doSelectedDocumentsContainDepictsRelations(): boolean {
 
         for (let document of this.selected) {
-            if (document.resource.relations.depicts &&
-                    document.resource.relations.depicts.length > 0) {
+            if (document.resource.relations.depicts && document.resource.relations.depicts.length > 0) {
                 return true;
             }
         }
@@ -101,7 +102,7 @@ export class ImageDocumentsManager {
         query.constraints['project:exist'] = 'UNKNOWN';
 
         try {
-            const {documents, totalCount} = await this.datastore.find(query);
+            const { documents, totalCount } = await this.datastore.find(query);
             if (queryId !== this.currentQueryId) return;
 
             this.documents = documents as Array<ImageDocument>;

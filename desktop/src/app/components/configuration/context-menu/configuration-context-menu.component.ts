@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ConfigurationContextMenu } from './configuration-context-menu';
-import { ContextMenuOrientation } from '../../widgets/context-menu';
 
 
 export type ConfigurationContextMenuAction = 'edit'|'extend'|'swap'|'delete';
@@ -8,31 +7,24 @@ export type ConfigurationContextMenuAction = 'edit'|'extend'|'swap'|'delete';
 
 @Component({
     selector: 'configuration-context-menu',
-    templateUrl: './configuration-context-menu.html'
+    templateUrl: './configuration-context-menu.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ConfigurationContextMenuComponent implements OnChanges {
+export class ConfigurationContextMenuComponent {
 
     @Input() contextMenu: ConfigurationContextMenu;
 
     @Output() onSelectAction: EventEmitter<ConfigurationContextMenuAction>
         = new EventEmitter<ConfigurationContextMenuAction>();
 
-    public orientation: ContextMenuOrientation = 'top';
-
 
     public selectAction = (action: ConfigurationContextMenuAction) => this.onSelectAction.emit(action);
 
     public getBottomPosition = (yPosition: number) => ConfigurationContextMenu.getBottomPosition(yPosition);
-
-
-    ngOnChanges() {
-
-        this.orientation = ConfigurationContextMenu.computeOrientation(this.contextMenu.position?.y);
-    }
 
 
     public areAnyOptionsAvailable(): boolean {
@@ -69,11 +61,14 @@ export class ConfigurationContextMenuComponent implements OnChanges {
 
     public isDeleteOptionAvailable(): boolean {
 
-        if (this.contextMenu.valuelist) return this.contextMenu.valuelist.source === 'custom';
-
-        return (!this.contextMenu.field
-            || this.contextMenu.category.customFields.includes(this.contextMenu.field.name))
-        && (this.contextMenu.field !== undefined || this.contextMenu.group !== undefined
-            || !this.contextMenu.category.required);
+        if (this.contextMenu.valuelist) {
+            return this.contextMenu.valuelist.source === 'custom';
+        } else if (this.contextMenu.field) {
+            return this.contextMenu.category.customFields.includes(this.contextMenu.field.name)
+                && !this.contextMenu.field.required;
+        } else {
+            return this.contextMenu.group !== undefined
+                || !this.contextMenu.category.required;
+        }
     }
 }

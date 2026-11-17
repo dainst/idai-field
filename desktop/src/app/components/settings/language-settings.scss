@@ -83,10 +83,13 @@ li.cdk-drag-preview {
   border-radius: 0 !important;
   height: initial;
   line-height: initial;
+  background-color: white;
 
-  .language-label {
+  .language-label,
+  .language-info {
     position: relative;
-    bottom: 2px;
+    top: 7px;
+    left: 10px;
   }
 
   .language-info {

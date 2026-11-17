@@ -138,8 +138,12 @@ function getGroupNameForUnassaginedField(fieldName: string): string {
         return Groups.TIME;
     } else if (Relation.Type.ALL.includes(fieldName)) {
         return Groups.IDENTIFICATION;
+    } else if (Relation.Inventory.ALL.includes(fieldName)) {
+        return Groups.INVENTORY;
     } else if (['hasChildren', 'includesStratigraphicalUnits'].includes(fieldName)) {
         return Groups.HIERARCHY;
+    } else if (['isSubjectOf', 'isResultOf'].includes(fieldName)) {
+        return Groups.WORKFLOW;
     } else {
         return Groups.OTHER;
     }
@@ -182,6 +186,7 @@ function buildCategoryFromDefinition(formDefinition: TransientFormDefinition,
     category.isAbstract = categoryDefinition?.abstract || false;
     category.userDefinedSubcategoriesAllowed = categoryDefinition?.userDefinedSubcategoriesAllowed || false;
     category.scanCodesAllowed = categoryDefinition?.scanCodesAllowed || false;
+    category.defaultRange = categoryDefinition?.defaultRange;
     category.required = categoryDefinition?.required || false;
 
     category.libraryId = formDefinition.name;
@@ -193,7 +198,8 @@ function buildCategoryFromDefinition(formDefinition: TransientFormDefinition,
     category.defaultLabel = formDefinition.defaultLabel;
     category.defaultDescription = formDefinition.defaultDescription;
     category.groups = [];
-        category.color = formDefinition.color ?? CategoryForm.generateColorForCategory(category.name);
+    category.originalGroups = formDefinition.originalGroups;
+    category.color = formDefinition.color ?? CategoryForm.generateColorForCategory(category.name);
     category.defaultColor = formDefinition.defaultColor ?? (category.libraryId
         ? CategoryForm.generateColorForCategory(category.name)
         : category.color
@@ -206,6 +212,7 @@ function buildCategoryFromDefinition(formDefinition: TransientFormDefinition,
     category.createdBy = formDefinition.createdBy;
     category.creationDate = formDefinition.creationDate ? new Date(formDefinition.creationDate) : undefined;
     category.references = formDefinition.references;
+    category.semanticReferences = formDefinition.semanticReferences;
     
     category.children = [];
     category[TEMP_FIELDS] = formDefinition.fields || {};

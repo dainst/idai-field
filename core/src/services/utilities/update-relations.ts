@@ -1,7 +1,7 @@
 import { append, compose, cond, filter, flow, forEach, isDefined, isEmpty, isnt, lookup, map, on,
     Pair, pairWith, Predicate, remove, to, update, values, zip, reduce, assoc, keys } from 'tsfun';
-import { Document } from '../../model/document';
-import { Resource } from '../../model/resource';
+import { Document } from '../../model/document/document';
+import { Resource } from '../../model/document/resource';
 import { Name } from '../../tools';
 import { Relation } from '../../model/configuration/relation';
 
@@ -23,12 +23,11 @@ import { Relation } from '../../model/configuration/relation';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function updateRelations(document: Document, 
-                                targetDocuments: Array<Document>,
+export function updateRelations(document: Document, targetDocuments: Array<Document>,
                                 inverseRelationsMap: Relation.InverseRelationsMap,
                                 setInverses: boolean = true): Array<Document> {
 
-    const cloneOfTargetDocuments = targetDocuments.map(Document.clone);
+    const clonedTargetDocuments: Array<Document> = targetDocuments.map(Document.clone);
 
     const getInverse = lookup(inverseRelationsMap);
     const hasInverseRelation = compose(getInverse, isDefined);
@@ -52,7 +51,7 @@ export function updateRelations(document: Document,
         }
     }
 
-    return determineChangedDocs(targetDocuments, cloneOfTargetDocuments);
+    return determineChangedDocuments(targetDocuments, clonedTargetDocuments);
 }
 
 
@@ -62,9 +61,7 @@ export function updateRelations(document: Document,
  * ->
  * { b: ['7'] }
  */
-function pruneInverseRelations(relations: Resource.Relations,
-                               resourceId: string,
-                               setInverses: boolean,
+function pruneInverseRelations(relations: Resource.Relations, resourceId: string, setInverses: boolean,
                                hasInverseRelation: Predicate<String>) {
 
     return flow(
@@ -78,9 +75,7 @@ function pruneInverseRelations(relations: Resource.Relations,
 }
 
 
-function setInverseRelations(target: Resource, 
-                             resource: Resource,
-                             getInverse: (_: string) => string|undefined,
+function setInverseRelations(target: Resource, resource: Resource, getInverse: (_: string) => string|undefined,
                              hasInverseRelation: Predicate<string>) {
 
     flow(
@@ -120,18 +115,19 @@ function setInverseRelation(target: Resource, resource: Resource) {
 }
 
 
-function determineChangedDocs(targetDocuments: Array<Document>,
-                              cloneOfTargetDocuments: Array<Document>): Array<Document> {
+function determineChangedDocuments(targetDocuments: Array<Document>,
+                                   clonedTargetDocuments: Array<Document>): Array<Document> {
 
-    return zip(targetDocuments, cloneOfTargetDocuments).reduce(changedDocsReducer, []);
+    return zip(targetDocuments, clonedTargetDocuments).reduce(changedDocumentsReducer, []);
 }
 
 
-function changedDocsReducer(changedDocs: Array<Document>, [targetDoc, cloneOfTargetDoc]: Pair<Document, Document>) {
+function changedDocumentsReducer(changedDocuments: Array<Document>,
+                                 [targetDocument, clonedTargetDocument]: Pair<Document, Document>) {
 
-    return changedDocs.concat(
-        !documentsRelationsEquivalent(targetDoc as any /* TODO review typings */)(cloneOfTargetDoc as any)
-            ? targetDoc
+    return changedDocuments.concat(
+        !documentsRelationsEquivalent(targetDocument as any /* TODO review typings */)(clonedTargetDocument as any)
+            ? targetDocument
             : []
     );
 }

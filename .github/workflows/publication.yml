@@ -1,0 +1,44 @@
+name: Publication
+on:
+  push:
+    paths:
+      - "publication/**"
+      - ".github/workflows/publication.yml"
+  pull_request:
+    paths:
+      - "publication/**"
+      - ".github/workflows/publication.yml"
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: 27.0
+          elixir-version: 1.18.0
+      - name: Start CouchDB and OpenSearch
+        run: docker compose -f docker-compose.yml up -d
+        working-directory: publication
+      - name: Install GDAL
+        run: sudo apt-get update && sudo apt-get install -y gdal-bin
+      - name: Sleep to await CouchDB and OpenSearch startup
+        run: sleep 15s
+      - name: Restore dependencies cache
+        uses: actions/cache@v5
+        with:
+          path: publication/deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('publication/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
+      - name: Install Field Publication dependencies and run setup
+        run: mix setup
+        working-directory: publication
+      - name: Audit Field Publication dependencies
+        run: mix deps.audit
+        working-directory: publication
+      - name: Run Field Publication tests
+        run: mix test
+        working-directory: publication

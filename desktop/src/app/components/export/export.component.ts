@@ -1,34 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
-import { CategoryForm, Datastore, FieldDocument, Query, Labels, Document, Tree, Named,
-    ProjectConfiguration } from 'idai-field-core';
+import { CategoryForm, Datastore, FieldDocument, Query, Labels, Document, Tree, Named, ProjectConfiguration,
+    IndexFacade } from 'idai-field-core';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../components/export/catalog/catalog-exporter';
 import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED } from '../../components/export/catalog/get-export-documents';
 import { CsvExporter } from '../../components/export/csv/csv-exporter';
 import { CategoryCount } from '../../components/export/export-helper';
-import { ExportRunner } from '../../components/export/export-runner';
+import { ExportResult, ExportRunner, InvalidField } from '../../components/export/export-runner';
 import { GeoJsonExporter } from '../../components/export/geojson-exporter';
 import { ShapefileExporter } from './shapefile-exporter';
-import { JavaToolExecutor } from '../../services/java/java-tool-executor';
 import { TabManager } from '../../services/tabs/tab-manager';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
-import { ExportModalComponent } from './export-modal.component';
 import { SettingsProvider } from '../../services/settings/settings-provider';
 import { ImageRelationsManager } from '../../services/image-relations-manager';
 import { Menus } from '../../services/menus';
 import { MenuContext } from '../../services/menu-context';
-import { InvalidField } from './csv/csv-export';
+import { AppState } from '../../services/app-state';
+import { AngularUtility } from '../../angular/angular-utility';
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const remote = window.require('@electron/remote');
 
 
 @Component({
     templateUrl: './export.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -38,7 +36,6 @@ export class ExportComponent implements OnInit {
     public format: 'geojson'|'shapefile'|'csv'|'catalog' = 'csv';
     public initializing: boolean = false;
     public running: boolean = false;
-    public javaInstalled: boolean = true;
     public operations: Array<FieldDocument> = [];
     public catalogs: Array<FieldDocument> = [];
 
@@ -52,21 +49,17 @@ export class ExportComponent implements OnInit {
     
     public invalidFields: Array<InvalidField> = [];
 
-    private modalRef: NgbModalRef|undefined;
-
-    private static TIMEOUT: number = 200;
-
 
     constructor(private settingsProvider: SettingsProvider,
-                private modalService: NgbModal,
                 private messages: Messages,
-                private i18n: I18n,
                 private datastore: Datastore,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: Menus,
                 private imageRelationsManager: ImageRelationsManager,
-                private labels: Labels) {}
+                private labels: Labels,
+                private appState: AppState,
+                private indexFacade: IndexFacade) {}
 
 
     public getDocumentLabel = (operation: FieldDocument) => Document.getLabel(
@@ -74,8 +67,6 @@ export class ExportComponent implements OnInit {
     );
 
     public getCategoryLabel = (category: CategoryForm) => this.labels.get(category);
-
-    public isJavaInstallationMissing = () => this.format === 'shapefile' && !this.javaInstalled;
 
     public noResourcesFound = () => this.categoryCounts.length === 0 && !this.initializing;
 
@@ -96,7 +87,6 @@ export class ExportComponent implements OnInit {
         this.catalogs = await this.fetchCatalogs();
         if (this.catalogs.length > 0) this.selectedCatalogId = this.catalogs[0].resource.id;
         await this.setCategoryCounts();
-        this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
 
         this.initializing = false;
     }
@@ -105,7 +95,8 @@ export class ExportComponent implements OnInit {
     public async setCategoryCounts() {
 
         this.categoryCounts = await ExportRunner.determineCategoryCounts(
-            this.find,
+            this.indexFacade,
+            this.datastore,
             this.getExportContext(),
             Tree.flatten(this.projectConfiguration.getCategories())
         );
@@ -124,8 +115,7 @@ export class ExportComponent implements OnInit {
 
     public isExportButtonEnabled() {
 
-        return !this.isJavaInstallationMissing()
-            && !this.initializing
+        return !this.initializing
             && !this.running
             && this.categoryCounts.length > 0
             && (this.format !== 'catalog' || this.catalogs.length > 0)
@@ -141,18 +131,25 @@ export class ExportComponent implements OnInit {
 
     public async startExport() {
 
+        if (this.running) return;
+        this.running = true;
+
         this.messages.removeAllMessages();
+        AngularUtility.blurActiveElement();
 
         const filePath: string = await this.chooseFilepath();
-        if (!filePath) return;
+        if (!filePath) {
+            this.running = false;
+            return;
+        }
+        
+        this.appState.setRunningDataTransfer('export');
 
-        this.running = true;
-        this.menuService.setContext(MenuContext.MODAL);
-        this.openModal();
+        await AngularUtility.refresh(350);
 
         try {
             if (this.format === 'geojson') await this.startGeojsonExport(filePath);
-            else if (this.format === 'shapefile') await this.startShapeFileExport(filePath);
+            else if (this.format === 'shapefile') await this.startShapefileExport(filePath);
             else if (this.format === 'csv') await this.startCsvExport(filePath);
             else if (this.format === 'catalog') await this.startCatalogExport(filePath);
 
@@ -162,8 +159,7 @@ export class ExportComponent implements OnInit {
         }
 
         this.running = false;
-        this.menuService.setContext(MenuContext.DEFAULT);
-        this.closeModal();
+        this.appState.setRunningDataTransfer('none');
     }
 
 
@@ -195,16 +191,16 @@ export class ExportComponent implements OnInit {
 
         await GeoJsonExporter.performExport(
             this.datastore,
-            filePath,
-            this.selectedContext
+            this.selectedContext,
+            filePath
         );
     }
 
 
-    private async startShapeFileExport(filePath: string) {
+    private async startShapefileExport(filePath: string) {
 
         await ShapefileExporter.performExport(
-            this.settingsProvider.getSettings(),
+            this.datastore,
             await this.datastore.get('project'),
             filePath,
             this.selectedContext
@@ -217,7 +213,7 @@ export class ExportComponent implements OnInit {
         if (!this.selectedCategory) return console.error('No category selected');
 
         try {
-            this.invalidFields = await ExportRunner.performExport(
+            const result: ExportResult = await ExportRunner.performExport(
                 this.find,
                 (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
                 this.getExportContext(),
@@ -226,13 +222,14 @@ export class ExportComponent implements OnInit {
                     .getRelationsForDomainCategory(this.selectedCategory.name)
                     .map(_ => _.name),
                 CsvExporter.performExport(
-                    filePath,
                     this.projectConfiguration.getProjectLanguages(),
                     this.csvSeparator,
-                    this.combineHierarchicalRelations
+                    this.combineHierarchicalRelations,
+                    filePath
                 )
             );
 
+            this.invalidFields = result.invalidFields;
             this.showInvalidFieldsWarning();
         } catch(err) {
             console.error(err);
@@ -241,31 +238,66 @@ export class ExportComponent implements OnInit {
     }
 
 
-    private chooseFilepath(): Promise<string> {
+    private async chooseFilepath(): Promise<string> {
 
-        return new Promise<string>(async resolve => {
+        const options: any = {
+            defaultPath: this.getDefaultPath(),
+            filters: [this.getFileFilter()]
+        };
 
-            const options: any = { filters: [this.getFileFilter()] };
-            if (this.selectedCategory) {
-                if (this.format === 'catalog') {
-                    options.defaultPath = this.getSelectedCatalog().resource.identifier;
-                } else {
-                    options.defaultPath = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' });
-                }
+        const saveDialogReturnValue = await remote.dialog.showSaveDialog(remote.getCurrentWindow(), options);
+        const filePath: string = saveDialogReturnValue.filePath;
 
-                if (this.format === 'csv') options.defaultPath += '.' + this.selectedCategory.name.toLowerCase().replace(':', '+');
-                if (remote.process.platform === 'linux') { // under linux giving the extensions entries in fileFilter will not automatically add the extensions
-                    let ext = 'csv';
-                    if (this.format === 'shapefile') ext = 'zip';
-                    if (this.format === 'geojson') ext = 'geojson';
-                    if (this.format === 'catalog') ext = 'catalog';
-                    options.defaultPath += '.' + ext;
-                }
-            }
+        if (filePath) {
+            this.appState.setFolderPath(filePath, 'export');
+            return filePath;
+        } else {
+            return undefined;
+        }
+    }
 
-            const saveDialogReturnValue = await remote.dialog.showSaveDialog(options);
-            resolve(saveDialogReturnValue.filePath);
-        });
+
+    private getDefaultPath(): string {
+
+        const folderPath: string = this.appState.getFolderPath('export');
+        const fileName: string = this.getFileName();
+
+        return folderPath
+            ? folderPath + '/' + fileName
+            : fileName;
+    }
+
+
+    private getFileName(): string {
+
+        let fileName: string;
+
+        if (this.format === 'catalog') {
+            fileName = this.getSelectedCatalog().resource.identifier;
+        } else {
+            fileName = $localize `:@@export.dialog.untitled:Ohne Titel`;
+        }
+
+        if (this.format === 'csv' && this.selectedCategory) {
+            fileName += '.' + this.selectedCategory.name.toLowerCase().replace(':', '+');
+        }
+
+        return fileName + '.' + this.getFileExtension();
+    }
+
+
+    private getFileExtension(): string {
+
+        switch (this.format) {
+            case 'csv':
+                return 'csv';
+            case 'shapefile':
+                return 'zip';
+            case 'geojson':
+                return 'geojson';
+            case 'catalog':
+                return 'catalog';
+        }
     }
 
 
@@ -274,17 +306,17 @@ export class ExportComponent implements OnInit {
         switch (this.format) {
             case 'catalog':
                 return {
-                    name: this.i18n({ id: 'export.dialog.filter.catalog', value: 'Katalog' }),
+                    name: $localize `:@@export.dialog.filter.catalog:Katalog`,
                     extensions: ['catalog']
                 };
             case 'geojson':
                 return {
-                    name: this.i18n({ id: 'export.dialog.filter.geojson', value: 'GeoJSON-Datei' }),
+                    name: $localize `:@@export.dialog.filter.geojson:GeoJSON-Datei`,
                     extensions: ['geojson', 'json']
                 };
             case 'shapefile':
                 return {
-                    name: this.i18n({ id: 'export.dialog.filter.zip', value: 'ZIP-Archiv' }),
+                    name: $localize `:@@export.dialog.filter.zip:ZIP-Archiv`,
                     extensions: ['zip']
                 };
             case 'csv':
@@ -293,26 +325,6 @@ export class ExportComponent implements OnInit {
                     extensions: ['csv']
                 };
         }
-    }
-
-
-    private openModal() {
-
-        setTimeout(() => {
-            if (this.running) {
-                this.modalRef = this.modalService.open(
-                    ExportModalComponent,
-                    { backdrop: 'static', keyboard: false, animation: false }
-                );
-            }
-        }, ExportComponent.TIMEOUT);
-    }
-
-
-    private closeModal() {
-
-        if (this.modalRef) this.modalRef.close();
-        this.modalRef = undefined;
     }
 
 

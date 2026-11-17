@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <.live_title suffix=" · Field Hub">
+      {assigns[:page_title] || ""}
+    </.live_title>
+
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
+    </script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <%= if @current_user do %>
+          <div>{@current_user}</div>
+          <div><.link href={~p"/ui/session/log_out"}>Log out</.link></div>
+        <% else %>
+          <div><.link navigate={~p"/ui/session/log_in"}>Log in</.link></div>
+        <% end %>
+        <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+          <div><.link navigate={~p"/dashboard"}>Live dashboard</.link></div>
+        <% end %>
+      </nav>
+    </header>
+    {@inner_content}
+  </body>
+</html>

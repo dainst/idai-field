@@ -5,6 +5,7 @@ import React, { CSSProperties, ReactElement, ReactNode, useEffect, useState } fr
 import { Carousel } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { NAVBAR_HEIGHT } from '../../constants';
+import { getLatestDesktopVersion } from '../getLatestDesktopVersion';
 import './Download.css';
 
 
@@ -17,55 +18,57 @@ export default function Download(): ReactElement {
     const { t } = useTranslation();
 
     useEffect (() => {
-        getLatestVersion().then(setLatestVersion);
+        getLatestDesktopVersion().then(setLatestVersion);
     }, []);
 
     return (
         <div style={ pageStyle } className="download-view">
-            { getCarousel(t) }
+            { getCarousel(latestVersion, t) }
             { getDownloadSection(latestVersion, t) }
         </div>
     );
 }
 
 
-const getCarousel = (t: TFunction): ReactNode => {
+const getCarousel = (latestVersion: string, t: TFunction): ReactNode => {
 
     return (
         <div style={ carouselContainerStyle } className="mt-5">
             <Carousel>
-                { getCarouselItems(t) }
+                { getCarouselItems(latestVersion, t) }
             </Carousel>
         </div>
     );
 };
 
 
-const getCarouselItems = (t: TFunction): ReactNode => {
+const getCarouselItems = (latestVersion: string, t: TFunction): ReactNode => {
+
+    const baseUrl: string = 'https://raw.githubusercontent.com/dainst/idai-field/v' + latestVersion + '/desktop/img/';
 
     const slides: Slide[] = [
         {
-            imageUrl: 'https://raw.githubusercontent.com/dainst/idai-field/master/desktop/img/README-FEATURES-1.png',
+            imageUrl: baseUrl + 'README-FEATURES-1.png',
             description: t('download.slides.metadataEditor')
         },
         {
-            imageUrl: 'https://raw.githubusercontent.com/dainst/idai-field/master/desktop/img/README-FEATURES-2.png',
+            imageUrl: baseUrl + 'README-FEATURES-2.png',
             description: t('download.slides.geodataEditor')
         },
         {
-            imageUrl: 'https://raw.githubusercontent.com/dainst/idai-field/master/desktop/img/README-FEATURES-8.png',
+            imageUrl: baseUrl + 'README-FEATURES-8.png',
             description: t('download.slides.matrixView')
         },
         {
-            imageUrl: 'https://raw.githubusercontent.com/dainst/idai-field/master/desktop/img/README-FEATURES-6.png',
+            imageUrl: baseUrl + 'README-FEATURES-6.png',
             description: t('download.slides.synchronization')
         },
         {
-            imageUrl: 'https://raw.githubusercontent.com/dainst/idai-field/master/desktop/img/README-FEATURES-3.png',
+            imageUrl: baseUrl + 'README-FEATURES-3.png',
             description: t('download.slides.tableView')
         },
         {
-            imageUrl: 'https://raw.githubusercontent.com/dainst/idai-field/master/desktop/img/README-FEATURES-4.png',
+            imageUrl: baseUrl + 'README-FEATURES-4.png',
             description: t('download.slides.nesting')
         }
     ];
@@ -124,6 +127,26 @@ const getDownloadSection = (latestVersion: string, t: TFunction): ReactNode => {
                 </a>
             </p>
             <hr className="m-5" />
+            <h3>{ t('download.installation.header') }</h3>
+            <h4>{ t('download.installation.update.header') }</h4>
+            <p className="mb-5" style={ installationInfoStyle }>{ t('download.installation.update.body') }</p>
+            <h4>{ t('download.installation.linux.header') }</h4>
+            <h5>{ t('download.installation.linux.appImage.header') }</h5>
+            <p className="mb-3" style={ installationInfoStyle }>
+                { t('download.installation.linux.appImage.body1') }
+                <a href="https://docs.appimage.org/user-guide/troubleshooting"
+                   target="_blank" rel="noopener noreferrer">
+                    { t('download.installation.linux.appImage.link') }
+                </a>
+                { t('download.installation.linux.appImage.body2') }
+            </p>
+            <h5>{ t('download.installation.linux.imageProcessing.header') }</h5>
+            <p className="mb-5" style={ installationInfoStyle }>
+                { t('download.installation.linux.imageProcessing.body1') }
+                <code>{ t('download.installation.linux.imageProcessing.flag') }</code>
+                { t('download.installation.linux.imageProcessing.body2') }
+            </p>
+            <hr className="m-5" />
             <p className="mb-5">
                 <a className="btn btn-secondary" href="https://github.com/dainst/idai-field"
                    target="_blank" rel="noopener noreferrer">
@@ -133,23 +156,6 @@ const getDownloadSection = (latestVersion: string, t: TFunction): ReactNode => {
             </p>
         </div>
     );
-};
-
-
-const getLatestVersion = (): Promise<string> => {
-
-    const url = 'https://api.github.com/repos/dainst/idai-field/releases/latest';
-
-    return new Promise<string>(resolve => {
-        const request = new XMLHttpRequest();
-        request.addEventListener('load', () => {
-            resolve(JSON.parse(request.response).tag_name.substr(1));
-        });
-
-        request.open('GET', url);
-        request.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-        request.send();
-    });
 };
 
 
@@ -175,4 +181,10 @@ const downloadContainerStyle: CSSProperties = {
 
 const osInfoStyle: CSSProperties = {
     marginBottom: '1rem'
+};
+
+const installationInfoStyle: CSSProperties = {
+    textAlign: 'left',
+    width: '1000px',
+    margin: 'auto'
 };

@@ -3,7 +3,8 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
     selector: 'paging-buttons',
-    templateUrl: './paging-buttons.html'
+    templateUrl: './paging-buttons.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira

@@ -8,6 +8,9 @@ import { Modals } from '../modals';
 import { Menus } from '../menus';
 import { WarningsModalComponent } from '../../components/navbar/warnings/warnings-modal.component';
 import { MenuContext } from '../menu-context';
+import { SettingsProvider } from '../settings/settings-provider';
+import { Settings } from '../settings/settings';
+import { AppState, DataTransferType } from '../app-state';
 
 
 @Injectable()
@@ -20,6 +23,7 @@ export class WarningsService {
     public hasConfigurationConflict: boolean = false;
 
     private warningsResolvedObservers: Array<Observer<void>> = [];
+    private runningDataTransfer: DataTransferType = 'none';
 
 
     constructor(private datastore: Datastore,
@@ -28,15 +32,26 @@ export class WarningsService {
                 private utilTranslations: UtilTranslations,
                 private modals: Modals,
                 private menus: Menus,
-                private syncService: SyncService) {
+                private syncService: SyncService,
+                private settingsProvider: SettingsProvider,
+                private appState: AppState) {
 
         this.update();
 
         this.indexFacade.changesNotifications().subscribe(() => {
-            if (SyncStatus.isSyncing(this.syncService.getStatus())) return;
+            if (SyncStatus.isSyncing(this.syncService.getStatus()) || this.runningDataTransfer !== 'none') return;
             this.zone.run(() => {
                 this.update();
             });
+        });
+
+        this.appState.dataTransferNotifications().subscribe(notification => {
+            if (notification.newDataTransfer === 'none') {
+                this.zone.run(() => {
+                    this.update();
+                });
+            }
+            this.runningDataTransfer = notification.newDataTransfer;
         });
 
         this.syncService.statusNotifications().subscribe((status: SyncStatus) => {
@@ -58,6 +73,8 @@ export class WarningsService {
 
     public async openModal(preselectedDocument?: FieldDocument) {
 
+        this.syncService.stopSync();
+
         this.modals.initialize(this.menus.getContext());
         const [result, componentInstance] = this.modals.make<WarningsModalComponent>(
             WarningsModalComponent,
@@ -71,8 +88,11 @@ export class WarningsService {
         componentInstance.initialize();
 
         await this.modals.awaitResult(result, nop, nop);
-    }
 
+        if (Settings.isSynchronizationActive(this.settingsProvider.getSettings())) {
+            this.syncService.startSync();
+        }
+    }
 
 
     private async update() {

@@ -1,12 +1,11 @@
 import { Observable } from 'rxjs';
-import { ConfigurationDocument } from '../../model/configuration-document';
-import { Document } from '../../model/document';
-import { NewDocument } from '../../model/document';
+import { ConfigurationDocument } from '../../model/document/configuration-document';
+import { Document } from '../../model/document/document';
+import { NewDocument } from '../../model/document/document';
 import { ObserverUtil } from '../../tools';
 import { DatastoreErrors } from '../datastore-errors';
 import { ChangeHistoryMerge } from './change-history-merge';
 import { IdGenerator } from './id-generator';
-import { PouchDbFactory } from './types';
 
 
 /**
@@ -16,7 +15,7 @@ import { PouchDbFactory } from './types';
  */
 export class PouchdbDatastore {
 
-    private db: PouchDB.Database;
+    private db: any;
 
     private changesObservers = [];
     private deletedObservers = [];
@@ -29,19 +28,19 @@ export class PouchdbDatastore {
     private deletedOnes = [];
 
 
-    constructor(private pouchDbFactory: PouchDbFactory,
+    constructor(private createPouchDB: (dbName: string) => any,
                 private idGenerator: IdGenerator) {}
 
 
-    public getDb = (): PouchDB.Database => this.db;
+    public getDb = (): any => this.db;
 
 
-    public destroyDb = (dbName: string) => this.pouchDbFactory(dbName).destroy();
+    public destroyDb = (dbName: string) => this.createPouchDB(dbName).destroy();
 
     
     public async createEmptyDb(name: string, destroyExisting: boolean = false) {
 
-        const db = this.pouchDbFactory(name);
+        const db = this.createPouchDB(name);
         const info = await db.info();
 
         if (info.update_seq !== 0) {
@@ -58,11 +57,11 @@ export class PouchdbDatastore {
 
     public createDbForTesting(dbName: string) {
      
-        this.db = this.pouchDbFactory(dbName);
+        this.db = this.createPouchDB(dbName);
         return this.db;
     }
 
-    public setDb_e2e = (db: PouchDB.Database) => this.db = db;
+    public setDb_e2e = (db: any) => this.db = db;
 
 
     /**
@@ -72,13 +71,13 @@ export class PouchdbDatastore {
      * and not overwritten.
      */
     public async createDb(name: string, projectDocument?: Document, configurationDocument?: ConfigurationDocument,
-                          destroyBeforeCreate: boolean = false): Promise<PouchDB.Database> {
+                          destroyBeforeCreate: boolean = false): Promise<any> {
 
-        let db = this.pouchDbFactory(name);
+        let db = this.createPouchDB(name);
 
         if (destroyBeforeCreate) {
             await db.destroy();
-            db = this.pouchDbFactory(name);
+            db = this.createPouchDB(name);
         }
 
         // Create project & configuration documents only if they do not exist,
@@ -216,8 +215,7 @@ export class PouchdbDatastore {
 
         this.deletedOnes.push(document.resource.id as never);
 
-        const fetchedDocument = await this.fetch(
-            document.resource.id, { conflicts: true }, true) as any;
+        const fetchedDocument = await this.fetch(document.resource.id, {}, true) as any;
 
         if (fetchedDocument._conflicts && fetchedDocument._conflicts.length > 0) {
             await this.removeRevisions(fetchedDocument.resource.id, fetchedDocument._conflicts);
@@ -239,14 +237,16 @@ export class PouchdbDatastore {
      * @throws [INVALID_DOCUMENT] if not Document.isValid
      * @returns Document. It is made sure that it isValid and the dates are converted to type Date.
      */
-    public fetch(resourceId: string,
-                 options: any = { conflicts: true }, skipValidation: boolean = false): Promise<Document> {
+    public fetch(resourceId: string, options: any = {}, skipValidation: boolean = false): Promise<Document> {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
+
+        options.conflicts = true;
 
         return this.db.get(resourceId, options)
             .then(
                 (result: any) => {
+                    PouchdbDatastore.autoFixCategory(result);
                     if (!skipValidation) {
                         if (!Document.isValid(result)) return Promise.reject([DatastoreErrors.INVALID_DOCUMENT]);
                     }
@@ -257,16 +257,20 @@ export class PouchdbDatastore {
     }
 
 
-    public async bulkFetch(resourceIds: string[], options: any = { conflicts: true }): Promise<Array<Document>> {
+    public async bulkFetch(resourceIds: string[]): Promise<Array<Document>> {
 
-        options.keys = resourceIds;
-        options.include_docs = true;
+        const options = {
+            keys: resourceIds,
+            conflicts: true,
+            include_docs: true
+        };
 
         return (await this.db.allDocs(options)).rows.map((row: any) => {
             if (!row.doc) {
                 console.warn('Document not found: ' + row.key);
                 return undefined;
             }
+            PouchdbDatastore.autoFixCategory(row.doc);
             if (!Document.isValid(row.doc)) {
                 console.warn('Invalid document', row.doc);
                 return undefined;
@@ -283,7 +287,7 @@ export class PouchdbDatastore {
      */
     public fetchRevision(resourceId: string, revisionId: string): Promise<Document> {
 
-        return this.fetch(resourceId, { rev: revisionId });
+        return this.fetch(resourceId, { rev: revisionId }, true);
     }
 
 
@@ -409,5 +413,12 @@ export class PouchdbDatastore {
 
         const clonedDocument = Document.clone(document);
         return Document.removeEmptyRelationArrays(clonedDocument);
+    }
+
+
+    private static autoFixCategory(document: Document) {
+
+        if (document.resource.id === 'project') document.resource.category = 'Project';
+        if (document.resource.id === 'configuration') document.resource.category = 'Configuration';
     }
 }

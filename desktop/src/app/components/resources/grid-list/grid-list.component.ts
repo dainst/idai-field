@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { filter, flatten, flow, Map, map, set, take, pipe, to } from 'tsfun';
-import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus,
-    Resource, ProjectConfiguration, ImageVariant, Hierarchy, SortUtil, makeLookup,
-    CategoryForm, Named } from 'idai-field-core';
+import { Document, Datastore, FieldDocument, Relation, SyncService, SyncStatus, Resource, ProjectConfiguration,
+    ImageVariant, Hierarchy, Comparator, makeLookup, CategoryForm, Named } from 'idai-field-core';
 import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
 import { NavigationPath } from '../view/state/navigation-path';
 import { ViewFacade } from '../view/view-facade';
@@ -32,13 +31,14 @@ type GridListSection = 'documents'|'linkedDocuments';
     host: {
         '(window:contextmenu)': 'handleClick($event, true)',
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class GridListComponent extends BaseList implements OnChanges {
+export class GridListComponent extends BaseList implements OnChanges, OnDestroy {
 
     /**
      * These are the documents found at the current level,
@@ -74,17 +74,18 @@ export class GridListComponent extends BaseList implements OnChanges {
                 private viewModalLauncher: ViewModalLauncher,
                 private routingService: Routing,
                 private tabManager: TabManager,
-                private changeDetectorRef: ChangeDetectorRef,
                 private syncService: SyncService,
                 private projectConfiguration: ProjectConfiguration,
                 private messages: Messages,
                 private warningsService: WarningsService,
-                resourcesComponent: ResourcesComponent,
+                private resourcesComponent: ResourcesComponent,
+                private comparator: Comparator,
+                changeDetectorRef: ChangeDetectorRef,
                 viewFacade: ViewFacade,
                 loading: Loading,
                 menuService: Menus) {
 
-        super(resourcesComponent, viewFacade, loading, menuService);
+        super(viewFacade, loading, menuService, changeDetectorRef);
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
         this.syncService.statusNotifications().subscribe(() => this.update(this.documents));
     }
@@ -100,6 +101,8 @@ export class GridListComponent extends BaseList implements OnChanges {
 
     public isInInventoryManagement = () => this.viewFacade.isInInventoryManagement();
 
+    public hasConfiguredCategories = () => this.resourcesComponent.filterOptions?.length;
+
 
     async ngOnChanges(changes: SimpleChanges) {
 
@@ -107,6 +110,12 @@ export class GridListComponent extends BaseList implements OnChanges {
         await this.update(changes['documents'].currentValue);
         this.loading.stop();
         this.changeDetectorRef.detectChanges();
+    }
+
+
+    ngOnDestroy() {
+        
+        this.removeListeners();
     }
 
 
@@ -168,6 +177,9 @@ export class GridListComponent extends BaseList implements OnChanges {
                 break;
             case 'edit-qr-code':
                 await this.resourcesComponent.editQRCode(document);
+                break;
+            case 'edit-workflow':
+                await this.resourcesComponent.editWorkflow([document]);
                 break;
             case 'warnings':
                 await this.warningsService.openModal(document);
@@ -307,7 +319,7 @@ export class GridListComponent extends BaseList implements OnChanges {
             = await this.datastore.getMultiple(linkedResourceIds) as Array<FieldDocument>;
 
         return linkedDocuments.sort((linkedDocument1, linkedDocument2) => {
-            return SortUtil.alnumCompare(linkedDocument1.resource.identifier, linkedDocument2.resource.identifier);
+            return this.comparator.alnumCompare(linkedDocument1.resource.identifier, linkedDocument2.resource.identifier);
         });
     }
 

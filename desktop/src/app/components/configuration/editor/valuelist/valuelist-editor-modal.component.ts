@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { equal, isEmpty, nop, set, Map, clone, on, is, isArray } from 'tsfun';
-import { I18N, InPlace, Labels, Named, SortUtil, Subfield, Valuelist, ValuelistValue } from 'idai-field-core';
+import { I18N, InPlace, Labels, Named, Comparator, Subfield, Valuelist, ValuelistValue } from 'idai-field-core';
 import { ConfigurationEditorModalComponent } from '../configuration-editor-modal.component';
 import { Menus } from '../../../../services/menus';
 import { Messages } from '../../../messages/messages';
@@ -22,7 +21,8 @@ import { ValuelistUsage } from '../../../../services/configuration/index/valueli
     host: {
         '(window:keydown)': 'onKeyDown($event)',
         '(window:keyup)': 'onKeyUp($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -38,13 +38,9 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public dragging: boolean;
     public openedFromFieldEditor: boolean;
 
-    public inputPlaceholder: string = this.i18n({
-        id: 'configuration.newValue', value: 'Neuer Wert'
-    });
+    public inputPlaceholder: string = $localize `:@@configuration.newValue:Neuer Wert`;
 
-    protected changeMessage = this.i18n({
-        id: 'configuration.valuelistChanged', value: 'Die Werteliste wurde geändert.'
-    });
+    protected changeMessage = $localize `:@@configuration.valuelistChanged:Die Werteliste wurde geändert.`;
 
     protected menuContext: MenuContext = MenuContext.CONFIGURATION_VALUELIST_EDIT;
 
@@ -56,7 +52,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
                 private settingsProvider: SettingsProvider,
                 private labels: Labels,
                 private configurationIndex: ConfigurationIndex,
-                private i18n: I18n) {
+                private comparator: Comparator) {
 
         super(activeModal, modals, menuService, messages);
     }
@@ -97,6 +93,9 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         }
 
         if (!this.getClonedValuelistDefinition().references) this.getClonedValuelistDefinition().references = [];
+        if (!this.getClonedValuelistDefinition().semanticReferences) {
+            this.getClonedValuelistDefinition().semanticReferences = [];
+        }
         this.sortAlphanumerically = this.getClonedValuelistDefinition().order === undefined;
         this.order = this.getOrder() ?? this.getSortedValueIds();
     }
@@ -112,6 +111,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         try {
             ConfigurationUtil.cleanUpAndValidateReferences(clonedValuelistDefinition);
+            ConfigurationUtil.cleanUpAndValidateSemanticReferences(clonedValuelistDefinition);
         } catch (errWithParams) {
             return this.messages.add(errWithParams);
         }
@@ -139,7 +139,9 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
             || (this.sortAlphanumerically && this.getClonedValuelistDefinition().order !== undefined)
             || !this.sortAlphanumerically && (!this.getClonedValuelistDefinition().order
                 || !equal(this.order, this.getClonedValuelistDefinition().order))
-        || ConfigurationUtil.isReferencesArrayChanged(this.getCustomValuelistDefinition(),
+            || ConfigurationUtil.isReferencesArrayChanged(this.getCustomValuelistDefinition(),
+                this.getClonedValuelistDefinition())
+            || ConfigurationUtil.isSemanticReferencesArrayChanged(this.getCustomValuelistDefinition(),
                 this.getClonedValuelistDefinition());
     }
 
@@ -167,7 +169,8 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         const [result, componentInstance] = this.modals.make<ValueEditorModalComponent>(
             ValueEditorModalComponent,
-            MenuContext.CONFIGURATION_MODAL
+            MenuContext.CONFIGURATION_MODAL,
+            'md'
         );
 
         componentInstance.value = this.getClonedValuelistDefinition().values[valueId]
@@ -181,7 +184,10 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
         await this.modals.awaitResult(
             result,
-            editedValue => this.getClonedValuelistDefinition().values[valueId] = editedValue,
+            editedValue => {
+                this.getClonedValuelistDefinition().values[valueId] = editedValue;
+                if (!this.order.includes(valueId)) this.order.push(valueId);
+            },
             nop
         );
     }
@@ -190,8 +196,8 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
     public async addValue(valueId: string) {
 
         this.newValueId = '';
+        valueId = valueId.trim();
         await this.editValue(valueId, true);
-        this.order.push(valueId);
     }
 
 
@@ -210,7 +216,9 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
 
     public isValidValue(valueId: string): boolean {
 
-        return valueId && !Object.keys(this.getClonedValuelistDefinition().values).includes(valueId);
+        return valueId
+            && !valueId.includes(';')
+            && !Object.keys(this.getClonedValuelistDefinition().values).includes(valueId.trim());
     }
 
 
@@ -230,7 +238,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         } else {
             if (!valuelistDefinition.hidden) valuelistDefinition.hidden = [];
             valuelistDefinition.hidden.push(valueId);
-            valuelistDefinition.hidden.sort(SortUtil.alnumCompare);
+            valuelistDefinition.hidden.sort(this.comparator.alnumCompare);
         }
     }
 
@@ -268,7 +276,7 @@ export class ValuelistEditorModalComponent extends ConfigurationEditorModalCompo
         );
 
         return valueIds.sort((valueId1: string, valueId2: string) => {
-            return SortUtil.alnumCompare(this.getValueLabel(valueId1), this.getValueLabel(valueId2));
+            return this.comparator.alnumCompare(this.getValueLabel(valueId1), this.getValueLabel(valueId2));
         });
     }
 

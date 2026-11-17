@@ -10,12 +10,16 @@ import { convertFields } from './convert-fields';
  */
 export module CsvParser {
 
-    const toDocument = (resource: Resource) => { return { resource: resource } as Document; };
+    const toDocument = (resource: Resource) => {
+
+        return { resource } as Document;
+    };
 
 
-    const insertRelations = assoc(
-            'relations',
-            (relations: Resource.Relations|undefined) => relations ? relations : {});
+    const insertRelations = assoc( 
+        'relations',
+        (relations: Resource.Relations|undefined) => relations ? relations : {}
+    );
 
 
     /**
@@ -23,7 +27,7 @@ export module CsvParser {
      * @param operationId converted into isChildOf entry if not empty
      * @param separator
      */
-    export const build = (category: CategoryForm, operationId: string, separator: string): Parser => {
+    export const build = (category: CategoryForm, separator: string): Parser => {
 
         /**
          * ParserErrors
@@ -49,6 +53,7 @@ export module CsvParser {
             map(updateD('category', category.name)),
             map(insertRelations),
             map(convertFields(category)),
-            map(toDocument) as any);
+            map(toDocument) as any
+        );
     }
 }

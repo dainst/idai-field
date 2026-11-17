@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "module": "esnext",
+        "moduleResolution": "node",
+        "target": "es2018",
+        "declaration": true,
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": [
+            "dom",
+            "es2018"
+        ],
+        "outDir": "./dist"
+    },
+    "include": [
+        "./createFullConfiguration.ts"
+    ]
+}

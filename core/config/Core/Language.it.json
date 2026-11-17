@@ -9,6 +9,18 @@
     },
     "shortDescription": {
       "label": "Descrizione breve"
+    },
+    "includesStratigraphicalUnits": {
+      "label": "Comprende le unità stratigrafiche"
+    },
+    "hasChildren": {
+      "label": "Risorse subordinate"
+    },
+    "isResultOf": {
+      "label": "Risultato di"
+    },
+    "isSubjectOf": {
+      "label": "Oggetto di"
     }
   },
   "categories": {
@@ -107,6 +119,18 @@
     },
     "hasInstance": {
       "label": "Reperti pertinenti"
+    },
+    "isStoredIn": {
+      "label": "Conservato a"
+    },
+    "isStoragePlaceOf": {
+      "label": "È il luogo di conservazione di"
+    },
+    "resultsIn": {
+      "label": "Risulta in"
+    },
+    "isCarriedOutOn": {
+      "label": "Eseguito il"
     }
   }
 }

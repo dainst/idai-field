@@ -23,10 +23,13 @@
                  *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'">
                 <edit-form-group [document]="document"
                                  [originalDocument]="originalDocument"
-                                 [fieldDefinitions]="getFields(activeGroup)"
+                                 [groupFields]="getGroupFields(activeGroup)"
+                                 [categoryFields]="fieldDefinitions"
                                  [identifierPrefix]="identifierPrefix"
                                  [languages]="languages"
-                                 [scrollTargetField]="scrollTargetField">
+                                 [scrollTargetField]="scrollTargetField"
+                                 (onChanged)="onChanged()"
+                                 [disabledRelationFields]="disabledRelationFields">
                 </edit-form-group>
             </div>
 

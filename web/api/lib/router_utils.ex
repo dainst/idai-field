@@ -1,30 +1,36 @@
 defmodule Api.RouterUtils do
-  import Plug.Conn, only: [put_resp_content_type: 2, send_resp: 3, get_req_header: 2]
+  import Plug.Conn,
+    only: [put_resp_content_type: 2, send_resp: 3, get_req_header: 2, put_resp_header: 3]
+
   alias Api.Core.Config
   alias Api.Auth.Rights
 
-  def send_json(conn, %{error: "bad_request"} = error) do
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(400, Poison.encode!(error))
-  end
+  def send_json(conn, content, additional_headers \\ []) do
+    conn =
+      additional_headers
+      |> Enum.reduce(conn, fn {key, val}, acc ->
+        put_resp_header(acc, key, val)
+      end)
+      |> put_resp_content_type("application/json")
 
-  def send_json(conn, %{error: "not_found"} = error) do
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(404, Poison.encode!(error))
-  end
+    status_code =
+      case content do
+        %{error: "bad_request"} ->
+          400
 
-  def send_json(conn, %{error: "unknown"} = error) do
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(500, Poison.encode!(error))
-  end
+        %{error: "not_found"} ->
+          404
 
-  def send_json(conn, body) do
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(200, Poison.encode!(body))
+        %{error: "unknown"} ->
+          500
+
+        _ ->
+          200
+      end
+
+    response_body = Poison.encode!(content)
+
+    send_resp(conn, status_code, response_body)
   end
 
   def send_unauthorized(conn) do
@@ -59,5 +65,12 @@ defmodule Api.RouterUtils do
 
   def get_user_from_token token do
     Rights.authenticate(token, Config.get(:rights), Config.get(:projects))
+  end
+
+  def cache_header() do
+    {
+      "cache-control",
+      Application.get_env(:api, :cache_control_header, "max-age=0, private, must-revalidate")
+    }
   end
 end

@@ -19,12 +19,15 @@ import { NavigationPath } from '../../components/resources/view/state/navigation
 import { ViewModalLauncher } from '../viewmodal/view-modal-launcher';
 import { MsgWithParams } from '../messages/msg-with-params';
 import { QrCodeEditorModalComponent } from './actions/edit-qr-code/qr-code-editor-modal.component';
-import { StoragePlaceScanner } from './actions/scan-storage-place/storage-place-scanner';
+import { ResourceScanner } from './actions/scan-resource/resource-scanner';
 import { WarningsService } from '../../services/warnings/warnings-service';
+import { WorkflowEditorModalComponent } from './actions/edit-workflow/workflow-editor-modal.component';
+import { AppState } from '../../services/app-state';
 
 
 @Component({
-    templateUrl: './resources.html'
+    templateUrl: './resources.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy
@@ -46,6 +49,7 @@ export class ResourcesComponent implements OnDestroy {
     private changedDocumentFromRemoteSubscription: Subscription;
     private selectViaResourceLinkSubscription: Subscription;
     private warningsResolvedSubscription: Subscription;
+    private apiSubscription: Subscription;
 
 
     constructor(route: ActivatedRoute,
@@ -62,8 +66,9 @@ export class ResourcesComponent implements OnDestroy {
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: Menus,
-                private storagePlaceScanner: StoragePlaceScanner,
-                private warningsService: WarningsService) {
+                private storagePlaceScanner: ResourceScanner,
+                private warningsService: WarningsService,
+                private appState: AppState) {
 
         routingService.routeParams(route).subscribe(async (params: any) => {
             this.quitGeometryEditing();
@@ -96,8 +101,9 @@ export class ResourcesComponent implements OnDestroy {
 
     public isInGridListView = () => this.viewFacade.isInGridListView();
 
-    public scanStoragePlace = (documents: Array<FieldDocument>) =>
-        this.storagePlaceScanner.scanStoragePlace(documents);
+    public isInWorkflowManagement = () => this.viewFacade.isInWorkflowManagement();
+
+    public scanResource = (documents: Array<FieldDocument>) => this.storagePlaceScanner.scanResources(documents);
 
 
     ngOnDestroy() {
@@ -107,6 +113,7 @@ export class ResourcesComponent implements OnDestroy {
         if (this.changedDocumentFromRemoteSubscription) this.changedDocumentFromRemoteSubscription.unsubscribe();
         if (this.selectViaResourceLinkSubscription) this.selectViaResourceLinkSubscription.unsubscribe();
         if (this.warningsResolvedSubscription) this.warningsResolvedSubscription.unsubscribe();
+        if (this.apiSubscription) this.apiSubscription.unsubscribe();
     }
 
 
@@ -138,11 +145,13 @@ export class ResourcesComponent implements OnDestroy {
             this.filterOptions = this.viewFacade.isInExtendedSearchMode()
                 ? this.projectConfiguration.getFieldCategories()
                     .filter(category => !category.parentCategory)
-                : this.projectConfiguration.getOverviewTopLevelCategories();
+                : this.projectConfiguration.getOverviewSupercategories();
         } else if (this.viewFacade.isInTypesManagement()) {
-            this.filterOptions = this.projectConfiguration.getTypeManagementTopLevelCategories();
+            this.filterOptions = this.projectConfiguration.getTypeManagementSupercategories();
         } else if (this.viewFacade.isInInventoryManagement()) {
-            this.filterOptions = this.projectConfiguration.getInventoryTopLevelCategories();
+            this.filterOptions = this.projectConfiguration.getInventorySupercategories();
+        } else if (this.viewFacade.isInWorkflowManagement()) {
+            this.filterOptions = [this.projectConfiguration.getCategory('Process')];
         } else {
             this.filterOptions = this.projectConfiguration.getAllowedRelationDomainCategories(
                 'isRecordedIn',
@@ -211,6 +220,27 @@ export class ResourcesComponent implements OnDestroy {
     }
 
 
+    public async editWorkflow(documents: Array<Document>) {
+
+        try {
+            this.menuService.setContext(MenuContext.WORKFLOW_EDITOR);
+
+            const modalRef: NgbModalRef = this.modalService.open(
+                WorkflowEditorModalComponent,
+                { size: 'md', animation: false, backdrop: 'static', keyboard: false }
+            );
+            modalRef.componentInstance.documents = documents.slice();
+            await modalRef.componentInstance.initialize();
+            AngularUtility.blurActiveElement();
+            await modalRef.result;
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
+    }
+
+
     public async moveDocuments(documents: Array<FieldDocument>) {
 
         this.quitGeometryEditing();
@@ -231,7 +261,7 @@ export class ResourcesComponent implements OnDestroy {
             } else {
                 await this.viewFacade.populateDocumentList();
             }
-            
+            result.errorMessages.forEach(errWithParams => this.messages.add(errWithParams));
         } catch (msgWithParams) {
             if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams as MsgWithParams);
             // Otherwise, the move modal has been canceled
@@ -427,6 +457,12 @@ export class ResourcesComponent implements OnDestroy {
             this.warningsService.warningsResolvedNotifications().subscribe(async () => {
                 await this.viewFacade.populateDocumentList();
             });
+        
+        this.apiSubscription = this.appState.dataTransferNotifications().subscribe(async notification => {
+            if (notification.previousDataTransfer === 'import' && notification.newDataTransfer !== 'import') {
+                await this.viewFacade.populateDocumentList();
+            }
+        });
     }
 
 

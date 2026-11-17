@@ -1,4 +1,3 @@
-import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Converter } from 'showdown';
 import { HttpReader } from '../../components/import/reader/http-reader';
@@ -12,21 +11,15 @@ export type Chapter = { id: string, label: string };
  */
 export module HelpLoader {
 
-    export async function load(filePath: string, folderPath: string, http: HttpClient, domSanitizer: DomSanitizer) {
+    export async function load(filePath: string, folderPath: string, http: HttpClient) {
 
         const markdown: string = await getMarkdown(filePath, folderPath, http);
         const htmlString: string = createMarkdownConverter().makeHtml(markdown);
 
         return {
-            html: domSanitizer.bypassSecurityTrustHtml(htmlString),
+            html: adjustLinks(htmlString),
             chapters: getChapters(htmlString)
         };
-    }
-
-
-    function adjustImageLinks(markdown: string, folderPath: string): string {
-
-        return markdown.replace(/img src="images/g, 'img src="' + folderPath + '/images');
     }
 
 
@@ -44,7 +37,7 @@ export module HelpLoader {
         const chapters: Array<Chapter> = [];
 
         const document = new DOMParser().parseFromString(htmlString, 'text/html');
-        const elements = document.getElementsByTagName('h2');
+        const elements = document.getElementsByTagName('h1');
 
         for (let i = 0; i < elements.length; i++) {
             chapters.push({
@@ -62,5 +55,17 @@ export module HelpLoader {
         const reader = new HttpReader(filePath, http);
         const markdown: string = await reader.go();
         return adjustImageLinks(markdown, folderPath);
+    }
+
+
+    function adjustImageLinks(markdown: string, folderPath: string): string {
+
+        return markdown.replace(/img src="images/g, 'img src="' + folderPath + '/images');
+    }
+
+
+    function adjustLinks(markdown: string): string {
+
+        return markdown.replace(/a href="/g, 'a target="_blank" href="');
     }
 }

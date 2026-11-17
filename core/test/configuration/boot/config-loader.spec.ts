@@ -5,6 +5,7 @@ import { ConfigLoader, ConfigurationErrors } from '../../../src/configuration/bo
 import { CategoryForm } from '../../../src/model/configuration/category-form';
 import { Groups } from '../../../src/model/configuration/group';
 import { Named, Tree } from '../../../src/tools';
+import { Valuelist } from '../../../src/model/configuration/valuelist';
 
 
 /**
@@ -18,14 +19,15 @@ describe('ConfigLoader', () => {
 
     function applyConfig(libraryCategories: Map<LibraryCategoryDefinition> = {},
                          libraryForms: Map<LibraryFormDefinition> = {},
+                         libraryValuelists: Map<Valuelist> = {},
                          languageConfiguration = {}) {
 
         configReader.read.and.returnValues(
             libraryCategories,
             libraryForms,
-            {},
+            libraryValuelists,
             languageConfiguration,
-            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+            {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
         );
         configReader.exists.and.returnValue(true);
         configReader.getValuelistsLanguages.and.returnValue({});
@@ -55,7 +57,7 @@ describe('ConfigLoader', () => {
     });
 
 
-    it('mix in common fields', async done => {
+    it('mix in common fields', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -104,12 +106,10 @@ describe('ConfigLoader', () => {
         }
 
         expect(pconf.getCategory('B').groups[0].fields[0]['name']).toBe('processor');
-        
-        done();
     });
 
 
-    it('translate common fields', async done => {
+    it('translate common fields', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -145,6 +145,7 @@ describe('ConfigLoader', () => {
         applyConfig(
             libraryCategories,
             {},
+            {},
             {
                 commons: {
                     processor: { label: 'Bearbeiter/Bearbeiterin', description: 'abc' }
@@ -170,12 +171,10 @@ describe('ConfigLoader', () => {
 
         expect(pconf.getCategory('B').groups[0].fields[0].label.de).toBe('Bearbeiter/Bearbeiterin');
         expect(pconf.getCategory('B').groups[0].fields[0].description.de).toBe('abc');
-
-        done();
     });
 
 
-    it('mix existing externally configured with internal inherits relation', async done => {
+    it('mix existing externally configured with internal inherits relation', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -243,8 +242,8 @@ describe('ConfigLoader', () => {
                         inputType: 'relation'
                     }, {
                         name: 'connection',
-                        domain: ['A:inherit'],
-                        range: ['B:inherit'],
+                        domain: ['A'],
+                        range: ['B'],
                         editable: false,
                         inputType: 'relation'
                     }],
@@ -259,74 +258,10 @@ describe('ConfigLoader', () => {
         expect((pconf.getRelationsForDomainCategory('A1') as any)[0].range).toContain('B');
         expect((pconf.getRelationsForDomainCategory('A2') as any)[0].range).toContain('B2');
         expect((pconf.getRelationsForDomainCategory('C') as any)[0].range).toContain('D');
-
-        done();
     });
 
 
-    // TODO Adjust title / check if this test is still necessary
-    it('preprocess - convert sameOperation to sameMainCategoryResource', async done => {
-
-        const builtInCategories: Map<BuiltInCategoryDefinition> = {
-            T: {
-                fields: {},
-                minimalForm: {
-                    groups: []
-                },
-                supercategory: true,
-                userDefinedSubcategoriesAllowed: true
-            },
-            A: { 
-                parent: 'T',
-                fields: {},
-                minimalForm: {
-                    groups: []
-                }
-             },
-            B: {
-                parent: 'T',
-                fields: {},
-                minimalForm: {
-                    groups: []
-                }
-            }
-        };
-
-        const customForms: Map<CustomFormDefinition> = {
-            A: { fields: {} },
-            B: { fields: {} },
-            T: { fields: {} }
-        };
-
-        applyConfig();
-
-        let pconf;
-        try {
-            pconf = await configLoader.go(
-                {},
-                builtInCategories,
-                [{
-                    name: 'abc',
-                    domain: ['A'],
-                    range: ['B'],
-                    sameMainCategoryResource: false,
-                    editable: false,
-                    inputType: 'relation'
-                }],
-                {},
-                getConfigurationDocument(customForms, {})
-            );
-        } catch(err) {
-            fail(err);
-        }
-
-        expect(pconf.getRelationsForDomainCategory('A')[0].sameMainCategoryResource).toBe(false);
-
-        done();
-    });
-
-
-    it('preprocess - apply language confs', async done => {
+    it('preprocess - apply language confs', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             Parent: { 
@@ -348,6 +283,7 @@ describe('ConfigLoader', () => {
         };
 
         applyConfig(
+            {},
             {},
             {},
             {
@@ -390,12 +326,10 @@ describe('ConfigLoader', () => {
 
         expect(pconf.getRelationsForDomainCategory('A')[1].label.de).toEqual('r1_');
         expect(pconf.getRelationsForDomainCategory('A')[0].label).toEqual({});
-
-        done();
     });
 
 
-    it('preprocess - apply custom fields configuration', async done => {
+    it('preprocess - apply custom fields configuration', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             F: {
@@ -480,12 +414,10 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
-
-        done();
     });
 
 
-    it('preprocess - apply custom fields configuration - add subcategories', async done => {
+    it('preprocess - apply custom fields configuration - add subcategories', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             Find: {
@@ -546,12 +478,10 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
-
-        done();
     });
 
 
-    it('preprocess - apply custom fields configuration - add subcategories - parent not defined', async done => {
+    it('preprocess - apply custom fields configuration - add subcategories - parent not defined', async () => {
 
         const customForms: Map<CustomFormDefinition> = {
             'B': {
@@ -573,12 +503,10 @@ describe('ConfigLoader', () => {
         } catch(err) {
             expect(err).toEqual([ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, 'Find']);
         }
-
-        done();
     });
 
 
-    it('preprocess - apply custom fields configuration - add subcategories - non extendable categories not allowed', async done => {
+    it('preprocess - apply custom fields configuration - add subcategories - non extendable categories not allowed', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             Place: {
@@ -610,12 +538,62 @@ describe('ConfigLoader', () => {
         } catch(err) {
             expect(err).toEqual([ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY, 'Place']);
         }
-
-        done();
     });
 
 
-    it('apply groups configuration', async done => {
+    it('preprocess - apply mandatory setting', async () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    field1: { inputType: 'input', required: true },
+                    field2: { inputType: 'input' }
+                },
+                minimalForm: {
+                    groups: [{ name: Groups.STEM, fields: ['field1', 'field2'] }]
+                },
+                userDefinedSubcategoriesAllowed: true,
+                supercategory: true
+            }
+        }
+        
+        const customForms: Map<CustomFormDefinition> = {
+            A: {
+                fields: {
+                    field1: { inputType: 'text', mandatory: false },    // Not allowed, expected to be ignored
+                    field2: { inputType: 'text', mandatory: true },
+                    customField: { inputType: 'text', mandatory: true }
+                },
+                groups: [{ name: Groups.STEM, fields: ['field1', 'field2', 'customField'] }]
+            }
+        };
+
+        applyConfig({});
+
+        let pconf;
+        try {
+            pconf = await configLoader.go(
+                {},
+                builtInCategories,
+                [],
+                {},
+                getConfigurationDocument(customForms)
+            );
+
+            expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'field1')
+                .mandatory).toBe(true);
+            expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'field2')
+                .mandatory).toBe(true);
+            expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'customField')
+                .mandatory).toBe(true);
+
+        } catch(err) {
+            fail(err);
+        }
+    });
+
+
+    it('apply groups configuration', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             Parent1: {
@@ -635,7 +613,19 @@ describe('ConfigLoader', () => {
                 },
                 userDefinedSubcategoriesAllowed: true,
                 supercategory: true
-            }
+            },
+            Parent3: {
+                fields: {
+                    parent3Field1: { inputType: 'input' }
+                },
+                minimalForm: {
+                    groups: [
+                        { name: Groups.STEM, fields: ['parent3Field1']}
+                    ]
+                },
+                userDefinedSubcategoriesAllowed: true,
+                supercategory: true
+            },
         };
 
         const libraryCategories: Map<LibraryCategoryDefinition> = {
@@ -648,6 +638,13 @@ describe('ConfigLoader', () => {
             Parent2: {
                 fields: {
                     parent2Field: { inputType: 'input' }
+                },
+                description: {}
+            },
+            Parent3: {
+                fields: {
+                    parent3Field1: { inputType: 'input' },
+                    parent3Field2: { inputType: 'input' }
                 },
                 description: {}
             },
@@ -686,6 +683,11 @@ describe('ConfigLoader', () => {
                 parent: 'Parent2',
                 fields: {},
                 description: {}
+            },
+            E: {
+                parent: 'Parent3',
+                fields: {},
+                description: {}
             }
         };
 
@@ -704,6 +706,16 @@ describe('ConfigLoader', () => {
                 categoryName: 'Parent2',
                 groups: [
                     { name: Groups.STEM, fields: ['parent2Field'] }
+                ],
+                valuelists: {},
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            },
+            'Parent3:default': {
+                categoryName: 'Parent3',
+                groups: [
+                    { name: Groups.STEM, fields: ['parent3Field1', 'parent3Field2'] }
                 ],
                 valuelists: {},
                 description: {},
@@ -738,8 +750,10 @@ describe('ConfigLoader', () => {
             B: { fields: {} },
             'C:default': { fields: {} },
             D: { fields: {} },
+            E: { fields: {} },
             Parent1: { fields: {} },
-            'Parent2:default': { fields: {} }
+            'Parent2:default': { fields: {} },
+            'Parent3:default': { fields: {} }
         };
 
         applyConfig(
@@ -781,15 +795,18 @@ describe('ConfigLoader', () => {
             expect(result['D'].groups[0].name).toBe(Groups.STEM);
             expect(result['D'].groups[0].fields.length).toBe(1);
             expect(result['D'].groups[0].fields[0].name).toEqual('parent2Field');
+            expect(result['E'].name).toEqual('E');
+            expect(result['E'].groups[0].name).toBe(Groups.STEM);
+            expect(result['E'].groups[0].fields.length).toBe(2);
+            expect(result['E'].groups[0].fields[0].name).toEqual('parent3Field1');
+            expect(result['E'].groups[0].fields[1].name).toEqual('parent3Field2');
         } catch(err) {
             fail(err);
         }
-
-        done();
     });
 
 
-    it('add fields only once even if they are mentioned multiple times in groups configuration', async done => {
+    it('add fields only once even if they are mentioned multiple times in groups configuration', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             Parent: {
@@ -840,12 +857,10 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
-
-        done();
     });
 
 
-   it('apply hidden', async done => {
+   it('apply hidden', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -906,7 +921,7 @@ describe('ConfigLoader', () => {
         try {
             pconf = await configLoader.go(
                 {}, builtInCategories,
-                [{ name: 'relation1', domain: ['A:inherit'], range: ['B'], inputType: 'relation' }],
+                [{ name: 'relation1', domain: ['A'], range: ['B'], inputType: 'relation' }],
                 {},
                 getConfigurationDocument(customForms)
             );
@@ -941,12 +956,10 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
-
-        done();
     });
 
 
-    it('set libraryId', async done => {
+    it('set libraryId', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -1003,12 +1016,11 @@ describe('ConfigLoader', () => {
         expect(pconf.getCategory('A').libraryId).toBe('A');
         expect(pconf.getCategory('B').libraryId).toBe('B:default');
         expect(pconf.getCategory('C').libraryId).toBe('C');
-        
-        done();
+    
     });
 
 
-    it('include all relations', async done => {
+    it('include all built-in relations', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -1079,7 +1091,219 @@ describe('ConfigLoader', () => {
         expect(pconf.getCategory('A').groups[0].fields[1].name).toEqual('isRecordedIn');
         expect(pconf.getCategory('B').groups[0].fields.length).toBe(1);
         expect(pconf.getCategory('B').groups[0].fields[0].name).toEqual('isSameAs');
+    });
 
-        done();
+
+    it('include custom relations', async () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {},
+                minimalForm: {
+                    groups: [
+                        { name: 'stem', fields: ['isSimilarTo'] }
+                    ]
+                },
+                supercategory: true
+            },
+            B: {
+                fields: {},
+                minimalForm: {
+                    groups: [
+                        { name: 'stem', fields: [] }
+                    ]
+                },
+                supercategory: true
+            }
+        };
+
+        const customForms: Map<CustomFormDefinition> = {
+            'A': {
+                fields: {
+                    customRelation: {
+                        inputType: 'relation',
+                        range: ['B']
+                    }
+                },
+                groups: [
+                    { name: 'stem', fields: ['isSimilarTo', 'customRelation'] }
+                ]
+            },
+            'B': { fields: {} }
+        };
+
+        applyConfig();
+
+        let pconf;
+
+        try {
+            pconf = await configLoader.go(
+                {},
+                builtInCategories,
+                [
+                    {
+                        name: 'isSimilarTo',
+                        domain: ['A'],
+                        range: ['A'],
+                        inputType: 'relation'
+                    }
+                ],
+                {},
+                getConfigurationDocument(customForms),
+                true
+            );
+        } catch(err) {
+            fail(err);
+        }
+
+        expect(pconf.getCategory('A').groups[0].fields.length).toBe(2);
+        expect(pconf.getCategory('A').groups[0].fields[0].name).toEqual('isSimilarTo');
+        expect(pconf.getCategory('A').groups[0].fields[1].name).toEqual('customRelation');
+        expect(pconf.getRelations()[0].name).toEqual('customRelation');
+        expect(pconf.getRelations()[0].domain.length).toBe(1);
+        expect(pconf.getRelations()[0].domain[0]).toBe('A');
+        expect(pconf.getRelations()[0].range.length).toBe(1);
+        expect(pconf.getRelations()[0].range[0]).toBe('B');
+        expect(pconf.getRelations()[1].name).toEqual('isSimilarTo');
+    });
+
+
+    it('read valuelists', () => {
+
+        const valuelists: Map<Valuelist> = {
+            valuelistDefault: {
+                values: {
+                    valueDefault: {}
+                }
+            },
+            valuelistProject: {
+                values: {
+                    valueProject: {}
+                }
+            }
+        };
+
+        const valuelistsLanguages = {
+            default: {
+                de: {
+                    valuelistDefault: {
+                        description: 'Valuelist Default Deutsch',
+                        values: {
+                            valueDefault: {
+                                label: 'Value Default Deutsch',
+                                description: 'Description Default Deutsch'
+                            }
+                        }
+                    }
+                },
+                en: {
+                    valuelistDefault: {
+                        description: 'Valuelist Default English',
+                        values: {
+                            valueDefault: {
+                                label: 'Value Default English',
+                                description: 'Description Default English'
+                            }
+                        }
+                    }
+                }
+            },
+            projects: {
+                de: {
+                    valuelistProject: {
+                        description: 'Valuelist Project Deutsch',
+                        values: {
+                            valueProject: {
+                                label: 'Value Project Deutsch',
+                                description: 'Description Project Deutsch'
+                            }
+                        }
+                    }
+                },
+                en: {
+                    valuelistProject: {
+                        description: 'Valuelist Project English',
+                        values: {
+                            valueProject: {
+                                label: 'Value Project English',
+                                description: 'Description Project English'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        configReader.read.and.returnValue(valuelists);
+        configReader.getValuelistsLanguages.and.returnValue(valuelistsLanguages);
+
+        const result: Map<Valuelist> = configLoader.readValuelists();
+        expect(result.valuelistDefault.description.de).toEqual('Valuelist Default Deutsch');
+        expect(result.valuelistDefault.description.en).toEqual('Valuelist Default English');
+        expect(result.valuelistDefault.values.valueDefault.label.de).toEqual('Value Default Deutsch');
+        expect(result.valuelistDefault.values.valueDefault.label.en).toEqual('Value Default English');
+        expect(result.valuelistProject.description.de).toEqual('Valuelist Project Deutsch');
+        expect(result.valuelistProject.description.en).toEqual('Valuelist Project English');
+        expect(result.valuelistProject.values.valueProject.label.de).toEqual('Value Project Deutsch');
+        expect(result.valuelistProject.values.valueProject.label.en).toEqual('Value Project English');
+    });
+
+
+    it('save original groups', async () => {
+
+        const builtInCategories: Map<BuiltInCategoryDefinition> = {
+            A: {
+                fields: {
+                    fieldA1: { inputType: 'text '},
+                    fieldA2: { inputType: 'text '}
+                },
+                minimalForm: {
+                    groups: []
+                },
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true
+            }
+        };
+
+        const libraryForms: Map<LibraryFormDefinition> = {
+            'A:default': {
+                categoryName: 'A',
+                groups: [
+                    { name: Groups.STEM, fields: ['fieldA1', 'fieldA2'] }
+                ],
+                valuelists: {},
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            }
+        };
+        
+        const customForms: Map<CustomFormDefinition> = {
+            'A:default': {
+                fields: {
+                    fieldA3: { inputType: 'text' }
+                },
+                groups: [
+                    { name: Groups.STEM, fields: ['fieldA2', 'fieldA1', 'fieldA3'] }
+                ],
+            }
+        };
+
+        applyConfig({}, libraryForms);
+
+        let pconf;
+        try {
+            pconf = await configLoader.go({},
+                builtInCategories,
+                [], {},
+                getConfigurationDocument(customForms)
+            );
+
+            expect(pconf.getCategory('A').originalGroups).toEqual([
+                { name: Groups.STEM, fields: ['fieldA1', 'fieldA2'] }
+            ])
+        } catch(err) {
+            fail(err);
+        }
     });
 });

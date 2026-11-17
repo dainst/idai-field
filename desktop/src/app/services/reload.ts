@@ -1,7 +1,5 @@
-const ipcRenderer = typeof window !== 'undefined'
-    ? window.require('electron').ipcRenderer
-    : require('electron').ipcRenderer;
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
+const ipcRenderer = window.require('electron')?.ipcRenderer;
+const remote = window.require('@electron/remote');
 
 
 /**

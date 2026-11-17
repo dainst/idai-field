@@ -1,21 +1,24 @@
 import { mdiChevronLeft, mdiChevronRight, mdiOpenInNew } from '@mdi/js';
 import { Icon } from '@mdi/react';
 import { TFunction } from 'i18next';
-import { Dating, Dimension, I18N, Literature, OptionalRange, Field as FieldDefinition } from 'idai-field-core';
+import { Dating, Measurement, I18N, Literature, OptionalRange, Field as FieldDefinition,
+    DateSpecification } from 'idai-field-core';
 import React, { CSSProperties, ReactElement, ReactNode, useContext, useEffect, useState } from 'react';
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { convertMeasurementPosition, Document, Field, FieldGroup, FieldValue, getDocumentImages,
+import { convertMeasurementSubfieldValue, Document, Field, FieldGroup, FieldValue, getDocumentImages,
     isLabeled, isLabeledValue, LabeledValue } from '../../api/document';
 import { search } from '../../api/documents';
 import { Query } from '../../api/query';
 import { Result, ResultDocument } from '../../api/result';
 import { ImageCarousel } from '../image/ImageCarousel';
-import { getLabel, getNumberOfUndisplayedLabels, getTranslation } from '../languages';
+import { getLabel, getNumberOfUndisplayedLabels, getTranslation, getUserInterfaceLanguage } from '../languages';
 import { LoginContext } from '../login';
 import { getDocumentLink, getSupercategoryName } from './document-utils';
 import DocumentTeaser from './DocumentTeaser';
+import { parseDate } from './date/parse-date';
+import { formatDate } from './date/format-date';
 
 const HIDDEN_FIELDS = ['id', 'identifier', 'geometry', 'georeference', 'originalFilename'];
 const HIDDEN_RELATIONS = ['isDepictedIn', 'hasMapLayer', 'hasDefaultMapLayer'];
@@ -68,7 +71,7 @@ export default function DocumentDetails({ document, baseUrl } : DocumentDetailsP
                             label: {
                                 'de': 'Enthält', 'en': 'Includes', 'es': 'Incluye', 'fr': 'Inclut', 'it': 'Include'
                             }
-                        } as Field
+                        } as any
                     ]
                 } as FieldGroup);
             } else {
@@ -242,10 +245,14 @@ const renderFieldValue = (value: FieldValue, inputType: FieldDefinition.InputTyp
                 return renderFieldValueBoolean(value as boolean, t);
             case 'dropdownRange':
                 return renderOptionalRange(value as OptionalRange<LabeledValue>, t);
+            case 'date':
+                return renderDate(value as DateSpecification, t);
             case 'dating':
                 return renderDating(value as Dating, t);
             case 'dimension':
-                return renderDimension(value as Dimension, t);
+            case 'weight':
+            case 'volume':
+                return renderMeasurement(value as Measurement, inputType, t);
             case 'literature':
                 return renderLiterature(value as Literature, t);
             default:
@@ -290,6 +297,22 @@ const renderMultiLanguageText = (object: LabeledValue, t: TFunction): ReactNode 
 };
 
 
+const renderDate = (date: DateSpecification, t: TFunction) => {
+
+    return DateSpecification.generateLabel(
+        date,
+        Intl.DateTimeFormat().resolvedOptions().timeZone ?? 'UTC',
+        t('timeSuffix'),
+        getUserInterfaceLanguage(),
+        t,
+        true,
+        false,
+        parseDate,
+        formatDate
+    );
+};
+
+
 const renderDating = (dating: Dating, t: TFunction) => {
 
     if (!Dating.isDating(dating)) return undefined;
@@ -302,15 +325,15 @@ const renderDating = (dating: Dating, t: TFunction) => {
 };
 
 
-const renderDimension = (dimension: Dimension, t: TFunction) => {
+const renderMeasurement = (measurement: Measurement, inputType: FieldDefinition.InputType, t: TFunction) => {
 
-    dimension = convertMeasurementPosition(dimension);
+    measurement = convertMeasurementSubfieldValue(measurement, inputType);
 
-    if (!Dimension.isDimension(dimension)) return undefined;
-    if (isLabeled(dimension)) return dimension.label;
+    if (!Measurement.isMeasurement(measurement)) return undefined;
+    if (isLabeled(measurement)) return measurement.label;
 
-    return Dimension.generateLabel(
-        dimension, getDecimalValue, t,
+    return Measurement.generateLabel(
+        measurement, inputType, getDecimalValue, t,
         // eslint-disable-next-line
         (value: any) => getLabel({ label: value, name: undefined })
         // eslint-disable-next-line

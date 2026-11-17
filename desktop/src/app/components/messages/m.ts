@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
 import { MD } from './md';
 import { MessageTemplate } from './message';
 
@@ -39,16 +38,18 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static MODEL_VALIDATION_INVALID_COORDINATES = 'model.validation.error.invalidCoordinates';
     public static MODEL_VALIDATION_MISSING_GEOMETRYTYPE = 'model.validation.error.missingGeometryType';
     public static MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE = 'model.validation.error.unsupportedGeometryType';
+    public static MODEL_VALIDATION_UNALLOWED_GEOMETRY_TYPE = 'model.validation.error.unallowedGeometryType';
+    public static MODEL_VALIDATION_GEOMETRY_NOT_ALLOWED = 'model.validation.error.geometryNotAllowed';
 
     // Backup Package
     public static BACKUP_WRITE_SUCCESS = 'backup.write.success';
-    public static BACKUP_READ_SUCCESS = 'backup.read.success';
     public static BACKUP_WRITE_ERROR_GENERIC = 'backup.write.error.generic';
     public static BACKUP_READ_ERROR_GENERIC = 'backup.read.error.generic';
     public static BACKUP_READ_ERROR_FILE_NOT_FOUND = 'backup.read.error.fileNotFound';
-    public static BACKUP_READ_ERROR_NO_PROJECT_IDENTIFIER = 'backup.read.error.noProjectIdentifier';
+    public static BACKUP_READ_ERROR_INVALID_FILE_FORMAT = 'backup.read.error.invalidFileFormat';
     public static BACKUP_READ_ERROR_SAME_PROJECT_IDENTIFIER = 'backup.read.error.sameProjectIdentifier';
-    public static BACKUP_READ_WARNING_UNSIMILAR_PROJECT_IDENTIFIER = 'backup.read.warning.unsimilarProjectIdentifier';
+    public static BACKUP_INVALID_AUTO_BACKUP_DIRECTORY = 'backup.error.invalidAutoBackupDirectory';
+    public static BACKUP_AUTOMATIC_FILE_CREATION_FAILED = 'backup.error.automaticFileCreationFailed';
 
     // Download Project Package
     public static INITIAL_SYNC_DB_NOT_EMPTY = 'M.InitialSync.dbNotEmpty';
@@ -60,11 +61,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_PARSER_INVALID_JSON = 'M.Import.ParserErrors.invalidJson';
     public static IMPORT_PARSER_INVALID_JSONL = 'M.Import.ParserErrors.invalidJsonl';
     public static IMPORT_PARSER_INVALID_GEOJSON_IMPORT_STRUCT = 'M.Import.ParserErrors.invalidGeojsonImportStruct';
-    public static IMPORT_PARSER_INVALID_GEOMETRY = 'M.Import.ParserErrors.invalidGeometry';
     public static IMPORT_PARSER_MISSING_IDENTIFIER = 'M.Import.ParserErrors.missingIdentifier';
-    public static IMPORT_PARSER_MISSING_IDENTIFIER_SHAPEFILE = 'M.Import.ParserErrors.missingIdentifierShapefile';
     public static IMPORT_PARSER_ID_MUST_NOT_BE_SET = 'M.Import.ParserErrors.parsing.idnottobeset';
-    public static IMPORT_PARSER_SHAPEFILE_GENERIC = 'M.Import.ParserErrors.shapefile.generic';
     public static IMPORT_PARSER_CATALOG_GENERIC = 'M.Import.ParserErrors.catalog.generic';
     public static IMPORT_PARSER_IDENTIFIER_FORMAT = 'M.Import.ParserErrors.identifierFormat';
     public static IMPORT_PARSER_MANDATORY_CSV_FIELD_MISSING = 'M.Import.ParserErrors.mandatoryCsvFieldMissing';
@@ -85,8 +83,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_READER_ROLLBACK = 'M.Import.ReaderErrors.rollbackError';
     public static IMPORT_READER_INVALID_OPERATION_RESOURCE = 'M.Import.ReaderErrors.invalidOperationResource';
     public static IMPORT_READER_SHAPEFILE_READ_ERROR = 'M.Import.ReaderErrors.shapefile.readError';
-    public static IMPORT_READER_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE = 'M.Import.ReaderErrors.shapefile.unsupportedGeometryType';
-    public static IMPORT_READER_SHAPEFILE_JSONL_WRITE = 'M.Import.ReaderErrors.shapefile.jsonlWriteError';
 
     // ImportPackage ValidationErrors
     public static IMPORT_VALIDATION_MISSING_PROPERTY = 'M.Import.ValidationErrors.missingProperty';
@@ -102,21 +98,33 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_URLS = 'M.Import.ValidationErrors.invalidUrls';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATE = 'M.Import.ValidationErrors.invalidDate';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATES = 'M.Import.ValidationErrors.invalidDates';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED = 'M.Import.ValidationErrors.invalidDate.rangeNotAllowed';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED = 'M.Import.ValidationErrors.invalidDate.singleNotAllowed';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED = 'M.Import.ValidationErrors.invalidDate.timeNotAllowed';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET = 'M.Import.ValidationErrors.invalidDate.timeNotSet';
+    public static IMPORT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE = 'M.Import.ValidationErrors.invalidDate.endDateBeforeBeginningDate';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE = 'M.Import.ValidationErrors.invalidDatingValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'M.Import.ValidationErrors.invalidDatingValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'M.Import.ValidationErrors.invalidDimensionValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES = 'M.Import.ValidationErrors.invalidDimensionValues';
+    public static IMPORT_VALIDATION_ERROR_INVALID_WEIGHT_VALUE = 'M.Import.ValidationErrors.invalidWeightValue';
+    public static IMPORT_VALIDATION_ERROR_INVALID_WEIGHT_VALUES = 'M.Import.ValidationErrors.invalidWeightValues';
+    public static IMPORT_VALIDATION_ERROR_INVALID_VOLUME_VALUE = 'M.Import.ValidationErrors.invalidVolumeValue';
+    public static IMPORT_VALIDATION_ERROR_INVALID_VOLUME_VALUES = 'M.Import.ValidationErrors.invalidVolumeValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUE = 'M.Import.ValidationErrors.invalidLiteratureValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUES = 'M.Import.ValidationErrors.invalidLiteratureValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_COMPOSITE_VALUE = 'M.Import.ValidationErrors.invalidCompositeValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_COMPOSITE_VALUES = 'M.Import.ValidationErrors.invalidCompositeValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES = 'M.Import.ValidationErrors.invalidDropdownRangeValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_MAP_LAYER_RELATION_TARGETS = 'M.Import.ValidationErrors.invalidMapLayerRelationTargets';
+    public static IMPORT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS = 'M.Import.ValidationErrors.invalidWorkflowRelationTargets';
     public static IMPORT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'M.Import.ValidationErrors.maxCharactersExceeded';
-    public static IMPORT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE = 'M.Import.ValidationErrors.endDateBeforeBeginningDate';
     public static IMPORT_VALIDATION_ERROR_RESOURCE_LIMIT_EXCEEDED = 'M.Import.ValidationErrors.resourceLimitExceeded';
+    public static IMPORT_VALIDATION_DUPLICATE_QR_CODE_IN_IMPORT_FILE = 'M.Import.ValidationErrors.duplicateQrCodeInImportFile';
+    public static IMPORT_VALIDATION_DUPLICATE_QR_CODE_IN_PROJECT = 'M.Import.ValidationErrors.duplicateQrCodeInProject';
 
     // Import Package - ImportErrors
+    public static IMPORT_ERROR_GENERIC = 'M.Import.ImportErrors.Generic';
     public static IMPORT_NO_OPERATION_ASSIGNABLE = 'M.Import.ImportErrors.noOperationAssignable';
     public static IMPORT_NO_FEATURE_ASSIGNABLE = 'M.Import.ImportErrors.noFeatureAssignable';
     public static IMPORT_EXEC_NO_LIES_WITHIN_SET = 'M.Import.ImportErrors.onlyPlaceAndOperationWithoutRecordedInAllowed';
@@ -143,13 +151,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED = 'M.Import.ImportErrors.parentAssignmentToOperationNotAllowed';
     public static IMPORT_PARENT_MUST_NOT_BE_ARRAY = 'M.Import.ImportErrors.parentMustNotBeArray';
     public static IMPORT_MUST_BE_ARRAY = 'M.Import.ImportErrors.relationMustBeArray';
-    public static IMPORT_MUST_BE_IN_SAME_OPERATION = 'M.Import.ImportErrors.mustBeInSameOperation';
     public static IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING = 'M.Import.ImportErrors.mustNotBeEmptyString';
     public static IMPORT_ERROR_CATEGORY_CANNOT_BE_CHANGED = 'M.Import.ImportErrors.categoryCannotBeChanged';
     public static IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN = 'M.Import.ImportErrors.emptySlotsInArraysForbidden';
     public static IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES = 'M.Import.ImportErrors.arrayOfHeterogeneousType';
     public static IMPORT_ERROR_INVALID_FILE_FORMAT = 'M.Import.ImportErrors.invalidFileFormat';
-    public static IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE = 'M.Import.ImportErros.emptyObjectInResource';
+    public static IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE = 'M.Import.ImportErrors.emptyObjectInResource';
 
     // Import Package - ImportCatalogErrors
     public static IMPORT_CATALOG_ERROR_IDENTIFIER_CLASH = 'M.Import.ImportCatalogErrors.identifierClash';
@@ -157,6 +164,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_CATALOG_ERROR_DIFFERENT_PROJECT_ENTRIES = 'M.Import.ImportCatalogErrors.differentProjectEntries';
     public static IMPORT_CATALOG_ERROR_NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS = 'M.Import.ImportCatalogErrors.noOrTooManyTypeCatalogDocuments';
     public static IMPORT_CATALOG_ERROR_INVALID_RELATIONS = 'M.Import.ImportCatalogErrors.invalidRelations';
+    public static IMPORT_CATALOG_ERROR_INVALID_CATEGORY = 'M.Import.ImportCatalogErrors.invalidCategory';
     public static IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_REIMPORT_CATALOG = 'M.Import.ImportCatalogErrors.ownerMustNotImportCatalog';
     public static IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_OVERWRITE_EXISTING_IMAGES = 'M.Import.ImportCatalogErrors.ownerMustNotOverwriteExistingImages';
 
@@ -166,10 +174,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static EXPORT_CATALOG_IMAGES_NOT_EXCLUSIVE_TO_CATALOG = 'export.error.catalog.imagesNotExclusiveToCatalog';
     public static EXPORT_CATALOG_FAILED_TO_COPY_IMAGES = 'export.error.catalog.failedToCopyImages';
     public static EXPORT_GEOJSON_ERROR_WRITE = 'export.geojson.error.write';
-    public static EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION = 'export.shapefile.error.tempFolderCreation';
-    public static EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION = 'export.shapefile.error.zipFileCreation';
     public static EXPORT_SHAPEFILE_ERROR_WRITE = 'export.shapefile.error.write';
-    public static EXPORT_SHAPEFILE_ERROR_GET_RESOURCES = 'export.shapefile.error.getResources';
+    public static EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION = 'export.shapefile.error.zipFileCreation';
     public static EXPORT_CSV_WARNING_INVALID_FIELD_DATA_SINGLE = 'export.csv.warning.invalidFieldData.single';
     public static EXPORT_CSV_WARNING_INVALID_FIELD_DATA_MULTIPLE = 'export.csv.warning.invalidFieldData.multiple';
 
@@ -178,8 +184,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Docedit Package
     public static DOCEDIT_WARNING_SAVE_CONFLICT = 'docedit.warning.saveConflict';
-    public static DOCEDIT_WARNING_CATEGORY_CHANGE_FIELDS = 'docedit.warning.categoryChange.fields';
-    public static DOCEDIT_WARNING_CATEGORY_CHANGE_RELATIONS = 'docedit.warning.categoryChange.relations';
+    public static DOCEDIT_WARNING_FIELD_DATA_DELETION = 'docedit.warning.fieldDataDeletion';
     public static DOCEDIT_ERROR_SAVE = 'docedit.error.save';
     public static DOCEDIT_ERROR_DELETE = 'docedit.error.delete';
     public static DOCEDIT_ERROR_RESOLVE_CONFLICT = 'docedit.error.resolveConflict';
@@ -187,26 +192,48 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'docedit.validation.error.invalidNumericValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_URL = 'docedit.validation.error.invalidUrl';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_URLS = 'docedit.validation.error.invalidUrls';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE = 'docedit.validation.error.invalidDate';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATES = 'docedit.validation.error.invalidDates';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED = 'docedit.validation.error.invalidDate.rangeNotAllowed';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED = 'docedit.validation.error.invalidDate.singleNotAllowed';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED = 'docedit.validation.error.invalidDate.timeNotAllowed';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET = 'docedit.validation.error.invalidDate.timeNotSet';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE = 'docedit.validation.error.invalidDate.endDateBeforeBeginningDate';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUE = 'docedit.validation.error.invalidDatingValue';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUES = 'docedit.validation.error.invalidDatingValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE = 'docedit.validation.error.invalidDimensionValue';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES = 'docedit.validation.error.invalidDimensionValues';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_WEIGHT_VALUE = 'docedit.validation.error.invalidWeightValue';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_WEIGHT_VALUES = 'docedit.validation.error.invalidWeightValues';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_VOLUME_VALUE = 'docedit.validation.error.invalidVolumeValue';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_VOLUME_VALUES = 'docedit.validation.error.invalidVolumeValues';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR = 'docedit.validation.error.invalidDecimalSeparator';
     public static DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS = 'docedit.validation.error.invalidDecimalSeparators';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS = 'docedit.validation.error.invalidWorkflowRelationTargets';
     public static DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY = 'docedit.validation.error.missingProperty';
+    public static DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTIES = 'docedit.validation.error.missingProperties';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN = 'docedit.validation.error.noRecordedIn';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'docedit.validation.error.noRecordedInTarget';
-    public static DOCEDIT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE = 'docedit.validation.error.endDateBeforeBeginningDate';
     public static DOCEDIT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED = 'docedit.validation.error.maxCharactersExceeded';
+    public static DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELD = 'docedit.validation.error.unallowedCharacterInField';
+    public static DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELDS = 'docedit.validation.error.unallowedCharacterInFields';
+    
 
     // Images Package
     public static IMAGES_SUCCESS_IMAGES_UPLOADED = 'images.success.imagesUploaded';
     public static IMAGES_SUCCESS_WLD_FILE_UPLOADED = 'images.success.wldFileUploaded';
     public static IMAGES_SUCCESS_WLD_FILES_UPLOADED = 'images.success.wldFilesUploaded';
+    public static IMAGES_SUCCESS_IMAGES_EXPORTED_SINGLE = 'images.success.imagesExported.single';
+    public static IMAGES_SUCCESS_IMAGES_EXPORTED_MULTIPLE = 'images.success.imagesExported.multiple';
+    public static IMAGES_SUCCESS_IMAGES_DOWNLOADED_SINGLE = 'images.success.imagesDownloaded.single';
+    public static IMAGES_SUCCESS_IMAGES_DOWNLOADED_MULTIPLE = 'images.success.imagesDownloaded.multiple';
     public static IMAGES_ERROR_FILEREADER = 'images.error.fileReader';
     public static IMAGES_ERROR_DUPLICATE_FILENAME = 'images.error.duplicateFilename';
     public static IMAGES_ERROR_DUPLICATE_FILENAMES = 'images.error.duplicateFilenames';
+    public static IMAGES_ERROR_UNALLOWED_CHARACTER_IN_FILENAME = 'images.error.unallowedCharacterInFilename';
     public static IMAGES_ERROR_UNMATCHED_WLD_FILES = 'images.error.unmatchedWldFiles';
+    public static IMAGES_ERROR_EXPORT_FAILED = 'images.error.exportFailed';
+    public static IMAGES_ERROR_DOWNLOAD_FAILED = 'images.error.downloadFailed';
 
     // Imagestore Package
     public static IMAGESTORE_ERROR_INVALID_PATH = 'imagestore.error.invalidPath';
@@ -227,22 +254,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_SUCCESS_IMAGES_UPLOADED = 'resources.success.imagesImported';
     public static RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_SINGLE = 'resources.success.storagePlaceSaved.single';
     public static RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_MULTIPLE = 'resources.success.storagePlaceSaved.multiple';
+    public static RESOURCES_SUCCESS_TYPE_SAVED_SINGLE = 'resources.success.typeSaved.single';
+    public static RESOURCES_SUCCESS_TYPES_SAVED_MULTIPLE = 'resources.success.typeSaved.multiple';
     public static RESOURCES_SUCCESS_GENERATED_QR_CODE_SAVED = 'resources.success.generatedQrCodeSaved';
     public static RESOURCES_SUCCESS_EXISTING_QR_CODE_SAVED = 'resources.success.existingQrCodeSaved';
     public static RESOURCES_SUCCESS_QR_CODE_DELETED = 'resources.success.qrCodeDeleted';
     public static RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_SINGLE = 'resources.info.storagePlaceAlreadySet.single';
     public static RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_MULTIPLE = 'resources.info.storagePlaceAlreadySet.multiple';
+    public static RESOURCES_INFO_TYPE_ALREADY_SET_SINGLE = 'resources.info.typeAlreadySet.single';
+    public static RESOURCES_INFO_TYPE_ALREADY_SET_MULTIPLE = 'resources.info.typeAlreadySet.multiple';
     public static RESOURCES_ERROR_NO_STORAGE_PLACE_CATEGORY = 'resources.error.noStoragePlaceCategory';
+    public static RESOURCES_ERROR_NO_TYPE_CATEGORY = 'resources.error.noTypeCategory';
+    public static RESOURCES_ERROR_NO_STORAGE_PLACE_OR_TYPE_CATEGORY = 'resources.error.noStoragePlaceOrTypeCategory';
     public static RESOURCES_WARNING_PROJECT_IDENTIFIER_NOT_SAME = 'resources.error.projectIdentifierNotSame';
-    public static RESOURCES_ERROR_CATEGORY_NOT_FOUND = 'resources.error.categoryNotFound';
     public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources.error.oneProjectMustExist'; // TODO Rename
     public static RESOURCES_ERROR_RESOURCE_DELETED = 'resources.error.resourceDeleted';
     public static RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED = 'resources.error.unknownResourceDeleted';
     public static RESOURCES_ERROR_PARENT_RESOURCE_DELETED = 'resources.error.parentResourceDeleted';
-    public static RESOURCES_ERROR_PARENT_RESOURCE_UNKNOWN_CATEGORY = 'resources.error.parentResourceUnknownCategory';
-    public static RESOURCES_ERROR_PARENT_OPERATION_UNKNOWN_CATEGORY = 'resources.error.parentOperationUnknownCategory';
     public static RESOURCES_ERROR_RESOURCE_MISSING_DURING_SYNCING = 'resources.error.resourceMissingDuringSyncing';
-    public static RESOURCES_ERROR_CANNOT_MOVE_WITH_SAME_OPERATION_RELATIONS = 'resources.error.cannotMoveWithSameOperationRelations';
     public static RESOURCES_ERROR_CANNOT_MOVE_CHILDREN = 'resources.error.cannotMoveChildren';
     public static RESOURCES_ERROR_QR_CODE_SCANNING_FAILURE = 'resources.error.qrCodeScanningFailure';
     public static RESOURCES_ERROR_QR_CODE_RESOURCE_NOT_FOUND = 'resources.error.qrCodeResourceNotFound';
@@ -257,1511 +286,1051 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static PROJECT_CREATION_ERROR_NAME_LENGTH = 'projectCreation.error.nameLength';
 
     // Configuration Package
+    public static CONFIGURATION_SUCCESS_IMPORT = 'configuration.success.import';
     public static CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST = 'configuration.error.noValuesInValuelist';
     public static CONFIGURATION_ERROR_NO_VALUELIST = 'configuration.error.noValuelist';
     public static CONFIGURATION_ERROR_NO_SUBFIELDS = 'configuration.error.noSubfields';
+    public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS = 'configuration.error.fieldConditionViolation.valuelists';
+    public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS_CHILD_CATEGORY = 'configuration.error.fieldConditionViolation.valuelists.childCategory';
+    public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE = 'configuration.error.fieldConditionViolation.inputType';
+    public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE_CHILD_CATEGORY = 'configuration.error.fieldConditionViolation.inputType.childCategory';
     public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS = 'configuration.error.subfieldConditionViolation.valuelists';
     public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_INPUT_TYPE = 'configuration.error.subfieldConditionViolation.inputType';
+    public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_DELETION = 'configuration.error.subfieldConditionViolation.deletion';
     public static CONFIGURATION_ERROR_VALUE_USED_IN_SUBFIELD_CONDITION = 'configuration.error.valueUsedInSubfieldCondition';
     public static CONFIGURATION_ERROR_INVALID_REFERENCE = 'configuration.error.invalidReference';
     public static CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_NOT_A_NUMBER = 'configuration.error.invalidResourceLimit.notANumber';
     public static CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_TOO_LOW = 'configuration.error.invalidResourceLimit.tooLow';
     public static CONFIGURATION_ERROR_IMPORT_FAILURE = 'configuration.error.importFailure';
+    public static CONFIGURATION_ERROR_IMPORT_UNSUPPORTED_VERSION = 'configuration.error.unsupportedVersion';
     public static CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES = 'configuration.error.noProjectLanguages';
+    public static CONFIGURATION_ERROR_NO_ALLOWED_TARGET_CATEGORIES = 'configuration.error.noAllowedTargetCategories';
+    public static CONFIGURATION_ERROR_NO_ALLOWED_GEOMETRY_TYPES = 'configuration.error.noAllowedGeometryTypes';
+
+    // Matrix Package
+    public static MATRIX_ERROR_GENERIC = 'matrix.error.generic';
 
     public msgs : { [id: string]: MessageTemplate } = {};
 
 
-    constructor(private i18n: I18n) {
+    constructor() {
 
         super();
+
         this.msgs[M.IMPORT_ERROR_NOT_UPDATED] = {
-            content: i18n({
-                id: 'messages.import.error.notupdated',
-                value: 'Fehlgeschlagene Zuordnung per Bezeichner \'[0]\'. Ressource nicht vorhanden.',
-            }),
+            content: $localize `:@@messages.import.error.notupdated:Fehlgeschlagene Zuordnung per Bezeichner \'[0]\'. Ressource nicht vorhanden.`,
             level: 'danger'
         };
         this.msgs[M.MESSAGES_ERROR_UNKNOWN_MESSAGE] = {
-            content: i18n({
-                id: 'messages.messages.error.unknownMessage',
-                value: 'Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.',
-            }),
+            content: $localize `:@@messages.messages.error.unknownMessage:Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.`,
             level: 'danger'
         };
         this.msgs[M.PROJECT_CONFIGURATION_ERROR_GENERIC] = {
-            content: i18n({
-                id: 'messages.configuration.error.generic',
-                value: 'Fehler beim Auswerten eines Konfigurationsobjektes.',
-            }),
+            content: $localize `:@@messages.configuration.error.generic:Fehler beim Auswerten eines Konfigurationsobjektes.`,
             level: 'danger'
         };
         this.msgs[M.CONFIG_READER_ERROR_INVALID_JSON] = {
-            content: i18n({
-                id: 'messages.configReader.error.invalidJson',
-                value: 'Fehler beim Parsen der Konfigurationsdatei \'[0]\': Das JSON ist nicht valide.',
-            }),
+            content: $localize `:@@messages.configReader.error.invalidJson:Fehler beim Parsen der Konfigurationsdatei \'[0]\': Das JSON ist nicht valide.`,
             level: 'danger'
         };
         this.msgs[M.ALL_ERROR_FIND] = {
-            content: i18n({
-                id: 'messages.all.error.find',
-                value: 'Beim Laden von Ressourcen ist ein Fehler aufgetreten.'
-            }),
+            content: $localize `:@@messages.all.error.find:Beim Laden von Ressourcen ist ein Fehler aufgetreten.`,
             level: 'danger'
         };
         this.msgs[M.SETTINGS_SUCCESS] = {
-            content: i18n({
-                id: 'messages.settings.success',
-                value: 'Die Einstellungen wurden erfolgreich aktiviert.'
-            }),
+            content: $localize `:@@messages.settings.success:Die Einstellungen wurden erfolgreich aktiviert.`,
             level: 'success'
         };
         this.msgs[M.SETTINGS_ERROR_MALFORMED_ADDRESS] = {
-            content: i18n({
-                id: 'messages.settings.error.malformedAddress',
-                value: 'Bitte geben Sie als Adresse eine gültige URL ein.'
-            }),
+            content: $localize `:@@messages.settings.error.malformedAddress:Bitte geben Sie als Adresse eine gültige URL ein.`,
             level: 'danger'
         };
         this.msgs[M.SETTINGS_ERROR_MISSING_USERNAME] = {
-            content: i18n({
-                id: 'messages.settings.error.missingUsername',
-                value: 'Bitte geben Sie Ihren Namen im Feld "Name der Benutzerin/des Benutzers" ein.'
-            }),
+            content: $localize `:@@messages.settings.error.missingUsername:Bitte geben Sie Ihren Namen im Feld "Name der Benutzerin/des Benutzers" ein.`,
             level: 'danger'
         };
         this.msgs[M.PROJECTS_DELETE_SUCCESS] = {
-            content: i18n({
-                id: 'messages.projects.deleteSuccess',
-                value: 'Das Projekt "[0]" wurde erfolgreich gelöscht.'
-            }),
+            content: $localize `:@@messages.projects.deleteSuccess:Das Projekt "[0]" wurde erfolgreich gelöscht.`,
             level: 'success'
         };
         this.msgs[M.APP_CONTROLLER_SUCCESS] = {
-            content: i18n({
-                id: 'messages.app.appControllerSuccess',
-                value: 'Erfolgreich ausgeführt.'
-            }),
+            content: $localize `:@@messages.app.appControllerSuccess:Erfolgreich ausgeführt.`,
             level: 'success'
         };
         this.msgs[M.BACKUP_WRITE_SUCCESS] = {
-            content: i18n({
-                id: 'messages.backup.write.success',
-                value: 'Die Datenbank wurde erfolgreich gesichert.'
-            }),
-            level: 'success'
-        };
-        this.msgs[M.BACKUP_READ_SUCCESS] = {
-            content: i18n({
-                id: 'messages.backup.read.success',
-                value: 'Das Backup wurde erfolgreich eingelesen.'
-            }),
+            content: $localize `:@@messages.backup.write.success:Die Datenbank wurde erfolgreich gesichert.`,
             level: 'success'
         };
         this.msgs[M.BACKUP_WRITE_ERROR_GENERIC] = {
-            content: i18n({
-                id: 'messages.backup.write.error.generic',
-                value: 'Beim Sichern der Datenbank ist ein Fehler aufgetreten.'
-            }),
+            content: $localize `:@@messages.backup.write.error.generic:Beim Sichern der Datenbank ist ein Fehler aufgetreten.`,
             level: 'danger'
         };
         this.msgs[M.BACKUP_READ_ERROR_GENERIC] = {
-            content: i18n({
-                id: 'messages.backup.read.error.generic',
-                value: 'Beim Einlesen der Backup-Datei ist ein Fehler aufgetreten.'
-            }),
+            content: $localize `:@@messages.backup.read.error.generic:Beim Einlesen der Backup-Datei ist ein Fehler aufgetreten.`,
             level: 'danger'
         };
         this.msgs[M.BACKUP_READ_ERROR_FILE_NOT_FOUND] = {
-            content: i18n({
-                id: 'messages.backup.read.error.fileNotFound',
-                value: 'Die angegebene Datei konnte nicht gefunden werden.'
-            }),
+            content: $localize `:@@messages.backup.read.error.fileNotFound:Die angegebene Datei konnte nicht gefunden werden.`,
             level: 'danger'
         };
-        this.msgs[M.BACKUP_READ_ERROR_NO_PROJECT_IDENTIFIER] = {
-            content: i18n({
-                id: 'messages.backup.read.error.noProjectIdentifier',
-                value: 'Geben Sie eine Projektkennung an, um fortzufahren.'
-            }),
+        this.msgs[M.BACKUP_READ_ERROR_INVALID_FILE_FORMAT] = {
+            content: $localize `:@@messages.backup.read.error.invalidFileFormat:Die angegebene Datei ist keine gültige Backup-Datei.`,
             level: 'danger'
         };
         this.msgs[M.BACKUP_READ_ERROR_SAME_PROJECT_IDENTIFIER] = {
-            content: i18n({
-                id: 'messages.backup.read.error.sameProjectIdentifier',
-                value: 'Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.'
-            }),
+            content: $localize `:@@messages.backup.read.error.sameProjectIdentifier:Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.`,
             level: 'danger'
         };
-        this.msgs[M.BACKUP_READ_WARNING_UNSIMILAR_PROJECT_IDENTIFIER] = {
-            content: i18n({
-                id: 'messages.backup.read.warning.unsimilarProjectIdentifier',
-                value: 'Die von Ihnen gewählte Projektkennung unterscheidet sich stark von der Kennung des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen Field-Desktop-Instanzen oder Field-Servern synchronisieren.'
-            }),
-            level: 'warning'
+        this.msgs[M.BACKUP_INVALID_AUTO_BACKUP_DIRECTORY] = {
+            content: $localize `:@@messages.backup.error.invalidAutoBackupDirectory:Es konnten keine automatischen Backups erstellt werden. Der in den Einstellungen angegebene Verzeichnispfad ist ungültig.`,
+            level: 'danger'
+        };
+        this.msgs[M.BACKUP_AUTOMATIC_FILE_CREATION_FAILED] = {
+            content: $localize `:@@messages.backup.error.automaticFileCreationFaile:Es konnten keine automatischen Backups erstellt werden. Bitte prüfen Sie die Einstellungen und stellen Sie sicher, dass ausreichend Speicherplatz zur Verfügung steht.`,
+            level: 'danger'
         };
         this.msgs[M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS] = {
-            content: i18n({
-                id: 'messages.model.validation.error.identifierExists',
-                value: 'Der Ressourcen-Bezeichner [0] existiert bereits.'
-            }),
+            content: $localize `:@@messages.model.validation.error.identifierExists:Der Ressourcen-Bezeichner [0] existiert bereits.`,
             level: 'danger'
         };
         this.msgs[M.MODEL_VALIDATION_INVALID_IDENTIFIER_PREFIX] = {
-            content: i18n({
-                id: 'messages.model.validation.error.identifierPrefix',
-                value: 'Der Ressourcen-Bezeichner \'[0]\' beginnt nicht mit dem für die Kategorie \'[1]\' konfigurierten Bezeichner-Präfix \'[2]\'.'
-            }),
+            content: $localize `:@@messages.model.validation.error.identifierPrefix:Der Ressourcen-Bezeichner \'[0]\' beginnt nicht mit dem für die Kategorie \'[1]\' konfigurierten Bezeichner-Präfix \'[2]\'.`,
             level: 'danger'
         };
         this.msgs[M.MODEL_VALIDATION_MISSING_COORDINATES] = {
-            content: i18n({
-                id: 'messages.model.validation.error.missingCoordinates',
-                value: 'Die Koordinaten einer Geometrie sind nicht definiert.'
-            }),
+            content: $localize `:@@messages.model.validation.error.missingCoordinates:Die Koordinaten einer Geometrie sind nicht definiert.`,
             level: 'danger'
         };
         this.msgs[M.MODEL_VALIDATION_INVALID_COORDINATES] = {
-            content: i18n({
-                id: 'messages.model.validation.error.invalidCoordinates',
-                value: 'Die Koordinaten einer Geometrie vom Typ [0] sind nicht valide.'
-            }),
+            content: $localize `:@@messages.model.validation.error.invalidCoordinates:Die Koordinaten einer Geometrie vom Typ [0] sind nicht valide.`,
             level: 'danger'
         };
         this.msgs[M.MODEL_VALIDATION_MISSING_GEOMETRYTYPE] = {
-            content: i18n({
-                id: 'messages.model.validation.error.missingGeometryType',
-                value: 'Der Typ einer Geometrie ist nicht definiert.'
-            }),
+            content: $localize `:@@messages.model.validation.error.missingGeometryType:Der Typ einer Geometrie ist nicht definiert.`,
             level: 'danger'
         };
         this.msgs[M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE] = {
-            content: i18n({
-                id: 'messages.model.validation.error.unsupportedGeometryType',
-                value: 'Der Geometrietyp [0] wird von der Anwendung nicht unterstützt.'
-            }),
+            content: $localize `:@@messages.model.validation.error.unsupportedGeometryType:Der Geometrietyp [0] wird von der Anwendung nicht unterstützt.`,
+            level: 'danger'
+        };
+        this.msgs[M.MODEL_VALIDATION_UNALLOWED_GEOMETRY_TYPE] = {
+            content: $localize `:@@messages.model.validation.error.unallowedGeometryType:Der Geometrietyp [1] ist für Ressourcen der Kategorie [0] nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.MODEL_VALIDATION_GEOMETRY_NOT_ALLOWED] = {
+            content: $localize `:@@messages.model.validation.error.geometryNotAllowed:Für Ressourcen der Kategorie [0] können keine Geometrien angelegt werden.`,
             level: 'danger'
         };
         this.msgs[M.INITIAL_SYNC_DB_NOT_EMPTY] = {
-            content: i18n({
-                id: 'messages.initialSync.targetDbNotEmpty',
-                value: 'Download fehlgeschlagen: Das angegebene Projekt existiert bereits auf dieser Field-Desktop-Installation.'
-            }),
+            content: $localize `:@@messages.initialSync.targetDbNotEmpty:Download fehlgeschlagen: Das angegebene Projekt existiert bereits auf dieser Field-Desktop-Installation.`,
             level: 'danger'
         };
         this.msgs[M.INITIAL_SYNC_GENERIC_ERROR] = {
-            content: i18n({
-                id: 'messages.initialSync.genericError',
-                value: 'Download fehlgeschlagen: Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung besteht. Prüfen Sie auch die Firewalleinstellungen Ihres Systems.'
-            }),
+            content: $localize `:@@messages.initialSync.genericError:Download fehlgeschlagen: Stellen Sie sicher, dass die angegebene Adresse korrekt ist und eine Netzwerkverbindung besteht. Prüfen Sie auch die Firewalleinstellungen Ihres Systems.`,
             level: 'danger'
         };
         this.msgs[M.INITIAL_SYNC_COULD_NOT_START_GENERIC_ERROR] = {
-            content: i18n({
-                id: 'messages.initialSync.couldNotStartGenericError',
-                value: 'Download fehlgeschlagen: Ein unbekannter Fehler ist aufgetreten.'
-            }),
+            content: $localize `:@@messages.initialSync.couldNotStartGenericError:Download fehlgeschlagen: Ein unbekannter Fehler ist aufgetreten.`,
             level: 'danger'
         };
         this.msgs[M.INITIAL_SYNC_INVALID_CREDENTIALS] = {
-            content: i18n({
-                id: 'messages.initialSync.invalidCredentials',
-                value: 'Download fehlgeschlagen: Stellen Sie sicher, dass das Projekt unter der angegebenen Adresse existiert und prüfen Sie das Passwort.'
-            }),
+            content: $localize `:@@messages.initialSync.invalidCredentials:Download fehlgeschlagen: Stellen Sie sicher, dass das Projekt unter der angegebenen Adresse existiert und prüfen Sie das Passwort.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_SUCCESS_SINGLE] = {
-            content: i18n({
-                id: 'messages.import.success.single',
-                value: 'Eine Ressource wurde erfolgreich importiert.'
-            }),
+            content: $localize `:@@messages.import.success.single:Eine Ressource wurde erfolgreich importiert.`,
             level: 'success'
         };
         this.msgs[M.IMPORT_SUCCESS_MULTIPLE] = {
-            content: i18n({
-                id: 'messages.import.success.multiple',
-                value: '[0] Ressourcen wurden erfolgreich importiert.'
-            }),
+            content: $localize `:@@messages.import.success.multiple:[0] Ressourcen wurden erfolgreich importiert.`,
             level: 'success'
         };
         this.msgs[M.IMPORT_WARNING_EMPTY] = {
-            content: i18n({
-                id: 'messages.import.warning.empty',
-                value: 'Die Import-Datei enthält keine Einträge.'
-            }),
+            content: $localize `:@@messages.import.warning.empty:Die Import-Datei enthält keine Einträge.`,
             level: 'warning'
         };
         this.msgs[M.IMPORT_WARNING_IGNORED_EXISTING_IDENTIFIER] = {
-            content: i18n({
-                id: 'messages.import.warning.ignoredExistingIdentifier',
-                value: 'Die Ressource \'[0]\' wurde nicht importiert, weil bereits eine Ressource mit dem gleichen Bezeichner existiert.'
-            }),
+            content: $localize `:@@messages.import.warning.ignoredExistingIdentifier:Die Ressource \'[0]\' wurde nicht importiert, weil bereits eine Ressource mit dem gleichen Bezeichner existiert.`,
             level: 'warning'
         };
         this.msgs[M.IMPORT_WARNING_IGNORED_EXISTING_IDENTIFIERS] = {
-            content: i18n({
-                id: 'messages.import.warning.ignoredExistingIdentifiers',
-                value: '[0] Ressourcen wurden nicht importiert, weil bereits Ressourcen mit dem jeweiligen Bezeichner existieren (vollständige Auflistung unten).'
-            }),
+            content: $localize `:@@messages.import.warning.ignoredExistingIdentifiers:[0] Ressourcen wurden nicht importiert, weil bereits Ressourcen mit dem jeweiligen Bezeichner existieren (vollständige Auflistung unten).`,
             level: 'warning'
         };
         this.msgs[M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIER] = {
-            content: i18n({
-                id: 'messages.import.warning.ignoredMissingIdentifier',
-                value: 'Die Ressource \'[0]\' wurde nicht importiert, weil keine Ressource mit dem Bezeichner gefunden wurde.'
-            }),
+            content: $localize `:@@messages.import.warning.ignoredMissingIdentifier:Die Ressource \'[0]\' wurde nicht importiert, weil keine Ressource mit dem Bezeichner gefunden wurde.`,
             level: 'warning'
         };
         this.msgs[M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIERS] = {
-            content: i18n({
-                id: 'messages.import.warning.ignoredMissingIdentifiers',
-                value: '[0] Ressourcen wurden nicht importiert, weil keine Ressourcen mit dem jeweiligen Bezeichner gefunden wurden (vollständige Auflistung unten).'
-            }),
+            content: $localize `:@@messages.import.warning.ignoredMissingIdentifiers:[0] Ressourcen wurden nicht importiert, weil keine Ressourcen mit dem jeweiligen Bezeichner gefunden wurden (vollständige Auflistung unten).`,
             level: 'warning'
         };
         this.msgs[M.IMPORT_READER_GENERIC_START_ERROR] = {
-            content: i18n({
-                id: 'messages.import.error.genericStartError',
-                value: 'Import kann nicht gestartet werden.'
-            }),
+            content: $localize `:@@messages.import.error.genericStartError:Import kann nicht gestartet werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_READER_FILE_UNREADABLE] = {
-            content: i18n({
-                id: 'messages.import.error.fileUnreadable',
-                value: 'Beim Import ist ein Fehler aufgetreten: Die Datei [0] konnte nicht gelesen werden.',
-            }),
+            content: $localize `:@@messages.import.error.fileUnreadable:Beim Import ist ein Fehler aufgetreten: Die Datei [0] konnte nicht gelesen werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_INVALID_JSON] = {
-            content: i18n({
-                id: 'messages.import.error.invalidJson',
-                value: 'Beim Import ist ein Fehler aufgetreten: Das JSON ist nicht valide. Die ursprüngliche Fehlermeldung lautet: [0].'
-            }),
+            content: $localize `:@@messages.import.error.invalidJson:Beim Import ist ein Fehler aufgetreten: Das JSON ist nicht valide. Die ursprüngliche Fehlermeldung lautet: [0].`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_INVALID_JSONL] = {
-            content: i18n({
-                id: 'messages.import.error.invalidJsonl',
-                value: 'Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile [0] ist nicht valide.'
-            }),
+            content: $localize `:@@messages.import.error.invalidJsonl:Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile [0] ist nicht valide.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_INVALID_GEOJSON_IMPORT_STRUCT] = {
-            content: i18n({
-                id: 'messages.import.error.invalidGeojsonImportStruct',
-                value: 'Fehlerhafte GeoJSON-Importstruktur. Grund: [0].'
-            }),
+            content: $localize `:@@messages.import.error.invalidGeojsonImportStruct:Fehlerhafte GeoJSON-Importstruktur. Grund: [0].`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_MISSING_IDENTIFIER] = {
-            content: i18n({
-                id: 'messages.import.error.missingIdentifier',
-                value: 'Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.'
-            }),
-            level: 'danger'
-        };
-        this.msgs[M.IMPORT_PARSER_MISSING_IDENTIFIER_SHAPEFILE] = {
-            content: i18n({
-                id: 'messages.import.error.missingIdentifierShapefile',
-                value: 'Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne das Attribut "identifier" wurden gefunden.'
-            }),
+            content: $localize `:@@messages.import.error.missingIdentifier:Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_ID_MUST_NOT_BE_SET] = {
-            content: i18n({
-                id: 'messages.import.error.parser.idnottobeset',
-                value: 'Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.'
-            }),
+            content: $localize `:@@messages.import.error.parser.idnottobeset:Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_IDENTIFIER_FORMAT] = {
-            content: i18n({
-                id: 'messages.import.error.identifierFormat',
-                value: 'Beim Import ist ein Fehler aufgetreten: properties.identifier muss eine Zeichenkette sein, keine Zahl.'
-            }),
+            content: $localize `:@@messages.import.error.identifierFormat:Beim Import ist ein Fehler aufgetreten: properties.identifier muss eine Zeichenkette sein, keine Zahl.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_INVALID_CSV] = {
-            content: i18n({
-                id: 'messages.import.error.invalidCsv',
-                value: 'Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile [0] konnte nicht gelesen werden.'
-            }),
+            content: $localize `:@@messages.import.error.invalidCsv:Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile [0] konnte nicht gelesen werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_CSV_INVALID_HEADING] = {
-            content: i18n({
-                id: 'messages.import.error.csvInvalidHeading',
-                value: 'Ungültiger CSV-Header: Siehe [0].'
-            }),
+            content: $localize `:@@messages.import.error.csvInvalidHeading:Ungültiger CSV-Header: Siehe [0].`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_CSV_HEADING_EMPTY_ENTRY] = {
-            content: i18n({
-                id: 'messages.import.error.csvHeadingEmptyEntry',
-                value: 'CSV-Header darf keine leeren Einträge haben.'
-            }),
+            content: $localize `:@@messages.import.error.csvHeadingEmptyEntry:CSV-Header darf keine leeren Einträge haben.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_CSV_HEADING_PATH_ITEM_TYPE_MISMATCH] = {
-            content: i18n({
-                id: 'messages.import.parser.error.csvHeadingPathItemTypeMismatch',
-                value: 'CSV-Header: Array Indices und Object keys dürfen nicht gemischt werden: [0]'
-            }),
+            content: $localize `:@@messages.import.parser.error.csvHeadingPathItemTypeMismatch:CSV-Header: Array Indices und Object keys dürfen nicht gemischt werden: [0]`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE] = {
-            content: i18n({
-                id: 'messages.import.error.csvHeadingArrayIndicesInvalidSequence',
-                value: 'Ungültige Sequenz für Array Indices in CSV-Header: [0]'
-            }),
+            content: $localize `:@@messages.import.error.csvHeadingArrayIndicesInvalidSequence:Ungültige Sequenz für Array Indices in CSV-Header: [0]`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_CSV_ROWS_LENGTH_MISMATCH] = {
-            content: i18n({
-                id: 'messages.import.error.csvRowsLengthMismatch',
-                value: 'Anzahl der Einträge in Zeile [0] stimmt nicht mit Anzahl der Einträge in Header überein'
-            }),
+            content: $localize `:@@messages.import.error.csvRowsLengthMismatch:Anzahl der Einträge in Zeile [0] stimmt nicht mit Anzahl der Einträge in Header überein`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_NOT_A_BOOLEAN] = {
-            content: i18n({
-                id: 'messages.import.error.parser.csv.notaboolean',
-                value: 'CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist kein Boolean.'
-            }),
+            content: $localize `:@@messages.import.error.parser.csv.notaboolean:CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist kein Boolean.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_NOT_A_NUMBER] = {
-            content: i18n({
-                id: 'messages.import.error.parser.csv.notanumber',
-                value: 'CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist keine Zahl.'
-            }),
+            content: $localize `:@@messages.import.error.parser.csv.notanumber:CSV fehlerhaft: Wert "[0]" in Spalte "[1]" ist keine Zahl.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_GENERIC_CSV_ERROR] = {
-            content: i18n({
-                id: 'messages.import.error.genericCsvError',
-                value: 'Beim Import ist ein Fehler aufgetreten: Die CSV-Daten konnten nicht gelesen werden.'
-            }),
+            content: $localize `:@@messages.import.error.genericCsvError:Beim Import ist ein Fehler aufgetreten: Die CSV-Daten konnten nicht gelesen werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_MANDATORY_CSV_FIELD_MISSING] = {
-            content: i18n({
-                id: 'messages.import.error.mandatoryCsvFieldMissing',
-                value: 'Beim Import ist ein Fehler aufgetreten: In Zeile [0] fehlt das Pflichtfeld \'[1]\'.'
-            }),
+            content: $localize `:@@messages.import.error.mandatoryCsvFieldMissing:Beim Import ist ein Fehler aufgetreten: In Zeile [0] fehlt das Pflichtfeld \'[1]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_READER_INVALID_OPERATION_RESOURCE] = {
-            content: i18n({
-                id: 'messages.import.error.invalidOperationResource',
-                value: 'Beim Import ist ein Fehler aufgetreten: Ressourcen der Kategorie [0] können der gewählten Maßnahme der Kategorie [1] nicht zugeordnet werden.'
-            }),
+            content: $localize `:@@messages.import.error.invalidOperationResource:Beim Import ist ein Fehler aufgetreten: Ressourcen der Kategorie [0] können der gewählten Maßnahme der Kategorie [1] nicht zugeordnet werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED] = {
-            content: i18n({
-                id: 'messages.import.error.operationsNotAllowed',
-                value: 'Wenn die Option \'Daten einer Maßnahme zuordnen\' gewählt ist, darf die Import-Datei keine Maßnahmen enthalten.'
-            }),
+            content: $localize `:@@messages.import.error.operationsNotAllowed:Wenn die Option \'Daten einer Maßnahme zuordnen\' gewählt ist, darf die Import-Datei keine Maßnahmen enthalten.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_EXEC_NO_LIES_WITHIN_SET] = {
-            content: i18n({
-                id: 'messages.import.error.onlyplaceandoperationwithoutrecordedinallowed',
-                value: 'Wenn \'Keine Zuordnung\' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte \'isChildOf\'-Zuordnungen haben.'
-            }),
+            content: $localize `:@@messages.import.error.onlyplaceandoperationwithoutrecordedinallowed:Wenn \'Keine Zuordnung\' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte \'isChildOf\'-Zuordnungen haben.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER] = {
-            content: i18n({
-                id: 'messages.import.error.duplicateidentifier',
-                value: 'Mehrfach vorhandener Identifier in Importdatei: \'[0]\'.'
-            }),
+            content: $localize `:@@messages.import.error.duplicateidentifier:Mehrfach vorhandener Identifier in Importdatei: \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_READER_GENERIC_DATASTORE] = {
-            content: i18n({
-                id: 'messages.import.error.genericDatastoreError',
-                value: 'Beim Import ist ein Fehler aufgetreten: Die Ressource [0] konnte nicht gespeichert werden.'
-            }),
+            content: $localize `:@@messages.import.error.genericDatastoreError:Beim Import ist ein Fehler aufgetreten: Die Ressource [0] konnte nicht gespeichert werden.`,
             level: 'danger'
         };
-        this.msgs[M.IMPORT_PARSER_INVALID_GEOMETRY] = {
-            content: i18n({
-                id: 'messages.import.error.invalidGeometry',
-                value: 'Beim Import ist ein Fehler aufgetreten: Invalide Geometriedaten in Zeile [0].'
-            }),
-            level: 'danger'
-        };
+
         this.msgs[M.IMPORT_READER_ROLLBACK] = {
-            content: i18n({
-                id: 'messages.import.error.rollbackError',
-                value: 'Beim Versuch, die bereits importierten Daten zu löschen, ist ein Fehler aufgetreten.'
-            }),
+            content: $localize `:@@messages.import.error.rollbackError:Beim Versuch, die bereits importierten Daten zu löschen, ist ein Fehler aufgetreten.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_EXEC_MISSING_RELATION_TARGET] = {
-            content: i18n({
-                id: 'messages.import.error.missingRelationTarget',
-                value: 'Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der ID [0] konnte nicht gefunden werden.'
-            }),
+            content: $localize `:@@messages.import.error.missingRelationTarget:Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der ID [0] konnte nicht gefunden werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_EXEC_NOT_INTERRELATED] = {
-            content: i18n({
-                id: 'messages.import.error.notInterrelated',
-                value: 'Beim Import ist ein Fehler aufgetreten: Verknüpfung bei \'[0]\' fehlerhaft.'
-            }),
+            content: $localize `:@@messages.import.error.notInterrelated:Beim Import ist ein Fehler aufgetreten: Verknüpfung bei \'[0]\' fehlerhaft.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_EXEC_EMPTY_RELATION] = {
-            content: i18n({
-                id: 'messages.import.error.emptyRelation',
-                value: 'Beim Import ist ein Fehler aufgetreten: Leere Relation bei \'[0]\'.'
-            }),
+            content: $localize `:@@messages.import.error.emptyRelation:Beim Import ist ein Fehler aufgetreten: Leere Relation bei \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN] = {
-            content: i18n({
-                id: 'messages.import.error.liesWithinRecordedInMismatch',
-                value: '\'parent\' zeigt auf Resource einer anderen Maßnahme. Bezeichner: \'[0]\'.'
-            }),
+            content: $localize `:@@messages.import.error.liesWithinRecordedInMismatch:\'parent\' zeigt auf Resource einer anderen Maßnahme. Bezeichner: \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED] = {
-            content: i18n({
-                id: 'messages.importerrors.parentassignmenttooperationnotallowed',
-                value: 'Wenn der Modus \'Daten einer Maßnahme zuordnen gewählt ist\', dürfen keine Zuordnungen zu Maßnahmen per \'parent\' vorgenommen werden.'
-            }),
+            content: $localize `:@@messages.importerrors.parentassignmenttooperationnotallowed:Wenn der Modus \'Daten einer Maßnahme zuordnen gewählt ist\', dürfen keine Zuordnungen zu Maßnahmen per \'parent\' vorgenommen werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARENT_MUST_NOT_BE_ARRAY] = {
-            content: i18n({
-                id: 'messages.Import.ImportErrors.parentMustNotBeArray',
-                value: 'Fehler bei Ressource mit Bezeichner \'[0]\'. Die \'parent\'-Relation darf kein Array sein.'
-            }),
+            content: $localize `:@@messages.Import.ImportErrors.parentMustNotBeArray:Fehler bei Ressource mit Bezeichner \'[0]\'. Die \'parent\'-Relation darf kein Array sein.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_MUST_BE_ARRAY] = {
-            content: i18n({
-                id: 'messages.Import.ImportErrors.relationMustBeArray',
-                value: 'Fehler bei Ressource mit Bezeichner \'[0]\'. Relationen ausser \'isChildOf\' müssen Arrays sein.'
-            }),
+            content: $localize `:@@messages.Import.ImportErrors.relationMustBeArray:Fehler bei Ressource mit Bezeichner \'[0]\'. Relationen ausser \'isChildOf\' müssen Arrays sein.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PREVALIDATION_MISSING_RELATION_TARGET] = {
-            content: i18n({
-                id: 'messages.import.error.prevalidation.missingRelationTarget',
-                value: 'Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem Bezeichner \'[0]\' konnte nicht gefunden werden.'
-            }),
+            content: $localize `:@@messages.import.error.prevalidation.missingRelationTarget:Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem Bezeichner \'[0]\' konnte nicht gefunden werden.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_ERROR_GENERIC] = {
+            content: $localize `:@@messages.import.error.generic:Import fehlgeschlagen.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_NO_OPERATION_ASSIGNABLE] = {
-            content: i18n({
-                id: 'messages.import.error.noOperationAssignable',
-                value: 'Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner Maßnahme mit dem Bezeichner \'[0]\' zugeordnet werden.'
-            }),
+            content: $localize `:@@messages.import.error.noOperationAssignable:Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner Maßnahme mit dem Bezeichner \'[0]\' zugeordnet werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_NO_FEATURE_ASSIGNABLE] = {
-            content: i18n({
-                id: 'messages.import.error.noFeatureAssignable',
-                value: 'Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner stratigraphischen Einheit zugeordnet werden. Ziel-Bezeichner oder Fehler: \'[0]\''
-            }),
+            content: $localize `:@@messages.import.error.noFeatureAssignable:Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner stratigraphischen Einheit zugeordnet werden. Ziel-Bezeichner oder Fehler: \'[0]\'`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_READER_SHAPEFILE_READ_ERROR] = {
-            content: i18n({
-                id: 'messages.import.error.shapefile.readError',
-                value: 'Beim Import ist ein Fehler aufgetreten: Die Datei konnte nicht gelesen werden. Bitte wählen Sie ein gültiges Shapefile (.shp) aus.'
-            }),
-            level: 'danger'
-        };
-        this.msgs[M.IMPORT_READER_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE] = {
-            content: i18n({
-                id: 'messages.import.error.shapefile.unsupportedGeometryType',
-                value: 'Beim Import ist ein Fehler aufgetreten: Der Geometrietyp [0] wird nicht unterstützt.'
-            }),
-            level: 'danger'
-        };
-        this.msgs[M.IMPORT_READER_SHAPEFILE_JSONL_WRITE] = {
-            content: i18n({
-                id: 'messages.import.error.shapefile.jsonlWriteError',
-                value: 'Beim Import ist ein Fehler aufgetreten: Die temporäre Datei [0] konnte nicht angelegt werden.'
-            }),
-            level: 'danger'
-        };
-        this.msgs[M.IMPORT_PARSER_SHAPEFILE_GENERIC] = {
-            content: i18n({
-                id: 'messages.import.error.shapefile.generic',
-                value: 'Beim Import ist ein Fehler aufgetreten: Das Shapefile konnte nicht importiert werden.'
-            }),
+            content: $localize `:@@messages.import.error.shapefile.readError:Beim Import ist ein Fehler aufgetreten: Die Datei konnte nicht gelesen werden. Bitte wählen Sie ein gültiges Shapefile (.shp) aus.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_PARSER_CATALOG_GENERIC] = {
-            content: i18n({
-                id: 'messages.import.error.catalog.generic',
-                value: 'Beim Import ist ein Fehler aufgetreten: Der Katalog konnte nicht importiert werden.'
-            }),
+            content: $localize `:@@messages.import.error.catalog.generic:Beim Import ist ein Fehler aufgetreten: Der Katalog konnte nicht importiert werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_INVALID_CATEGORY] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidCategory',
-                value: 'Ungültige Kategoriedefinition: \'[0]\''
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidCategory:Ungültige Kategoriedefinition: \'[0]\'`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE] = {
-            content: i18n({
-                id: 'messages.import.validation.error.mustHaveLiesWithin',
-                value: 'Ressourcen der Kategorie \'[0]\' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffen ist: \'[1]\'.'
-            }),
+            content: $localize `:@@messages.import.validation.error.mustHaveLiesWithin:Ressourcen der Kategorie \'[0]\' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffene Ressource: \'[1]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_TARGET_CATEGORY_RANGE_MISMATCH] = {
-            content: i18n({
-                id: 'messages.import.validation.error.targetCategoryRangeMismatch',
-                value: 'Eine Ressource der Kategorie \'[2]\' darf nicht mittels \'[1]\' mit \'[0]\' verknüpft werden.'
-            }),
+            content: $localize `:@@messages.import.validation.error.targetCategoryRangeMismatch:Eine Ressource der Kategorie \'[2]\' darf nicht mittels \'[1]\' mit \'[0]\' verknüpft werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_FIELD] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidField',
-                value: 'Fehlende Felddefinition für das Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidField:Fehlende Felddefinition für das Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_FIELDS] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidFields',
-                value: 'Fehlende Felddefinitionen für die Felder \'[1]\' einer Ressource der Kategorie \'[0]\'.'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidFields:Fehlende Felddefinitionen für die Felder \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELD] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidRelationField',
-                value: 'Fehlende Definition für die Relation \'[1]\' einer Ressource der Kategorie \'[0]\'.'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidRelationField:Fehlende Definition für die Relation \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELDS] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidRelationFields',
-                value: 'Fehlende Definitionen für die Relationen \'[1]\' einer Ressource der Kategorie \'[0]\'.'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidRelationFields:Fehlende Definitionen für die Relationen \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidNumericValue',
-                value: 'Ungültiger Zahlenwert im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidNumericValue:Ungültiger Zahlenwert im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidNumericValues',
-                value: 'Ungültige Zahlenwerte in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidNumericValues:Ungültige Zahlenwerte in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_URL] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidUrl',
-                value: 'Ungültige URL im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidUrl:Ungültige URL im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_URLS] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidUrls',
-                value: 'Ungültige URLs in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidUrls:Ungültige URLs in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidDate',
-                value: 'Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidDate:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATES] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidDates',
-                value: 'Ungültige Datumsangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1]. Format für Datumsangaben: "Tag.Monat.Jahr", z. B.: 01.01.2010'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidDates:Ungültige Datumsangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED] = {
+            content: $localize `:@@messages.import.validation.error.invalidDate.rangeNotAllowed:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED] = {
+            content: $localize `:@@messages.import.validation.error.invalidDate.singleNotAllowed:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED] = {
+            content: $localize `:@@messages.import.validation.error.invalidDate.timeNotAllowed:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET] = {
+            content: $localize `:@@messages.import.validation.error.invalidDate.timeNotSet:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Die Angabe einer Uhrzeit ist für dieses Feld erforderlich.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE] = {
+            content: $localize `:@@messages.import.validation.error.endDateBeforeBeginningDate:Ungültige Datumsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\': Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidDatingValue',
-                value: 'Ungültige Datierung im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidDatingValue:Ungültige Datierung im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUES] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidDatingValues',
-                value: 'Ungültige Datierungen in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidDatingValues:Ungültige Datierungen in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidDimensionValue',
-                value: 'Ungültige Maßangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidDimensionValue:Ungültige Maßangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidDimensionValues',
-                value: 'Ungültige Maßangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidDimensionValues:Ungültige Maßangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_WEIGHT_VALUE] = {
+            content: $localize `:@@messages.import.validation.error.invalidWeightValue:Ungültige Gewichtsangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_WEIGHT_VALUES] = {
+            content: $localize `:@@messages.import.validation.error.invalidWeightValues:Ungültige Gewichtsangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_VOLUME_VALUE] = {
+            content: $localize `:@@messages.import.validation.error.invalidVolumeValue:Ungültige Volumenangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_VOLUME_VALUES] = {
+            content: $localize `:@@messages.import.validation.error.invalidVolumeValues:Ungültige Volumenangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUE] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidLiteratureValue',
-                value: 'Ungültiger Literaturverweis im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidLiteratureValue:Ungültiger Literaturverweis im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUES] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidLiteratureValues',
-                value: 'Ungültige Literaturverweise in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidLiteratureValues:Ungültige Literaturverweise in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_COMPOSITE_VALUE] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidCompositeValue',
-                value: 'Ungültiger Kompositfeld-Eintrag im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidCompositeValue:Ungültiger Kompositfeld-Eintrag im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_COMPOSITE_VALUES] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidCompositeValues',
-                value: 'Ungültige Kompositfeld-Einträge in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidCompositeValues:Ungültige Kompositfeld-Einträge in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidDropdownValues',
-                value: 'Ungültiger Bereich im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidDropdownValues:Ungültiger Bereich im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_MAP_LAYER_RELATION_TARGETS] = {
-            content: i18n({
-                id: 'messages.import.validation.error.invalidMapLayerRelationTargets',
-                value: 'Die Relation \'hasDefaultMapLayer\' einer Ressource der Kategorie \'[0]\' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation \'hasMapLayer\' verwiesen wird.'
-            }),
+            content: $localize `:@@messages.import.validation.error.invalidMapLayerRelationTargets:Die Relation \'hasDefaultMapLayer\' einer Ressource der Kategorie \'[0]\' verweist auf eine oder mehrere Ressourcen, auf die nicht in der Relation \'hasMapLayer\' verwiesen wird.`,
             level: 'danger'
         };
-        this.msgs[M.IMPORT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE] = {
-            content: i18n({
-                id: 'messages.import.validation.error.endDateBeforeBeginningDate',
-                value: 'Das Enddatum einer Ressource der Kategorie \'[0]\' liegt vor dem Startdatum.'
-            }),
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS] = {
+            content: $localize `:@@messages.import.validation.error.invalidWorkflowRelationTargets:Es dürfen nicht die selben Ressourcen sowohl als Ziele der Relation \'isCarriedOutOn\' als auch der Relation \'resultsIn\' angegeben werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_MISSING_PROPERTY] = {
-            content: i18n({
-                id: 'messages.import.validation.error.missingProperty',
-                value: 'Eigenschaft(en) einer Ressource der Kategorie \'[0]\' müssen vorhanden sein: \'[1]\'.'
-            }),
+            content: $localize `:@@messages.import.validation.error.missingProperty:Folgende Felder einer Ressource der Kategorie \'[0]\' müssen vorhanden sein: \'[1]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED] = {
-            content: i18n({
-                id: 'messages.import.validation.error.maxCharactersExceeded',
-                value: 'Im Feld \'[1]\' der Kategorie \'[0]\' dürfen maximal [2] Zeichen eingetragen werden.'
-            }),
+            content: $localize `:@@messages.import.validation.error.maxCharactersExceeded:Im Feld \'[1]\' der Kategorie \'[0]\' dürfen maximal [2] Zeichen eingetragen werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_RESOURCE_LIMIT_EXCEEDED] = {
-            content: i18n({
-                id: 'messages.import.validation.error.resourceLimitExceeded',
-                value: 'In diesem Projekt dürfen maximal [1] Ressourcen der Kategorie \'[0]\' angelegt werden.'
-            }),
+            content: $localize `:@@messages.import.validation.error.resourceLimitExceeded:In diesem Projekt dürfen maximal [1] Ressourcen der Kategorie \'[0]\' angelegt werden.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_DUPLICATE_QR_CODE_IN_IMPORT_FILE] = {
+            content: $localize `:@@messages.import.validation.error.duplicateQrCodeInImportFile:Der QR-Code \'[0]\' ist in mehr als einem Importdatensatz eingetragen.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_VALIDATION_DUPLICATE_QR_CODE_IN_PROJECT] = {
+            content: $localize `:@@messages.import.validation.error.duplicateQrCodeInProject:Der QR-Code \'[0]\' ist bereits der Ressource \'[1]\' zugeordnet.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_CATEGORY_NOT_ALLOWED] = {
-            content: i18n({
-                id: 'messages.import.error.categoryNotAllowed',
-                value: 'Ressourcen der folgenden Kategorie sind beim Import nicht erlaubt: \'[0]\''
-            }),
+            content: $localize `:@@messages.import.error.categoryNotAllowed:Ressourcen der folgenden Kategorie sind beim Import nicht erlaubt: \'[0]\'`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_CATEGORY_ONLY_ALLOWED_ON_UPDATE] = {
-            content: i18n({
-                id: 'messages.import.error.categoryOnlyAllowedOnUpdate',
-                value: 'Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: \'[0]\''
-            }),
-            level: 'danger'
-        };
-        this.msgs[M.IMPORT_MUST_BE_IN_SAME_OPERATION] = {
-            content: i18n({
-                id: 'messages.import.error.mustBeInSameOperation',
-                value: 'Ressourcen liegen in unterschiedlichen Maßnahmen: \'[0]\', \'[1]\''
-            }),
+            content: $localize `:@@messages.import.error.categoryOnlyAllowedOnUpdate:Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: \'[0]\'`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_CATEGORY_CANNOT_BE_CHANGED] = {
-            content: i18n({
-                id: 'messages.import.error.categoryCannotBeChanged',
-                value: 'Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: \'[0]\''
-            }),
+            content: $localize `:@@messages.import.error.categoryCannotBeChanged:Die Kategorie kann beim Import nicht geändert werden. Betroffene Ressource: \'[0]\'`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN] = {
-            content: i18n({
-                id: 'messages.import.error.emptySlotsInArraysForbidden',
-                value: 'Leere Array-Felder sind nicht erlaubt. Betroffen ist: \'[0]\''
-            }),
+            content: $localize `:@@messages.import.error.emptySlotsInArraysForbidden:Leere Listeneinträge sind nur am Ende der Liste erlaubt. Betroffene Ressource: \'[0]\'`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES] = {
-            content: i18n({
-                id: 'messages.import.error.arrayOfHeterogeneousTypes',
-                value: 'Arrays müssen konsistent Felder vom gleichen Typ beinhalten. Betroffen ist: \'[0]\''
-            }),
+            content: $localize `:@@messages.import.error.arrayOfHeterogeneousTypes:Listenfelder müssen konsistent Einträge des gleichen Typs beinhalten. Betroffene Ressource: \'[0]\'`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING] = {
-            content: i18n({
-                id: 'messages.import.error.mustNotBeEmptyString',
-                value: 'Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.'
-            }),
+            content: $localize `:@@messages.import.error.mustNotBeEmptyString:Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_INVALID_FILE_FORMAT] = {
-            content: i18n({
-                id: 'messages.import.error.invalidFileFormat',
-                value: 'Die ausgewählte Datei kann nicht importiert werden. Gültige Dateiendungen sind: [0]'
-            }),
+            content: $localize `:@@messages.import.error.invalidFileFormat:Die ausgewählte Datei kann nicht importiert werden. Gültige Dateiendungen sind: [0]`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE] = {
-            content: i18n({
-                id: 'messages.import.error.emptyObjectInResource',
-                value: 'Leere Objekte sind in Importdatensätzen nicht erlaubt (Ausnahme: Feld "relations").'
-            }),
+            content: $localize `:@@messages.import.error.emptyObjectInResource:Leere Objekte sind in Importdatensätzen nicht erlaubt (Ausnahme: Feld "relations").`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_CATALOG_ERROR_CONNECTED_TYPE_DELETED] = {
-            content: i18n({
-                id: 'messages.import.catalog.error.connected_type_deleted',
-                value: 'Update eines bestehenden Katalogs abgebrochen. Die bestehende Version enthält mit Funden verknüpfte Typen, die in der Import-Datei nicht mehr vorhanden sind. Bitte entfernen Sie die Verknüpfungen und starten den Import anschließend erneut. Betroffene Typen: [0]'
-            }),
+            content: $localize `:@@messages.import.catalog.error.connected_type_deleted:Update eines bestehenden Katalogs abgebrochen. Die bestehende Version enthält mit Funden verknüpfte Typen, die in der Import-Datei nicht mehr vorhanden sind. Bitte entfernen Sie die Verknüpfungen und starten den Import anschließend erneut. Betroffene Typen: [0]`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_CATALOG_ERROR_IDENTIFIER_CLASH] = {
-            content: i18n({
-                id: 'messages.import.catalog.error.identifier_clash',
-                value: 'Katalogimport abgebrochen. Identifier-Konflikte mit Dokumenten der Datenbank. Identifier: [0]'
-            }),
+            content: $localize `:@@messages.import.catalog.error.identifier_clash:Katalogimport abgebrochen. Identifier-Konflikte mit Dokumenten der Datenbank. Identifier: [0]`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_REIMPORT_CATALOG] = {
-            content: i18n({
-                id: 'messages.import.catalog.error.owner_must_not_reimport_catalog',
-                value: 'Katalogimport abgebrochen. Löschen Sie den Katalog \'[0]\', bevor Sie ihn erneut importieren.'
-            }),
+            content: $localize `:@@messages.import.catalog.error.owner_must_not_reimport_catalog:Katalogimport abgebrochen. Löschen Sie den Katalog \'[0]\', bevor Sie ihn erneut importieren.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_OVERWRITE_EXISTING_IMAGES] = {
-            content: i18n({
-                id: 'messages.import.catalog.error.owner_must_not_overwrite_existing_images',
-                value: 'Katalogimport abgebrochen. Importdatei beinhaltet Bilder, die bereits in der Datenbank vorhanden sind.'
-            }),
+            content: $localize `:@@messages.import.catalog.error.owner_must_not_overwrite_existing_images:Katalogimport abgebrochen. Importdatei beinhaltet Bilder, die bereits in der Datenbank vorhanden sind.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_CATALOG_ERROR_DIFFERENT_PROJECT_ENTRIES] = {
-            content: i18n({
-                id: 'messages.import.catalog.error.differentProjectEntries',
-                value: 'Katalogimport abgebrochen. Alle zu importierenden Dokumente müssen den gleichen Projekt-Eintrag haben.'
-            }),
+            content: $localize `:@@messages.import.catalog.error.differentProjectEntries:Katalogimport abgebrochen. Alle zu importierenden Dokumente müssen den gleichen Projekt-Eintrag haben.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_CATALOG_ERROR_NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS] = {
-            content: i18n({
-                id: 'messages.import.catalog.error.noOrTooManyTypeCatalogDocuments',
-                value: 'Katalogimport abgebrochen. Keine oder zu viele TypeCatalog-Dokumente.'
-            }),
+            content: $localize `:@@messages.import.catalog.error.noOrTooManyTypeCatalogDocuments:Katalogimport abgebrochen. Keine oder zu viele TypeCatalog-Dokumente.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_CATALOG_ERROR_INVALID_RELATIONS] = {
-            content: i18n({
-                id: 'messages.import.catalog.error.invalidRelations',
-                value: 'Katalogimport abgebrochen. Ungültige Relationen.'
-            }),
+            content: $localize `:@@messages.import.catalog.error.invalidRelations:Katalogimport abgebrochen. Ungültige Relationen.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMPORT_CATALOG_ERROR_INVALID_CATEGORY] = {
+            content: $localize `:@@messages.import.catalog.error.unconfiguredCategory:Katalogimport abgebrochen. Die Kategorie \'[0]\' ist keine konfigurierte Unterkategorie von \'Typ'\ oder \'Abbildung'\.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN] = {
-            content: i18n({
-                id: 'messages.import.validation.error.noRecordedIn',
-                value: 'Fehlende Definition von \'Aufgenommen in Maßnahme\'. Eine Zuordnung muss vorgenommen werden.'
-            }),
+            content: $localize `:@@messages.import.validation.error.noRecordedIn:Fehlende Definition von \'Aufgenommen in Maßnahme\'. Eine Zuordnung muss vorgenommen werden.`,
             level: 'danger'
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET] = {
-            content: i18n({
-                id: 'messages.import.validation.error.noRecordedInTarget',
-                value: 'Fehlendes Ziel einer Relation vom Typ \'Aufgenommen in Maßnahme\'. Ziel-ID: [0].'
-            }),
+            content: $localize `:@@messages.import.validation.error.noRecordedInTarget:Fehlendes Ziel einer Relation vom Typ \'Aufgenommen in Maßnahme\'. Ziel-ID: [0].`,
             level: 'danger'
         };
         this.msgs[M.EXPORT_SUCCESS] = {
-            content: i18n({
-                id: 'messages.export.success',
-                value: 'Die Exportdatei wurde erfolgreich erstellt.'
-            }),
+            content: $localize `:@@messages.export.success:Die Exportdatei wurde erfolgreich erstellt.`,
             level: 'success'
         };
         this.msgs[M.EXPORT_ERROR_GENERIC] = {
-            content: i18n({
-                id: 'messages.export.error.generic',
-                value: 'Beim Export ist ein Fehler aufgetreten.'
-            }),
+            content: $localize `:@@messages.export.error.generic:Beim Export ist ein Fehler aufgetreten.`,
             level: 'danger'
         };
         this.msgs[M.EXPORT_GEOJSON_ERROR_WRITE] = {
-            content: i18n({
-                id: 'messages.export.geojson.error.write',
-                value: 'Beim Export ist ein Fehler aufgetreten: Die GeoJSON-Datei konnte nicht geschrieben werden.'
-            }),
+            content: $localize `:@@messages.export.geojson.error.write:Beim Export ist ein Fehler aufgetreten: Die GeoJSON-Datei konnte nicht geschrieben werden.`,
             level: 'danger'
         };
         this.msgs[M.EXPORT_CATALOG_IMAGES_NOT_EXCLUSIVE_TO_CATALOG] = {
-            content: i18n({
-                id: 'messages.export.error.catalog.images-not-exclusive-to-catalog',
-                value: 'Beim Export ist ein Fehler aufgetreten: Bilder des Kataloges dürfen nicht gleichzeitig mit anderen Ressourcen verbunden sein. Bilder: [0]'
-            }),
+            content: $localize `:@@messages.export.error.catalog.images-not-exclusive-to-catalog:Beim Export ist ein Fehler aufgetreten: Bilder des Kataloges dürfen nicht gleichzeitig mit anderen Ressourcen verbunden sein. Bilder: [0]`,
             level: 'danger'
         };
         this.msgs[M.EXPORT_CATALOG_FAILED_TO_COPY_IMAGES] = {
-            content: i18n({
-                id: 'messages.export.error.catalog.failedToCopyImages',
-                value: 'Beim Export ist ein Fehler aufgetreten: Die mit dem Katalog verknüpften Bilder konnten nicht exportiert werden. Bitte prüfen Sie, ob die Original-Bilddateien im Bilderverzeichnis vorhanden sind.'
-            }),
-            level: 'danger'
-        };
-        this.msgs[M.EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION] = {
-            content: i18n({
-                id: 'messages.export.shapefile.error.tempFolderCreation',
-                value: 'Beim Export ist ein Fehler aufgetreten: Das temporäre Verzeichnis [0] konnte nicht angelegt werden.'
-            }),
-            level: 'danger'
-        };
-        this.msgs[M.EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION] = {
-            content: i18n({
-                id: 'messages.export.shapefile.error.zipFileCreation',
-                value: 'Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.'
-            }),
+            content: $localize `:@@messages.export.error.catalog.failedToCopyImages:Beim Export ist ein Fehler aufgetreten: Die mit dem Katalog verknüpften Bilder konnten nicht exportiert werden. Bitte prüfen Sie, ob die Original-Bilddateien im Bilderverzeichnis vorhanden sind.`,
             level: 'danger'
         };
         this.msgs[M.EXPORT_SHAPEFILE_ERROR_WRITE] = {
-            content: i18n({
-                id: 'messages.export.shapefile.error.write',
-                value: 'Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.'
-            }),
+            content: $localize `:@@messages.export.shapefile.error.write:Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.`,
             level: 'danger'
         };
-        this.msgs[M.EXPORT_SHAPEFILE_ERROR_GET_RESOURCES] = {
-            content: i18n({
-                id: 'messages.export.shapefile.error.getResources',
-                value: 'Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.'
-            }),
+        this.msgs[M.EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION] = {
+            content: $localize `:@@messages.export.shapefile.error.zipFileCreation:Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.`,
             level: 'danger'
         };
         this.msgs[M.EXPORT_CSV_WARNING_INVALID_FIELD_DATA_SINGLE] = {
-            content: i18n({
-                id: 'messages.export.csv.warning.invalidFieldData.single',
-                value: 'Das Feld "[0]" der Ressoure [1] wurde beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen.'
-            }),
+            content: $localize `:@@messages.export.csv.warning.invalidFieldData.single:Das Feld "[0]" der Ressoure [1] wurde beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen.`,
             level: 'warning'
         };
         this.msgs[M.EXPORT_CSV_WARNING_INVALID_FIELD_DATA_MULTIPLE] = {
-            content: i18n({
-                id: 'messages.export.csv.warning.invalidFieldData.multiple',
-                value: 'Mehrere Felder wurden beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen (vollständige Auflistung unten).'
-            }),
+            content: $localize `:@@messages.export.csv.warning.invalidFieldData.multiple:Mehrere Felder wurden beim Export ignoriert, weil die eingetragenen Felddaten nicht dem konfigurierten Eingabetyp entsprechen (vollständige Auflistung unten).`,
             level: 'warning'
         };
         this.msgs[M.DATASTORE_ERROR_NOT_FOUND] = {
-            content: i18n({
-                id: 'messages.datastore.error.notFound',
-                value: 'Die Ressource konnte nicht gefunden werden.'
-            }),
+            content: $localize `:@@messages.datastore.error.notFound:Die Ressource konnte nicht gefunden werden.`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_WARNING_SAVE_CONFLICT] = {
-            content: i18n({
-                id: 'messages.docedit.warning.saveConflict',
-                value: 'Beim Speichern der Ressource ist ein Konflikt aufgetreten.'
-            }),
+            content: $localize `:@@messages.docedit.warning.saveConflict:Beim Speichern der Ressource ist ein Konflikt aufgetreten.`,
             level: 'warning'
         };
-        this.msgs[M.DOCEDIT_WARNING_CATEGORY_CHANGE_FIELDS] = {
-            content: i18n({
-                id: 'messages.docedit.warning.categoryChange.fields',
-                value: 'Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]'
-            }),
-            level: 'warning'
-        };
-        this.msgs[M.DOCEDIT_WARNING_CATEGORY_CHANGE_RELATIONS] = {
-            content: i18n({
-                id: 'messages.docedit.warning.categoryChange.relations',
-                value: 'Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren gehen: [0]'
-            }),
+        this.msgs[M.DOCEDIT_WARNING_FIELD_DATA_DELETION] = {
+            content: $localize `:@@messages.docedit.warning.fieldDataDeletion:Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]`,
             level: 'warning'
         };
         this.msgs[M.DOCEDIT_ERROR_SAVE] = {
-            content: i18n({
-                id: 'messages.docedit.error.save',
-                value: 'Beim Speichern der Ressource ist ein Fehler aufgetreten.'
-            }),
+            content: $localize `:@@messages.docedit.error.save:Beim Speichern der Ressource ist ein Fehler aufgetreten.`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_ERROR_DELETE] = {
-            content: i18n({
-                id: 'messages.docedit.error.delete',
-                value: 'Beim Löschen der Ressource ist ein Fehler aufgetreten.'
-            }),
+            content: $localize `:@@messages.docedit.error.delete:Beim Löschen der Ressource ist ein Fehler aufgetreten.`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_ERROR_RESOLVE_CONFLICT] = {
-            content: i18n({
-                id: 'messages.docedit.error.resolveConflict',
-                value: 'Der Konflikt konnte nicht gelöst werden. Bitte prüfen Sie, ob der Konflikt bereits von einem anderen Benutzer bzw. einer anderen Benutzerin gelöst wurde.'
-            }),
+            content: $localize `:@@messages.docedit.error.resolveConflict:Der Konflikt konnte nicht gelöst werden. Bitte prüfen Sie, ob der Konflikt bereits von einem anderen Benutzer bzw. einer anderen Benutzerin gelöst wurde.`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.invalidNumericValue',
-                value: 'Bitte tragen Sie im Feld \'[1]\' einen gültigen Zahlenwert ein.'
-            }),
+            content: $localize `:@@messages.docedit.validation.error.invalidNumericValue:Bitte tragen Sie im Feld \'[1]\' einen gültigen Zahlenwert ein.`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.invalidNumericValues',
-                value: 'Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].'
-            }),
+            content: $localize `:@@messages.docedit.validation.error.invalidNumericValues:Bitte tragen Sie in den folgenden Feldern gültige Zahlenwerte ein: [1].`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_URL] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.invalidUrl',
-                value: 'Bitte tragen Sie im Feld \'[1]\' eine gültige URL ein.'
-            }),
+            content: $localize `:@@messages.docedit.validation.error.invalidUrl:Bitte tragen Sie im Feld \'[1]\' eine gültige URL ein.`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_URLS] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.invalidUrls',
-                value: 'Bitte tragen Sie in den folgenden Feldern gültige URLs ein: [1].'
-            }),
+            content: $localize `:@@messages.docedit.validation.error.invalidUrls:Bitte tragen Sie in den folgenden Feldern gültige URLs ein: [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate:Bitte tragen Sie im Feld \'[1]\' eine gültige Datumsangabe ein.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATES] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDates:Bitte tragen Sie in den folgenden Feldern gültige Datumsangaben ein: [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_RANGE_NOT_ALLOWED] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate.rangeNotAllowed:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_SINGLE_NOT_ALLOWED] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate.singleNotAllowed:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_ALLOWED] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate.timeNotAllowed:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_TIME_NOT_SET] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidDate.timeNotSet:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATE_END_DATE_BEFORE_BEGINNING_DATE] = {
+            content: $localize `:@@messages.docedit.validation.error.endDateBeforeBeginningDate:Bitte korrigieren Sie die Datumsangabe im Feld \'[1]\': Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUE] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.invalidDatingValue',
-                value: 'Bitte tragen Sie im Feld \'[1]\' eine gültige Datierung ein.'
-            }),
+            content: $localize `:@@messages.docedit.validation.error.invalidDatingValue:Bitte tragen Sie im Feld \'[1]\' eine gültige Datierung ein.`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DATING_VALUES] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.invalidDatingValues',
-                value: 'Bitte tragen Sie in den folgenden Feldern gültige Datierungen ein: [1].'
-            }),
+            content: $localize `:@@messages.docedit.validation.error.invalidDatingValues:Bitte tragen Sie in den folgenden Feldern gültige Datierungen ein: [1].`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.invalidDimensionValue',
-                value: 'Bitte tragen Sie im Feld \'[1]\' eine gültige Maßangabe ein.'
-            }),
+            content: $localize `:@@messages.docedit.validation.error.invalidDimensionValue:Bitte tragen Sie im Feld \'[1]\' eine gültige Maßangabe ein.`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.invalidDimensionValues',
-                value: 'Bitte tragen Sie in den folgenden Feldern gültige Maßangaben ein: [1].'
-            }),
+            content: $localize `:@@messages.docedit.validation.error.invalidDimensionValues:Bitte tragen Sie in den folgenden Feldern gültige Maßangaben ein: [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_WEIGHT_VALUE] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidWeightValue:Bitte tragen Sie im Feld \'[1]\' eine gültige Gewichtsangabe ein.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_WEIGHT_VALUES] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidWeightValues:Bitte tragen Sie in den folgenden Feldern gültige Gewichtsangaben ein: [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_VOLUME_VALUE] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidVolumeValue:Bitte tragen Sie im Feld \'[1]\' eine gültige Volumenangabe ein.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_VOLUME_VALUES] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidVolumeValues:Bitte tragen Sie in den folgenden Feldern gültige Volumenangaben ein: [1].`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATOR] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.invalidDecimalSeparator',
-                value: 'Bitte verwenden Sie im Feld \'[1]\' den Punkt als Dezimaltrennzeichen.'
-            }),
+            content: $localize `:@@messages.docedit.validation.error.invalidDecimalSeparator:Bitte verwenden Sie im Feld \'[1]\' den Punkt als Dezimaltrennzeichen.`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_DECIMAL_SEPARATORS] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.invalidDecimalSeparators',
-                value: 'Bitte verwenden Sie in den folgenden Feldern den Punkt als Dezimaltrennzeichen: [1].'
-            }),
+            content: $localize `:@@messages.docedit.validation.error.invalidDecimalSeparators:Bitte verwenden Sie in den folgenden Feldern den Punkt als Dezimaltrennzeichen: [1].`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_WORKFLOW_RELATION_TARGETS] = {
+            content: $localize `:@@messages.docedit.validation.error.invalidWorkflowRelationTargets:Bitte geben Sie nicht die selben Ressourcen sowohl als Ziele der Relation \'[0]\' als auch der Relation \'[1]\' an.`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.missingProperty',
-                value: 'Bitte füllen Sie das Feld \'[1]\' aus.'
-            }),
+            content: $localize `:@@messages.docedit.validation.error.missingProperty:Bitte füllen Sie das Feld \'[1]\' aus.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTIES] = {
+            content: $localize `:@@messages.docedit.validation.error.missingProperties:Bitte füllen Sie die folgenden Felder aus: [1]`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_MAX_CHARACTERS_EXCEEDED] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.maxCharactersExceeded',
-                value: 'Im Feld \'[1]\' dürfen maximal [2] Zeichen eingetragen werden.'
-            }),
+            content: $localize `:@@messages.docedit.validation.error.maxCharactersExceeded:Im Feld \'[1]\' dürfen maximal [2] Zeichen eingetragen werden.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELD] = {
+            content: $localize `:@@messages.docedit.validation.error.unallowedCharacterInField:Das Zeichen \';\' ist im Feld \'[0]\' nicht erlaubt.`,
+            level: 'danger'
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_UNALLOWED_CHARACTER_IN_FIELDS] = {
+            content: $localize `:@@messages.docedit.validation.error.unallowedCharacterInFields:Das Zeichen \';\' ist in den folgenden Feldern nicht erlaubt: [0]`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.noRecordedIn',
-                value: 'Bitte wählen Sie eine Zielressource für die Relation \'Aufgenommen in Maßnahme\' aus.'
-            }),
+            content: $localize `:@@messages.docedit.validation.error.noRecordedIn:Bitte wählen Sie eine Zielressource für die Relation \'Aufgenommen in Maßnahme\' aus.`,
             level: 'danger'
         };
         this.msgs[M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.noRecordedInTarget',
-                value: 'Die Zielressource [0] der Relation \'Aufgenommen in Maßnahme\' konnte nicht gefunden werden.'
-            }),
-            level: 'danger'
-        };
-        this.msgs[M.DOCEDIT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE] = {
-            content: i18n({
-                id: 'messages.docedit.validation.error.endDateBeforeBeginningDate',
-                value: 'Das angegebene Enddatum liegt vor dem Startdatum. Bitte prüfen Sie die eingetragenen Daten.'
-            }),
+            content: $localize `:@@messages.docedit.validation.error.noRecordedInTarget:Die Zielressource [0] der Relation \'Aufgenommen in Maßnahme\' konnte nicht gefunden werden.`,
             level: 'danger'
         };
         this.msgs[M.IMAGES_SUCCESS_IMAGES_UPLOADED] = {
-            content: i18n({
-                id: 'messages.images.success.imagesUploaded',
-                value: '[0] Bilder wurden erfolgreich importiert.'
-            }),
+            content: $localize `:@@messages.images.success.imagesUploaded:[0] Bilder wurden erfolgreich importiert.`,
             level: 'success'
         };
         this.msgs[M.IMAGES_SUCCESS_WLD_FILE_UPLOADED] = {
-            content: i18n({
-                id: 'messages.images.success.wldFileUploaded',
-                value: 'Zu einem Bild wurden Georeferenzdaten aus einem World-File importiert.'
-            }),
+            content: $localize `:@@messages.images.success.wldFileUploaded:Zu einem Bild wurden Georeferenzdaten aus einem World-File importiert.`,
             level: 'success'
         };
         this.msgs[M.IMAGES_SUCCESS_WLD_FILES_UPLOADED] = {
-            content: i18n({
-                id: 'messages.images.success.wldFilesUploaded',
-                value: 'Zu [0] Bildern wurden Georeferenzdaten aus World-Files importiert.'
-            }),
+            content: $localize `:@@messages.images.success.wldFilesUploaded:Zu [0] Bildern wurden Georeferenzdaten aus World-Files importiert.`,
+            level: 'success'
+        };
+        this.msgs[M.IMAGES_SUCCESS_IMAGES_EXPORTED_SINGLE] = {
+            content: $localize `:@@messages.images.success.imagesExported.single:Das Bild wurde erfolgreich exportiert.`,
+            level: 'success'
+        };
+        this.msgs[M.IMAGES_SUCCESS_IMAGES_EXPORTED_MULTIPLE] = {
+            content: $localize `:@@messages.images.success.imagesExported.multiple:[0] Bilder wurden erfolgreich exportiert.`,
+            level: 'success'
+        };
+        this.msgs[M.IMAGES_SUCCESS_IMAGES_DOWNLOADED_SINGLE] = {
+            content: $localize `:@@messages.images.success.imagesDownloaded.single:Das Originalbild wurde erfolgreich heruntergeladen.`,
+            level: 'success'
+        };
+        this.msgs[M.IMAGES_SUCCESS_IMAGES_DOWNLOADED_MULTIPLE] = {
+            content: $localize `:@@messages.images.success.imagesDownloaded.multiple:[0] Originalbilder wurden erfolgreich heruntergeladen.`,
             level: 'success'
         };
         this.msgs[M.IMAGES_ERROR_FILEREADER] = {
-            content: i18n({
-                id: 'messages.images.error.fileReader',
-                value: 'Datei \'[0]\' konnte nicht vom lokalen Dateisystem gelesen werden.'
-            }),
+            content: $localize `:@@messages.images.error.fileReader:Datei \'[0]\' konnte nicht vom lokalen Dateisystem gelesen werden.`,
             level: 'danger'
         };
         this.msgs[M.IMAGES_ERROR_DUPLICATE_FILENAME] = {
-            content: i18n({
-                id: 'messages.images.error.duplicateFilename',
-                value: 'Die Bilddatei \'[0]\' konnte nicht hinzugefügt werden. Ein Bild mit dem gleichen Dateinamen existiert bereits.'
-            }),
+            content: $localize `:@@messages.images.error.duplicateFilename:Die Bilddatei \'[0]\' konnte nicht hinzugefügt werden. Ein Bild mit dem gleichen Dateinamen existiert bereits.`,
             level: 'danger'
         };
         this.msgs[M.IMAGES_ERROR_DUPLICATE_FILENAMES] = {
-            content: i18n({
-                id: 'messages.images.error.duplicateFilenames',
-                value: 'Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen Dateinamen bereits existieren: [0]'
-            }),
+            content: $localize `:@@messages.images.error.duplicateFilenames:Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen Dateinamen bereits existieren: [0]`,
+            level: 'danger'
+        };
+        this.msgs[M.IMAGES_ERROR_UNALLOWED_CHARACTER_IN_FILENAME] = {
+            content: $localize `:@@messages.images.error.unallowedCharacterInFilename:Die Bilddatei '\[0]\' konnte nicht hinzugefügt werden. Das Zeichen \';\' ist in Dateinamen nicht erlaubt.`,
             level: 'danger'
         };
         this.msgs[M.IMAGES_ERROR_UNMATCHED_WLD_FILES] = {
-            content: i18n({
-                id: 'messages.images.error.unmachtedWldFiles',
-                value: 'Die folgenden World-Files konnten nicht geladen werden, da die entsprechenden Bilddateien nicht gefunden wurden: [0]'
-            }),
+            content: $localize `:@@messages.images.error.unmachtedWldFiles:Die folgenden World-Files konnten nicht geladen werden, da die entsprechenden Bilddateien nicht gefunden wurden: [0]`,
+            level: 'danger'
+        };
+        this.msgs[M.IMAGES_ERROR_EXPORT_FAILED] = {
+            content: $localize `:@@messages.images.error.exportFailed:Beim Export der Bilder ist ein Fehler aufgetreten.`,
+            level: 'danger'
+        };
+        this.msgs[M.IMAGES_ERROR_DOWNLOAD_FAILED] = {
+            content: $localize `:@@messages.images.error.downloadFailed:Beim Versuch, das Bild \'[0]\' herunterzuladen, ist ein Fehler aufgetreten.`,
             level: 'danger'
         };
         this.msgs[M.IMAGESTORE_ERROR_INVALID_PATH] = {
-            content: i18n({
-                id: 'messages.imagestore.error.invalidPath',
-                value: 'Das Bilderverzeichnis konnte nicht gefunden werden. Der Verzeichnispfad \'[0]\' ist ungültig.'
-            }),
+            content: $localize `:@@messages.imagestore.error.invalidPath:Das Bilderverzeichnis konnte nicht gefunden werden. Der Verzeichnispfad \'[0]\' ist ungültig.`,
             level: 'warning'
         };
         this.msgs[M.IMAGESTORE_ERROR_INVALID_PATH_READ] = {
-            content: i18n({
-                id: 'messages.imagestore.error.invalidPath.read',
-                value: 'Es können keine Dateien aus dem Bilderverzeichnis gelesen werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.'
-            }),
+            content: $localize `:@@messages.imagestore.error.invalidPath.read:Es können keine Dateien aus dem Bilderverzeichnis gelesen werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.`,
             level: 'warning'
         };
         this.msgs[M.IMAGESTORE_ERROR_INVALID_PATH_WRITE] = {
-            content: i18n({
-                id: 'messages.imagestore.error.invalidPath.write',
-                value: 'Es können keine Dateien im Bilderverzeichnis gespeichert werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.'
-            }),
+            content: $localize `:@@messages.imagestore.error.invalidPath.write:Es können keine Dateien im Bilderverzeichnis gespeichert werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.`,
             level: 'danger'
         };
         this.msgs[M.IMAGESTORE_ERROR_INVALID_PATH_DELETE] = {
-            content: i18n({
-                id: 'messages.imagestore.error.invalidPath.delete',
-                value: 'Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.'
-            }),
+            content: $localize `:@@messages.imagestore.error.invalidPath.delete:Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.`,
             level: 'danger'
         };
         this.msgs[M.IMAGESTORE_ERROR_UPLOAD] = {
-            content: i18n({
-                id: 'messages.imagestore.error.upload',
-                value: 'Die Datei \'[0]\' konnte nicht gelesen werden.'
-            }),
+            content: $localize `:@@messages.imagestore.error.upload:Die Datei \'[0]\' konnte nicht gelesen werden.`,
             level: 'danger'
         };
         this.msgs[M.IMAGESTORE_ERROR_UPLOAD_PIXEL_LIMIT_EXCEEDED] = {
-            content: i18n({
-                id: 'messages.imagestore.error.upload.pixelLimitExceeded',
-                value: 'Die Datei \'[0]\' konnte nicht gelesen werden: Die maximale Pixelanzahl von [1] wurde überschritten. Bitte verringern Sie die Auflösung des Bildes und versuchen Sie es erneut.'
-            }),
+            content: $localize `:@@messages.imagestore.error.upload.pixelLimitExceeded:Die Datei \'[0]\' konnte nicht gelesen werden: Die maximale Pixelanzahl von [1] wurde überschritten. Bitte verringern Sie die Auflösung des Bildes und versuchen Sie es erneut.`,
             level: 'danger'
         };
         this.msgs[M.IMAGESTORE_ERROR_WRITE] = {
-            content: i18n({
-                id: 'messages.imagestore.error.write',
-                value: 'Die Datei \'[0]\' konnte nicht im Bilderverzeichnis gespeichert werden.'
-            }),
+            content: $localize `:@@messages.imagestore.error.write:Die Datei \'[0]\' konnte nicht im Bilderverzeichnis gespeichert werden.`,
             level: 'danger'
         };
         this.msgs[M.IMAGESTORE_ERROR_DELETE] = {
-            content: i18n({
-                id: 'messages.imagestore.error.delete',
-                value: 'Fehler beim Löschen des Bilds \'[0]\'.'
-            }),
+            content: $localize `:@@messages.imagestore.error.delete:Fehler beim Löschen des Bildes \'[0]\'.`,
             level: 'danger'
         };
         this.msgs[M.IMAGESTORE_ERROR_INVALID_WORLDFILE] = {
-            content: i18n({
-                id: 'messages.imagestore.error.invalidWorldfile',
-                value: 'Die Datei \'[0]\' ist kein gültiges World-File.'
-            }),
+            content: $localize `:@@messages.imagestore.error.invalidWorldfile:Die Datei \'[0]\' ist kein gültiges World-File.`,
             level: 'danger'
         };
         this.msgs[M.IMAGESTORE_DROP_AREA_ERROR_UNSUPPORTED_EXTENSIONS] = {
-            content: i18n({
-                id: 'messages.imagestore.dropArea.error.unsupportedExtensions',
-                value: 'Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]'
-            }),
+            content: $localize `:@@messages.imagestore.dropArea.error.unsupportedExtensions:Dateien mit nicht unterstützten Formaten ([0]) werden ignoriert. Gültige Dateiendungen sind: [1]`,
             level: 'danger'
         };
         this.msgs[M.REMOTEIMAGESTORE_WARNING_LARGE_FILE_UPLOAD_BLOCKED_BY_PEER] = {
-            content: i18n({
-                id: 'remoteimagestore.warning.largeFileUploadBlockedByPeer',
-                value: 'Ihr aktuelles Synchronisationsziel blockiert den Empfang von Originalbildern. Sie können entweder in Ihren Synchronisations-Einstellungen das Hochladen von Originalbildern deaktivieren, oder Sie sorgen beim Synchronisationsziel dafür, dass die Option zur Annahme von Originalbildern angepasst wird.'
-            }),
+            content: $localize `:@@remoteimagestore.warning.largeFileUploadBlockedByPeer:Ihr aktuelles Synchronisationsziel blockiert den Empfang von Originalbildern. Sie können entweder in Ihren Synchronisations-Einstellungen das Hochladen von Originalbildern deaktivieren, oder Sie sorgen beim Synchronisationsziel dafür, dass die Option zur Annahme von Originalbildern angepasst wird.`,
             level: 'warning'
         };
         this.msgs[M.RESOURCES_SUCCESS_IMAGES_UPLOADED] = {
-            content: i18n({
-                id: 'messages.resources.success.imagesUploaded',
-                value: '[0] Bilder wurden erfolgreich importiert und mit der Ressource [1] verknüpft.'
-            }),
+            content: $localize `:@@messages.resources.success.imagesUploaded:[0] Bilder wurden erfolgreich importiert und mit der Ressource [1] verknüpft.`,
             level: 'success'
         };
         this.msgs[M.RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_SINGLE] = {
-            content: i18n({
-                id: 'messages.resources.success.storagePlaceSaved.single',
-                value: 'Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.'
-            }),
+            content: $localize `:@@messages.resources.success.storagePlaceSaved.single:Für die Ressource [0] wurde erfolgreich der Aufbewahrungsort [1] gespeichert.`,
             level: 'success',
             extendedTimeout: true
         };
         this.msgs[M.RESOURCES_SUCCESS_STORAGE_PLACE_SAVED_MULTIPLE] = {
-            content: i18n({
-                id: 'messages.resources.success.storagePlaceSaved.multiple',
-                value: 'Für [0] Ressourcen wurde erfolgreich der Aufbewahrungsort [1] gespeichert.'
-            }),
+            content: $localize `:@@messages.resources.success.storagePlaceSaved.multiple:Für [0] Ressourcen wurde erfolgreich der Aufbewahrungsort [1] gespeichert.`,
+            level: 'success',
+            extendedTimeout: true
+        };
+        this.msgs[M.RESOURCES_SUCCESS_TYPE_SAVED_SINGLE] = {
+            content: $localize `:@@messages.resources.success.typeSaved.single:Für die Ressource [0] wurde erfolgreich der Typ [1] gespeichert.`,
+            level: 'success',
+            extendedTimeout: true
+        };
+        this.msgs[M.RESOURCES_SUCCESS_TYPES_SAVED_MULTIPLE] = {
+            content: $localize `:@@messages.resources.success.typeSaved.multiple:Für [0] Ressourcen wurde erfolgreich der Typ [1] gespeichert.`,
             level: 'success',
             extendedTimeout: true
         };
         this.msgs[M.RESOURCES_SUCCESS_GENERATED_QR_CODE_SAVED] = {
-            content: i18n({
-                id: 'messages.resources.success.qrCodeSaved',
-                value: 'Der neu generierte QR-Code wurde erfolgreich gespeichert.'
-            }),
+            content: $localize `:@@messages.resources.success.qrCodeSaved:Der neu generierte QR-Code wurde erfolgreich gespeichert.`,
             level: 'success'
         };
         this.msgs[M.RESOURCES_SUCCESS_EXISTING_QR_CODE_SAVED] = {
-            content: i18n({
-                id: 'messages.resources.success.qrCodeSaved',
-                value: 'Der eingescannte QR-Code wurde erfolgreich gespeichert.'
-            }),
+            content: $localize `:@@messages.resources.success.existingQrCodeSaved:Der eingescannte QR-Code wurde erfolgreich gespeichert.`,
             level: 'success'
         };
         this.msgs[M.RESOURCES_SUCCESS_QR_CODE_DELETED] = {
-            content: i18n({
-                id: 'messages.resources.success.qrCodeDeleted',
-                value: 'Der QR-Code wurde erfolgreich gelöscht.'
-            }),
+            content: $localize `:@@messages.resources.success.qrCodeDeleted:Der QR-Code wurde erfolgreich gelöscht.`,
             level: 'success',
         };
         this.msgs[M.RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_SINGLE] = {
-            content: i18n({
-                id: 'messages.resources.info.storagePlaceAlreadySet.single',
-                value: 'Der Aufbewahrungsort [1] ist für die Ressource [0] bereits gesetzt.'
-            }),
+            content: $localize `:@@messages.resources.info.storagePlaceAlreadySet.single:Der Aufbewahrungsort [1] ist für die Ressource [0] bereits gesetzt.`,
             level: 'info',
             extendedTimeout: true
         };
         this.msgs[M.RESOURCES_INFO_STORAGE_PLACE_ALREADY_SET_MULTIPLE] = {
-            content: i18n({
-                id: 'messages.resources.info.storagePlaceAlreadySet.multiple',
-                value: 'Der Aufbewahrungsort [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.'
-            }),
+            content: $localize `:@@messages.resources.info.storagePlaceAlreadySet.multiple:Der Aufbewahrungsort [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.`,
+            level: 'info',
+            extendedTimeout: true
+        };
+        this.msgs[M.RESOURCES_INFO_TYPE_ALREADY_SET_SINGLE] = {
+            content: $localize `:@@messages.resources.info.typeAlreadySet.single:Der Typ [1] ist für die Ressource [0] bereits gesetzt.`,
+            level: 'info',
+            extendedTimeout: true
+        };
+        this.msgs[M.RESOURCES_INFO_TYPE_ALREADY_SET_MULTIPLE] = {
+            content: $localize `:@@messages.resources.info.typeAlreadySet.multiple:Der Typ [1] ist für die ausgewählten [0] Ressourcen bereits gesetzt.`,
             level: 'info',
             extendedTimeout: true
         };
         this.msgs[M.RESOURCES_ERROR_NO_STORAGE_PLACE_CATEGORY] = {
-            content: i18n({
-                id: 'messages.resources.error.noStoragePlaceCategory',
-                value: 'Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.'
-            }),
+            content: $localize `:@@messages.resources.error.noStoragePlaceCategory:Die Ressource [0] der Kategorie [1] ist kein gültiger Aufbewahrungsort.`,
+            level: 'danger',
+            extendedTimeout: true
+        };
+        this.msgs[M.RESOURCES_ERROR_NO_TYPE_CATEGORY] = {
+            content: $localize `:@@messages.resources.error.noTypeCategory:Die Ressource [0] der Kategorie [1] ist kein gültiger Typ.`,
+            level: 'danger',
+            extendedTimeout: true
+        };
+        this.msgs[M.RESOURCES_ERROR_NO_STORAGE_PLACE_OR_TYPE_CATEGORY] = {
+            content: $localize `:@@messages.resources.error.noStoragePlaceOrTypeCategory:Die Ressource [0] der Kategorie [1] ist kein gültiger Typ oder Aufbewahrungsort.`,
             level: 'danger',
             extendedTimeout: true
         };
         this.msgs[M.RESOURCES_WARNING_PROJECT_IDENTIFIER_NOT_SAME] = {
-            content: i18n({
-                id: 'messages.resources.warning.projectIdentifierNotSame',
-                value: 'Die Projektkennungen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.'
-            }),
+            content: $localize `:@@messages.resources.warning.projectIdentifierNotSame:Die Projektkennungen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.`,
             level: 'warning'
         };
-        this.msgs[M.RESOURCES_ERROR_CATEGORY_NOT_FOUND] = {
-            content: i18n({
-                id: 'messages.resources.error.categoryNotFound',
-                value: 'Die Kategoriedefinition für \'[0]\' fehlt in der Datei Fields.json.'
-            }),
-            level: 'danger'
-        };
         this.msgs[M.RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST] = {
-            content: i18n({
-                id: 'messages.resources.error.oneProjectMustExist',
-                value: 'Das Projekt kann nicht gelöscht werden. Es muss mindestens ein Projekt vorhanden sein.'
-            }),
+            content: $localize `:@@messages.resources.error.oneProjectMustExist:Das Projekt kann nicht gelöscht werden. Es muss mindestens ein Projekt vorhanden sein.`,
             level: 'danger'
         };
         this.msgs[M.RESOURCES_ERROR_RESOURCE_DELETED] = {
-            content: i18n({
-                id: 'messages.resources.error.resourceDeleted',
-                value: 'Die Ressource \'[0]\' kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.'
-            }),
+            content: $localize `:@@messages.resources.error.resourceDeleted:Die Ressource \'[0]\' kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.`,
             level: 'danger'
         };
         this.msgs[M.RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED] = {
-            content: i18n({
-                id: 'messages.resources.error.unknownResourceDeleted',
-                value: 'Die Ressource kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.'
-            }),
+            content: $localize `:@@messages.resources.error.unknownResourceDeleted:Die Ressource kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.`,
             level: 'danger'
         };
         this.msgs[M.RESOURCES_ERROR_RESOURCE_MISSING_DURING_SYNCING] = {
-            content: i18n({
-                id: 'messages.resources.error.resourceMissingDuringSyncing',
-                value: 'Die Ressource kann nicht aufgerufen werden. Bitte warten Sie, bis die Synchronisierung abgeschlossen ist, und versuchen es anschließend erneut.'
-            }),
-            level: 'danger'
-        };
-        this.msgs[M.RESOURCES_ERROR_CANNOT_MOVE_WITH_SAME_OPERATION_RELATIONS] = {
-            content: i18n({
-                id: 'messages.resources.error.cannotMoveWithSameOperationRelations',
-                value: 'Die Ressource [0] kann nicht in eine andere Maßnahme verschoben werden, da Relationen gesetzt sind, die nur zwischen Ressourcen innerhalb der gleichen Maßnahme gesetzt werden dürfen. Entfernen Sie die Relationen und versuchen Sie es anschließend erneut.'
-            }),
+            content: $localize `:@@messages.resources.error.resourceMissingDuringSyncing:Die Ressource kann nicht aufgerufen werden. Bitte warten Sie, bis die Synchronisierung abgeschlossen ist, und versuchen es anschließend erneut.`,
             level: 'danger'
         };
         this.msgs[M.RESOURCES_ERROR_CANNOT_MOVE_CHILDREN] = {
-            content: i18n({
-                id: 'messages.resources.error.cannotMoveChildren',
-                value: 'Die Ressource [0] kann nicht verschoben werden, weil eine oder mehrere der ihr untergeordneten Ressourcen nicht innerhalb der Zielmaßnahme liegen dürfen.'
-            }),
+            content: $localize `:@@messages.resources.error.cannotMoveChildren:Die Ressource [0] kann nicht verschoben werden, weil eine oder mehrere der ihr untergeordneten Ressourcen nicht innerhalb der Zielmaßnahme liegen dürfen.`,
             level: 'danger'
         };
         this.msgs[M.RESOURCES_ERROR_QR_CODE_SCANNING_FAILURE] = {
-            content: i18n({
-                id: 'messages.resources.error.qrCodeScanningFailure',
-                value: 'Beim Scannen eines QR-Codes ist ein Fehler aufgetreten.'
-            }),
+            content: $localize `:@@messages.resources.error.qrCodeScanningFailure:Beim Scannen eines QR-Codes ist ein Fehler aufgetreten.`,
             level: 'danger'
         };
         this.msgs[M.RESOURCES_ERROR_QR_CODE_RESOURCE_NOT_FOUND] = {
-            content: i18n({
-                id: 'messages.resources.error.qrCodeResourceNotFound',
-                value: 'Für diesen QR-Code konnte keine Ressource gefunden werden.'
-            }),
+            content: $localize `:@@messages.resources.error.qrCodeResourceNotFound:Für diesen QR-Code konnte keine Ressource gefunden werden.`,
             level: 'danger'
         };
         this.msgs[M.RESOURCES_ERROR_QR_CODE_ALREADY_ASSIGNED] = {
-            content: i18n({
-                id: 'messages.resources.error.qrCodeAlreadyAssigned',
-                value: 'Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.'
-            }),
-            level: 'danger'
-        };
-        this.msgs[M.RESOURCES_ERROR_PARENT_RESOURCE_UNKNOWN_CATEGORY] = {
-            content: i18n({
-                id: 'messages.resources.error.parentResourceUnknownCategory',
-                value: 'Die Ressource kann nicht aufgerufen werden, da sie einer Ressource der nicht konfigurierten Kategorie "[0]" untergeordnet ist. Fügen Sie die Kategorie der Projektkonfiguration hinzu, um wieder auf die Ressource zugreifen zu können.'
-            }),
-            level: 'danger'
-        };
-        this.msgs[M.RESOURCES_ERROR_PARENT_OPERATION_UNKNOWN_CATEGORY] = {
-            content: i18n({
-                id: 'messages.resources.error.parentOperationUnknownCategory',
-                value: 'Die Ressource kann nicht aufgerufen werden, da sie einer Maßnahme der nicht konfigurierten Kategorie "[0]" angehört. Fügen Sie die Kategorie der Projektkonfiguration hinzu, um wieder auf die Ressource zugreifen zu können.'
-            }),
+            content: $localize `:@@messages.resources.error.qrCodeAlreadyAssigned:Der gescannte QR-Code ist bereits einer anderen Ressource zugeordnet.`,
             level: 'danger'
         };
         this.msgs[M.RESOURCES_ERROR_PARENT_RESOURCE_DELETED] = {
-            content: i18n({
-                id: 'messages.resources.error.parentResourceDeleted',
-                value: 'Die Ressource kann nicht angelegt werden, da die übergeordnete Ressource in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.'
-            }),
+            content: $localize `:@@messages.resources.error.parentResourceDeleted:Die Ressource kann nicht angelegt werden, da die übergeordnete Ressource in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.`,
             level: 'danger'
         };
         this.msgs[M.PROJECT_CREATION_ERROR_MISSING_IDENTIFIER] = {
-            content: i18n({
-                id: 'messages.projectCreation.error.missingIdentifier',
-                value: 'Bitte geben Sie eine Kennung für das neue Projekt ein.'
-            }),
+            content: $localize `:@@messages.projectCreation.error.missingIdentifier:Bitte geben Sie eine Kennung für das neue Projekt ein.`,
             level: 'danger'
         };
         this.msgs[M.PROJECT_CREATION_ERROR_IDENTIFIER_EXISTS] = {
-            content: i18n({
-                id: 'messages.projectCreation.error.identifierExists',
-                value: 'Ein Projekt mit der Kennung \'[0]\' existiert bereits.'
-            }),
+            content: $localize `:@@messages.projectCreation.error.identifierExists:Ein Projekt mit der Kennung \'[0]\' existiert bereits.`,
             level: 'danger'
         };
         this.msgs[M.PROJECT_CREATION_ERROR_IDENTIFIER_LENGTH] = {
-            content: i18n({
-                id: 'messages.projectCreation.error.identifierLength',
-                value: 'Die angegebene Projektkennung ist um [0] Zeichen zu lang.'
-            }),
+            content: $localize `:@@messages.projectCreation.error.identifierLength:Die angegebene Projektkennung ist um [0] Zeichen zu lang.`,
             level: 'danger'
         };
         this.msgs[M.PROJECT_CREATION_ERROR_IDENTIFIER_CHARACTERS] = {
-            content: i18n({
-                id: 'messages.projectCreation.error.identifierCharacters',
-                value: 'Die angegebene Projektkennung enthält nicht erlaubte Zeichen.'
-            }),
+            content: $localize `:@@messages.projectCreation.error.identifierCharacters:Die angegebene Projektkennung enthält nicht erlaubte Zeichen.`,
             level: 'danger'
         };
         this.msgs[M.PROJECT_CREATION_ERROR_IDENTIFIER_STARTING_CHARACTER] = {
-            content: i18n({
-                id: 'messages.projectCreation.error.identifierStartingCharacter',
-                value: 'Die Projektkennung muss mit einem Kleinbuchstaben beginnen.'
-            }),
+            content: $localize `:@@messages.projectCreation.error.identifierStartingCharacter:Die Projektkennung muss mit einem Kleinbuchstaben beginnen.`,
             level: 'danger'
         };
         this.msgs[M.PROJECT_CREATION_ERROR_NAME_LENGTH] = {
-            content: i18n({
-                id: 'messages.projectCreation.error.nameLength',
-                value: 'Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.'
-            }),
+            content: $localize `:@@messages.projectCreation.error.nameLength:Der angegebene Projektname für die Sprache [0] ist um [1] Zeichen zu lang.`,
             level: 'danger'
         };
+        this.msgs[M.CONFIGURATION_SUCCESS_IMPORT] = {
+            content: $localize `:@@messages.configuration.success.import:Die Projektkonfiguration wurde erfolgreich importiert.`,
+            level: 'success'
+        };
         this.msgs[M.CONFIGURATION_ERROR_NO_VALUES_IN_VALUELIST] = {
-            content: i18n({
-                id: 'messages.configuration.error.noValuesInValuelist',
-                value: 'Bitte tragen Sie mindestens einen Wert ein.'
-            }),
+            content: $localize `:@@messages.configuration.error.noValuesInValuelist:Bitte tragen Sie mindestens einen Wert ein.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_NO_VALUELIST] = {
-            content: i18n({
-                id: 'messages.configuration.error.noValuelist',
-                value: 'Bitte wählen Sie eine Werteliste aus oder wechseln Sie den Eingabetyp des Feldes.'
-            }),
+            content: $localize `:@@messages.configuration.error.noValuelist:Bitte wählen Sie eine Werteliste aus oder wechseln Sie den Eingabetyp des Feldes.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_NO_SUBFIELDS] = {
-            content: i18n({
-                id: 'messages.configuration.error.noSubfields',
-                value: 'Bitte legen Sie mindestens zwei Unterfelder an oder wechseln Sie den Eingabetyp des Feldes.'
-            }),
+            content: $localize `:@@messages.configuration.error.noSubfields:Bitte legen Sie mindestens zwei Unterfelder an oder wechseln Sie den Eingabetyp des Feldes.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS] = {
+            content: $localize `:@@messages.configuration.error.fieldConditionViolation.valuelists:Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS_CHILD_CATEGORY] = {
+            content: $localize `:@@messages.configuration.error.fieldConditionViolation.valuelists.childCategory:Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Feld "[0]" der Unterkategorie "[1]" konfiguriert wurde.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE] = {
+            content: $localize `:@@messages.configuration.error.fieldConditionViolation.inputType:Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE_CHILD_CATEGORY] = {
+            content: $localize `:@@messages.configuration.error.fieldConditionViolation.inputType.childCategory:Der Eingabetyp dieses Feldes kann nicht geändert werden, da es als Bedingungsfeld für das Feld "[0]" der Unterkategorie "[1]" konfiguriert wurde.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS] = {
-            content: i18n({
-                id: 'messages.configuration.error.subfieldConditionViolation.valuelists',
-                value: 'Die Werteliste dieses Unterfeldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.'
-            }),
+            content: $localize `:@@messages.configuration.error.subfieldConditionViolation.valuelists:Die Werteliste dieses Unterfeldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_INPUT_TYPE] = {
-            content: i18n({
-                id: 'messages.configuration.error.subfieldConditionViolation.inputType',
-                value: 'Der Eingabetyp dieses Unterfeldes kann nicht geändert werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.'
-            }),
+            content: $localize `:@@messages.configuration.error.subfieldConditionViolation.inputType:Der Eingabetyp dieses Unterfeldes kann nicht geändert werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_DELETION] = {
+            content: $localize `:@@messages.configuration.error.subfieldConditionViolation.deletion:Das Unterfeld kann nicht gelöscht werden, da es als Bedingungsfeld für das Unterfeld "[0]" konfiguriert wurde.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_VALUE_USED_IN_SUBFIELD_CONDITION] = {
-            content: i18n({
-                id: 'messages.configuration.error.valueUsedInSubfieldCondition',
-                value: 'Der Wert "[0]" kann nicht gelöscht werden, solange er als Bedingungswert für das Unterfeld "[1]" des Feldes "[2]" von Kategorie "[3]" konfiguriert ist.'
-            }),
+            content: $localize `:@@messages.configuration.error.valueUsedInSubfieldCondition:Der Wert "[0]" kann nicht gelöscht werden, solange er als Bedingungswert für das Unterfeld "[1]" des Feldes "[2]" von Kategorie "[3]" konfiguriert ist.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_INVALID_REFERENCE] = {
-            content: i18n({
-                id: 'messages.configuration.error.invalidReference',
-                value: '"[0]" ist keine gültige URL. Bitte geben Sie als Verweise ausschließlich URLs an.'
-            }),
+            content: $localize `:@@messages.configuration.error.invalidReference:"[0]" ist keine gültige URL. Bitte geben Sie als Verweise ausschließlich URLs an.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_NOT_A_NUMBER] = {
-            content: i18n({
-                id: 'messages.configuration.error.invalidResourceLimit.notANumber',
-                value: 'Bitte geben Sie einen Zahlenwert als Ressourcenlimit an.'
-            }),
+            content: $localize `:@@messages.configuration.error.invalidResourceLimit.notANumber:Bitte geben Sie einen Zahlenwert als Ressourcenlimit an.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_INVALID_RESOURCE_LIMIT_TOO_LOW] = {
-            content: i18n({
-                id: 'messages.configuration.error.invalidResourceLimit.tooLow',
-                value: 'Bitte geben Sie als Ressourcenlimit eine Zahl an, die größer ist als 0.'
-            }),
+            content: $localize `:@@messages.configuration.error.invalidResourceLimit.tooLow:Bitte geben Sie als Ressourcenlimit eine Zahl an, die größer ist als 0.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_IMPORT_FAILURE] = {
-            content: i18n({
-                id: 'messages.configuration.error.importFailure',
-                value: 'Die Projektkonfiguration konnte nicht importiert werden.'
-            }),
+            content: $localize `:@@messages.configuration.error.importFailure:Die Projektkonfiguration konnte nicht importiert werden.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_IMPORT_UNSUPPORTED_VERSION] = {
+            content: $localize `:@@messages.configuration.error.unsupportedVersion:Die Konfigurationsdatei wurde mit einer aktuelleren Version von Field Desktop (Version [0]) erstellt und kann daher nicht geladen werden. Bitte aktualisieren Sie die Anwendung und starten Sie den Importvorgang anschließend erneut.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_NO_PROJECT_LANGUAGES] = {
-            content: i18n({
-                id: 'messages.configuration.error.noProjectLanguages',
-                value: 'Bitte wählen Sie mindestens eine Projektsprache aus.'
-            }),
+            content: $localize `:@@messages.configuration.error.noProjectLanguages:Bitte wählen Sie mindestens eine Projektsprache aus.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_NO_ALLOWED_TARGET_CATEGORIES] = {
+            content: $localize `:@@configuration.error.noAllowedTargetCategories:Bitte wählen Sie mindestens eine Kategorie als erlaubte Zielkategorie aus.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_NO_ALLOWED_GEOMETRY_TYPES] = {
+            content: $localize `:@@configuration.error.noAllowedGeometryTypes:Bitte wählen Sie mindestens einen erlaubten Geometrietyp aus.`,
+            level: 'danger'
+        };
+        this.msgs[M.MATRIX_ERROR_GENERIC] = {
+            content: $localize `:@@messages.matrix.error.generic:Bei der Generierung der Matrix ist ein Fehler aufgetreten.`,
             level: 'danger'
         };
     }

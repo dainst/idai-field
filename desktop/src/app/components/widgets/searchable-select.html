@@ -1,17 +1,45 @@
 <ng-select [(ngModel)]="selectedValue"
+           [class.with-info]="hasInfo(selectedValue)"
            #selectElement
            clearAllText=""
            notFoundText="Wert nicht gefunden"
            i18n-notFoundText="@@docedit.forms.dropdown.notFound"
            appendTo="body"
            [readonly]="disabled"
-           [clearable]="selectedValue !== ''"
+           [clearable]="clearable && selectedValue !== ''"
            [placeholder]="placeholder"
+           [preventToggleOnRightClick]="true"
+           [items]="options"
+           bindValue="value"
+           bindLabel="label"
+           #valueInfoPopover="ngbPopover"
+           [ngbPopover]="infoPopover"
+           container="body"
+           triggers="manual"
+           [popoverTitle]="getLabel(popoverValue)"
+           popoverClass="configuration-info-popover"
+           [autoClose]="true"
+           [popoverContext]="{ value: valuelist?.values[popoverValue] }"
            (open)="onOpen()"
-           (close)="stopListeningToScrollEvents()"
+           (close)="closePopover(); stopListeningToScrollAndResizeEvents();"
            (change)="emitChanges()"
+           (search)="closePopover()"
+           (click)="onClick()"
+           (contextmenu)="hasInfo(selectedValue) && openPopover(valueInfoPopover, selectedValue);
+                $event.preventDefault();"
            (blur)="onBlur.emit()"
            (scrollToEnd)="onScrollToEnd.emit()"
            (search)="onSearchTermChanged.emit($event.term)">
-    <ng-option *ngFor="let value of values" [value]="value">{{getLabel(value)}}</ng-option>
+    <ng-template ng-option-tmp let-item="item" let-index="index">
+        <div #optionElement
+             class="option-element"
+             [class.with-info]="hasInfo(item.value)"
+             (contextmenu)="hasInfo(item.value) && openPopover(valueInfoPopover, item.value, optionElement)">
+            {{item.label}}
+        </div>
+    </ng-template>
 </ng-select>
+
+<ng-template #infoPopover let-value="value">
+    <configuration-info [configurationItem]="value"></configuration-info>
+</ng-template>

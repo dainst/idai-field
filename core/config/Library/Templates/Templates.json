@@ -246,6 +246,10 @@
         "StorageBag:default": {
           "hidden": [],
           "fields": {}
+        },
+        "Process:default": {
+          "hidden": [],
+          "fields": {}
         }
       },
       "order": [
@@ -298,6 +302,7 @@
         "FindCollection",
         "Inscription",
         "Sample",
+        "Process",
         "Image",
         "Drawing",
         "Photo",
@@ -352,6 +357,10 @@
         "Type": {
           "hidden": [],
           "fields": {}
+        },
+        "Process": {
+          "hidden": [],
+          "fields": {}
         }
       },
       "order": [
@@ -361,6 +370,7 @@
         "Place",
         "Feature",
         "Find",
+        "Process",
         "Image",
         "TypeCatalog",
         "Type"
@@ -434,6 +444,10 @@
         "Type": {
           "hidden": [],
           "fields": {}
+        },
+        "Process": {
+          "hidden": [],
+          "fields": {}
         }
       },
       "order": [
@@ -450,6 +464,7 @@
         "Roof",
         "Opening",
         "Stairs",
+        "Process",
         "Image",
         "TypeCatalog",
         "Type"
@@ -503,6 +518,10 @@
         "Type": {
           "hidden": [],
           "fields": {}
+        },
+        "Process": {
+          "hidden": [],
+          "fields": {}
         }
       },
       "order": [
@@ -514,6 +533,7 @@
         "SurveyUnit",
         "Excavation",
         "Find",
+        "Process",
         "Image",
         "TypeCatalog",
         "Type"
@@ -530,13 +550,21 @@
         },
         "Place:archaeoDox": {
           "hidden": ["gazId"],
-          "fields": {},
+          "fields": {
+            "geometry": {
+              "geometryTypes": ["Polygon", "MultiPolygon"]
+            }
+          },
           "color": "#9cbde8",
           "resourceLimit": 1
         },
         "Operation:archaeoDox": {
           "hidden": [],
-          "fields": {}
+          "fields": {
+            "geometry": {
+              "geometryTypes": ["Polygon", "MultiPolygon"]
+            }
+          }
         },
         "ExcavationArea:archaeoDox": {
           "hidden": [],
@@ -546,37 +574,94 @@
         },
         "FeatureGroup:archaeoDox": {
           "hidden": [],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            },
+            "geometry": {
+              "geometryTypes": ["Polygon", "MultiPolygon"]
+            }
+          },
           "identifierPrefix": "BK",
           "color": "#ff00ff"
         },
         "Feature:archaeoDox": {
           "hidden": ["borders"],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            },
+            "geometry": {
+              "geometryTypes": ["Polygon", "MultiPolygon"]
+            }
+          },
           "identifierPrefix": "B",
           "color": "#ffff00"
         },
         "FeatureSegment:archaeoDox": {
           "hidden": [],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            },
+            "geometry": {
+              "geometryTypes": ["Polygon", "MultiPolygon"]
+            }
+          },
           "identifierPrefix": "BA",
           "color": "#969696"
         },
         "Find:archaeoDox": {
           "hidden": [],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            },
+            "geometry": {
+              "geometryTypes": ["Point", "MultiPoint"]
+            }
+          },
           "identifierPrefix": "F",
           "color": "#ff0000"
         },
         "Sample:archaeoDox": {
           "hidden": [],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            },
+            "geometry": {
+              "geometryTypes": ["Point", "MultiPoint"]
+            }
+          },
           "identifierPrefix": "P",
           "color": "#ff0000"
         },
         "Image:archaeoDox": {
           "hidden": [],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            }
+          },
           "color": "#dcdcdc"
         },
         "Photo:archaeoDox": {
@@ -596,13 +681,33 @@
         },
         "Planum:archaeoDox": {
           "hidden": [],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            },
+            "geometry": {
+              "geometryTypes": ["Polygon", "MultiPolygon"]
+            }
+          },
           "identifierPrefix": "FLZ",
           "color": "#0000ff"
         },
         "Profile:archaeoDox": {
           "hidden": [],
-          "fields": {},
+          "fields": {
+            "date": {
+              "dateConfiguration": {
+                "dataType": "date",
+                "inputMode": "single"
+              }
+            },
+            "geometry": {
+              "geometryTypes": ["LineString", "MultiLineString"]
+            }
+          },
           "identifierPrefix": "PRZ",
           "color": "#00ff00"
         }

@@ -4,7 +4,8 @@ import { WarningsService } from '../../../services/warnings/warnings-service';
 
 @Component({
     selector: 'taskbar-warnings',
-    templateUrl: './taskbar-warnings.html'
+    templateUrl: './taskbar-warnings.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy

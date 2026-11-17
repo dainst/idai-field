@@ -6,11 +6,12 @@
                                        [languages]="fieldLanguages"
                                        (onFieldDataChanged)="updateExistingEntry($event, i)">
             </multi-language-text-field>
-            <div class="input-group-append" [class.with-language-tabs]="!hasNoConfiguredLanguages()">
-                <button class="btn btn-danger delete-multi-input-entry" type="button" (click)="deleteEntry(entry)">
-                    <span class="mdi mdi-delete"></span>
-                </button>
-            </div>
+            <button class="btn btn-danger delete-multi-input-entry"
+                    [class.with-language-tabs]="!hasNoConfiguredLanguages()"
+                    type="button"
+                    (click)="deleteEntry(entry)">
+                <span class="mdi mdi-delete"></span>
+            </button>
         </div>
     </div>
 </div>
@@ -21,10 +22,11 @@
                                [languages]="fieldLanguages"
                                (onFieldDataChanged)="updateNewEntry($event)">
     </multi-language-text-field>
-    <div class="input-group-append" [class.with-language-tabs]="!hasNoConfiguredLanguages()">
-        <button class="btn btn-success add-multi-input-entry" [disabled]="!isValidEntry(newEntry)" type="button"
-                (click)="addNewEntry()">
-            <span class="mdi mdi-plus"></span>
-        </button>
-    </div>
+    <button class="btn btn-success add-multi-input-entry"
+            [class.with-language-tabs]="!hasNoConfiguredLanguages()"
+            [disabled]="!isValidEntry(newEntry)"
+            type="button"
+            (click)="addNewEntry()">
+        <span class="mdi mdi-plus-circle"></span>
+    </button>
 </div>

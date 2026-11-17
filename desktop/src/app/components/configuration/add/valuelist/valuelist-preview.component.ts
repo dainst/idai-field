@@ -6,7 +6,8 @@ import { ValuelistUsage } from '../../../../services/configuration/index/valueli
 
 @Component({
     selector: 'valuelist-preview',
-    templateUrl: './valuelist-preview.html'
+    templateUrl: './valuelist-preview.html',
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

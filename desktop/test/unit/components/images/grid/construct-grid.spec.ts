@@ -19,7 +19,7 @@ describe('constructGrid', () => {
     }];
 
 
-    it('should keep the aspect ration of an image', ()=> {
+    test('should keep the aspect ration of an image', ()=> {
 
         const rows = constructGrid(documents as any,4,800, 20);
 
@@ -27,7 +27,7 @@ describe('constructGrid', () => {
     });
 
 
-    it('should throw when nrOfColumns not integer', () => {
+    test('should throw when nrOfColumns not integer', () => {
 
         expect(function(){constructGrid([],4.1,0, 20)}).toThrow();
     });

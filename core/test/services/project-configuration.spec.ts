@@ -156,7 +156,7 @@ describe('ProjectConfiguration', () => {
 
         expect(
             sameset(
-                projectConfiguration.getOverviewTopLevelCategories().map(Named.toName),
+                projectConfiguration.getOverviewSupercategories().map(Named.toName),
                 ['Operation', 'Place'])
         ).toBeTruthy();
     });

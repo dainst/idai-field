@@ -1,6 +1,6 @@
 # Field Desktop
-   
-The German Archaeological Institute’s ([DAI](https://www.dainst.org)) new take on a field research documentation system. 
+
+Field Desktop is a modern take on flexible field and find recording for archaeological excavations. It is developed as a cooperation between the German Archaeological Institute ([DAI](https://www.dainst.org)) and the Head Office of the GBV Common Library Network ([GBV](https://en.gbv.de/)). Field Desktop is completely Open Source and free to use!
 
 ## Usage
 
@@ -8,7 +8,7 @@ Please refer to the [wiki](https://github.com/dainst/idai-field/wiki).
    
 ## Development
 
-Development of Field Desktop works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) >= 16 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
+Development of Field Desktop works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) 22 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
 
 Then clone this repository locally and run the following commands (in the repository root):
 
@@ -22,16 +22,20 @@ $ npm start
 
 `npm run bootstrap` sets up and fetches the necessary dependencies, while `npm start` compiles the Angular app and starts it via Electron.
 
+### Troubleshooting
+
+If the application does not start in an arm64 environment (e. g. Apple Silicon), set this NPM configuration parameter before bootstrapping the application:
+```
+$ npm config set cpu=arm64
+```
+
+If `npm run bootstrap` fails to build sharp, that might be because of an already installed libvips. You can force the build process to ignore your preinstalled libvips by running `export  SHARP_IGNORE_GLOBAL_LIBVIPS=true` before running the bootstrap comand. See also https://sharp.pixelplumbing.com/install/#building-from-source.
+
 There seems to be an issue with `lerna bootstrap` that prevents running install scripts in dependencies. Use the following commands to run necessary scripts manually as a workaround:
 
 ```
 $ node node_modules/electron/install.js
 $ node node_modules/electron-chromedriver/download-chromedriver.js
-```
- 
-Shapefile import/export is handled by a Java command line tool which is called by the Electron app. If Java 8 or higher and [Maven](https://maven.apache.org/) are installed, the Java tool can be built via the command:
-```
-$ npm run build:java
 ```
 
 ## Tests
@@ -44,24 +48,19 @@ To execute the **unit tests**, run
 $ npm test   
 ```
 
-The project is set up to manage the compilation of the sources (test as well as regular sources) independently from Angular. This is due to the fact that we perform Node based tests, since our code runs in an Electron context. This is done on the 
-basis of `test/tsconfig.json` and `jasmine`. To rebuild the sources for tests continually, you can run `npm run build:test+watch` in one terminal window, and `npm test` in another.
-
-For troubleshooting information see [here](docs/unit-test-troubleshooting.md).
-
 To execute **e2e tests**, run 
 
 ```
 $ npm run e2e
 ```
 
-To execute **integration test with FieldHub**, run
+To execute **integration test with Field Hub**, run
 
 ```
-$ npm run test:hub-integration --prefix desktop
+$ npm run test:hub-integration
 ```
 
-The FieldHub integration tests require installed Docker and docker-compose.
+The Field Hub integration tests require installed Docker.
 
 ## Packaging
 

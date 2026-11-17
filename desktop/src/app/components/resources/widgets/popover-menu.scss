@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 #popover-menu {
   background-color: $popover-bg-color;
   position: absolute;
@@ -37,7 +39,7 @@
       }
 
       &.active {
-        background-color: darken($popover-header-hover-bg-color, 10%);
+        background-color: color.adjust($popover-header-hover-bg-color, $lightness: -10%);
       }
 
       .mdi {

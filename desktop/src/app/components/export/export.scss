@@ -6,7 +6,7 @@
   
   .export-info {
     font-size: 14px;
-    margin-bottom: 12px;
+    margin: 12px 0;
     cursor: default;
   }
 
@@ -26,5 +26,18 @@
     max-height: calc(100vh - 258px);
     overflow-y: auto;
     overflow-x: hidden;
+  }
+
+  .form-check-label {
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+
+  .col-form-label {
+    padding-top: 0;
+  }
+
+  input[type=checkbox] {
+    margin-right: 8px;
   }
 }

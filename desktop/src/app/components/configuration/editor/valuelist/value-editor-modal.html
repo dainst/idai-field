@@ -24,10 +24,17 @@
     </div>
 
     <div class="configuration-editor-section">
-        <div class="configuration-editor-section-title" i18n="@@configuration.references">
-            Verweise
+        <div class="configuration-editor-section-title" i18n="@@configuration.generalReferences">
+            Allgemeine Verweise
         </div>
         <references-input [references]="clonedValue.references"></references-input>
+    </div>
+
+    <div class="configuration-editor-section">
+        <div class="configuration-editor-section-title" i18n="@@configuration.semanticReferences">
+            Semantische Verweise
+        </div>
+        <semantic-references-input [references]="clonedValue.semanticReferences"></semantic-references-input>
     </div>
 </div>
 

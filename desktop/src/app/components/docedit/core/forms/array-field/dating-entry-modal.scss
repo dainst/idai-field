@@ -1,0 +1,46 @@
+/**
+ * @author Sebastian Cuy
+ * @author Thomas Kleinke
+ */
+
+.dating-entry-modal-body {
+  .card-block {
+    padding-bottom: 0 !important;
+  }
+
+  .margin-label {
+    width: 60px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    user-select: none;
+  }
+
+  .margin-input {
+    width: 100px;
+  }
+
+  .year-input {
+    width: 100px;
+  }
+
+  .type-select {
+    width: 80px;
+  }
+
+  .until-label {
+    width: 60px;
+    text-align: center;
+    font-size: 15px;
+    user-select: none;
+  }
+
+  .card-block {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .form-check {
+    padding-left: 0;
+  }
+}

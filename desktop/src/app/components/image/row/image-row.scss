@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 image-row {
   display: inline-grid;
   width: 100%;
@@ -87,11 +89,11 @@ image-row {
       z-index: 1;
 
       &:hover {
-        background-color: lighten(#545454, 10%);
+        background-color: color.adjust(#545454, $lightness: 10%);
       }
 
       &:active {
-        background-color: darken(#545454, 10%);
+        background-color: color.adjust(#545454, $lightness: -10%);
       }
 
       .mdi {

@@ -1,0 +1,26 @@
+process-plus-button {
+  .circular-button {
+    left: calc(50% - 62px);
+    width: 41px;
+    height: 41px;
+
+    &.category-button {
+      top: -1px;
+    }
+
+    .category-icon {
+      position: relative;
+      right: 1px;
+      bottom: 2px;
+    }
+  }
+
+  #multiple-select-buttons {
+    border-radius: 0;
+  }
+}
+
+.process-plus-button-popover {
+  max-width: 500px !important;
+  width: auto !important;
+}

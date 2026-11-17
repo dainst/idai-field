@@ -10,7 +10,8 @@ import { ComponentHelpers } from '../../component-helpers';
     host: {
         '(document:click)': 'handleClick($event, false)',
         '(document:contextmenu)': 'handleClick($event, true)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke

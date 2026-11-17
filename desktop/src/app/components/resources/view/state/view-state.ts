@@ -1,4 +1,4 @@
-import { FieldDocument } from 'idai-field-core';
+import { FieldDocument, SortMode } from 'idai-field-core';
 import { NavigationPath } from './navigation-path';
 import { ViewContext } from './view-context';
 import { ResourcesViewMode } from '../view-facade';
@@ -22,17 +22,19 @@ export interface ViewState {
     limitSearchResults: boolean;
     expandAllGroups: boolean;
     searchContext: ViewContext;
-    customConstraints: { [name: string]: string }
+    customConstraints: { [name: string]: string };
+    sortMode?: SortMode;
 }
 
 
 export module ViewState {
 
-    export function build(mode: ResourcesViewMode = 'map'): ViewState {
+    export function build(mode: ResourcesViewMode = 'map', sortMode?: SortMode,
+                          bypassHierarchy: boolean = false): ViewState {
 
-        return {
+        const viewState: ViewState = {
             operation: undefined,
-            bypassHierarchy: false,
+            bypassHierarchy,
             expandAllGroups: false,
             navigationPath: NavigationPath.empty(),
             mode: mode,
@@ -40,6 +42,10 @@ export module ViewState {
             searchContext: ViewContext.empty(),
             customConstraints: {}
         };
+
+        if (sortMode) viewState.sortMode = sortMode;
+
+        return viewState;
     }
 
 

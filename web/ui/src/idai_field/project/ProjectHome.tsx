@@ -206,7 +206,7 @@ const renderDescription = (description: string) =>
 
 const renderProjectDetails = (projectDocument: Document, t: TFunction) => {
     
-    const contactMail: FieldValue = getFieldValue(projectDocument, 'contactMail');
+    const contactMail: FieldValue = getTranslation(getFieldValue(projectDocument, 'contactMail') as undefined);
     const homepage: FieldValue = getFieldValue(projectDocument, 'externalReference');
     const gazetteerId: FieldValue = getFieldValue(projectDocument, 'gazId');
 
@@ -316,7 +316,7 @@ const getStaffInfo = (projectDocument: Document): string => {
 
     const staffValues: I18N.String[]|string[] = getFieldValue(projectDocument, 'staff') as I18N.String[]|string[];
     return staffValues
-        ? staffValues.map(staff => getTranslation(staff)).join(', ')
+        ? (staffValues as any[]).map(staff => getTranslation(staff)).join(', ')
         : '';
 };
 

@@ -2,13 +2,17 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryForm, Datastore, Document, Field, Labels, WarningType } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
+import { AngularUtility } from '../../../../angular/angular-utility';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
     templateUrl: './select-new-field-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -20,16 +24,22 @@ export class SelectNewFieldModalComponent {
     public fieldLabel: string;
     public category: CategoryForm;
     public warningType: WarningType;
+    public isRelationField: boolean;
 
     public availableFields: Array<Field>;
     public selectedFieldName: string;
     public multiple: boolean;
 
+    public countAffected: number;
+    
+    private affectedDocuments: Array<Document>;
+
 
     constructor(public activeModal: NgbActiveModal,
                 private modalService: NgbModal,
                 private datastore: Datastore,
-                private labels: Labels) {}
+                private labels: Labels,
+                private menuService: Menus) {}
 
     
     public getFieldLabel = (field: Field) => this.labels.getFieldLabel(this.category, field.name);
@@ -38,15 +48,26 @@ export class SelectNewFieldModalComponent {
 
     public cancel = () => this.activeModal.dismiss('cancel');
 
+
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 
-    public initialize() {
-
+    public async initialize() {
+        
         this.availableFields = this.getAvailableFields();
+
+        const findResult = await this.datastore.find({
+            categories: [this.category.name],
+            constraints: { [this.warningType + ':contain']: this.fieldName }
+        }, { includeResourcesWithoutValidParent: true });
+
+        this.countAffected = findResult.totalCount;
+        this.affectedDocuments = findResult.documents;
     }
 
 
@@ -68,6 +89,8 @@ export class SelectNewFieldModalComponent {
 
         const fixingDataInProgressModal: NgbModalRef = this.openFixingDataInProgressModal();
 
+        await AngularUtility.refresh();
+
         if (this.multiple) {
             await this.moveMultiple();
         } else {
@@ -88,32 +111,37 @@ export class SelectNewFieldModalComponent {
 
     private async moveMultiple() {
 
-        const documents = (await this.datastore.find({
-            categories: [this.category.name],
-            constraints: { [this.warningType + ':contain']: this.fieldName }
-        })).documents;
+        this.affectedDocuments.forEach(document => this.moveDataToNewField(document));
 
-        documents.forEach(document => this.moveDataToNewField(document));
-
-        await this.datastore.bulkUpdate(documents);
+        await this.datastore.bulkUpdate(this.affectedDocuments);
     }
 
 
     private moveDataToNewField(document: Document) {
 
-        document.resource[this.selectedFieldName] = document.resource[this.fieldName];
-        delete document.resource[this.fieldName];
+        if (this.isRelationField) {
+            document.resource.relations[this.selectedFieldName] = document.resource.relations[this.fieldName];
+            delete document.resource.relations[this.fieldName];
+        } else {
+            document.resource[this.selectedFieldName] = document.resource[this.fieldName];
+            delete document.resource[this.fieldName];
+        }
     }
 
 
     private getAvailableFields(): Array<Field> {
 
-        const forbiddenInputTypes: Array<Field.InputType> = Field.InputType.RELATION_INPUT_TYPES.concat([
-            Field.InputType.CATEGORY, Field.InputType.IDENTIFIER, Field.InputType.NONE
-        ] as Array<Field.InputType>);
+        const fields: Array<Field> = CategoryForm.getFields(this.category);
 
-        return CategoryForm.getFields(this.category)
-            .filter(field => !forbiddenInputTypes.includes(field.inputType));
+        if (this.isRelationField) {
+            return fields.filter(field => Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(field.inputType));
+        } else {
+            const forbiddenInputTypes: Array<Field.InputType> = Field.InputType.RELATION_INPUT_TYPES.concat([
+                Field.InputType.CATEGORY, Field.InputType.IDENTIFIER, Field.InputType.NONE
+            ] as Array<Field.InputType>);
+
+            return fields.filter(field => !forbiddenInputTypes.includes(field.inputType));
+        }
     }
 
 

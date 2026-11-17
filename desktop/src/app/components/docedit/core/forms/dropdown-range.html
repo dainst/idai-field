@@ -1,12 +1,11 @@
-<div class="input-group">
-    <div class="input-group-prepend">
-        <label *ngIf="showEndElements()">
-            <span i18n="@@docedit.forms.dropdownRange.from">von</span>
-        </label>
-    </div>
+<div *ngIf="valuelist" class="input-group">
+    <label *ngIf="showEndElements()">
+        <span i18n="@@docedit.forms.dropdownRange.from">von</span>
+    </label>
 
     <searchable-select [selectedValue]="fieldContainer[field.name] && fieldContainer[field.name]['value']"
-                       [values]="getValues()"
+                       [values]="values"
+                       [valuelist]="valuelist"
                        [getLabel]="getLabel"
                        [closeOnClear]="showEndElements()"
                        (onValueSelected)="setValue($event)"></searchable-select>
@@ -17,25 +16,24 @@
 
     <searchable-select *ngIf="showEndElements()"
                         [selectedValue]="fieldContainer[field.name] && fieldContainer[field.name]['endValue']"
-                        [values]="getValues()"
+                        [values]="values"
+                        [valuelist]="valuelist"
                         [getLabel]="getLabel"
                         [disabled]="!fieldContainer[field.name]
                                 || !fieldContainer[field.name]['value']
                                 || fieldContainer[field.name]['value'] === ''"
                         (onValueSelected)="setEndValue($event)"></searchable-select>
 
-    <div class="input-group-append">
-        <button *ngIf="!showEndElements()"
-                ngbTooltip="Start- und Endzeitraum angeben"
-                i18n-ngbTooltip="@@docedit.forms.dropdownRange.tooltip"
-                placement="left"
-                container="body"
-                class="btn btn-outline-primary dropdown-range-activate-end-button"
-                type="button"
-                (click)="activateEnd()">
-            <span class="mdi mdi-arrow-expand-horizontal"></span>
-        </button>
-    </div>
+    <button *ngIf="!showEndElements()"
+            ngbTooltip="Start- und Endzeitraum angeben"
+            i18n-ngbTooltip="@@docedit.forms.dropdownRange.tooltip"
+            placement="left"
+            container="body"
+            class="btn btn-outline-primary dropdown-range-activate-end-button"
+            type="button"
+            (click)="activateEnd()">
+        <span class="mdi mdi-arrow-expand-horizontal"></span>
+    </button>
 </div>
 
 <outliers [fieldContainer]="fieldContainer" [field]="field" [valuelist]="valuelist"></outliers>

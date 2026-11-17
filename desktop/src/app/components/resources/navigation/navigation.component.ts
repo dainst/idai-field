@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Component, OnInit } from '@angular/core';
 import { FieldDocument, ProjectConfiguration } from 'idai-field-core';
 import { Loading } from '../../widgets/loading';
 import { NavigationPath } from '../../../components/resources/view/state/navigation-path';
@@ -12,13 +11,14 @@ type NavigationButtonLabelMap = { [id: string]: { text: string, fullText: string
 
 @Component({
     selector: 'navigation',
-    templateUrl: './navigation.html'
+    templateUrl: './navigation.html',
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class NavigationComponent {
+export class NavigationComponent implements OnInit {
 
     public navigationPath: NavigationPath = NavigationPath.empty();
     public labels: NavigationButtonLabelMap = {};
@@ -29,14 +29,9 @@ export class NavigationComponent {
     constructor(public viewFacade: ViewFacade,
                 public projectConfiguration: ProjectConfiguration,
                 private navigationService: NavigationService,
-                private loading: Loading,
-                private i18n: I18n) {
+                private loading: Loading) {
 
-        this.viewFacade.navigationPathNotifications().subscribe(path => {
-            this.navigationPath = path;
-            NavigationComponent.maxTotalLabelCharacters = this.getMaxTotalLabelCharacters();
-            this.labels = NavigationComponent.getLabels(this.navigationPath, this.viewFacade.getCurrentOperation());
-        });
+        this.viewFacade.navigationPathNotifications().subscribe(path => this.updateNavigationPath(path));
     }
 
 
@@ -49,17 +44,17 @@ export class NavigationComponent {
     public isSelectedSegment = (id: string) => id === this.navigationPath.selectedSegmentId;
 
 
+    ngOnInit() {
+
+        this.updateNavigationPath(this.viewFacade.getNavigationPath());
+    }
+
+
     public getTooltip() {
 
         return this.viewFacade.isInExtendedSearchMode()
-            ? this.i18n({
-                id: 'resources.navigation.tooltips.deactivateExtendedSearchMode',
-                value: 'Erweiterten Suchmodus deaktivieren'
-            })
-            : this.i18n({
-                id: 'resources.navigation.tooltips.activateExtendedSearchMode',
-                value: 'Erweiterten Suchmodus aktivieren'
-            });
+            ? $localize `:@@resources.navigation.tooltips.deactivateExtendedSearchMode:Erweiterten Suchmodus deaktivieren`
+            : $localize `:@@resources.navigation.tooltips.activateExtendedSearchMode:Erweiterten Suchmodus aktivieren`;
     }
 
 
@@ -76,6 +71,14 @@ export class NavigationComponent {
         return !this.viewFacade.isInExtendedSearchMode()
             ? this.navigationPath.segments.map(_ => _.document)
             : [];
+    }
+
+
+    private updateNavigationPath(navigationPath: NavigationPath) {
+
+        this.navigationPath = navigationPath;
+        NavigationComponent.maxTotalLabelCharacters = this.getMaxTotalLabelCharacters();
+        this.labels = NavigationComponent.getLabels(this.navigationPath, this.viewFacade.getCurrentOperation());
     }
 
 
@@ -137,7 +140,7 @@ export class NavigationComponent {
                     labels[id].text = this.getShortenedLabel(labels[id].text, maxSingleLabelCharacters);
                     labels[id].shortened = true;
                 }
-            })
+            });
         }
     }
 

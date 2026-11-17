@@ -1,0 +1,58 @@
+<div *ngIf="!isDatePickerVisible()"
+     class="date-label"
+     (click)="editDate()">
+    {{getFormattedDate()}}
+</div>
+
+<div *ngIf="isDatePickerVisible()"
+     class="input-group"
+     [class.editing]="editing">
+    <input *ngIf="isDatePickerVisible()"
+           #dateInput
+           #datePicker="ngbDatepicker"
+           class="form-control date-picker-input"
+           [firstDayOfWeek]="1"
+           placeholder="dd.mm.yyyy"
+           container="body"
+           (click)="openDatePicker()"
+           (blur)="onDateInputBlurred()"
+           (dateSelect)="update()"
+           (closed)="onDatePickerClosed()"
+           (keydown)="onKeyDown($event)"
+           [(ngModel)]="dateStruct"
+           ngbDatepicker>
+
+    <button *ngIf="isNowButtonVisible()"
+            class="btn btn-outline-primary now-button"
+            ngbTooltip="Aktuelles Datum verwenden"
+            i18n-ngbTooltip="@@docedit.forms.date.now.tooltip"
+            placement="top"
+            container="body"
+            triggers="manual"
+            #nowButtonTooltip="ngbTooltip"
+            (mouseover)="nowButtonTooltip.open()"
+            (mouseleave)="nowButtonTooltip.close()"
+            (mousedown)="nowButtonTooltip.close()"
+            (click)="setCurrentDate()">
+          <span class="mdi mdi-calendar-clock"></span>
+     </button>
+</div>
+
+<time-input *ngIf="isTimeInputVisible()"
+            [time]="time"
+            (onChanged)="onTimeChanged($event)"></time-input>
+
+<div class="timezone-selector">
+    <searchable-select *ngIf="isTimeInputVisible()"
+                       [selectedValue]="selectedTimezone"
+                       [values]="availableTimezones"
+                       [getLabel]="getTimezoneLabel"
+                       [clearable]="false"
+                       (onValueSelected)="selectTimezone($event)"></searchable-select>
+</div>
+
+<div *ngIf="!isDatePickerVisible()"
+     class="small-circular-button red-button remove-date-value-button"
+     (click)="remove()">
+    <span class="mdi mdi-delete"></span>
+ </div>

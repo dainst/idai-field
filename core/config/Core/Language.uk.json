@@ -9,6 +9,12 @@
     },
     "shortDescription": {
       "label": "Короткий опис"
+    },
+    "includesStratigraphicalUnits": {
+      "label": "Включає/містить стратиграфічні одиниці"
+    },
+    "hasChildren": {
+      "label": "Підпорядковані ресурси"
     }
   },
   "categories": {
@@ -107,6 +113,12 @@
     },
     "isAbuttedBy": {
       "label": "викликається"
+    },
+    "isStoredIn": {
+      "label": "Зберігатися буде в"
+    },
+    "isStoragePlaceOf": {
+      "label": "Є місцем зберігання для"
     }
   }
 }

@@ -25,10 +25,7 @@ import { UpdateUsernameModalComponent } from './update-username-modal.component'
         LanguagePickerModalComponent,
         UpdateUsernameModalComponent
     ],
-    providers: [],
-    entryComponents: [
-        LanguagePickerModalComponent
-    ],
+    providers: []
 })
 
 /**

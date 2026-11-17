@@ -1,0 +1,6 @@
+#fix-outliers-modal-body {
+  .replacement-values-container {
+    max-height: calc(100vh - 500px);
+    overflow-y: auto;
+  }
+}

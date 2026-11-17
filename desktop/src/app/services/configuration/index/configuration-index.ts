@@ -1,7 +1,7 @@
 import { to, Map, clone } from 'tsfun';
 import { BuiltInConfiguration, Category, CategoryForm, ConfigLoader, ConfigReader, ConfigurationDocument,
-    createContextIndependentCategories, Field, Forest, getConfigurationName, LanguageConfiguration, Name, ProjectConfiguration,
-    RawProjectConfiguration, Template, Tree, Valuelist } from 'idai-field-core';
+    createContextIndependentCategories, Field, Forest, getConfigurationName, LanguageConfiguration, Name,
+    ProjectConfiguration, RawProjectConfiguration, Relation, Template, Tree, Valuelist } from 'idai-field-core';
 import { CategoryFormIndex } from './category-form-index';
 import { FieldIndex } from './field-index';
 import { ValuelistIndex } from './valuelist-index';
@@ -88,13 +88,13 @@ export class ConfigurationIndex {
     }
 
 
-    public createSubIndices(forms: Array<CategoryForm>, categories: Array<Category>,
+    public createSubIndices(forms: Array<CategoryForm>, categories: Array<Category>, relations: Array<Relation>,
                             commonFields: Array<Field>, valuelists: Array<Valuelist>,
                             usedCategoryForms: Array<CategoryForm>) {
 
         this.categoryFormIndex = CategoryFormIndex.create(forms);
         this.categoryFormChildrenIndex = CategoryFormChildrenIndex.create(forms);
-        this.fieldIndex = FieldIndex.create(categories, commonFields);
+        this.fieldIndex = FieldIndex.create(categories, relations, commonFields);
         this.valuelistIndex = ValuelistIndex.create(valuelists);
         this.valuelistUsageIndex = ValuelistUsageIndex.create(valuelists, usedCategoryForms);
         this.groupIndex = GroupIndex.create(usedCategoryForms);
@@ -134,6 +134,9 @@ export class ConfigurationIndex {
         this.createSubIndices(
             Tree.flatten(rawConfiguration.forms),
             Object.values(rawConfiguration.categories),
+            customProjectConfiguration
+                ? customProjectConfiguration.getRelations()
+                : this.projectConfiguration.getRelations(),
             Object.values(rawConfiguration.commonFields),
             Object.values(rawConfiguration.valuelists),
             Tree.flatten(usedCategoryForms)

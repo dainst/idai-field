@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ImageDocument, Document, CategoryForm, Datastore, ProjectConfiguration } from 'idai-field-core';
 import { ImageGridComponent } from '../grid/image-grid.component';
-import { ImageOverviewFacade } from '../../../components/image/overview/view/imageoverview-facade';
+import { ImageOverviewFacade } from './view/image-overview-facade';
 import { ImageUploadResult } from '../upload/image-uploader';
 import { ImageViewModalComponent } from '../../viewmodal/image/image-view-modal.component';
 import { MenuContext } from '../../../services/menu-context';
@@ -15,13 +15,15 @@ import { TabManager } from '../../../services/tabs/tab-manager';
 import { ViewFacade } from '../../../components/resources/view/view-facade';
 import { Messages } from '../../messages/messages';
 import { Routing } from '../../../services/routing';
+import { AppState } from '../../../services/app-state';
 
 
 @Component({
     templateUrl: './image-overview.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Daniel de Oliveira
@@ -37,6 +39,7 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
 
     private selectViaImageLinkSubscription: Subscription;
     private intitialization: Promise<void>;
+    private apiSubscription: Subscription;
 
 
     constructor(route: ActivatedRoute,
@@ -50,12 +53,15 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
                 private modalService: NgbModal,
                 private menuService: Menus,
                 private router: Router,
-                private routing: Routing) {
+                private routing: Routing,
+                private appState: AppState,
+                private changeDetectorRef: ChangeDetectorRef) {
 
         this.intitialization = this.imageOverviewFacade.initialize();
-        this.intitialization.then(() => this.setUpRouting(route, location));
-        this.selectViaImageLinkSubscription =
-            this.routing.selectViaImageLinkNotifications().subscribe(document => this.showImage(document));
+        this.intitialization.then(() => {
+            this.setUpRouting(route, location);
+            this.initializeSubscriptions();
+        });
     }
 
 
@@ -88,7 +94,7 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
 
     public setQueryString = (q: string) => this.imageOverviewFacade.setQueryString(q);
 
-    public onResize = () => this.imageGrid.calcGrid();
+    public onResize = () => this.imageGrid.triggerGridCalculation();
 
     public refreshGrid = () => this.imageOverviewFacade.fetchDocuments();
 
@@ -107,16 +113,18 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
 
     async ngOnInit() {
 
+        this.filterOptions = [this.projectConfiguration.getCategory('Image')];
+
         await this.intitialization;
         
         this.imageGrid.nrOfColumns = this.imageOverviewFacade.getNrImagesPerRow();
-        this.filterOptions = [this.projectConfiguration.getCategory('Image')];
     }
 
 
     ngOnDestroy() {
 
         if (this.selectViaImageLinkSubscription) this.selectViaImageLinkSubscription.unsubscribe();
+        if (this.apiSubscription) this.apiSubscription.unsubscribe();
     }
 
 
@@ -132,7 +140,9 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT && !this.hasSelectedImages()) {
+        if (event.key === 'Escape'
+                && this.menuService.getContext() === MenuContext.DEFAULT
+                && !this.hasSelectedImages()) {
             await this.tabManager.openActiveTab();
         }
     }
@@ -188,5 +198,21 @@ export class ImageOverviewComponent implements OnInit, OnDestroy {
 
         const image = (await this.datastore.get(id)) as ImageDocument;
         this.showImage(image, true, this.router.url.includes('conflicts'));
+    }
+
+
+    private initializeSubscriptions() {
+
+        this.selectViaImageLinkSubscription =
+            this.routing.selectViaImageLinkNotifications().subscribe(document => this.showImage(document));
+
+        this.apiSubscription = this.appState.dataTransferNotifications().subscribe(async notification => {
+            if (notification.previousDataTransfer === 'fileImport' && notification.newDataTransfer !== 'fileImport') {
+                // Calling fetchDocuments twice is necessary to prevent ExpressionChangedAfterItHasBeenCheckedError
+                await this.imageOverviewFacade.fetchDocuments();
+                this.changeDetectorRef.detectChanges();
+                await this.imageOverviewFacade.fetchDocuments();
+            }
+        });
     }
 }

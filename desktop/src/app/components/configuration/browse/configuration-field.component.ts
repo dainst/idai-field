@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { isArray } from 'tsfun';
+import { CategoryForm, Condition, ConfigurationDocument, CustomFieldDefinition, Datastore, Field, FieldGeometry,
+    FieldGeometryType, Labels, ProjectConfiguration, Relation, Valuelist, ValuelistUtil } from 'idai-field-core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
-import { CategoryForm, ConfigurationDocument, CustomFieldDefinition, Field, Labels } from 'idai-field-core';
 import { ConfigurationUtil, InputType } from '../configuration-util';
 import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
 import { UtilTranslations } from '../../../util/util-translations';
@@ -9,7 +11,8 @@ import { getInputTypeLabel } from '../../../util/get-input-type-label';
 
 @Component({
     selector: 'configuration-field',
-    templateUrl: './configuration-field.html'
+    templateUrl: './configuration-field.html',
+    standalone: false
 })
 /**
  * @author Sebastian Cuy
@@ -20,6 +23,7 @@ export class ConfigurationFieldComponent implements OnChanges {
     @Input() category: CategoryForm;
     @Input() field: Field;
     @Input() configurationDocument: ConfigurationDocument;
+    @Input() clonedProjectConfiguration: ProjectConfiguration;
     @Input() hidden: boolean;
     @Input() availableInputTypes: Array<InputType>;
     @Input() contextMenu: ConfigurationContextMenu;
@@ -35,22 +39,41 @@ export class ConfigurationFieldComponent implements OnChanges {
     public label: string;
     public description: string;
 
+    public allowedGeometryTypes: Array<FieldGeometryType>;
+    public allowedGeometryTypesLabel: string;
+
+    private conditionFieldValuelist: Valuelist;
+
 
     constructor(private labels: Labels,
                 private utilTranslations: UtilTranslations,
-                private settingsProvider: SettingsProvider) {}
+                private settingsProvider: SettingsProvider,
+                private datastore: Datastore) {}
 
 
-    public getFieldId = (field: Field) => 'field-' + field.name.replace(':', '-');
+    public getFieldId = () => 'field-' + this.field.name.replace(':', '-');
 
+    public getInputTypeLabel = () => getInputTypeLabel(
+        this.field.inputType, this.utilTranslations
+    );
+    
+    public getCategoryLabel = (categoryName: string) => this.labels.get(
+        this.clonedProjectConfiguration.getCategory(categoryName)
+    );
 
-    ngOnChanges() {
+    public getFieldLabel = (fieldName: string) => this.labels.get(
+        CategoryForm.getField(this.category, fieldName)
+    );
 
-        if (!this.category || !this.field) return;
+    public getRelationLabel = (relationName: string) => this.labels.getRelationLabel(
+        relationName, this.clonedProjectConfiguration.getRelations()
+    );
 
-        this.parentField = ConfigurationUtil.isParentField(this.category, this.field);
-        this.updateLabelAndDescription();
-    }
+    public getInverseRelation = () => (this.field as Relation).inverse;
+
+    public getDateDataType = () => this.field.dateConfiguration?.dataType;
+
+    public getDateInputMode = () => this.field.dateConfiguration?.inputMode;
 
     public getCustomLanguageConfigurations = () => this.configurationDocument.resource.languages;
 
@@ -63,9 +86,16 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public isContextMenuOpen = () => this.contextMenu.isOpen() && this.contextMenu.field === this.field;
 
-    public getInputTypeLabel = () => getInputTypeLabel(
-        this.field.inputType, this.utilTranslations
-    );
+
+    async ngOnChanges() {
+
+        if (!this.category || !this.field) return;
+
+        this.parentField = ConfigurationUtil.isParentField(this.category, this.field);
+        this.updateLabelAndDescription();
+        await this.updateConditionFieldValuelist();
+        this.updateAllowedGeometryTypes();
+    }
 
 
     public getCustomFieldDefinition(): CustomFieldDefinition|undefined {
@@ -76,10 +106,57 @@ export class ConfigurationFieldComponent implements OnChanges {
     }
 
 
+    public getRange(): string[] {
+        
+        const range: string[] = (this.field as Relation).range;
+        
+        return range?.filter(categoryName => {
+            const parentCategory = this.clonedProjectConfiguration.getCategory(categoryName).parentCategory;
+            return !parentCategory || !range.includes(parentCategory.name);
+        });
+    }
+
+
+    public getConditionValuesLabel(): string {
+
+        return Condition.generateLabel(
+            this.field.condition,
+            key => this.utilTranslations.getTranslation(key),
+            valueId => this.labels.getValueLabel(this.conditionFieldValuelist, valueId)
+        );
+    }
+
+
     private updateLabelAndDescription() {
 
         const { label, description } = this.labels.getLabelAndDescription(this.field);
         this.label = label;
         this.description = description;
+    }
+
+    
+    private async updateConditionFieldValuelist() {
+
+        if (!this.field.condition || !isArray(this.field.condition.values)) return;
+
+        this.conditionFieldValuelist = ValuelistUtil.getValuelist(
+            CategoryForm.getField(this.category, this.field.condition.fieldName),
+            await this.datastore.get('project')
+        );
+    }
+
+
+    private updateAllowedGeometryTypes() {
+
+        if (this.field.inputType !== Field.InputType.GEOMETRY) {
+            this.allowedGeometryTypes = undefined;
+            this.allowedGeometryTypesLabel = undefined;
+            return;
+        }
+
+        this.allowedGeometryTypes = this.field.geometryTypes ?? FieldGeometry.getAvailableGeometryTypes();
+        this.allowedGeometryTypesLabel = this.allowedGeometryTypes.map(geometryType => {
+            return this.utilTranslations.getTranslation('geometry.' + geometryType);
+        }).join(', ');
     }
 }

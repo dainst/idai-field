@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 valuelist-listing {
   display: block;
   width: 100%;
@@ -53,7 +55,7 @@ valuelist-listing {
     
           &.selected,
           &:not(.btn):hover {
-            background-color: darken($custom-highlight-color, 5%);
+            background-color: color.adjust($custom-highlight-color, $lightness: -5%);
             transition: background-color .5s ease;
           }
         }

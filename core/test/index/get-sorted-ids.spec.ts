@@ -1,4 +1,6 @@
 import { getSortedIds } from '../../src/index/get-sorted-ids';
+import { SortMode } from '../../src/model/datastore/query';
+import { Comparator } from '../../src/services/comparator';
 
 
 /**
@@ -6,24 +8,27 @@ import { getSortedIds } from '../../src/index/get-sorted-ids';
  */
 describe('getSortedIds', () => {
 
+    const comparator = new Comparator('de');
+
+
     it('exactMatchFirst', () => {
 
         const as = [
             { id: 'a', identifier: 'AB-C1' },
             { id: 'b', identifier: 'AB-C2' },
             { id: 'c', identifier: 'C2' }
-            ];
+        ];
 
         const result1 = getSortedIds(as as any, {
             q: 'C2',
-            sort: { mode: 'default' }
-        }, ['Type']);
+            sort: { mode: SortMode.Alphanumeric }
+        }, ['Type'], comparator);
         expect(result1).toEqual(['a', 'b', 'c']);
 
         const result2 = getSortedIds(as as any, {
             q: 'C2',
-            sort: { mode: 'exactMatchFirst' }
-        }, ['Type']);
+            sort: { mode: SortMode.ExactMatchFirst }
+        }, ['Type'], comparator);
         expect(result2).toEqual(['c', 'a', 'b']);
     });
 
@@ -41,7 +46,8 @@ describe('getSortedIds', () => {
                 categories: ['Type'],
                 sort: { matchCategory: 'Pottery' }
             },
-            ['Type']
+            ['Type'],
+            comparator
         );
         expect(result1).toEqual(['a', 'b', 'c']);
 
@@ -50,7 +56,8 @@ describe('getSortedIds', () => {
                 categories: ['Type'],
                 sort: { matchCategory: 'Terracotta' }
             },
-            ['Type']
+            ['Type'],
+            comparator
         );
         expect(result2).toEqual(['c', 'b', 'a']);
     });
@@ -68,8 +75,111 @@ describe('getSortedIds', () => {
                 categories: ['Type'],
                 sort: { matchCategory: 'Terracotta' }
             },
-            ['Type']
+            ['Type'],
+            comparator
         );
         expect(result1).toEqual(['a', 'b']);
+    });
+
+
+    it('sort alphanumerically ascending', () => {
+
+        const indexItems = [
+            { id: 'a', identifier: 'A1' },
+            { id: 'b', identifier: 'B1' },
+            { id: 'c', identifier: 'A11' },
+            { id: 'd', identifier: 'A2' }
+        ];
+
+        const result1 = getSortedIds(indexItems as any, {
+            q: '',
+            sort: { mode: SortMode.Alphanumeric }
+        }, [], comparator);
+        expect(result1).toEqual(['a', 'd', 'c', 'b']);
+    });
+
+
+    it('sort alphanumerically descending', () => {
+
+        const indexItems = [
+            { id: 'a', identifier: 'A1' },
+            { id: 'b', identifier: 'B1' },
+            { id: 'c', identifier: 'A11' },
+            { id: 'd', identifier: 'A2' }
+        ];
+
+        const result1 = getSortedIds(indexItems as any, {
+            q: '',
+            sort: { mode: SortMode.AlphanumericDescending }
+        }, [], comparator);
+        expect(result1).toEqual(['b', 'c', 'd', 'a']);
+    });
+
+
+    it('sort by date ascending', () => {
+
+        const indexItems = [
+            { id: 'a', identifier: 'A', date: 1751038414531 },
+            { id: 'b', identifier: 'B', date: 1751038414534 },
+            { id: 'c', identifier: 'C', date: 1751038414533 },
+            { id: 'd', identifier: 'D', date: 1751038414532 }
+        ];
+
+        const result1 = getSortedIds(indexItems as any, {
+            q: '',
+            sort: { mode: SortMode.Date }
+        }, [], comparator);
+        expect(result1).toEqual(['a', 'd', 'c', 'b']);
+    });
+
+
+    it('sort by date descending', () => {
+
+        const indexItems = [
+            { id: 'a', identifier: 'A', date: 1751038414531 },
+            { id: 'b', identifier: 'B', date: 1751038414534 },
+            { id: 'c', identifier: 'C', date: 1751038414533 },
+            { id: 'd', identifier: 'D', date: 1751038414532 }
+        ];
+
+        const result1 = getSortedIds(indexItems as any, {
+            q: '',
+            sort: { mode: SortMode.DateDescending }
+        }, [], comparator);
+        expect(result1).toEqual(['b', 'c', 'd', 'a']);
+    });
+
+
+    it('sort alphanumerically if date is identical in sort mode "date ascending"', () => {
+
+        const indexItems = [
+            { id: 'd', identifier: 'D', date: 1751038414531 },
+            { id: 'c', identifier: 'C', date: 1751038414532 },
+            { id: 'b', identifier: 'B', date: 1751038414532 },
+            { id: 'a', identifier: 'A', date: 1751038414533 }
+        ];
+
+        const result1 = getSortedIds(indexItems as any, {
+            q: '',
+            sort: { mode: SortMode.Date }
+        }, [], comparator);
+        expect(result1).toEqual(['d', 'b', 'c', 'a']);
+    });
+
+
+    it('sort alphanumerically if date is identical in sort mode "date descending"', () => {
+
+        const indexItems = [
+            { id: 'd', identifier: 'D', date: 1751038414531 },
+            { id: 'c', identifier: 'C', date: 1751038414532 },
+            { id: 'b', identifier: 'B', date: 1751038414532 },
+            { id: 'a', identifier: 'A', date: 1751038414533 }
+        ];
+
+        const result1 = getSortedIds(indexItems as any, {
+            q: '',
+            sort: { mode: SortMode.DateDescending }
+        }, [], comparator);
+        expect(result1).toEqual(['a', 'b', 'c', 'd']);
     });
 });

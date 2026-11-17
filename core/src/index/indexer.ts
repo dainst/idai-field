@@ -1,8 +1,7 @@
 import { isUndefined, not } from 'tsfun';
 import { IndexFacade } from './index-facade';
-import { DocumentConverter, DatastoreErrors, DocumentCache } from '../datastore';
-import { Document } from '../model/document';
-import { CategoryForm } from '../model/configuration/category-form';
+import { DocumentCache, Migrator } from '../datastore';
+import { Document } from '../model/document/document';
 import { WarningsUpdater } from '../datastore/warnings-updater';
 import { ProjectConfiguration } from '../services';
 
@@ -14,10 +13,10 @@ import { ProjectConfiguration } from '../services';
  */
  export module Indexer {
  
-    export async function reindex(indexFacade: IndexFacade, db: PouchDB.Database, documentCache: DocumentCache,
-                                  converter: DocumentConverter, projectConfiguration: ProjectConfiguration,
-                                  keepCachedInstances: boolean, setProgress?: (progress: number) => Promise<void>,
-                                  setIndexing?: () => Promise<void>, setError?: (error: string) => Promise<void>) {
+    export async function reindex(indexFacade: IndexFacade, db: any, documentCache: DocumentCache,
+                                  projectConfiguration: ProjectConfiguration, keepCachedInstances: boolean,
+                                  setProgress?: (progress: number) => Promise<void>, setIndexing?: () => Promise<void>,
+                                  setError?: (error: string) => Promise<void>) {
 
         indexFacade.clear();
 
@@ -36,10 +35,10 @@ import { ProjectConfiguration } from '../services';
             if (keepCachedInstances) {
                 documents = documents.filter(document => !documentCache.get(document.resource?.id));
             }
-            documents = convertDocuments(documents, converter);
+            documents = migrateDocuments(documents, projectConfiguration);
             documents.forEach(document => {
                 WarningsUpdater.updateIndexIndependentWarnings(document, projectConfiguration);
-                documentCache.set(document)
+                documentCache.set(document);
             });
 
             if (keepCachedInstances) {
@@ -59,7 +58,7 @@ import { ProjectConfiguration } from '../services';
     }
 
 
-    async function fetchAll(db: PouchDB.Database) {
+    async function fetchAll(db: any) {
 
         return (await db
             .allDocs({
@@ -71,14 +70,15 @@ import { ProjectConfiguration } from '../services';
     }
 
 
-    function convertDocuments(documents: Array<Document>, converter: DocumentConverter): Array<Document> {
+    function migrateDocuments(documents: Array<Document>,
+                              projectConfiguration: ProjectConfiguration): Array<Document> {
 
         return documents.map(document => {
             try {
-                converter.convert(document);
+                Migrator.migrate(document, projectConfiguration);
                 return document;
             } catch (err) {
-                console.warn('Error while converting document: ', err);
+                console.warn('Error while migrating document: ', err);
                 return undefined;
             }
         }).filter(not(isUndefined));
@@ -93,12 +93,16 @@ import { ProjectConfiguration } from '../services';
 
         for (let i = 0; i < documents.length; i++) {
             const document: Document = documents[i];
-            WarningsUpdater.updateIndexDependentWarnings(document, indexFacade, documentCache, projectConfiguration);
+            await WarningsUpdater.updateIndexDependentWarnings(
+                document, indexFacade, documentCache, projectConfiguration
+            );
 
             if (setProgress && (i % 250 === 0 || i === documents.length)) {
                 await setProgress(documents.length * 0.75 + i * 0.25);
             }
         };
+
+        indexFacade.notifyObservers();
     }
 
 

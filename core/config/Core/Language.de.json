@@ -10,11 +10,17 @@
     "shortDescription": {
       "label": "Kurzbeschreibung"
     },
+    "includesStratigraphicalUnits": {
+      "label": "Umfasst stratigraphische Einheiten"
+    },
     "hasChildren": {
       "label": "Untergeordnete Ressourcen"
     },
-    "includesStratigraphicalUnits": {
-      "label": "Umfasst stratigraphische Einheiten"
+    "isSubjectOf": {
+      "label": "Gegenstand von"
+    },
+    "isResultOf": {
+      "label": "Ergebnis von"
     }
   },
   "categories": {
@@ -37,6 +43,9 @@
         },
         "width": {
           "label": "Breite"
+        },
+        "originalFilename": {
+          "label": "Ursprünglicher Dateiname"
         }
       }
     }
@@ -119,6 +128,12 @@
     },
     "isStoragePlaceOf": {
       "label": "Ist Aufbewahrungsort von"
+    },
+    "isCarriedOutOn": {
+      "label": "Durchgeführt an"
+    },
+    "resultsIn": {
+      "label": "Ergibt"
     }
   }
 }

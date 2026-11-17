@@ -1,5 +1,4 @@
 import { ElementRef } from '@angular/core';
-import 'viz.js';
 
 
 /**
@@ -20,7 +19,6 @@ export module GraphManipulation {
     export function removeTitleElements(svg: SVGSVGElement) {
 
         const rootElement: SVGGElement = svg.getElementsByTagName('g')[0];
-        rootElement.removeChild(rootElement.getElementsByTagName('title')[0]);
 
         for (let i = 0; i < rootElement.children.length; i++) {
             const titleElements: HTMLCollectionOf<HTMLTitleElement>

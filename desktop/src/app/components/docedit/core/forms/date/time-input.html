@@ -1,0 +1,24 @@
+<input #timeInput
+       type="time"
+       class="form-control"
+       [class.with-am-pm-switch]="meridian !== '24h'"
+       [class.with-time-suffix]="getTimeSuffix()"
+       [min]="getMinTime()"
+       [max]="getMaxTime()"
+       [(ngModel)]="timeString"
+       (ngModelChange)="notify()"
+       (focus)="focused = true"
+       (blur)="focused = false">
+
+<div *ngIf="meridian === '24h' && getTimeSuffix()"
+     class="time-suffix"
+     [class.focused]="focused"
+     (click)="timeInput.focus()">{{getTimeSuffix()}}</div>
+
+<div *ngIf="meridian !== '24h'"
+     class="am-pm-switch"
+     [class.focused]="focused"
+     (click)="toggleMeridian()">
+    <span *ngIf="meridian === 'am'">AM</span>
+    <span *ngIf="meridian === 'pm'">PM</span>
+</div>

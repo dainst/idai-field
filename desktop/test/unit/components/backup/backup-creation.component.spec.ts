@@ -1,7 +1,5 @@
 import { BackupCreationComponent } from '../../../../src/app/components/backup/backup-creation.component';
 
-import PouchDB = require('pouchdb-node');
-
 
 /**
  * @author Daniel de Oliviera
@@ -9,51 +7,62 @@ import PouchDB = require('pouchdb-node');
 describe('BackupCreationComponent', () => {
 
     const backupFilePath = 'test/store/backup_test_file.txt';
-    const unittestdb = 'unittestdb';
 
-    let c: BackupCreationComponent;
-    let messages: any;
-    let settingsService: any;
-    let backupProvider: any;
-    let tabManager: any;
-    let menuService: any;
+    let backupCreationComponent: BackupCreationComponent;
+    let backupService: any;
 
 
     beforeEach(() => {
 
-        spyOn(console, 'warn');
+        backupService = {
+            create: jest.fn(),
+            restore: jest.fn()
+        };
 
-        const dialogProvider = jasmine.createSpyObj('dialogProvider', ['chooseFilepath']);
-        const modalService = jasmine.createSpyObj('modalService', ['open']);
-        messages = jasmine.createSpyObj('messages', ['add']);
-        settingsService = jasmine.createSpyObj('settingsService', ['getSettings', 'addProject']);
-        backupProvider = jasmine.createSpyObj('backupProvider', ['dump', 'readDump']);
-        tabManager = jasmine.createSpyObj('tabManager', ['openActiveTab']);
-        menuService = jasmine.createSpyObj('menuService', ['setContext']);
+        const dialogProvider: any = {
+            chooseFilepath: jest.fn()
+        };
 
-        c = new BackupCreationComponent(
+        const modalService: any = {
+            open: jest.fn()
+        };
+
+        const messages: any = {
+            add: jest.fn()
+        };
+
+        const settingsService: any = {
+            getSettings: jest.fn(),
+            addProject: jest.fn()
+        };
+
+        const tabManager: any = {
+            openActiveTab: jest.fn()
+        };
+
+        const menuService: any = {
+            setContext: jest.fn()
+        };
+
+        backupCreationComponent = new BackupCreationComponent(
             dialogProvider,
             modalService,
             messages,
             settingsService,
-            backupProvider,
+            backupService,
             tabManager,
-            menuService
+            menuService,
+            undefined
         );
 
-        settingsService.getSettings.and.returnValue({ selectedProject: 'selectedproject' } as any);
-        dialogProvider.chooseFilepath.and.returnValue(Promise.resolve(backupFilePath));
+        settingsService.getSettings.mockReturnValue({ selectedProject: 'selected-project' } as any);
+        dialogProvider.chooseFilepath.mockReturnValue(Promise.resolve(backupFilePath));
     });
 
 
-    afterEach(done => new PouchDB(unittestdb).destroy().then(done));
+    test('create backup', async () => {
 
-
-    it('create backup', async done => {
-
-        await c.createBackup();
-        expect(backupProvider.dump).toHaveBeenCalledWith(backupFilePath, 'selectedproject');
-
-        done();
+        await backupCreationComponent.startBackupCreation();
+        expect(backupService.create).toHaveBeenCalledWith(backupFilePath, 'selected-project');
     });
 });

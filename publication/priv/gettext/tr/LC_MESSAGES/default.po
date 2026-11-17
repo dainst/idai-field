@@ -1,0 +1,40 @@
+## "msgid"s in this file come from POT (.pot) files.
+###
+### Do not add, change, or remove "msgid"s manually here as
+### they're tied to the ones in the corresponding POT file
+### (with the same domain).
+###
+### Use "mix gettext.extract --merge" or "mix gettext.merge"
+### to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: tr\n"
+"Plural-Forms: nplurals=2; plural=(n>1);\n"
+
+#: lib/field_publication_web/components/core_components.ex:474
+#: lib/field_publication_web/live/admin_live/user_management.ex:22
+#: lib/field_publication_web/live/project_live/index.html.heex:18
+#, elixir-autogen, elixir-format
+msgid "Actions"
+msgstr ""
+
+#: lib/field_publication_web/components/core_components.ex:76
+#: lib/field_publication_web/components/core_components.ex:128
+#, elixir-autogen, elixir-format
+msgid "close"
+msgstr ""
+
+#: lib/field_publication_web/live/presentation/home_live.html.heex:1
+#, elixir-autogen, elixir-format
+msgid "home_title"
+msgstr "Projects"
+
+#: lib/field_publication_web/live/presentation/components/project_document.ex:21
+#, elixir-autogen, elixir-format
+msgid "project_doc_about_project"
+msgstr ""
+
+#: lib/field_publication_web/live/presentation/components/project_document.ex:26
+#, elixir-autogen, elixir-format
+msgid "project_doc_about_publication"
+msgstr ""

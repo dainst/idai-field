@@ -1,8 +1,10 @@
-<div *ngIf="fieldDataLabel">
+<div *ngIf="ready">
     <div i18n="@@docedit.forms.invalidFieldData.info" class="invalid-field-data-info">
         Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten Eingabetyp:
     </div>
-   <div class="invalid-field-data-label" [innerHTML]="fieldDataLabel"></div>
+    <div *ngIf="fieldDataLabel" class="invalid-field-data-label" [innerHTML]="fieldDataLabel"></div>
+    <div *ngIf="!fieldDataLabel" class="invalid-field-data-label no-data"
+         i18n="@@navbar.taskbar.warnings.fieldData.none"><i>Keine</i></div>
     <button class="btn btn-danger delete-invalid-field-data-button" type="button" (click)="delete()">
         <span class="mdi mdi-delete"></span>
         <span class="delete-invalid-data-button-label" 

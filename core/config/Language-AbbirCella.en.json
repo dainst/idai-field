@@ -495,12 +495,6 @@
         "diary": {
             "label": "Diary"
         },
-        "beginningDate": {
-            "label": "Beginning date"
-        },
-        "endDate": {
-            "label": "End date"
-        },
         "campaign": {
             "label": "Campaign"
         },

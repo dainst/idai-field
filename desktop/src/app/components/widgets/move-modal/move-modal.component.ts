@@ -2,14 +2,17 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FieldDocument, CategoryForm, IndexFacade, Constraint, RelationsManager, ProjectConfiguration,
     Datastore} from 'idai-field-core';
-import { Messages } from '../../messages/messages';
 import { Loading } from '../loading';
 import { MoveUtility } from './move-utility';
 import { UtilTranslations } from '../../../util/util-translations';
+import { MsgWithParams } from '../../messages/msg-with-params';
+import { Menus } from '../../../services/menus';
+import { MenuContext } from '../../../services/menu-context';
 
 
 export interface MoveResult {
     success: boolean;
+    errorMessages: Array<MsgWithParams>;
     newParent?: FieldDocument;
 }
 
@@ -19,7 +22,8 @@ export interface MoveResult {
     templateUrl: './move-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -36,11 +40,11 @@ export class MoveModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 private relationsManager: RelationsManager,
                 private indexFacade: IndexFacade,
-                private messages: Messages,
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
                 private loading: Loading,
-                private utilTranslations: UtilTranslations) {}
+                private utilTranslations: UtilTranslations,
+                private menuService: Menus) {}
 
 
     public isLoading = () => this.loading.isLoading('moveModal');
@@ -73,7 +77,9 @@ export class MoveModalComponent {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.isLoading()) this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && !this.isLoading() && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 
@@ -82,7 +88,10 @@ export class MoveModalComponent {
         if (this.isLoading()) return;
         this.loading.start('moveModal');
 
-        const result: MoveResult = { success: false };
+        const result: MoveResult = {
+            success: false,
+            errorMessages: []
+        };
 
         for (let document of this.documents) {
             try {
@@ -97,8 +106,7 @@ export class MoveModalComponent {
                 result.success = true;
                 result.newParent = newParent;
             } catch (msgWithParams) {
-                console.error(msgWithParams);
-                this.messages.add(msgWithParams);
+                result.errorMessages.push(msgWithParams);
             }
         }
 

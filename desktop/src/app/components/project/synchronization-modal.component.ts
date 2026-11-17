@@ -10,6 +10,9 @@ import { SettingsService } from '../../services/settings/settings-service';
 import { Messages } from '../messages/messages';
 import { M } from '../messages/m';
 import { SettingsErrors } from '../../services/settings/settings-errors';
+import { getFileSizeLabel } from '../../util/get-file-size-label';
+import { MenuContext } from '../../services/menu-context';
+import { Menus } from '../../services/menus';
 
 
 const CREDENTIALS_TIMER_INTERVAL: number = 500;
@@ -20,7 +23,8 @@ const CREDENTIALS_TIMER_INTERVAL: number = 500;
     templateUrl: './synchronization-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -48,7 +52,8 @@ export class SynchronizationModalComponent implements OnInit {
                 private settingsProvider: SettingsProvider,
                 private settingsService: SettingsService,
                 private decimalPipe: DecimalPipe,
-                private messages: Messages) {}
+                private messages: Messages,
+                private menuService: Menus) {}
 
 
     async ngOnInit() {
@@ -77,7 +82,8 @@ export class SynchronizationModalComponent implements OnInit {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') {
+        if (event.key === 'Escape'
+                && [MenuContext.MODAL, MenuContext.CONFIGURATION_MODAL].includes(this.menuService.getContext())) {
             this.activeModal.close();
         }
     }
@@ -221,13 +227,13 @@ export class SynchronizationModalComponent implements OnInit {
             } else {
                 console.error(err);
             }
-            return; 
+            return;
         }
+
+        this.activeModal.close();
 
         this.syncTarget = this.settings.syncTargets[this.settings.selectedProject];
         await this.settingsService.setupSync();
-
-        this.activeModal.close();
     }
 
 
@@ -274,10 +280,10 @@ export class SynchronizationModalComponent implements OnInit {
 
         if (this.getFileSizesStart !== startDate) return;
 
-        const thumbnailDownloadSizeMsg = ImageStore.byteCountToDescription(
+        const thumbnailDownloadSizeMsg = getFileSizeLabel(
             downloadSize, (value) => this.decimalPipe.transform(value)
         );
-        const thumbnailUploadSizeMsg = ImageStore.byteCountToDescription(
+        const thumbnailUploadSizeMsg = getFileSizeLabel(
             uploadSize, (value) => this.decimalPipe.transform(value)
         );
         this.thumbnailImageSizesMsg = `(⬇ ${thumbnailDownloadSizeMsg} / ⬆ ${thumbnailUploadSizeMsg})`;
@@ -290,10 +296,10 @@ export class SynchronizationModalComponent implements OnInit {
 
         if (this.getFileSizesStart !== startDate) return;
 
-        this.originalImageDownloadSizeMsg = `(⬇ ${ImageStore.byteCountToDescription(
+        this.originalImageDownloadSizeMsg = `(⬇ ${getFileSizeLabel(
             downloadSize, (value) => this.decimalPipe.transform(value)
         )})`;
-        this.originalImageUploadSizeMsg = `(⬆ ${ImageStore.byteCountToDescription(
+        this.originalImageUploadSizeMsg = `(⬆ ${getFileSizeLabel(
             uploadSize, (value) => this.decimalPipe.transform(value)
         )})`;
     }
@@ -307,7 +313,7 @@ export class SynchronizationModalComponent implements OnInit {
                 [variant]
             ),
             this.remoteImageStore.getFileInfosUsingCredentials(
-                SyncTarget.getAddress(this.syncTarget).trim(),
+                (await SyncTarget.getAddress(this.syncTarget)).trim(),
                 this.syncTarget.password.trim(),
                 this.settings.selectedProject,
                 [variant]

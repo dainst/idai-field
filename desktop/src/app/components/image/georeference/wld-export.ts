@@ -1,40 +1,65 @@
 import { ImageDocument } from 'idai-field-core';
 import { ExtensionUtil } from '../../../util/extension-util';
+import { AppState } from '../../../services/app-state';
+import { ImageUploader } from '../upload/image-uploader';
+
+const remote = window.require('@electron/remote');
+const fs = window.require('fs');
 
 
-export function downloadWldFile(imageDoc: ImageDocument) {
+export async function downloadWldFile(imageDocument: ImageDocument, appState: AppState) {
 
-    const content = getWldFileContent(imageDoc);
-    const fileName = ExtensionUtil.replaceExtension(imageDoc.resource.identifier, 'wld');
-    triggerDownload(content, fileName);
+    const content: string = getWldFileContent(imageDocument);
+    const fileName: string = ExtensionUtil.replaceExtension(imageDocument.resource.identifier, 'wld');
+    const filePath: string = await openFileSelectionDialog(fileName, appState);
+
+    if (filePath) fs.writeFileSync(filePath, content);
 }
 
 
-function triggerDownload(content: string, fileName: string) {
+function getWldFileContent(imageDocument: ImageDocument): string {
 
-    const link = document.createElement('a');
-    const blob = new Blob([content], { type: 'application/octet-stream;charset=utf-8' });
-    link.href = window.URL.createObjectURL(blob);
-    link.download = fileName;
-    link.click();
+    if (!imageDocument.resource.georeference) {
+        throw Error('No georeference present in the document');
+    }
+
+    return ImageDocument.getWldFileContent(imageDocument);
 }
 
 
-function getWldFileContent(imageDoc: ImageDocument): string {
+async function openFileSelectionDialog(fileName: string, appState: AppState): Promise<string> {
 
-    if (!imageDoc.resource.georeference)
-        throw Error('No georefence present in the document');
+    const defaultPath: string = getDefaultPath(fileName, appState);
 
-    let lines: number[] = [];
-    const georef = imageDoc.resource.georeference;
-    const width = imageDoc.resource.width - 1;
-    const height = imageDoc.resource.height - 1;
+    const saveDialogReturnValue = await remote.dialog.showSaveDialog(
+        remote.getCurrentWindow(),
+        {
+            defaultPath,
+            filters: [
+                {
+                    name: 'Worldfile',
+                    extensions: ImageUploader.supportedWorldFileTypes
+                }
+            ]
+        }
+    );
 
-    lines[0] = (georef.topRightCoordinates[1] - georef.topLeftCoordinates[1]) / width;
-    lines[1] = (georef.topRightCoordinates[0] - georef.topLeftCoordinates[0]) / height;
-    lines[2] = (georef.bottomLeftCoordinates[1] - georef.topLeftCoordinates[1]) / width;
-    lines[3] = (georef.bottomLeftCoordinates[0] - georef.topLeftCoordinates[0]) / height;
-    lines[4] = georef.topLeftCoordinates[1];
-    lines[5] = georef.topLeftCoordinates[0];
-    return lines.map((x: number) => x).join('\n');
+    const filePath: string = saveDialogReturnValue.filePath;
+    
+    if (filePath) {
+        if (appState) appState.setFolderPath(filePath, 'worldfileExport');
+        return filePath;
+    } else {
+        return undefined;
+    }
+}
+
+
+function getDefaultPath(fileName: string, appState: AppState): string {
+
+    const folderPath: string = appState?.getFolderPath('worldfileExport');
+
+    return folderPath
+        ? folderPath + '/' + fileName
+        : fileName;
 }

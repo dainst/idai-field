@@ -172,8 +172,7 @@
             "supervisor",
             "processor",
             "campaign",
-            "beginningDate",
-            "endDate"
+            "date"
           ]
         },
         {

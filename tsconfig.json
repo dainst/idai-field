@@ -1,12 +1,5 @@
 {
     "compilerOptions": {
-        "baseUrl": "./",
-        // These paths are configured here because IDEs normally only pick up
-        // this tsconfig.json and thus will be able to correctly resolve
-        // TypeScript code in other packages.
-        // Packages are built with the corresponding local tsconfig.json files.
-        "paths": {
-            "idai-field-core": ["core/index.ts"]
-        }
+        "baseUrl": "./"
     }
 }

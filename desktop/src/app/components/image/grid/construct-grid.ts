@@ -1,7 +1,6 @@
-import {ImageResource} from 'idai-field-core';
-import {Document} from 'idai-field-core';
-import {ImageUrlMaker} from '../../../services/imagestore/image-url-maker';
-import {ImageContainer} from '../../../services/imagestore/image-container';
+import { Document, ImageResource } from 'idai-field-core';
+import { ImageUrlMaker } from '../../../services/imagestore/image-url-maker';
+import { ImageContainer } from '../../../services/imagestore/image-container';
 
 
 /**
@@ -101,4 +100,3 @@ function newCell(document: any, calculatedHeight: any): ImageContainer {
 
     return cell;
 }
-

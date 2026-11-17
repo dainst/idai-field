@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { nop } from 'tsfun';
-import { ConfigurationDocument, SortUtil, Valuelist } from 'idai-field-core';
+import { ConfigurationDocument, Comparator, Valuelist } from 'idai-field-core';
 import { ConfigurationIndex } from '../../../../services/configuration/index/configuration-index';
 import { Modals } from '../../../../services/modals';
 import { ValuelistEditorModalComponent } from '../../editor/valuelist/valuelist-editor-modal.component';
@@ -17,6 +17,7 @@ import { ValuelistSearchQuery } from './valuelist-search-query';
 import { ExtendValuelistModalComponent } from './extend-valuelist-modal.component';
 import { SettingsProvider } from '../../../../services/settings/settings-provider';
 import { Naming } from '../naming';
+import { ContextMenuProvider } from '../../../widgets/context-menu-provider';
 
 
 @Component({
@@ -25,12 +26,13 @@ import { Naming } from '../naming';
         '(window:keydown)': 'onKeyDown($event)',
         '(window:click)': 'onClick($event, false)',
         '(window:contextmenu)': 'onClick($event, true)'
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
  */
-export class ManageValuelistsModalComponent {
+export class ManageValuelistsModalComponent extends ContextMenuProvider implements OnDestroy {
 
     public configurationDocument: ConfigurationDocument;
     public applyChanges: (configurationDocument: ConfigurationDocument,
@@ -47,9 +49,20 @@ export class ManageValuelistsModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 protected configurationIndex: ConfigurationIndex,
                 protected modals: Modals,
+                protected comparator: Comparator,
                 private menus: Menus,
                 private messages: Messages,
-                private settingsProvider: SettingsProvider) {}
+                private settingsProvider: SettingsProvider,
+                changeDetectorRef: ChangeDetectorRef) {
+
+        super(changeDetectorRef);
+    }
+
+
+    ngOnDestroy() {
+        
+        this.removeListeners();
+    }
 
 
     public initialize() {
@@ -67,7 +80,7 @@ export class ManageValuelistsModalComponent {
     }
 
 
-    public onClick(event: any, rightClick: boolean = false) {
+    public onClick(event: MouseEvent, rightClick: boolean = false) {
 
         if (!this.contextMenu.position) return;
 
@@ -165,7 +178,7 @@ export class ManageValuelistsModalComponent {
     protected submitQuery(): Array<Valuelist> {
 
         return this.configurationIndex.findValuelists(this.searchQuery.queryString)
-            .sort((valuelist1, valuelist2) => SortUtil.alnumCompare(valuelist1.id, valuelist2.id));
+            .sort((valuelist1, valuelist2) => this.comparator.alnumCompare(valuelist1.id, valuelist2.id));
     }
 
 

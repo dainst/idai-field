@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 @import 'depicts-relations-view';
 @import 'georeference-view';
 @import 'thumbnail';
@@ -68,7 +70,7 @@ document-info {
         }
 
         &.active {
-          background-color: darken($popover-header-hover-bg-color, 10%);
+          background-color: color.adjust($popover-header-hover-bg-color, $lightness: -10%);
         }
 
         &:active:focus {

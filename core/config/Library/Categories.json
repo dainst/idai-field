@@ -1338,9 +1338,6 @@
         "inputType": "input",
         "constraintIndexed": true
       },
-      "weight": {
-        "inputType": "unsignedFloat"
-      },
       "condition": {
         "inputType": "dropdown",
         "constraintIndexed": true,
@@ -1365,9 +1362,6 @@
       "amount": {
         "inputType": "unsignedInt",
         "constraintIndexed": true
-      },
-      "weight": {
-        "inputType": "unsignedFloat"
       },
       "storagePlace": {
         "inputType": "radio",
@@ -1587,9 +1581,6 @@
         "inputType": "input",
         "constraintIndexed": true
       },
-      "weight": {
-        "inputType": "unsignedFloat"
-      },
       "sampleType": {
         "inputType": "radio",
         "constraintIndexed": true,
@@ -1647,5 +1638,265 @@
     "parent": "StoragePlace",
     "description": {},
     "fields": {}
+  },
+  "Sampling": {
+    "parent": "Process",
+    "color": "#04a3e7",
+    "description": {},
+    "fields": {
+      "samplingStrategy": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "Sampling-samplingStrategy-default"
+      },
+      "horizontalSamplingStrategy": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "Sampling-horizontalSamplingStrategy-default"
+      },
+      "systematicSamplingStrategy": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "Sampling-systematicSamplingStrategy-default"
+      },
+      "proportionSystematicSampling": {
+        "inputType": "unsignedFloat"
+      },
+      "quadrantDimensionsSystematicSampling": {
+        "inputType": "unsignedFloat"
+      },
+      "verticalSamplingStrategy": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "Sampling-verticalSamplingStrategy-default"
+      },
+      "profileSamplingStrategy": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "Sampling-profileSamplingStrategy-default"
+      }
+    },
+    "defaultRange": {
+      "isCarriedOutOn": ["Feature", "Profile", "Area", "Find"],
+      "resultsIn": ["Sample"]
+    }
+  },
+  "Sieving": {
+    "parent": "Process",
+    "color": "#024ad9",
+    "description": {},
+    "fields": {
+      "waterOrigin": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "Sieving-waterOrigin-default"
+      },
+      "waterChangeFrequency": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "Sieving-waterChangeFrequency-default"
+      },
+      "samplePretreated": {
+        "inputType": "boolean",
+        "constraintIndexed": true
+      },
+      "pretreatmentType": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "Sieving-pretreatmentType-default"
+      },
+      "pretreatmentChemicals": {
+        "inputType": "multiInput"
+      },
+      "sievingMethod": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "Sieving-sievingMethod-default",
+        "references": [
+          "https://doi.org/10.4324/9781315423098"
+        ]
+      },
+      "sievingMeshes": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "Sieving-sievingMeshes-default",
+        "references": [
+          "https://doi.org/10.4324/9781315423098",
+          "https://zenon.dainst.org/Record/000086684/Details",
+          "https://en.wikipedia.org/wiki/Mesh_(scale)",
+          "https://blog.certifiedmtp.com/sieve-size-chart-understanding-mesh-and-particle-sizes"
+        ]
+      }
+    },
+    "defaultRange": {
+      "isCarriedOutOn": ["Sample"]
+    }
+  },
+  "SievedFractionProcessing": {
+    "parent": "Process",
+    "color": "#0025b8",
+    "description": {},
+    "fields": {
+      "mineralFractionKept": {
+        "inputType": "boolean",
+        "constraintIndexed": true
+      },
+      "mineralFractionMeasured": {
+        "inputType": "boolean",
+        "constraintIndexed": true
+      },
+      "mineralFractionMeasurementUnit": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "SievedFractionProcessing-measurementUnit-default"
+      },
+      "mineralFractionMeasurement8": {
+        "inputType": "unsignedFloat"
+      },
+      "mineralFractionMeasurement4": {
+        "inputType": "unsignedFloat"
+      },
+      "mineralFractionMeasurement2": {
+        "inputType": "unsignedFloat"
+      },
+      "mineralFractionMeasurement1": {
+        "inputType": "unsignedFloat"
+      },
+      "mineralFractionMeasurement05": {
+        "inputType": "unsignedFloat"
+      },
+      "mineralFractionMeasurementStrain": {
+        "inputType": "unsignedFloat"
+      },
+      "mineralFractionSubsampled": {
+        "inputType": "boolean",
+        "constraintIndexed": true
+      },
+      "mineralSubsamplingTechnique": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "SievedFractionProcessing-subsamplingTechnique-default"
+      },
+      "mineralFractionSubsampledList": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "SievedFractionProcessing-mineralFractionSubsampledList-default"
+      },
+      "mineralMultiplicationFactor8": {
+        "inputType": "unsignedFloat"
+      },
+      "mineralMultiplicationFactor4": {
+        "inputType": "unsignedFloat"
+      },
+      "mineralMultiplicationFactor2": {
+        "inputType": "unsignedFloat"
+      },
+      "mineralMultiplicationFactor1": {
+        "inputType": "unsignedFloat"
+      },
+      "mineralMultiplicationFactor05": {
+        "inputType": "unsignedFloat"
+      },
+      "mineralMultiplicationFactorStrain": {
+        "inputType": "unsignedFloat"
+      },
+      "mineralDescription": {
+        "inputType": "text"
+      },
+      "mineralNotes": {
+        "inputType": "text"
+      },
+      "organicFractionTreatmentType": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "SievedFractionProcessing-organicFractionTreatmentType-default"
+      },
+      "organicFractionMeasured": {
+        "inputType": "boolean",
+        "constraintIndexed": true
+      },
+      "organicFractionMeasurementUnit": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "SievedFractionProcessing-measurementUnit-default"
+      },
+      "organicFractionVolumeMeasurementTechnique": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "SievedFractionProcessing-volumeMeasurementTechnique-default"
+      },
+      "organicFractionMeasurement8": {
+        "inputType": "unsignedFloat"
+      },
+      "organicFractionMeasurement4": {
+        "inputType": "unsignedFloat"
+      },
+      "organicFractionMeasurement2": {
+        "inputType": "unsignedFloat"
+      },
+      "organicFractionMeasurement05": {
+        "inputType": "unsignedFloat"
+      },
+      "organicFractionMeasurement035": {
+        "inputType": "unsignedFloat"
+      },
+      "organicFractionMeasurement025": {
+        "inputType": "unsignedFloat"
+      },
+      "organicFractionMeasurement0125": {
+        "inputType": "unsignedFloat"
+      },
+      "organicFractionMeasurementStrain": {
+        "inputType": "unsignedFloat"
+      },
+      "organicFractionSubsampled": {
+        "inputType": "boolean",
+        "constraintIndexed": true
+      },
+      "organicSubsamplingTechnique": {
+        "inputType": "radio",
+        "constraintIndexed": true,
+        "valuelistId": "SievedFractionProcessing-subsamplingTechnique-default"
+      },
+      "organicFractionSubsampledList": {
+        "inputType": "checkboxes",
+        "constraintIndexed": true,
+        "valuelistId": "SievedFractionProcessing-organicFractionSubsampledList-default"
+      },
+      "organicMultiplicationFactor8": {
+        "inputType": "unsignedFloat"
+      },
+      "organicMultiplicationFactor4": {
+        "inputType": "unsignedFloat"
+      },
+      "organicMultiplicationFactor2": {
+        "inputType": "unsignedFloat"
+      },
+      "organicMultiplicationFactor05": {
+        "inputType": "unsignedFloat"
+      },
+      "organicMultiplicationFactor035": {
+        "inputType": "unsignedFloat"
+      },
+      "organicMultiplicationFactor025": {
+        "inputType": "unsignedFloat"
+      },
+      "organicMultiplicationFactor0125": {
+        "inputType": "unsignedFloat"
+      },
+      "organicMultiplicationFactorStrain": {
+        "inputType": "unsignedFloat"
+      },
+      "organicDescription": {
+        "inputType": "text"
+      },
+      "organicNotes": {
+        "inputType": "text"
+      }
+    },
+    "defaultRange": {
+      "isCarriedOutOn": ["Sample"],
+      "resultsIn": ["FindCollection"]
+    }
   }
 }

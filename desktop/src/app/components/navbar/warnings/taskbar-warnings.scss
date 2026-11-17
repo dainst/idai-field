@@ -1,7 +1,9 @@
+@use 'sass:color';
+
 #warnings {
   position: relative;
   height: 40px;
-  margin-right: 12px;
+  margin-right: 14px;
 
   #taskbar-warnings-container {
     margin-left: 18px;
@@ -14,6 +16,10 @@
 
     #taskbar-warnings-button-icon {
       color: $navbar-link-color;
+    }
+
+    #taskbar-warnings-button-pill {
+      right: -3px;
     }
   }
 }
@@ -61,7 +67,7 @@
       }
 
       .list-group-item:hover {
-        background-color: darken($list-item-hover-color, 5%);
+        background-color: color.adjust($list-item-hover-color, $lightness: -5%);
         transition: background-color .5s ease;
       }
 

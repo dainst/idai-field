@@ -7,7 +7,7 @@ import { CsvExportUtils } from '../../../../../src/app/components/export/csv/csv
  */
 describe('CSVExportUtils', () => {
 
-    it('getMax', () => {
+    test('getMax', () => {
 
         const result = CsvExportUtils
             .getMax(2)
@@ -21,7 +21,7 @@ describe('CSVExportUtils', () => {
     });
 
 
-    it('replaceItems', () => {
+    test('replaceItems', () => {
 
         const result = CsvExportUtils
             .replaceItems(1, 2, val(['e']))
@@ -31,7 +31,7 @@ describe('CSVExportUtils', () => {
     });
 
 
-    it('replaceItem', () => {
+    test('replaceItem', () => {
 
         const result = CsvExportUtils
             .replaceItem(1, val(['e', 'f']))

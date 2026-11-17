@@ -4,11 +4,13 @@ import { Routing } from '../../../services/routing';
 import { ResourcesSearchBarComponent } from './resources-search-bar.component';
 import { ViewFacade} from '../../../components/resources/view/view-facade';
 import { Messages } from '../../messages/messages';
+import { AngularUtility } from '../../../angular/angular-utility';
 
 
 @Component({
     selector: 'search-suggestions',
-    templateUrl: './search-suggestions.html'
+    templateUrl: './search-suggestions.html',
+    standalone: false
 })
 
 /**
@@ -23,6 +25,7 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     public suggestedDocuments: Array<FieldDocument> = [];
     private documentsFound: boolean;
+    private updatingSuggestions: boolean = true;
     private stopListeningToKeyDownEvents: Function|undefined;
 
 
@@ -35,6 +38,8 @@ export class SearchSuggestionsComponent implements OnChanges {
                 private messages: Messages) {
 
         this.viewFacade.populateDocumentsNotifications().subscribe(async documents => {
+            this.updatingSuggestions = true;
+            await AngularUtility.refresh();
             this.documentsFound = documents.length > 0;
             await this.updateSuggestions();
         });
@@ -83,8 +88,10 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     public isSuggestionBoxVisible(): boolean {
 
-        return this.visible && !this.documentsFound
-            && (this.viewFacade.getSearchString().length > 0 || this.viewFacade.getFilterCategories().length > 0);
+        return this.visible
+            && !this.documentsFound
+            && !this.updatingSuggestions
+            && this.viewFacade.getSearchString().length > 0;
     }
 
 
@@ -103,12 +110,16 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     private async updateSuggestions() {
 
-        if ((this.viewFacade.getSearchString().length === 0 && this.viewFacade.getFilterCategories().length === 0)
-                || this.documentsFound) {
+        if (this.viewFacade.getSearchString().length === 0 || this.documentsFound) {
             return this.suggestedDocuments = [];
         }
 
-        this.suggestedDocuments = (await this.datastore.find(this.makeQuery())).documents as Array<FieldDocument>;
+        try {
+            this.suggestedDocuments = (await this.datastore.find(this.makeQuery())).documents as Array<FieldDocument>;
+        } finally {
+            this.updatingSuggestions = false;
+        }
+
         this.selectedSuggestion = undefined;
     }
 

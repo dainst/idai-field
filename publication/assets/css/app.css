@@ -1,0 +1,117 @@
+@import "tailwindcss";
+@import "./open-sans.css";
+
+@plugin "../js/heroicons.tailwind.plugin.js";
+
+/* This file is for your main application CSS */
+
+:root {
+    --main-navbar-height: 50px;
+    --background: #ffffff;
+    --main-text: #000000;
+    --panel-color: #f2f2f2;
+
+    /*
+    The following variables are set here only to be able to compile the @theme below
+    and will get overriden by their setting equivalent...
+    */
+    --primary-color: #5882c2;
+    --primary-color-hover: #375d97;
+    --primary-color-inverse: #ffffff;
+    --primary-color-hover-inverse: #ffffff;
+    /*
+    ^---- until here.
+    */
+    --font-body: "Open Sans", sans-serif;
+    --font-headings:  "Open Sans", serif;
+
+    @media (width >= 64rem) {
+        --ol-full-height: calc(100vh - var(--main-navbar-height) - 220px);
+    }
+
+    @media (width < 64rem) {
+        --ol-full-height: calc(100vh * 0.5);
+    }
+}
+
+@theme {
+    --color-primary: var(--primary-color);
+    --color-primary-hover: var(--primary-color-hover);
+    --color-primary-inverse: var(--primary-color-inverse);
+    --color-primary-inverse-hover: var(--primary-color-hover-inverse);
+    --color-panel: var(--panel-color);
+    --animate-spin-slow: spin 3s linear infinite;
+}
+
+body {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a.suppress-link-styling {
+    color: black;
+}
+
+a.suppress-link-styling:hover {
+    color: black;
+    text-decoration: none;
+}
+
+a {
+    color: var(--primary-color);
+}
+
+a:hover {
+    color: var(--primary-color-hover);
+    text-decoration: underline;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-headings);
+}
+
+.markdown {
+    h1 {
+        font-size: 1.5rem;
+        /* 24px */
+        line-height: 2rem;
+        /* 32px */
+
+        margin-bottom: 1.5rem;
+    }
+
+    h2 {
+        margin-top: 1.5rem;
+        font-size: 1.25rem;
+        /* 20px */
+        line-height: 1.75rem;
+        /* 28px */
+        margin-bottom: 1rem;
+    }
+
+    h3 {
+        font-size: 1.125rem;
+        /* 18px */
+        line-height: 1.75rem;
+        /* 28px */
+        margin-top: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    ul {
+        list-style-type: disc;
+        margin-left: 2rem;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    code {
+        font-family:
+            source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    }
+}

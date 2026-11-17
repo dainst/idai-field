@@ -1,31 +1,20 @@
-## Erste Schritte
+# Erste Schritte
 
-Nach dem ersten Start der Anwendung befinden Sie sich zunächst im Testprojekt, das es
-Ihnen ermöglicht, die Funktionen des Programms anhand einiger Beispieldaten auszuprobieren.
-Bitte beachten Sie, dass neu angelegte Datensätze nach einem Neustart der Anwendung
-gelöscht und alle Änderungen zurückgesetzt werden, solange das Testprojekt ausgewählt ist.
-Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen Field-Desktop-Installationen oder Field-Servern statt.
+Beim ersten Start der Anwendung werden Sie dazu aufgefordert, Ihren Namen einzugeben. Empfohlen wird, Vor- und Nachnamen anzugeben. Der eingetragene Name wird bei allen von Ihnen vorgenommenen Änderungen in der Datenbank hinterlegt und erleichtert die gemeinsame Bearbeitung von Datensätzen im Projekt, indem bei der Datensynchronisation Änderungen eindeutig zugeordnet werden können. Per Klick auf den Namen oben rechts in der Navigationsleiste oder über das Untermenü **Einstellungen**, das Sie über das Menü "Field" (macOS) bzw. "Werkzeuge" (Windows und Linux) erreichen, können Sie den Namen der Benutzerin/des Benutzers zu einem späteren Zeitpunkt ändern.
+
+Sie befinden sich zunächst im Testprojekt, das es Ihnen ermöglicht, die Funktionen des Programms anhand einiger Beispieldaten auszuprobieren. Bitte beachten Sie, dass neu angelegte Datensätze nach einem Neustart der Anwendung gelöscht und alle Änderungen zurückgesetzt werden, solange das Testprojekt ausgewählt ist. Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen Field-Desktop-Installationen oder Field-Servern statt.
 
 Um mit Field Desktop produktiv zu arbeiten und ein eigenes Projekt anzulegen, sollten Sie zunächst die folgenden Schritte durchführen:
 
-1. Im Untermenü **Einstellungen**, das Sie über das Menü "Field" (MacOS) bzw. "Werkzeuge" (Windows)
-erreichen, können Sie grundlegende Einstellungen vornehmen, die für sämtliche Projekte gelten. Legen Sie hier
-bitte zunächst Ihren Bearbeiternamen bzw. Bearbeiterinnennamen fest. Dieser Name wird bei allen von Ihnen
-vorgenommenen Änderungen in der Datenbank hinterlegt und sollte unbedingt gesetzt werden, insbesondere wenn
-Daten synchronisiert werden sollen.
+1. Rufen Sie im Menü "Projekt" den Menüpunkt **Neu...** auf, um ein eigenes Projekt anzulegen. Sie haben die Wahl zwischen mehreren Voreinstellungen für die Projektkonfiguration: Wählen Sie "Standard" für die umfangreiche Field-Standardkonfiguration oder eine der "Basis"-Optionen, wenn Sie lediglich mit einem Grundgerüst an voreingestellten Kategorien und Feldern starten möchten. Legen Sie außerdem die Sprachen fest, in denen innerhalb des Projekts Daten eingegeben werden sollen. Geben Sie zuletzt die gewünschte Projektkennung sowie optional einen Projektnamen für jede der ausgewählten Sprachen ein.
 
-2. Rufen Sie im Menü "Projekt" den Menüpunkt **Neu...** auf, um ein eigenes Projekt anzulegen. Sie haben die Wahl zwischen mehreren Voreinstellungen für die Projektkonfiguration: Wählen Sie "Standard" für die umfangreiche Field-Standardkonfiguration oder eine der "Basis"-Optionen, wenn Sie lediglich mit einem Grundgerüst an voreingestellten Kategorien und Feldern starten möchten. Legen Sie außerdem die Sprachen fest, in denen innerhalb des Projekts Daten eingegeben werden sollen. Geben Sie zuletzt die gewünschte Projektkennung sowie optional einen Projektnamen für jede der ausgewählten Sprachen ein.
-
-3. Sobald das neue Projekt geladen wurde, können Sie über das Menü "Projekt" ➝ "Eigenschaften" allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt") anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
-
-Verwenden Sie das Untermenü **Backup erstellen...**, das Sie über das Menü "Projekt" erreichen, um regelmäßig
-Sicherungen Ihrer Projektdaten anzulegen.
+2. Sobald das neue Projekt geladen wurde, können Sie über das Menü "Projekt" ➝ "Eigenschaften" allgemeine Projektdaten eingeben. Hier sollten Sie zunächst die Listen der **Teammitglieder** (Feld "Team" in der Sektion "Projekt") und der **Kampagnen** (Feld "Kampagnen", ebenfalls in der Sektion "Projekt") anlegen. Sie können diese Listen zu einem späteren Zeitpunkt jederzeit erweitern.
 
 
 <hr>
 
 
-## Ressourcen
+# Ressourcen
 
 Nach dem Anlegen bzw. Öffnen eines Projekts befinden Sie sich zunächst im Tab **Übersicht** (gekennzeichnet
 durch ein Haus-Symbol), in dem alle Maßnahmen und Orte des Projekts verwaltet werden.
@@ -34,11 +23,7 @@ Verwenden Sie den grünen Plus-Button unten in der Ressourcenliste, um eine neue
 
 <p align="center"><img src="images/de/resources/create_operation.png" alt="Maßnahmen-Ressource erstellen"/></p>
 
-Dabei wählen Sie in einem ersten Schritt die Kategorie der Maßnahme aus und können anschließend optional eine
-Geometrie für die neue Ressource anlegen. Schließlich öffnet sich der Editor, in dem Sie sämtliche Daten der
-Maßnahme eintragen können. Je nach gewählter Maßnahmenkategorie stehen unterschiedliche Felder zur Auswahl,
-die jeweils in Gruppen aufgeteilt sind. Zwischen den Feldgruppen können Sie jederzeit per Klick auf einen der
-Buttons auf der linken Seite wechseln.
+Dabei wählen Sie in einem ersten Schritt die Kategorie der Maßnahme aus (z. B. "Schnitt" oder "Bauwerk") und können anschließend optional eine Geometrie für die neue Ressource auf der Karte anlegen. Schließlich öffnet sich der Editor, in dem Sie sämtliche Daten der Maßnahme eintragen können. Je nach gewählter Maßnahmenkategorie stehen dabei unterschiedliche Felder zur Auswahl (siehe Abschnitt *Ressourcen bearbeiten*).
 
 Bevor die Maßnahme über den grünen Speichern-Button gesichert werden kann, muss in jedem Fall das Feld
 **Bezeichner** in der Gruppe "Stammdaten" ausgefüllt werden.
@@ -54,19 +39,13 @@ In Abhängigkeit von der Maßnahmenkategorie können innerhalb eines Maßnahmen-
 Ressourcen verschiedener Kategorien angelegt werden (etwa stratigraphische Einheiten innerhalb eines Schnitts
 oder Räume innerhalb eines Gebäudes).
 
-### Hierarchische Anordnung
+## Hierarchische Anordnung
 
 Ressourcen können in hierarchischen Strukturen angeordnet werden, beispielsweise um Funde einer
 stratigraphischen Einheit zuzuweisen. Benutzen Sie den Button "Untergeordnete Ressourcen anzeigen"
-(Symbol: rechtwinkliger Pfeil nach rechts unten), um eine Liste aller Ressourcen anzuzeigen, die der
-ausgewählten Ressource untergeordnet wurden. Bei einer neu angelegten Ressource ist diese Liste zunächst leer.
-
-<p align="center"><img src="images/de/resources/open_collection.png" alt="Kollektion öffnen"/></p>
-
-Per Klick auf **Kollektion öffnen** kann auf die tiefere Hierarchieebene gewechselt werden, sodass nun die
-untergeordneten Ressourcen angezeigt werden (etwa die Funde einer stratigraphischen Einheit).
-Die Verwendung des Plus-Buttons führt jetzt dazu, dass Ressourcen entsprechend auf dieser Ebene angelegt
-werden.
+(Symbol: rechtwinkliger Pfeil nach rechts unten), um auf die tiefere Hierarchieebene zu wechseln. Es werden
+nun die untergeordneten Ressourcen angezeigt (etwa die Funde einer stratigraphischen Einheit), und über den
+Plus-Button neu erstellte Ressourcen werden entsprechend auf dieser Ebene angelegt.
 
 Der Navigationspfad oberhalb der Ressourcenliste zeigt die gerade ausgewählte Hierarchieebene an. Sie können
 jederzeit per Klick auf einen der Buttons des Navigationspfades in eine andere Ebene wechseln.
@@ -74,50 +53,108 @@ jederzeit per Klick auf einen der Buttons des Navigationspfades in eine andere E
 <p align="center"><img src="images/de/resources/navpath.png" alt="Navigationspfad"/></p>
 
 
-### Ressourcen verwalten
+## Ressourcen verwalten
 
 Ressourcen in der Liste können per Klick ausgewählt werden. Bei gedrückter Strg/Cmd- oder Shift-Taste lassen
 sich mehrere Ressourcen gleichzeitig selektieren. Nach einem Rechtsklick auf eine oder mehrere ausgewählte
 Ressourcen öffnet sich ein Kontextmenü, das die folgenden Optionen bereitstellt:
 
-* *Bearbeiten*: Öffnet den Editor (alternativ auch per Doppelklick auf den Ressourceneintrag in der Liste
-erreichbar)
-* *Bilder verknüpfen*: Öffnet ein Fenster, in dem Bilder mit der gewählten Ressource verknüpft bzw. verknüpfte Bilder entfernt werden können.
+* *Warnungen anzeigen*: Zeigt die für diese Ressource vorliegenden Warnungen an (nur verfügbar für Ressourcen mit Warnungen, siehe Kapitel *Warnungen*)
+* *Bearbeiten*: Öffnet den Ressourceneditor (siehe Abschnitt *Ressourcen bearbeiten*). Der Editor ist alternativ auch per Doppelklick auf den Ressourceneintrag in der Liste aufrufbar.
+* *Bilder verknüpfen*: Öffnet ein Fenster, in dem Bilder mit der gewählten Ressource verknüpft bzw. verknüpfte Bilder entfernt werden können
+* *QR-Code hinzufügen*: Öffnet ein Fenster, in dem ein neuer QR-Code für die Ressource generiert werden bzw. ein bestehender QR-Code per Kamera-Scan übernommen werden kann
+* *QR-Code verwalten*: Zeigt den QR-Code der Ressource an und erlaubt den Druck eines QR-Code-Etiketts (alternativ auch über den QR-Code-Button rechts im Listenelement der Ressource erreichbar)
 * *Verschieben*: Erlaubt es, Ressourcen aus ihrem aktuellen Kontext zu entfernen und einer anderen
 Ressource unterzuordnen
 * *Löschen*: Entfernt Ressourcen nach einer Sicherheitsabfrage (optional können außerdem alle Bilder entfernt werden,
 die ausschließlich mit den zu löschenden Ressourcen verknüpft sind)
+* *Workflow dokumentieren*: Zeigt die mit den ausgewählten Ressourcen verknüpften Prozesse an und ermöglicht es, neue Prozesse anzulegen (nur verfügbar für Kategorien, die als Zielkategorie der Relation "Durchgeführt an" einer Prozess-Kategorie konfiguriert wurden)
+* *Typ scannen*: Verknüpft die Ressource mit einem Typ, indem der QR-Code des Typs per Kamera-Scan eingelesen wird (nur verfügbar für Ressourcen der Kategorie "Fund" und deren Unterkategorien)
+* *Aufbewahrungsort scannen*: Setzt einen neuen Aufbewahrungsort für die Ressource, indem der QR-Code des Aufbewahrungsortes per Kamera-Scan eingelesen wird (nur verfügbar für Ressourcen der Kategorien "Fund", "Fundkollektion" und "Probe" sowie der entsprechenden Unterkategorien)
+* *Typ oder Aufbewahrungsort scannen*: Sind QR-Codes in der Projektkonfiguration sowohl für Typen als auch für Aufbewahrungsorte aktiviert, können Verknüpfungen mit Ressourcen beider Kategorien per Kamera-Scan des QR-Codes über diese Option hergestellt werden (nur verfügbar für Ressourcen der Kategorie "Fund" und deren Unterkategorien)
 
 Darüber hinaus stellt das Kontextmenü Funktionen zum Anlegen bzw. Bearbeiten von Geometrien bereit. Bitte beachten Sie,
-dass bei Auswahl mehrerer Ressourcen ausschließlich die Optionen *Verschieben* und *Löschen* verfügbar sind.
+dass bei Auswahl mehrerer Ressourcen ausschließlich die Optionen *Verschieben* und *Löschen* verfügbar sind. Optionen zum Hinzufügen oder Verwalten von QR-Codes sind ausschließlich verfügbar, wenn die Verwendung von QR-Codes für die entsprechende Kategorie im Konfigurationseditor eingerichtet wurde (siehe Abschnitt *Kategorien bearbeiten* im Kapitel *Konfiguration*).
 
 <p align="center"><img src="images/de/resources/context_menu.png" alt="Kontextmenü"/></p>
+
+
+## Ressourcen bearbeiten
+
+Über das Kontextmenü oder einen Doppelklick auf einen Eintrag in der Ressourcenliste kann der Editor aufgerufen werden, in dem die Daten der ausgewählten Ressource bearbeitet werden können. Das Eingabeformular richtet sich dabei nach der Kategorie der Ressource (z. B. "Schnitt" oder "Fund") und kann im Konfigurationseditor festgelegt werden (siehe Kapitel *Projektkonfiguration*).
+
+Die für die Kategorie zur Verfügung stehenden Felder sind in mehrere Gruppen eingeteilt (z. B. "Stammdaten", "Maße", "Lage/Kontext"). Klicken Sie auf einen der Gruppen-Buttons im linken Bereich des Editors, werden im rechten Bereich des Editors die Felder der jeweiligen Gruppe angezeigt. Jedem Feld ist in der Projektkonfiguration ein bestimmter Eingabetyp zugeordnet, der bestimmt, welche Art von Daten in das Feld eingetragen werden können (z. B. "Einzeiliges Textfeld", "Datum", "Längenangabe"). Eine Auflistung aller Eingabetypen finden Sie im Unterkapitel *Felder* des Kapitels *Projektkonfiguration*.
+
+Alle Änderungen, die Sie im Editor vornehmen, werden erst gesichert, nachdem Sie den Button "Speichern" betätigt haben.
+
+
+### Informationen über Felder und Werte einsehen
+
+Zu Feldern und Wertelisten können in der Projektkonfiguration Beschreibungstexte sowie Verweise auf Webseiten mit zusätzlichen Informationen hinterlegt werden, die als Hilfestellung bei der Dateneingabe dienen können. Sind solche zusätzlichen Informationen für ein Feld oder einen Wert innerhalb einer Werteliste verfügbar, wird dies durch eine gepunktete Linie angezeigt, die erscheint, wenn Sie mit dem Mauszeiger auf den entsprechenden Feld bzw. Wert zeigen.
+
+<p align="center"><img src="images/de/resources/information_underline.png" alt="Informationen einsehen"/></p>
+
+Durch einen **Rechtsklick** können Sie ein Popup-Fenster öffnen, in dem der Beschreibungstext und/oder als Verweise eingetragene Links zu externen Webseiten angezeigt werden.
+
+
+### Kategorie wechseln
+
+Links in der Kopfzeile des Editors wird das Symbol der Kategorie angezeigt, der die ausgewählte Ressource angehört. Handelt es sich bei der Kategorie um eine Oberkategorie oder eine ihrer Unterkategorien, so können Sie an dieser Stelle zu einer anderen Unterkategorie oder zur Oberkategorie selbst wechseln. Angezeigt wird diese Möglichkeit durch einen kleinen blauen Button mit einem Pfeil-Symbol.
+
+<p align="center"><img src="images/de/resources/change_category.png" alt="Kategorie wechseln"/></p>
+
+Klicken Sie auf den Button, um aus einer Liste die gewünschte Kategorie auszuwählen. Im Editor wird nun das Formular der neu ausgewählten Kategorie angezeigt. Der Wechsel selbst wird allerdings erst beim Klick auf den "Speichern"-Button vollzogen.
+
+*Beispiel*: Die Oberkategorie "Fund" verfügt unter anderem über die Unterkategorien "Ziegel", "Münze" und "Keramik". Gehört eine Ressource der Kategorie "Ziegel" an, können Sie jederzeit zur Oberkategorie "Fund" oder einer der anderen Unterkategorien ("Münze" oder "Keramik") wechseln. Ein Wechsel zu einer anderen Kategorie (z. B. "Schnitt") ist dagegen nicht möglich.
+
+**Wichtig**: Bitte beachten Sie, dass bereits eingetragene Felddaten beim Wechsel der Kategorie verloren gehen können, wenn das entsprechende Feld für das Formular der neu ausgewählten Kategorie nicht konfiguriert ist. In diesem Fall wird beim Wechsel eine Warnung angezeigt. Wechseln Sie vor dem Speichern zur ursprünglichen Kategorie zurück, bleiben alle Felddaten erhalten.
+
+Ein Kategoriewechsel ist nicht möglich, wenn die Kategorie zur Oberkategorie "Maßnahme" oder "Prozess" gehört.
+
+
+### Ressourcen mehrfach erstellen
+
+Beim Anlegen einer neuen Ressource haben Sie die Möglichkeit, mehrere Ressourcen gleichzeitig zu erstellen. Klicken Sie dazu auf den Button mit dem "Pfeil nach unten"-Symbol rechts neben dem "Speichern"-Button und wählen Sie in dem sich öffnenden Dropdown-Menü die Option "Mehrfach erstellen". Geben Sie nun die Anzahl der insgesamt zu erstellenden Ressourcen ein und bestätigen Sie Ihre Eingabe mit einem Klick auf den Button "Ressourcen erstellen".
+
+Bei der mehrfachen Erstellung von Ressourcen werden für jede Ressource diejenigen Felddaten eingetragen, die Sie im Formular des Ressourceneditors eingetragen haben. Eingetragene Relationen werden lediglich für die erste erstellte Ressource gespeichert und **nicht** für angelegte Kopien übernommen.
+
+Der eingetragene Wert im Feld "Bezeichner" wird bei den zusätzlich angelegten Kopien jeweils um einen Zähler ergänzt, um sicherzustellen, dass jede Ressource einen einzigartigen Bezeichner besitzt. Haben Sie im Feld "Bezeichner" bereits einen Wert eingetragen, der einen Zähler enthält, so wird dieser fortgeführt.
+
+*Beispiel*: Sie haben im Feld "Bezeichner" den Wert "ABC" eingegeben und möchten drei Ressourcen anlegen. Die weiteren angelegten Ressourcen erhalten automatisch die Bezeichner "ABC2" und "ABC3".
+Haben Sie dagegen den Wert "ABC15" eingegeben, erhalten die weiteren angelegten Ressourcen die Bezeichner "ABC16" und "ABC17".
+
+
+### Ressourcen vervielfältigen
+
+Sie können Kopien einer bereits bestehenden Ressource anlegen, indem Sie im Ressourceneditor den Button mit dem "Pfeil nach unten"-Symbol rechts neben dem "Speichern"-Button anklicken und in dem sich öffnenden Dropdown-Menü die Option "Vervielfältigen" wählen. Geben Sie nun die Anzahl der anzulegenden Kopien an (die bereits existierende Ressource wird nicht mitgezählt) und bestätigen Sie Ihre Eingabe mit einem Klick auf den Button "Ressourcen speichern".
+
+Wie bei der mehrfachen Erstellung von Ressourcen werden mit Ausnahme von Relationen alle eingetragene Felddaten für die angelegten Kopien übernommen. Der Bezeichner wird entsprechend um einen Zähler ergänzt bzw. ein bereits vorhandener Zähler fortgeführt (siehe Abschnitt *Ressourcen mehrfach erstellen*).
 
 
 <hr>
 
 
-## Bilder
+# Bilder
 
 Bilder können in ein Field-Projekt importiert werden, um sie anschließend mit Ressourcen zu verknüpfen oder als Kartenhintergründe zu verwenden. Für jedes importierte Bild wird automatisch eine Bildressource angelegt, in der Metadaten des Bildes eingetragen werden können.
 
 Bilddateien können über eine Synchronisationsverbindung optional mit anderen Rechnern geteilt werden (siehe Kapitel *Synchronisation*). Ist eine Bilddatei nicht auf dem Rechner vorhanden, wird stattdessen eine Platzhaltergrafik angezeigt.
 
 
-### Bilder importieren
+## Bilder importieren
 
 Bilder können auf zwei verschiedene Arten in die Anwendung importiert werden: über das Menü  "Werkzeuge" ➝ "Bilderverwaltung" sowie über die Option "Bilder verknüpfen" im Kontextmenü einer Ressource (erreichbar per Rechtsklick auf die gewünschte Ressource). In letzterem Fall wird das Bild nach dem Import automatisch mit der entsprechenden Ressource verknüpft (siehe Abschnitt *Bilder mit Ressourcen verknüpfen*).
 
 <p align="center"><img src="images/de/images/droparea.png" alt="Import-Button"/></p>
 
-Zum Import klicken Sie auf den Plus-Button und wählen die gewünschten Dateien aus. Alternativ können Sie die Dateien auch direkt aus einer Dateimanager-Anwendung auf die markierte Fläche ziehen, die den Plus-Button umgibt. Sind für das Projekt mehrere Bildkategorien (d. h. Unterkategorien der Kategorie "Bild") definiert, können Sie die gewünschte Kategorie anschließend aus einem Auswahlmenü wählen.
+Zum Import klicken Sie auf den Plus-Button und wählen die gewünschten Dateien aus. Alternativ können Sie die Dateien auch direkt aus einer Dateimanager-Anwendung auf die markierte Fläche ziehen, die den Plus-Button umgibt. Sind für das Projekt mehrere Bildkategorien (d. h. Unterkategorien der Kategorie "Bild") definiert, können Sie die gewünschte Kategorie anschließend aus einem Auswahlmenü wählen. Sie können außerdem den Inhalt des Feldes "Bildersteller/Bilderstellerin" wahlweise automatisch aus den Metadaten der Bilddatei auslesen lassen oder manuell setzen. Zur Auswahl stehen dabei die im Feld "Team" der Projekteigenschaften eingetragenen Personennamen. Das Erstellungsdatum sowie Höhe und Breite des Bildes werden in jedem Fall automatisch aus den Datei-Metadaten ausgelesen.
 
 Unterstützte Bildformate sind *jpg/jpeg*, *png* und *tif/tiff*.
 
 
-### Bildvarianten
+## Bildvarianten
 
-Für jedes importierte Bild wird von der Anwendung eine Kopie sowie eine kleinere Version als Vorschaubild erstellt und im **Bilderverzeichnis** gespeichert, dessen Pfad Sie in den Einstellungen unter "Erweiterte Einstellungen" auslesen können. Die Dateien in diesem Ordner werden von der Anwendung verwaltet und dürfen nicht manuell bearbeitet, umbenannt oder gelöscht werden, da es ansonsten zu Fehlern bei der Anzeige oder der Synchronisation von Bildern kommen kann.
+Für jedes importierte Bild wird von der Anwendung eine Kopie sowie eine kleinere Version als Vorschaubild erstellt und im **Bilderverzeichnis** gespeichert, dessen Pfad Sie in den Einstellungen unter "Erweiterte Optionen" auslesen können. Die Dateien in diesem Ordner werden von der Anwendung verwaltet und dürfen nicht manuell bearbeitet, umbenannt oder gelöscht werden, da es ansonsten zu Fehlern bei der Anzeige oder der Synchronisation von Bildern kommen kann.
 
 Insgesamt verwaltet die Anwendung für jedes Bild bis zu drei verschiedene Varianten:
 * *Originalbild*: Die unveränderte Bilddatei, wie sie in das Projekt importiert wurde
@@ -127,17 +164,17 @@ Insgesamt verwaltet die Anwendung für jedes Bild bis zu drei verschiedene Varia
 Eine Übersicht der aktuell im Bilderverzeichnis vorliegenden Daten können Sie über das Menü "Projekt" ➝ "Datenübersicht" abrufen.
 
 
-### Bilder verwalten
+## Bilder verwalten
 
 Öffnen Sie zur Verwaltung der Bilder das Menü "Werkzeuge" ➝ "Bilderverwaltung". Hier können Sie sämtliche Bilder des Projekts einsehen und durchsuchen (siehe dazu auch das Kapitel *Suche*).
 
 
-#### Metadaten bearbeiten
+### Metadaten bearbeiten
 
 Sie können die Metadaten eines Bildes einsehen, indem Sie per Doppelklick auf das gewünschte Bild die Bildansicht öffnen. Klicken Sie den Bearbeiten-Button, um den Editor aufzurufen und die Metadaten zu editieren. Zur Verfügung stehen hier die Felder, die im Konfigurationsedtior für das Formular der entsprechenden Bildkategorie konfiguriert wurden.
 
 
-#### Bilder löschen
+### Bilder löschen
 
 Um importierte Bilder wieder aus dem Projekt zu entfernen, selektieren Sie die entsprechenden Bilder in der Bilderverwaltung. Über den Button "Löschen" können sie anschließend entfernt werden:
 
@@ -146,7 +183,22 @@ Um importierte Bilder wieder aus dem Projekt zu entfernen, selektieren Sie die e
 Beachten Sie, dass dabei auch die entsprechenden Dateien im Bilderverzeichnis des Projekts gelöscht werden (bei einer bestehenden Synchronisationsverbindung auch auf anderen Rechnern). Verknüpfungen mit Ressourcen gehen beim Löschen verloren.
 
 
-### Bilder mit Ressourcen verknüpfen
+### Originalbilder herunterladen
+
+Sollte die Originaldatei eines Bildes nicht auf dem Rechner vorhanden sein, können Sie sie auch einzeln herunterladen, ohne das Herunterladen von Originalbildern für das gesamte Projekt zu aktivieren. Selektieren Sie die gewünschten Bilder dazu in der Bilderverwaltung (oder rufen Sie sie aus einem anderen Teil der Anwendung heraus auf) und klicken Sie den Button "Originalbilder herunterladen". Die Bilddateien werden nun geladen.
+
+Bitte beachten Sie, dass diese Funktion nur dann zur Verfügung steht, wenn über das Menü "Projekt" ➝ "Synchronisieren..." ein gültiges Synchronisationsziel für das Projekt eingetragen wurde (siehe Kapitel *Synchronisation*).
+
+
+### Originalbilder exportieren
+
+Um die Original-Bilddateien aus Field Desktop zu exportieren, selektieren Sie die Bilder zunächst in der Bilderverwaltung (oder rufen Sie sie aus einem anderen Teil der Anwendung heraus auf) und klicken Sie den Button "Exportieren". Es erscheint ein Fenster, in dem Sie das Verzeichnis auswählen können, in das die Bilddateien exportiert werden sollen. Sie haben außerdem die Wahl zwischen zwei verschiedenen Optionen zur Benennung der Dateien:
+
+* *Bezeichner*: Die Dateien erhalten den Bezeichner als Dateinamen, den die entsprechenden Bilder derzeit im Projekt haben.
+* *Ursprünglicher Dateiname*: Die Dateien werden unter denjenigen Namen exportiert, unter denen sie ursprünglich in das Projekt importiert wurden.
+
+
+## Bilder mit Ressourcen verknüpfen
 
 Um eines oder mehrere Bilder mit einer Ressource zu verknüpfen, wählen Sie die Option "Bilder verknüpfen" im Kontextmenü der entsprechenden Ressource und klicken anschließend auf den Plus-Button. Sie haben nun die Wahl zwischen zwei Optionen:
 
@@ -160,16 +212,16 @@ Verknüpfungen können auch über die Bilderverwaltung hinzugefügt oder entfern
 <p align="center"><img src="images/de/images/link_buttons.png" alt="Buttons 'Verknüpfungen entfernen' und 'Verknüpfen'"/></p>
 
 
-#### Hauptbild festlegen
+### Hauptbild festlegen
 
 Ist eine Ressource mit mehreren Bildern verknüpft, wird eines der Bilder als **Hauptbild** mit einem Stern-Symbol markiert. Dieses Hauptbild wird bei der Ressource als Vorschaubild angezeigt. Sie können das Hauptbild wechseln, indem Sie die Option "Bilder verknüpfen" im Kontextmenü der Ressource auswählen und das gewünschte Bild in der Liste verknüpfter Bilder selektieren. Klicken Sie anschließend den Button "Als Hauptbild festlegen":
 
 <p align="center"><img src="images/de/images/main_image.png" alt="Button 'Als Hauptbild festlegen'"/></p>
 
 
-### Kartenhintergründe
+## Kartenhintergründe
 
-#### Georeferenzierung
+### Georeferenzierung
 
 Damit ein Bild als Kartenhintergrund eingesetzt werden kann, müssen zunächst Informationen zur Georeferenzierung eingelesen werden. Unterstützt werden Dateien im GeoTIFF-Format mit der Dateiendung *tif/tiff* sowie World-Files mit den Dateiendungen *wld*, *jpgw*, *jpegw*, *jgw*, *pngw*, *pgw*, *tifw*, *tiffw* und *tfw*.
 
@@ -180,7 +232,7 @@ World-Files können auf zwei verschiedene Arten importiert werden: Ist der Datei
 <p align="center"><img src="images/de/images/worldfile_import.png" alt="Georeferenzierung hinzufügen"/></p>
 
 
-#### Kartenhintergründe konfigurieren
+### Kartenhintergründe konfigurieren
 
 Ein Kartenhintergund kann entweder für eine bestimmte Maßnahme konfiguriert werden oder für das gesamte Projekt. Wechseln Sie in den Übersichts-Tab (Haussymbol), wenn der Kartenhintergrund im gesamten Projekt zur Verfügung stehen soll, oder in den Tab der gewünschten Maßnahme. Öffnen Sie dort das Kartenhintergründe-Menü über den Button rechts oben auf der Karte und klicken den Bearbeiten-Button. Über den Plus-Button können Sie nun neue Kartenhintergünde hinzufügen, wobei alle Bilder zur Auswahl stehen, für die über den Import eines World-Files Georeferenzierungsdaten hinzugefügt wurden.
 
@@ -195,7 +247,7 @@ Der blaue Button "Als Standard-Kartenhintergrund festlegen" (Stern-Symbol) recht
 Klicken Sie den Button "Speichern", um die Änderungen in der Datenbank zu speichern.
 
 
-#### Kartenhintergründe anzeigen
+### Kartenhintergründe anzeigen
 
 Über das Kartenhintergründe-Menü können konfigurierte Kartenhintergründe jederzeit ein- und ausgeblendet werden. Klicken Sie dazu den Augen-Button links neben dem entsprechenden Eintrag in der Liste. Die hier vorgenommenen Einstellungen werden (anders als die Liste der grundsätzlich für den Tab zur Verfügung stehenden Kartenhintergründe) nicht in der Datenbank gespeichert und somit auch nicht über eine Synchronisationsverbindung geteilt, sodass auf unterschiedlichen Rechnern unterschiedliche Kartenhintergründe ein- und ausgeblendet sein können.
 
@@ -203,7 +255,7 @@ Klicken Sie den Button "Speichern", um die Änderungen in der Datenbank zu speic
 <hr>
 
 
-## Suche
+# Suche
 
 In der **Übersicht**, den **Maßnahmen-Tabs** sowie in der **Bilderverwaltung** stehen **Suchfilter** zur Verfügung, die Sie verwenden können, um die Menge der aktuell
 angezeigten Ressourcen anhand grundlegender Suchkriterien  (Bezeichner, Kurzbeschreibung, Kategorie)
@@ -212,10 +264,10 @@ einzuschränken.
 Möchten Sie komplexere Suchanfragen formulieren, können Sie innerhalb der **Übersicht** und der
 **Maßnahmen-Tabs** darüber hinaus in den **erweiterten Suchmodus** wechseln. 
 Dieser Modus ermöglicht es Ihnen einerseits, über Hierarchieebenen hinweg und auch innerhalb des gesamten
-Projektes zu suchen und dabei andererseits zusätzliche feldspezifische Suchkriterien zu definieren.
+Projekts zu suchen und dabei andererseits zusätzliche feldspezifische Suchkriterien zu definieren.
 
 
-### Suchfilter
+## Suchfilter
 
 Der Suchfilter stellt eine schnelle Möglichkeit dar, Ressourcen nach bestimmten Kriterien anzuzeigen bzw.
 auszublenden, und besteht aus einem *Textfilter* (Eingabefeld) sowie einem *Kategoriefilter* (blauer Button).
@@ -229,7 +281,7 @@ Kartenansicht) bzw. die Elemente der Liste (in der Listenansicht). In der **Bild
 Raster angezeigten Bilder vom Suchfilter betroffen.
 
 
-#### Kategoriefilter
+### Kategoriefilter
 
 <p align="center"><img src="images/de/search/filter_menu.png" alt="Kategoriefilter-Auswahl"/></p>
 
@@ -244,9 +296,9 @@ Welche Kategorien zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext 
 können Maßnahmenkategorien gewählt werden, in der Bilderverwaltung Bildkategorien etc. 
 
 
-#### Textfilter
+### Textfilter
 
-Suchbegriffe werden derzeit mit den Feldern "Bezeichner" und "Kurzbeschreibung" von Ressourcen abgeglichen. 
+Suchbegriffe werden mit den Feldern "Bezeichner" und "Kurzbeschreibung" von Ressourcen abgeglichen. 
  
 *Beispiel:*
  
@@ -276,7 +328,7 @@ sowohl (1) als auch (2) als Suchtreffer. Eine Suche nach "Schn" liefert (1), (2)
 nach "itt" oder "chni" hingegen nichts.
 
 
-#### Platzhaltersuche
+### Platzhaltersuche
 
 Im Textfilter ist auch eine Platzhaltersuche möglich: Statt eines Zeichens können Sie innerhalb eckiger
 Klammern eine Menge unterschiedlicher erlaubter Zeichen angeben. Ein solcher Platzhalter kann pro Suchanfrage
@@ -297,7 +349,7 @@ Eine Suche nach "Landscape-00[01]1" liefert (1) und (4), da die Ziffer nach dem 
 muss.
 
 
-#### Suchergebnisse aus anderen Kontexten
+### Suchergebnisse aus anderen Kontexten
 
 Werden bei gesetztem Suchfilter keine Suchergebnisse im aktuellen Kontext gefunden, werden unterhalb des
 Textfelds Suchergebnisse aus anderen Kontexten angezeigt.
@@ -308,7 +360,7 @@ Durch einen Klick auf eine der angezeigten Ressourcen wechseln Sie sofort in den
 wählen die entsprechende Ressource aus.
 
 
-### Erweiterter Suchmodus
+## Erweiterter Suchmodus
 
 In der **Übersicht** und in den **Maßnahmen-Tabs** können Sie durch einen Klick auf den Lupen-Button in
 den erweiterten Suchmodus wechseln.
@@ -337,7 +389,7 @@ beschränkt. Das Programm zeigt die weiteren Ressourcen nicht an, weist aber dar
 die ausgeblendeten Ressourcen zugreifen zu können.
  
 
-#### Feldspezifische Suchkriterien
+### Feldspezifische Suchkriterien
  
 Ist der erweiterte Suchmodus aktiviert, können Sie eine Suche über spezifische Felder einer Ressource
 anstoßen, indem Sie auf den Plus-Button links neben dem Kategoriefilter-Button klicken. Dabei werden Felder
@@ -365,16 +417,14 @@ Suchkriterien auch nachträglich wieder entfernen, indem Sie das Menü durch ein
 <hr>
 
 
-## Synchronisation
+# Synchronisation
 
 Um mit mehreren Computern an einem Projekt zu arbeiten, können Daten zwischen verschiedenen Field-Desktop-Installationen synchronisiert werden. Das bedeutet, dass Änderungen (neue Ressourcen, gelöschte Ressourcen oder Editierungen bestehender Ressourcen sowie hinzugefügte oder gelöschte Bilder), die auf einem anderen Rechner in Field Desktop vorgenommen werden, automatisch auch in die eigene Datenbank übertragen werden und umgekehrt. So wird erreicht, dass alle Mitarbeitenden zu jeder Zeit mit dem aktuellen Stand des Projekts arbeiten können. Die Synchronisation kann dabei über das Internet oder über ein lokales Netzwerk stattfinden. Sie können weiterhin auch bei konfigurierter Synchronisation offline mit dem Projekt arbeiten – die Datenbanken werden dann synchronisiert, sobald Sie wieder mit dem Netzwerk verbunden sind.
 
-Bitte beachten Sie, dass vor der Einrichtung der Synchronisation in jedem Fall das Feld **Name des Bearbeiters/der Bearbeiterin** in den Einstellungen ausgefüllt sein sollte.
 
+## Projekt herunterladen
 
-### Projekt herunterladen
-
-Um mit einem bestehenden Projekt zu arbeiten, das bei einer anderen Field-Desktop-Installation oder auf einem Field-Server vorliegt, laden Sie das Projekt zunächst herunter. Wählen Sie dazu im Menü "Projekt" den Menüpunkt **Herunterladen...** aus und geben Sie die Zugangsdaten ein:
+Um mit einem bestehenden Projekt zu arbeiten, das bei einer anderen Field-Desktop-Installation oder auf einem Field-Server vorliegt, laden Sie das Projekt zunächst herunter. Wählen Sie dazu den Menüpunkt "Projekt" ➝ "Herunterladen..." aus und geben Sie die Zugangsdaten ein:
 
 * *Adresse*: Tragen Sie hier die Adresse des Projekts ein, das Sie herunterladen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem Field Desktop gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse eines Field-Servers, der über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://server.field.idai.world* für den Server des DAI).
 * *Projektname*: Der Name des Projekts, das Sie herunterladen möchten.
@@ -388,11 +438,11 @@ Sobald Sie gültige Angaben für die Adresse, den Projektnamen und das Passwort 
 Der Download kann bei größeren Projekten unter Umständen eine längere Zeit dauern. Das heruntergeladene Projekt wird anschließend automatisch geöffnet und eine Synchronisationsverbindung unter Verwendung der gleichen Zugangsdaten hergestellt.
 
 
-### Synchronisation konfigurieren
+## Synchronisation konfigurieren
 
 Sowohl heruntergeladene als auch neu angelegte Projekte können jederzeit mit anderen Datenbanken synchronisiert werden. Die Synchronisation kann über den Menüpunkt "Projekt" ➝ "Synchronisieren..." konfiguriert werden.
 
-* *Adresse*: Tragen Sie hier die Adresse der Datenbank ein, mit der Sie eine Synchronisationsverbindung herstellen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem Field Desktop gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse eines FieldHub-Servers, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://server.field.idai.world* für den FieldHub-Server des DAI).
+* *Adresse*: Tragen Sie hier die Adresse der Datenbank ein, mit der Sie eine Synchronisationsverbindung herstellen möchten. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem Field Desktop gerade geöffnet ist (diese Adresse kann in den Einstellungen unter *Eigene Adresse* eingesehen werden), oder die Adresse eines Field-Hub-Servers, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *https://server.field.idai.world* für den Field-Hub-Server des DAI).
 * *Passwort*: Das Passwort des Projekts bzw. der Field-Desktop-Installation, mit der Sie die Synchronisationsverbindung herstellen möchten.
 * *Vorschaubilder synchronisieren*: Diese Option ist standardmäßig aktiviert. Wenn Sie über eine schwache Internetverbindung verfügen und möglichst wenige Daten hoch- bzw. herunterladen möchten, können Sie sie deaktivieren.
 * *Synchronisation aktivieren*: Über diesen Schalter können Sie die Verbindung starten bzw. unterbrechen.
@@ -404,7 +454,7 @@ Sobald Sie eine gültige Adresse und das korrekte Passwort eingegeben haben, wir
 Über den Schalter **Synchronisation aktivieren** können Sie die Verbindung starten bzw. unterbrechen. Bestätigen Sie Ihre Einstellungen zuletzt über den Button **Einstellungen übernehmen**.
 
 
-### Synchronisationsstatus
+## Synchronisationsstatus
 
 Das Wolken-Icon oben rechts in der Navigationsleiste zeigt den atuellen Status der von Ihnen eingerichteten Synchronisationsverbindung an.
 
@@ -413,20 +463,16 @@ Das Wolken-Icon oben rechts in der Navigationsleiste zeigt den atuellen Status d
 Konnte die Verbindung erfolgreich hergestellt werden, zeigt das Icon einen Haken an. Werden gerade Dateien herunter- oder hochgeladen, wird dies durch einen Pfeil signalisiert. Im Falle eines Fehlers erscheint ein Ausrufezeichen. Zusätzliche Informationen zum Synchronisationsstatus können Sie abfragen, indem Sie den Mauszeiger über das Icon bewegen.
 
 
-### Konflikte
+## Konflikte
 
 Zu Konflikten kann es kommen, wenn eine Ressource gleichzeitig auf mehreren Computern bearbeitet wird oder wenn sich zwei Datenbanken miteinander synchronisieren, in denen zuvor die gleiche Ressource bearbeitet wurde. In solchen Fällen stehen sich zwei unterschiedliche Versionen der Ressource gegenüber: die *aktuelle Version* (die in der Ressourcenverwaltung und anderen Bereichen der Anwendung angezeigt wird) und die *konkurrierende Version* (die im Hintergrund gespeichert bleibt, aber vorerst nicht angezeigt wird). Die Versionen können sich in der Anzahl der ausgefüllten Felder unterscheiden; möglicherweise wurden auch verschiedene Werte in die gleichen Felder eingetragen.
 
-Ressourcen mit Konflikten werden in der Liste mit einer roten Linie markiert. Darüber hinaus erscheint in der Navigationsleiste ein Icon, das die Anzahl der Konflikte im Projekt mitteilt:
-
-<p align="center"><img src="images/de/synchronization/conflicts_icon.png" alt="Konflikte-Icon"/></p>
-
-Klicken Sie auf das Icon, um eine Liste sämtlicher Ressourcen mit Konflikten zu öffnen. Wenn Sie eine der Ressourcen anwählen, gelangen Sie in den **Konflikte**-Tab des Editors, wo Sie die Ressource bereinigen können.
+Für jede Ressource mit Konflikten wird eine Warnung angezeigt (siehe Kapitel *Warnungen*). Im **Konflikte**-Tab des Ressourceneditors können Sie eine betroffene Ressource bereinigen.
 
 Um den Konflikt aufzulösen, muss für jedes Feld mit voneinander abweichenden Werten entschieden werden, welche Version die jeweils gültige ist. Alternativ können Sie per Klick auf *Aktuelle Version* oder *Konkurrierende Version* eine der beiden Versionen in Gänze übernehmen. Bestätigen Sie Ihre Entscheidung anschließend über den Button **Konflikt lösen**. Falls in der Ressource mehrere Konflikte aufgetreten sind, können Sie diese auf die gleiche Weise der Reihe nach lösen. Sie können dabei auch weitere Anpassungen in den anderen Editor-Tabs vornehmen. Um die Änderungen zu übernehmen, muss die Ressource zum Schluss über den **Speichern**-Button gesichert werden. 
 
 
-### Synchronisationsverbindungen zur eigenen Field-Desktop-Installation erlauben
+## Synchronisationsverbindungen zur eigenen Field-Desktop-Installation erlauben
 
 Sie können anderen erlauben, eine Synchronisationsverbindung mit Ihrem Projekt herzustellen, indem Sie ihnen die Zugangsdaten mitteilen, die Sie im Menü **Einstellungen** im Abschnitt **Synchronisation** finden können:
 
@@ -438,7 +484,7 @@ Sie können anderen erlauben, eine Synchronisationsverbindung mit Ihrem Projekt 
 <hr>
 
 
-## Projektkonfiguration
+# Projektkonfiguration
 
 Eine mit Field Desktop verwaltete Datenbank enthält eine Reihe von Ressourcen, die immer einer bestimmten **Kategorie** angehören, beispielsweise "Ort", "Fund" oder "Abbildung". Dabei wird unterschieden zwischen **Oberkategorien** (z. B. "Fund") und **Unterkategorien** (z. B. "Ziegel" oder "Keramik"). Eine Ressource der Unterkategorie gehört dabei immer auch der Oberkategorie an (ein Ziegel ist gleichzeitig ein Fund).
 
@@ -451,7 +497,14 @@ Durch **Relationen** werden Beziehungen zwischen Ressourcen angegeben (z. B.: Er
 Über das Menü "Werkzeuge" ➝ "Projektkonfiguration" erreichen Sie den Konfigurationseditor, der es Ihnen erlaubt, die im Projekt verfügbaren Kategorien, Felder und Wertelisten anzupassen und zu erweitern. Änderungen an der Konfiguration werden bei bestehender Synchronisationsverbindung an andere Nutzer und Nutzerinnen übertragen, sobald sie über den "Speichern"-Button bestätigt werden.
 
 
-### Kategorien und Formulare
+## Bezeichner und Anzeigenamen
+
+Alle Elemente der Projektkonfiguration (Kategorien, Felder usw.) besitzen jeweils einen **Bezeichner** zur eindeutigen Identifikation. Dieser Bezeichner wird in der Datenbank gespeichert und auch beim Import oder Export von Ressourcen verwendet. Im Konfigurationseditor wird er jeweils in magentafarbener Schrift dargestellt.
+
+Darüber hinaus können **Anzeigenamen** für jede der konfigurierten Projektsprachen eingetragen werden. Diese Texte werden zur Anzeige in allen anderen Bereichen der Anwendung verwendet und auch im Konfigurationseditor in schwarzer Schrift angezeigt. Ist kein Anzeigename vorhanden, wird stattdessen der Bezeichner angezeigt.
+
+
+## Kategorien und Formulare
 
 In der linken Seitenleiste des Editors werden die aktuell für das Projekt konfigurierten Kategorien aufgelistet. Über das Filtermenü links oben können Sie die Auswahl der angezeigten Kategorien auf einen bestimmten Bereich der Anwendung beschränken (z. B. "Schnitt" für die Beschränkung auf Kategorien, die innerhalb eines Schnitt-Tabs angelegt werden können). Bei Wahl der Option "Alle" werden sämtliche Kategorien des Projekts aufgeführt.
 
@@ -460,14 +513,14 @@ In der linken Seitenleiste des Editors werden die aktuell für das Projekt konfi
 Wenn Sie eine Kategorie in der Liste auswählen, wird auf der rechten Seite das für diese Kategorie konfigurierte Formular mit den entsprechenden Feldgruppen und Feldern angezeigt.
 
 
-#### Hinzufügen von Oberkategorien
+### Hinzufügen von Oberkategorien
 
 Über den grünen Plus-Button unten in der Liste können Sie eine neue Oberkategorie zum Projekt hinzufügen. Dabei haben Sie die Auswahl zwischen allen Oberkategorien der Field-Kategoriebibliothek, die aktuell noch nicht für das Projekt konfiguriert sind. Über das Textfeld oberhalb der Liste können Sie die angezeigten Kategorien und Formulare filtern. Für jede Kategorie werden die verfügbaren Formulare aufgelistet; bei Klick auf eines der Formulare sehen Sie auf der rechten Seite die entsprechenden Feldgruppen und Felder. Bestätigen Sie Ihre Auswahl über den Button "Kategorie hinzufügen".
 
-Beachten Sie bitte, dass aktuell keine neuen Oberkategorien über den Konfigurationseditor hinzugefügt werden können.
+Beachten Sie bitte, dass keine neuen Oberkategorien über den Konfigurationseditor hinzugefügt werden können.
 
 
-#### Hinzufügen von Unterkategorien
+### Hinzufügen von Unterkategorien
 
 Möchten Sie eine neue Unterkategorie zu einer bestehenden Oberkategorie hinzufügen, klicken Sie auf den kleinen Plus-Button, der rechts neben der entsprechenden Oberkategorie angezeigt wird. Fehlt der Plus-Button, so ist das Anlegen von Unterkategorien für diese Kategorie nicht möglich.
 
@@ -476,7 +529,7 @@ Analog zum Hinzufügen von Oberkategorien haben Sie auch hier die Auswahl zwisch
 Projektspezifische Kategorien werden in der Liste blau markiert, sofern die Option "Eigene Kategorien/Felder hervorheben" im Menü "Projektkonfiguration" aktiviert ist.
 
 
-#### Kategorien verwalten
+### Kategorien verwalten
 
 Bei einem Rechtsklick auf eine Kategorie wird ein Kontextmenü eingeblendet, das die folgenden Optionen bereithält:
 
@@ -485,21 +538,37 @@ Bei einem Rechtsklick auf eine Kategorie wird ein Kontextmenü eingeblendet, das
 * *Löschen*: Entfernt die Kategorie nach einer Sicherheitsabfrage. Wurden bereits Ressourcen dieser Kategorie im Projekt angelegt, so bleiben diese erhalten, werden allerdings nicht mehr angezeigt, bis die Kategorie erneut hinzugefügt wurde. Da beim Löschen auch sämtliche Anpassungen des für die Kategorie ausgewählten Formulars verloren gehen, sollte eine Kategorie allerdings im Regelfall nicht gelöscht werden, wenn bereits Ressourcen mit dem entsprechenden Formular angelegt wurden.
 
 
-#### Kategorien bearbeiten
+### Kategorien bearbeiten
 
 Über das Kontextmenü oder per Doppelklick auf einen Eintrag in der Kategorieliste kann der Kategorieeditor geöffnet werden, in dem die Eigenschaften der Kategorie editiert werden können:
 
-* *Kategoriebezeichnung*: Der Anzeigename der Kategorie, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
+* *Anzeigename*: Der Name der Kategorie, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
 * *Farbe*: Die Farbe des Kategorie-Symbols sowie der Geometrien, die für Ressourcen dieser Kategorie auf der Karte angezeigt werden.
+* *QR-Codes*: Ermöglicht die Verwendung von QR-Codes bei Ressourcen dieser Kategorie (siehe Abschnitt *QR-Codes*).
 * *Bezeichner-Präfix*: Geben Sie hier optional einen Text ein, mit dem der Bezeichner von Ressourcen dieser Kategorie stets beginnen soll. Beachten Sie dabei, dass bereits bestehende Bezeichner nicht automatisch angepasst werden.
 * *Ressourcenlimit*: Geben Sie hier optional eine Zahl ein, um die maximale Anzahl von Ressourcen festzulegen, die für diese Kategorie angelegt werden können. Bleibt das Feld leer, können beliebig viele Ressourcen angelegt werden. Diese Option steht nur für Maßnahmenkategorien und die Kategorie "Ort" zur Verfügung.
 
 Für von Ihnen angelegte, projektspezifische Kategorien können Sie darüber hinaus folgende Eigenschaften festlegen:
 * *Beschreibung*: Ein Beschreibungstext, der darüber informiert, in welchen Kontexten die Kategorie verwendet werden sollte.
-* *Verweise*: Geben Sie hier URLs an, wenn Sie auf weitere Informationen zur Kategorie oder Kategoriedefinitionen in anderen Systemen verweisen möchten.
+* *Allgemeine Verweise*: URLs zu Webseiten, über die weitere Informationen zur Kategorie abgerufen werden können (siehe Abschnitt *Verweise*).
+* *Semantische Verweise*: Verknüpfungen mit verwandten Konzepten in anderen Systemen (siehe Abschnitt *Verweise*).
 
 
-#### Hierarchie
+#### QR-Codes
+
+Ist die Verwendung von QR-Codes für eine Kategorie aktiviert, kann jeder Ressource der Kategorie ein einzigartiger QR-Code zugewiesen werden. Es können dabei sowohl neue Codes generiert als auch bestehende Codes per Kamera-Scan übernommen und mit der jeweiligen Ressource verknüpft werden. Der QR-Code kann anschließend auf verschiedene Arten eingesetzt werden:
+* Aufrufen der Ressource per Kamera-Scan (über den QR-Code-Button der Suchleiste)
+* Druck von QR-Code-Etiketten (über das Kontextmenü der Ressource)
+* Setzen des Aufbewahrungsortes einer Ressource per Kamera-Scan des mit dem Aufbewahrungsort verknüpften QR-Codes (über das Kontextmenü der Ressource)
+Bitte beachten Sie, dass QR-Codes nur für die Kategorien "Fund", "Fundkollektion", "Probe", "Typ" und "Aufbewahrungsort" sowie die jeweiligen Unterkategorien verwendet werden können.
+
+Zur Konfiguration von QR-Codes stehen im Kategorieeditor folgende Optionen bereit:
+* *QR-Codes zur Identifikation verwenden*: Aktivieren Sie diese Option, um die Verwendung von QR-Codes für Ressourcen der Kategorie zu erlauben
+* *Für neue Ressourcen automatisch erzeugen*: Aktivieren Sie diese Option, wenn für jede neu angelegte Ressource automatisch ein QR-Code generiert werden soll
+* *Zu druckende Felder*: Wählen Sie bis zu drei Felder aus, die zusätzlich zum Ressourcen-Bezeichner auf dem QR-Code-Etikett gedruckt werden sollen. Aktivieren Sie jeweils die Option "Feldbezeichnung drucken", wenn der Anzeigename des Feldes vor dem Feldinhalt auf dem Etikett erscheinen soll.
+
+
+### Hierarchie
 
 Die Kategorie bestimmt, an welcher Stelle der Ressourcenhierarchie eine Ressource angelegt werden kann: So können beispielsweise Funde innerhalb von stratigraphischen Einheiten angelegt werden, nicht aber umgekehrt. Mit den beiden Buttons rechts oben über der Formularanzeige können Sie sich anzeigen lassen, unterhalb von Ressourcen welcher Kategorien eine Ressource der ausgewählten Kategorie angelegt werden kann bzw. Ressourcen welcher Kategorien sie beinhalten kann.
 
@@ -508,17 +577,17 @@ Die Kategorie bestimmt, an welcher Stelle der Ressourcenhierarchie eine Ressourc
 Die Kategorienhierarchie kann aktuell nicht im Konfigurationseditor geändert werden. Für neu angelegte Unterkategorien gelten die hierarchischen Restriktionen der Oberkategorie.
 
 
-### Gruppen
+## Gruppen
 
 Rechts neben der Kategorieliste werden die Feldgruppen des derzeit ausgewählten Kategorieformulars angezeigt. Klicken Sie auf eine Gruppe, um rechts davon die entsprechenden Felder anzuzeigen.
 
 
-#### Hinzufügen von Gruppen
+### Hinzufügen von Gruppen
 
 Über den grünen Plus-Button unten in der Liste können Sie eine neue Gruppe zum Formular hinzufügen. Dabei können Sie eine der Gruppen auswählen, die bereits in anderen für das Projekt konfigurierten Formularen enthalten sind, oder eine neue Gruppe erstellen. Hierzu geben Sie den Bezeichner der neuen Gruppe in das Textfeld oberhalb der Liste ein und wählen die Option "Neue Gruppe erstellen". Es öffnet sich der Gruppeneditor, in dem Sie den Anzeigenamen der neuen Gruppe eintragen können.
 
 
-#### Gruppen verwalten
+### Gruppen verwalten
 
 Bei einem Rechtsklick auf eine Gruppe wird ein Kontextmenü eingeblendet, das die folgenden Optionen bereithält:
 
@@ -526,21 +595,21 @@ Bei einem Rechtsklick auf eine Gruppe wird ein Kontextmenü eingeblendet, das di
 * *Löschen*: Entfernt die Gruppe aus dem Formular. Bitte beachten Sie, dass eine Gruppe nur dann gelöscht werden kann, wenn sie keine Felder enthält. Verschieben Sie vor dem Löschen der Gruppe alle Felder in andere Gruppen oder entfernen Sie sie.
 
 
-### Felder
+## Felder
 
 Rechts neben der Gruppenliste werden die Felder angezeigt, die in der ausgewählten Gruppe enthalten sind. Klicken Sie auf einen Eintrag in der Felderliste, um weitere Informationen zum Feld einzublenden (Beschreibung, Eingabetyp und gegebenenfalls die zugeordnete Werteliste).
 
 Felder, die aus dem Formular der Oberkategorie stammen, werden durch das Icon der Oberkategorie markiert und können nicht bearbeitet oder gelöscht werden. Wechseln Sie dazu ins Formular der entsprechenden Oberkategorie.
 
 
-#### Hinzufügen von Feldern
+### Hinzufügen von Feldern
 
 Klicken Sie auf den Plus-Button unten in der Feldliste, um ein neues Feld zur Gruppe hinzuzufügen. Sie haben dabei zunächst die Auswahl aus allen Feldern, die für die ausgewählte Kategorie zur Verfügung stehen und die noch nicht zum Formular hinzugefügt wurden. Wählen Sie einen Eintrag in der Liste aus, um auf der rechten Seite Informationen über das Feld einzublenden. Um ein neues Feld anzulegen, geben Sie den gewünschten Bezeichner in das Eingabefeld oberhalb der Liste ein und wählen Sie die Option "Neues Feld erstellen". Es öffnet sich der Feldeditor, in dem Sie die Eigenschaften des Feldes angeben können (siehe Abschnitt *Felder bearbeiten*).
 
 Projektspezifische Felder werden in der Liste blau markiert, sofern die Option "Eigene Kategorien/Felder hervorheben" im Menü "Projektkonfiguration" aktiviert ist.
 
 
-#### Felder verwalten
+### Felder verwalten
 
 Bei einem Rechtsklick auf ein Feld wird ein Kontextmenü eingeblendet, das die folgenden Optionen bereithält:
 
@@ -548,130 +617,236 @@ Bei einem Rechtsklick auf ein Feld wird ein Kontextmenü eingeblendet, das die f
 * *Löschen*: Löscht das Feld nach einer Sicherheitsabfrage. Wurden bereits Daten für dieses Feld in Ressourcen eingetragen, so gehen diese nicht verloren, werden aber nicht mehr angezeigt, bis das Feld erneut hinzugefügt wird. Diese Option steht nur für projektspezifische Felder zur Verfügung. Felder, die einem ausgewählten Formular der Field-Formularbibliothek angehören, können nicht gelöscht, sondern lediglich im Feldeditor ausgeblendet werden. 
 
 
-#### Felder bearbeiten
+### Felder bearbeiten
 
 Über das Kontextmenü oder per Doppelklick auf einen Eintrag in der Feldliste kann der Feldeditor geöffnet werden, in dem die Eigenschaften des Feldes editiert werden können:
 
-* *Feldbezeichnung*: Der Anzeigename des Feldes, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
-* *Beschreibung*: Ein Beschreibungstext, der darüber informiert, welche Daten in das Feld eingetragen werden sollen. Dieser Text wird im Ressourceneditor als Tooltip des Info-Icons neben dem Feldnamen eingeblendet und soll als Hilfestellung bei der Dateneingabe dienen.
+* *Anzeigename*: Der Name des Feldes, der in allen Bereichen der Anwendung angezeigt wird. Sie können Bezeichnungen für unterschiedliche Sprachen eintragen.
+* *Beschreibung*: Ein Beschreibungstext, der darüber informiert, welche Daten in das Feld eingetragen werden sollen. Dieser Text wird im Ressourceneditor als Tooltip des Info-Icons neben dem Anzeigenamen des Feldes eingeblendet und soll als Hilfestellung bei der Dateneingabe dienen.
+* *Allgemeine Verweise*: URLs zu Webseiten, über die weitere Informationen zum Feld abgerufen werden können (siehe Abschnitt *Verweise*).
+* *Semantische Verweise*: Verknüpfungen mit verwandten Konzepten in anderen Systemen (siehe Abschnitt *Verweise*).
 
 
-#### Eingabetyp ändern
+### Eingabetyp ändern
 
 Über das Auswahlfeld *Eingabetyp* im Feldeditor können Sie den Eingabetyp des Feldes wechseln. Bitte beachten Sie, dass Sie für die mit Field mitgelieferten Felder nur Eingabetypen wählen können, deren Datenformat mit dem standardmäßig eingestellten Eingabetyp kompatibel sind (beispielsweise ist der Wechsel von einem einzeiligen Textfeld auf ein mehrzeiliges Textfeld möglich, nicht aber der Wechsel von einem Datierungsfeld zu einem Checkbox-Auswahlfeld). Bei projektspezifischen Feldern können Sie den Eingabetyp jederzeit frei ändern.
 
 Bereits eingetragene Felddaten werden auch nach einem Wechsel des Eingabetyps weiterhin angezeigt. Im Ressourceneditor werden mit dem aktuellen Eingabetyp inkompatible Daten allerdings entsprechend markiert und können dort nicht mehr editiert, sondern nur noch gelöscht werden.
 
-##### Einzeiliger Text
+#### Einzeiliger Text
 Eingabe eines einzeiligen Textes (wahlweise einsprachig oder mehrsprachig)
 <p align="center"><img src="images/de/configuration/input_type_input.png" alt="Eingabetyp 'Einzeiliger Text'"/></p>
 
-##### Einzeiliger Text mit Mehrfachauswahl
+#### Einzeiliger Text mit Mehrfachauswahl
 Eingabe mehrerer einzeiliger Texte (wahlweise einsprachig oder mehrsprachig)
 <p align="center"><img src="images/de/configuration/input_type_multi_input.png" alt="Eingabetyp 'Einzeiliger Text mit Mehrfachauswahl'"/></p>
   
-#####  Mehrzeiliger Text
+####  Mehrzeiliger Text
 Eingabe eines mehrzeiligen, mehrsprachigen Textes
 <p align="center"><img src="images/de/configuration/input_type_text.png" alt="Eingabetyp 'Mehrzeiliger Text mit Mehrfachauswahl'"/></p>
 
-##### Ganzzahl
+#### Ganzzahl
 Eingabe einer positiven oder negativen Ganzzahl
 <p align="center"><img src="images/de/configuration/input_type_int.png" alt="Eingabetyp 'Ganzzahl'"/></p>
 
-##### Positive Ganzzahl
+#### Positive Ganzzahl
 Eingabe einer positiven Ganzzahl
 <p align="center"><img src="images/de/configuration/input_type_unsigned_int.png" alt="Eingabetyp 'Positive Ganzzahl'"/></p>
 
-##### Kommazahl
+#### Kommazahl
 Eingabe einer positiven oder negativen Kommazahl
 <p align="center"><img src="images/de/configuration/input_type_float.png" alt="Eingabetyp 'Kommazahl'"/></p>
 
-##### Positive Kommazahl
+#### Positive Kommazahl
 Eingabe einer positiven Kommazahl
 <p align="center"><img src="images/de/configuration/input_type_unsigned_float.png" alt="Eingabetyp 'Positive Kommazahl'"/></p>
 
-##### URL
+#### URL
 Eingabe einer URL
 <p align="center"><img src="images/de/configuration/input_type_url.png" alt="Eingabetyp 'URL'"/></p>
 
-##### Dropdown-Liste
+#### Dropdown-Liste
 Auswahl eines Wertes aus einer Werteliste
 <p align="center"><img src="images/de/configuration/input_type_dropdown.png" alt="Eingabetyp 'Dropdown-Liste'"/></p>
 
-##### Dropdown-Liste (Bereich)
+#### Dropdown-Liste (Bereich)
 Auswahl eines Wertes oder eines Wertebereichs (von/bis, zwei Werte) aus einer Werteliste
 <p align="center"><img src="images/de/configuration/input_type_dropdown_range.png" alt="Eingabetyp 'Dropdown-Liste (Bereich)'"/></p>
 
-##### Radiobutton
+#### Radiobutton
 Auswahl eines Werte aus einer Werteliste
 <p align="center"><img src="images/de/configuration/input_type_radio.png" alt="Eingabetyp 'Radiobutton'"/></p>
 
-##### Ja / Nein
+#### Ja / Nein
 Angabe von Ja oder Nein
 <p align="center"><img src="images/de/configuration/input_type_boolean.png" alt="Eingabetyp 'Ja / Nein'"/></p>
 
-##### Checkboxen
+#### Checkboxen
 Auswahl eines oder mehrerer Werte aus einer Werteliste
 <p align="center"><img src="images/de/configuration/input_type_checkboxes.png" alt="Eingabetyp 'Checkboxen'"/></p>
 
-##### Datierungsangabe
+#### Datum
+Auswahl eines Datums aus einem Kalender. Über das Eingabefeld können auch lediglich Monats- oder Jahresangaben eingetragen werden. Optional kann auch eine Uhrzeit angegeben werden. Zu den weiteren Konfigurationsmöglichkeiten siehe den Abschnitt *Konfiguration von Datumsfeldern*.
+<p align="center"><img src="images/de/configuration/input_type_date.png" alt="Eingabetyp 'Datum'"/></p>
+
+#### Datierungsangabe
 Angabe einer oder mehrerer Datierungen. Mögliche Datierungstypen sind: Zeitraum, Exakt, Vor, Nach, Naturwissenschaftlich.
 <p align="center"><img src="images/de/configuration/input_type_dating.png" alt="Eingabetyp 'Datierungsangabe'"/></p>
 
-##### Datum
-Auswahl eines Datums aus einem Kalender. Über das Eingabefeld können auch lediglich Monats- oder Jahresangaben eingetragen werden.
-<p align="center"><img src="images/de/configuration/input_type_date.png" alt="Eingabetyp 'Datum'"/></p>
+#### Längenangabe
+Angabe einer oder mehrerer Längenmessungen. Zur Auswahl stehen die Maßeinheiten "mm", "cm" und "m". Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Gemessen an" entnommen.
+<p align="center"><img src="images/de/configuration/input_type_dimension.png" alt="Eingabetyp 'Längenangabe'"/></p>
 
-##### Maßangabe
-Angabe einer oder mehrerer Maßangaben. Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Gemessen an" entnommen.
-<p align="center"><img src="images/de/configuration/input_type_dimension.png" alt="Eingabetyp 'Maßangabe'"/></p>
+#### Gewichtsangabe
+Angabe einer oder mehrerer Gewichtsmessungen. Zur Auswahl stehen die Maßeinheiten "mg", "g" und "kg". Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Messgerät" entnommen.
 
-##### Literaturangabe
+<p align="center"><img src="images/de/configuration/input_type_weight.png" alt="Eingabetyp 'Gewichtsangabe'"/></p>
+
+#### Volumenangabe
+Angabe einer oder mehrerer Volumenmessungen. Zur Auswahl stehen die Maßeinheiten "ml" und "l". Es kann wahlweise ein Einzelwert oder ein Bereich angegeben werden. Aus der spezifizierten Werteliste werden die Auswahlmöglichkeiten für das Dropdown-Unterfeld "Messverfahren" entnommen.
+
+<p align="center"><img src="images/de/configuration/input_type_volume.png" alt="Eingabetyp 'Volumenangabe'"/></p>
+
+#### Literaturangabe
 Angabe eines oder mehrerer bibliographischer Verweise. Optional können Zenon-ID, DOI, Seitenzahl sowie Abbildungsnummer angegeben werden.
 <p align="center"><img src="images/de/configuration/input_type_literature.png" alt="Eingabetyp 'Literaturangabe'"/></p>
 
-##### Kompositfeld
+#### Kompositfeld
 Kompositfelder können mehrere Einträge enthalten, die jeweils aus einer beliebigen Anzahl von Unterfeldern bestehen. Jedes Unterfeld besitzt einen eigenen Namen und Eingabetyp (siehe Abschnitt *Unterfelder*).
 <p align="center"><img src="images/de/configuration/input_type_composite_field.png" alt="Eingabetyp 'Kompositfeld'"/></p>
 
+#### Relation
+Verweis auf eine oder mehrere andere Ressourcen, die einer der konfigurierten Zielkategorien angehören (siehe Abschnitt *Erlaubte Zielkategorien*). Optional kann eine Gegenrelation konfiguriert werden, die automatisch in den Zielressourcen gesetzt wird (siehe Abschnitt *Gegenrelation*).
+<p align="center"><img src="images/de/configuration/input_type_relation.png" alt="Eingabetyp 'Relation'"/></p>
 
-#### Felder verstecken
+
+### Felder verstecken
 
 Felder können versteckt werden, indem die Einstellung *Feld anzeigen* im Feldeditor deaktiviert wird. Das Feld wird daraufhin weder in der Ressourcenansicht noch im Ressourceneditor angezeigt. Ob versteckte Felder im Konfigurationseditor angezeigt werden, hängt von der Einstellung "Versteckte Felder anzeigen" im Menü "Projektkonfiguration" ab. Bereits eingetragene Daten bleiben auch nach dem Verstecken weiterhin erhalten und werden beim erneuten Aktivieren der Option *Feld anzeigen* wieder eingeblendet. Einige Felder, die für die Funktionalität der Anwendung wesentlich sind, können nicht versteckt werden (etwa der Bezeichner); in diesen Fällen wird die Option nicht angezeigt.
 
 
-#### Eingabe in mehreren Sprachen erlauben
+### Pflichtfelder
+
+Ein Feld kann als Pflichtfeld konfiguriert werden, indem die Option *Pflichtfeld* im Feldeditor aktiviert wird. Pflichtfelder müssen ausgefüllt werden, bevor die entsprechende Ressource gespeichert werden kann. Sind beim Aktivieren der Option bereits Ressourcen der Kategorie vorhanden, wird jeweils eine Warnung angezeigt, die auf das auszufüllende Pflichtfeld hinweist.
+
+
+### Eingabe in mehreren Sprachen erlauben
 
 Ist die Option *Eingabe in mehreren Sprachen erlauben* aktiviert, kann für jede der konfigurierten Projektsprachen ein eigener Text in das Feld eingegeben werden. Die Einstellung kann nur für Felder der Eingabetypen "Einzeiliger Text", "Einzeiliger Text mit Mehrfachauswahl" und "Mehrzeiliger Text" ausgewählt werden und ist standardmäßig aktiviert.
 
 
-#### Feldspezifische Suche
+### Feldspezifische Suche
 
 Die Einstellung *Feldspezifische Suche erlauben* im Feldeditor bestimmt, ob für ein Feld eine feldspezifische Suche im erweiterten Suchmodus durchgeführt werden kann (siehe Abschnitt *Erweiterter Suchmodus* im Kapitel *Suche*). Für Felder der Kategorie "Projekt" sowie für Felder einiger Eingabetypen kann diese Einstellung nicht aktiviert werden; in diesen Fällen ist sie ausgegraut.
 
 
-#### Werteliste wechseln
+### Anzeigebedingungen
+
+Über die Einstellung "Bedingung für Anzeige des Feldes" kann die Anzeige des Feldes an eine Bedingung geknüpft werden. Ist eine Bedingung gesetzt, steht das Feld bei der Dateneingabe nur dann zur Verfügung, wenn in ein anderes Feld der gleichen Ressource wahlweise ein einzelner bestimmter Wert, einer von mehreren Werten oder ein beliebiger Wert eingetragen ist.
+
+Um eine Bedingung zu setzen, wählen Sie im Dropdown-Feld "Bedingung für die Anzeige des Feldes" zunächst ein anderes Feld der gleichen Kategorie aus. Abhängig vom Eingabetyp des gewählten Feldes stehen nun unterschiedliche Arten von Anzeigebedingungen zur Verfügung:
+
+Die Option "Feld beliebig ausgefüllt" ist für alle Eingabetypen verfügbar. Ist diese Option aktiviert, wird das aktuelle Feld immer dann angezeigt, wenn im als Bedingung gewählten Feld ein beliebiger Wert eingetragen ist.
+
+Wird ein Feld des Eingabetyps "Dropdown-Liste", "Dropdown-Liste (Bereich)", "Radiobutton", "Ja / Nein" oder "Checkboxen" ausgewählt, werden darüber hinaus nun die möglichen Werte des gewählten Feldes angezeigt und können selektiert werden. Sind einer oder mehrere Werte selektiert, wird das aktuelle Feld bei der Dateneingabe nur dann angezeigt, wenn beim als Bedingung gewählten Feld mindestens einer der selektierten Werte gesetzt ist.
+
+Bitte beachten Sie, dass keine Anzeigebedingung für ein Feld gesetzt werden kann, solange es als Pflichtfeld konfiguriert ist.
+
+
+### Werteliste wechseln
 
 Die aktuell ausgewählte Werteliste kann per Klick auf den Button "Werteliste wechseln" durch eine andere Werteliste ausgetauscht werden. Dabei kann entweder eine bestehende Werteliste ausgewählt oder eine neue Liste angelegt werden (siehe Abschnitt *Wertelisten*).
 
-Wurden bereits Daten für das Feld eingetragen, so werden diese auch dann weiterhin angezeigt, wenn die eingetragenen Werte nicht in der neuen Werteliste enthalten sind. Die entsprechenden Werte werden in diesem Fall im Ressourceneditor als inkompatibel markiert und können dort gelöscht werden.
+Wurden bereits Daten für das Feld eingetragen, so werden diese auch dann weiterhin angezeigt, wenn die eingetragenen Werte nicht in der neuen Werteliste enthalten sind. Die entsprechenden Werte werden in diesem Fall im Ressourceneditor als inkompatibel markiert und können dort gelöscht werden; darüber hinaus wird eine entsprechende Warnung für die Ressource angezeigt.
 
 
-#### Unterfelder
+### Konfiguration von Datumsfeldern
+
+Ist der Eingabetyp "Datum" gewählt, erscheinen zwei zusätzliche Auswahlfelder, die eine weitere Anpassung des Datumsfeldes erlauben.
+
+
+#### Angabe der Uhrzeit
+
+Legen Sie hier fest, ob die Angabe einer Uhrzeit im Datumsfeld erlaubt ist oder nicht.
+
+* *Optional*: Bei der Eingabe kann eine Uhrzeit eingetragen werden, es kann jedoch auch lediglich ein Datum gesetzt werden.
+* *Verpflichtend*: Das Feld kann nur ausgefüllt werden, wenn zusätzlich zum Datum eine Uhrzeit eingetragen wird.
+* *Nicht erlaubt*: Die Eingabe einer Uhrzeit ist nicht möglich. Es kann lediglich ein Datum gesetzt werden.
+
+
+#### Eingabemodus
+
+Legen Sie hier fest, ob in das Feld ein Einzeldatum oder ein Datumsbereich eingetragen werden soll. Ein Datumsbereich besteht aus einem Start- und einem Enddatum.
+
+* *Wählbar*: Bei der Eingabe kann sowohl ein Einzeldatum als auch ein Datumsbereich eingetragen werden.
+* *Einzeldatum*: Es kann ausschließlich ein Einzeldatum eingetragen werden.
+* *Datumsbereich*: Es kann ausschließlich ein Datumsbereich eingetragen werden.
+
+
+### Konfiguration von Geometriefeldern
+
+Das Formular jeder Kategorie, für die Geometrien angelegt werden können, enthält immer ein Feld des Eingabetyps "Geometrie". Im Feldeditor stehen für dieses Feld zusätzliche Optionen zur Einschränkung der Bearbeitung auf der Karte sowie zur Auswahl der erlaubten Geometrietypen zur Verfügung.
+
+
+#### Bearbeitung auf der Karte erlauben
+
+Über diese Option kann festgelegt werden, ob die Geometrie manuell auf der Karte angelegt und editiert werden kann. Die Option ist standardmäßig aktiviert. Wird sie deaktiviert, können Geometriedaten nur noch über den Ressourceneditor oder per Import hinzugefügt bzw. bearbeitet werden.
+
+
+#### Erlaubte Geometrietypen
+
+Hier können Sie einen oder mehrere Geometrietypen auswählen. Beim Anlegen von Geometrien für Ressourcen der entsprechenden Kategorie stehen anschließend nur die ausgewählten Geometrietypen zur Auswahl. Standardmäßig sind alle Geometrietypen erlaubt.
+
+Field Desktop unterstützt die folgenden Geometrietypen:
+
+* *Polygon* (immer automatisch ausgewählt, wenn "Multipolygon" ausgewählt wurde)
+* *Multipolygon*
+* *Polyline* (immer automatisch ausgewählt, wenn "Multipolyline" ausgewählt wurde)
+* *Multipolyline*
+* *Punkt* (immer automatisch ausgewählt, wenn "Multipunkt" ausgewählt wurde)
+* *Multipunkt*
+
+
+### Unterfelder
 
 Dieser Abschnitt erscheint ausschließlich dann, wenn der Eingabetyp "Kompositfeld" gewählt ist. Legen Sie hier fest, aus welchen Unterfeldern jeder Eintrag des Kompositfelds besteht. Die Reihenfolge der Unterfelder lässt sich per Drag & Drop ändern.
 
-Um ein neues Unterfeld anzulegen, geben Sie den gewünschten Namen in das Eingabefeld ein und bestätigen die Eingabe per Klick auf den Plus-Button.  Es öffnet sich ein neues Editorfenster, in dem Sie das Unterfeld ähnlich wie ein gewöhnliches Feld konfigurieren können (Eingabetyp, Anzeigename, Beschreibung usw.).
+Um ein neues Unterfeld anzulegen, geben Sie den gewünschten Namen in das Eingabefeld ein und bestätigen die Eingabe per Klick auf den Plus-Button. Es öffnet sich ein neues Editorfenster, in dem Sie das Unterfeld ähnlich wie ein gewöhnliches Feld konfigurieren können (Eingabetyp, Anzeigename, Beschreibung usw.).
 
 
-##### Bedingungen für die Anzeige von Unterfeldern
+#### Bedingungen für die Anzeige von Unterfeldern
 
 Optional lässt sich im Unterfeldeditor eine Bedingung für die Anzeige des Unterfelds festlegen. Ist eine Bedingung gesetzt, steht das Unterfeld bei der Dateneingabe nur dann zur Auswahl, wenn bei einem anderen Unterfeld ein bestimmter Wert (oder einer von mehreren Werten) gesetzt ist.
 
 Um eine Bedingung zu setzen, wählen Sie im Dropdown-Feld "Bedingung für die Anzeige des Unterfelds" zunächst ein anderes Unterfeld des gleichen Kompositfelds aus. Zur Auswahl stehen dabei Unterfelder der Eingabetypen "Dropdown-Liste", "Dropdown-Liste (Bereich)", "Radiobutton", "Ja / Nein" und "Checkboxen". Die möglichen Werte des gewählten Unterfelds werden nun angezeigt und können selektiert werden. Das aktuelle Unterfeld wird bei der Dateneingabe nur dann angezeigt, wenn beim als Bedingung gewählten Unterfeld mindestens einer der selektierten Werte gesetzt ist.
 
 
-### Anpassen der Reihenfolge und der Gruppenzugehörigkeit
+### Erlaubte Zielkategorien
+
+Dieser Abschnitt erscheint ausschließlich dann, wenn der Eingabetyp "Relation" gewählt ist. Lediglich Ressourcen der hier gewählten Kategorien können als Ziele der Relation ausgewählt werden. Wird eine Oberkategorie gewählt, so gelten automatisch auch alle ihre Unterkategorien als erlaubte Zielkategorien.
+
+Bitte beachten Sie, dass bereits in das Feld eingetragene Zielressourcen nicht automatisch entfernt werden, wenn eine Kategorie aus der Liste der erlaubten Zielkategorien entfernt wird. In diesem Fall wird für die betroffenen Ressourcen jeweils eine entsprechende Warnung angezeigt.
+
+
+### Gegenrelation
+
+Dieser Abschnitt erscheint ausschließlich dann, wenn der Eingabetyp "Relation" gewählt ist. Optional kann hier ein anderes Feld des Eingabetyps "Relation" ausgewählt werden, das automatisch in eingetragenen Zielressourcen aktualisiert wird, um die Gegenrichtung der Relation anzuzeigen.
+
+*Beispiel:* Für die Relation "Liegt unter" ist die Gegenrelation "Liegt über" konfiguriert. Wird in der Ressource "A" im Relationsfeld "Liegt unter" die Zielressource "B" eingetragen, so wird automatisch in der Ressource "B" im Relationsfeld "Liegt über" die Zielressource "A" eingetragen.
+
+Im Auswahlfeld *Gegenrelation* erscheinen lediglich bereits angelegte Felder, die den folgenden Kriterien entsprechen:
+
+* Das infrage kommende Feld muss den Eingabetyp "Relation" besitzen.
+* Das infrage kommende Feld muss bei allen erlaubten Zielkategorien des aktuell bearbeiteten Feldes unter dem gleichen Bezeichner konfiguriert sein.
+* Die Kategorie, der das aktuell bearbeitete Feld angehört, muss für das infrage kommende Feld als erlaubte Zielkategorie eingetragen sein.
+* Das aktuell bearbeitete Feld muss für alle erlaubten Zielkategorien des infrage kommenden Feldes gemäß dieser Kriterien als Gegenrelation eingetragen werden können.
+
+Nach Auswahl einer Gegenrelation und Bestätigung der Änderungen über den Button *OK* werden die Gegenrelationen in anderen Feldern automatisch entsprechend ergänzt bzw. aktualisiert.
+
+Bitte beachten Sie, dass bereits eingetragene Ressourcendaten bei Auswahl einer anderen Gegenrelation nicht automatisch angepasst werden.
+
+
+## Anpassen der Reihenfolge und der Gruppenzugehörigkeit
 
 Die Reihenfolge von Ober- und Unterkategorien, Gruppen und Feldern lässt sich per Drag & Drop ändern. Dazu klicken Sie auf das Icon links im Listeneintrag, halten die Maustaste gedrückt und schieben das Element an die gewünschte Position.
 
@@ -680,7 +855,7 @@ Die Reihenfolge von Ober- und Unterkategorien, Gruppen und Feldern lässt sich p
 Auf die gleiche Weise können Felder auch einer anderen Gruppe zugeordnet werden: Ziehen Sie das Feld einfach auf den Eintrag der entsprechenden Gruppe in der Gruppenliste. Beachten Sie dabei, dass Änderungen der Feld- oder Gruppenreihenfolge bzw. der Gruppenzugehörigkeit nicht automatisch vom Formular einer Oberkategorie auf Formulare der entsprechenden Unterkategorien übertragen werden (und umgekehrt).
 
 
-### Wertelisten
+## Wertelisten
 
 Über das Menü "Projektkonfiguration" ➝ "Wertelistenverwaltung" kann eine Übersicht sämtlicher Wertelisten aufgerufen werden, die mit Field mitgeliefert werden. Die hier aufgeführten Wertelisten werden entweder von den Feldern der Standard-Formulare verwendet oder wurden im Rahmen von Projekten angelegt, die Field bereits eingesetzt haben.
 
@@ -691,14 +866,14 @@ Verwenden Sie das Textfeld oberhalb der Liste, um die Wertelisten auf Basis beli
 Bitte beachten Sie, dass sämtliche Änderungen, die in der Wertelistenverwaltung vorgenommen werden, anschließend per Klick auf den "Speichern"-Button des Konfigurationseditors bestätigt werden müssen, bevor sie für das Projekt angewendet werden.
 
 
-#### Erstellen und Erweitern von Wertelisten
+### Erstellen und Erweitern von Wertelisten
 
 Um eine neue Werteliste anzulegen, geben Sie den gewünschten Bezeichner in das Textfeld ein und wählen Sie die Option "Neue Werteliste erstellen". Es öffnet sich der Wertelisteneditor, in dem Sie die gewünschten Werte eintragen und weitere Einstellungen vornehmen können (siehe Abschnitt *Wertelisten bearbeiten*).
 
 Anstatt eine komplett neue Werteliste anzulegen, können Sie alternativ eine bereits bestehende erweitern. Öffnen Sie dazu per Rechtsklick auf den entsprechenden Listeneintrag das Kontextmenü, wählen Sie die Option *Werteliste erweitern* und geben Sie einen Bezeichner für Ihre Erweiterungsliste ein. Alle Werte der ausgewählten Werteliste werden übernommen und können nun im Editor durch zusätzliche Werte ergänzt werden. Sie haben außerdem die Möglichkeit, existierende Werte zu verstecken und die Reihenfolge anzupassen. Bitte beachten Sie, dass Erweiterungslisten sowie projektspezifische Listen nicht erweitert werden können.
 
 
-#### Projektspezifische Wertelisten verwalten
+### Projektspezifische Wertelisten verwalten
 
 Bei einem Rechtsklick auf eine projektspezifische Werteliste wird ein Kontextmenü eingeblendet, das die folgenden Optionen bereithält:
 
@@ -706,26 +881,110 @@ Bei einem Rechtsklick auf eine projektspezifische Werteliste wird ein Kontextmen
 * *Löschen*: Löscht die Werteliste nach einer Sicherheitsabfrage. Das Löschen einer Werteliste ist nicht möglich, solange sie von einem oder mehreren Feldern verwendet wird. Wählen Sie in diesem Fall zunächst eine andere Werteliste für die entsprechenden Felder aus.
 
 
-#### Wertelisten bearbeiten
+### Wertelisten bearbeiten
 
 Über das Kontextmenü oder per Doppelklick auf eine Werteliste kann ein Editor geöffnet werden, in dem die Eigenschaften der Werteliste bearbeitet werden können:
 
 * *Beschreibung der Werteliste*: Ein Beschreibungstext, in dem Sie nähere Informationen zur Werteliste angeben können. Dieser Text wird in der Wertelistenverwaltung bei Auswahl der Liste angezeigt.
-* *Verweise*: Geben Sie hier URLs an, um auf weitere Informationen zur Werteliste oder zugrunde liegenden Definitionen in anderen Systemen zu verweisen.
-* *Werte*: Tragen Sie hier über das Textfeld "Neuer Wert" die Werte ein, die von der Werteliste angeboten werden sollen. Es öffnet sich jeweils der Werte-Editor, der auch später per Klick auf den Bearbeiten-Button neben jedem Wert aufgerufen werden kann (siehe Abschnitt *Werte bearbeiten*).
+* *Allgemeine Verweise*: URLs zu Webseiten, über die weitere Informationen zur Werteliste abgerufen werden können (siehe Abschnitt *Verweise*).
+* *Semantische Verweise*: Verknüpfungen mit verwandten Konzepten in anderen Systemen (siehe Abschnitt *Verweise*).
+* *Werte*: Tragen Sie hier über das Textfeld "Neuer Wert" den gewünschten Bezeichner eines neuen Wertes ein, der von der Werteliste angeboten werden soll. Es öffnet sich der Werte-Editor, der auch später per Klick auf den Bearbeiten-Button neben jedem Wert aufgerufen werden kann (siehe Abschnitt *Werte bearbeiten*).
 * *Automatische Sortierung*: Ist diese Option aktiviert, werden die Werte stets in alphanumerischer Reihenfolge angezeigt. Sie können die Option deaktivieren, um die Werte anschließend per Drag & Drop in die gewünschte Reihenfolge zu bringen.
 
 
-#### Werte bearbeiten
+### Werte bearbeiten
 
 Der Werte-Editor erlaubt es, die Eigenschaften eines Wertes anzupassen:
 
 * *Anzeigetext*: Der Anzeigetext des Wertes. Sie können Texte für unterschiedliche Sprachen eintragen.
 * *Beschreibung*: Ein Beschreibungstext, in dem Sie nähere Informationen zum Wert angeben können. Dieser Text wird im Konfigurationseditor als Tooltip für den entsprechenden Wert angezeigt.
-* *Verweise*: Geben Sie hier URLs an, um auf zugrunde liegende Definitionen in anderen Systemen zu verweisen.
+* *Allgemeine Verweise*: URLs zu Webseiten, über die weitere Informationen zum Wert abgerufen werden können (siehe Abschnitt *Verweise*).
+* *Semantische Verweise*: Verknüpfungen mit verwandten Konzepten in anderen Systemen (siehe Abschnitt *Verweise*).
 
 
-### Projektsprachen auswählen
+## Verweise
+
+Formulare, Felder, Wertelisten sowie deren Werte können durch Verweise mit externen Ressourcen verknüpft werden. Unterschieden wird dabei zwischen allgemeinen und semantischen Verweisen.
+
+
+### Allgemeine Verweise
+
+Allgemeine Verweise sind URLs zu Webseiten, über die weitere Informationen zum jeweiligen Element der Projektkonfiguration abgerufen werden können. Diese URLs werden im Informations-Popup angezeigt, das im Ressourceneditor über einen Rechtsklick auf das Feld bzw. den Wert eingeblendet werden kann, und können so als Hilfestellung bei der Dateneingabe dienen.
+
+
+### Semantische Verweise
+
+Semantische Verweise stellen Verknüpfungen mit verwandten Konzepten in anderen Systemen (Vokabulare, Ontologien etc.) dar und bestehen aus einem Prädikat sowie einem URI.
+
+
+#### Mapping-Relationen
+
+Als Prädikat kann eine der folgenden Relationen ausgewählt werden:
+
+* skos:exactMatch
+* skos:closeMatch
+* skos:broadMatch
+* skos:narrowMatch
+* skos:relatedMatch
+* idw:unknownMatch
+
+Die ersten fünf Relationen sind Standard-Mapping-Relationen des *Simple Knowledge Organization System (SKOS)*. *idw:unknownMatch* ist eine speziell definierte Ergänzung. Alle Relationen sind Untereigenschaften von *skos:mappingRelation* und sind – gemäß Konvention – für Verknüpfungen zwischen verschiedenen Konzeptschemata vorgesehen.
+
+Die folgenden Erläuterungen orientieren sich an der [SKOS-Referenz](https://www.w3.org/TR/skos-reference/#mapping), in der Sie weitere Informationen finden.
+
+
+##### skos:exactMatch
+
+Die Relation *skos:exactMatch* wird verwendet, um zwei Konzepte zu verknüpfen, wobei ein hohes Maß an Sicherheit angegeben wird, dass die Konzepte in einer Vielzahl von Anwendungen zur Informationsgewinnung austauschbar verwendet werden können.
+
+
+##### skos:closeMatch
+
+Die Relation *skos:closeMatch* wird verwendet, um zwei Konzepte zu verknüpfen, die so ähnlich sind, dass sie in einigen Anwendungen zur Informationsgewinnung austauschbar verwendet werden können.
+
+
+##### skos:broadMatch
+
+Die Relation *skos:broadMatch* wird verwendet, um eine hierarchische Mapping-Verbindung zwischen zwei Konzepten anzugeben, wobei das Zielkonzept als ein weiter gefasstes Konzept ausgewiesen wird (d. h. das verknüpfte Konzept umfasst das Konzept in der Field-Projektkonfiguration).
+
+Wenn [A] das Element (z. B. Feld oder Wert) der Field-Projektkonfiguration ist und [B] das durch den URI identifizierte Konzept:
+
+[A] skos:broadMatch [B] = [B] ist weiter gefasst als [A]
+
+
+##### skos:narrowMatch
+
+Die Relation *skos:narrowMatch* wird verwendet, um eine hierarchische Mapping-Verbindung zwischen zwei Konzepten anzugeben, wobei das Zielkonzept als ein enger gefasstes Konzept ausgewiesen wird (d. h. das Konzept in der Field-Projektkonfiguration umfasst das verknüpfte Konzept).
+
+Wenn [A] das Element (z. B. Feld oder Wert) in der Field-Projektkonfiguration ist und [B] das durch den URI identifizierte Konzept:
+
+[A] skos:narrowMatch [B] = [B] ist enger gefasst als [A]
+
+
+##### skos:relatedMatch
+
+Die Relation *skos:relatedMatch* wird verwendet, um eine assoziative Mapping-Verbindung zwischen zwei Konzepten anzugeben. Sie sollte eingesetzt werden, wenn zwei Konzepte miteinander in Beziehung stehen, aber keines der beiden weiter oder enger gefasst ist und sie nicht gleichwertig sind. Die Relation ist geeignet für thematische, funktionale oder kontextuelle Assoziationen (z. B. eine Verknüpfung zwischen "Amphore" und "Weinhandel").
+
+
+##### idw:unknownMatch
+
+Die Relation *idw:unknownMatch* wird verwendet, um zwei Konzepte zu verknüpfen, wobei angegeben wird, dass die Art der Zuordnung nicht bekannt ist. Sie sollte eingesetzt werden, wenn es hinreichende Anhaltspunkte dafür gibt, dass zwei Konzepte miteinander in Beziehung stehen, die genaue Art der Zuordnung (Äquivalenz, hierarchisch oder assoziativ) jedoch noch nicht festgelegt wurde.
+
+
+##### Entscheidungshilfe
+
+Gleicher Umfang und gleiche Absicht? ➝ *skos:exactMatch*
+
+Sehr ähnlich, aber mit Vorbehalten? ➝ *skos:closeMatch*
+
+Eindeutig allgemeiner/spezifischer? ➝ *skos:broadMatch* / *skos:narrowMatch*
+
+Nur assoziiert, nicht hierarchisch/äquivalent? ➝ *skos:relatedMatch*
+
+Unklar; zur Überprüfung markieren? ➝ *idw:unknownMatch*
+
+
+## Projektsprachen auswählen
 
 Über das Menü "Projektkonfiguration" ➝ "Projektsprachen auswählen..." können Sie die Sprachen festlegen, für die im Projekt Daten eingegeben werden sollen. Bei Freitextfeldern, für die im Konfigurationseditor die Option "Eingabe in mehreren Sprachen erlauben" aktiviert ist, kann für jede Projektsprache ein eigener Text eingegeben werden.
 Darüber hinaus werden im Konfigurationseditor für jede Projektsprache automatisch leere Eingabefelder für die Anzeigetexte und Beschreibungen von Kategorien, Feldern, Gruppen, Wertelisten und Werten eingeblendet.
@@ -733,15 +992,99 @@ Darüber hinaus werden im Konfigurationseditor für jede Projektsprache automati
 Bitte beachten Sie, dass bereits eingegebene Texte nicht mehr angezeigt werden, wenn die entsprechende Sprache aus der Liste der Projektsprachen entfernt wird. Sie bleiben allerdings in der Datenbank erhalten und werden wieder eingeblendet, wenn die Sprache zu einem späteren Zeitpunkt erneut als Projektsprache ausgewählt wird.
 
 
-### Konfiguration importieren
+## Konfiguration importieren
 
-Um eine bereits existierende Konfiguration aus einem anderen Projekt zu übernehmen, öffnen Sie das neue Projekt, wechseln in den Konfigurationseditor und rufen die Menüoption "Projektkonfiguration" ➝ "Konfiguration importieren..." auf. Wählen Sie das Projekt, deren Konfiguration Sie übernehmen möchten, anschließend aus der Liste aus, und bestätigen Sie Ihre Auswahl per Klick auf den "OK"-Button. Das Ergebnis des Imports kann nun im Editor überprüft und per Klick auf den "Speichern"-Button übernommen werden. Bitte beachten Sie, dass dabei sämtliche bisherigen Konfigurationseinstellungen durch die importierte Konfiguration ersetzt werden.
+Rufen Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration importieren..." auf, um eine bereits existierende Konfiguration aus einem anderen Projekt zu übernehmen. 
+Im Auswahlmenü "Quelle" können Sie zwischen zwei verschiedenen Importmöglichkeiten wählen:
+
+* *Datei*: Importieren Sie eine Field-Konfigurationsdatei (Dateiendung *.configuration*), die zuvor in einem anderen Projekt über das Menü "Projektkonfiguration" ➝ "Konfiguration exportieren..." erstellt wurde.
+* *Projekt*: Importieren Sie die Konfiguration eines anderen auf dem gleichen Computer vorliegenden Projekts.
+
+Das Ergebnis des Imports kann nun im Editor überprüft und per Klick auf den "Speichern"-Button übernommen werden. Bitte beachten Sie, dass dabei sämtliche bisherigen Konfigurationseinstellungen durch die importierte Konfiguration ersetzt werden.
+
+
+## Konfiguration exportieren
+
+Rufen Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration exportieren..." auf, um die Konfiguration des aktuell geöffneten Projekts als Field-Konfigurationsdatei (Dateiendung *.configuration*) zu speichern. Exportiert wird dabei der im Konfigurationseditor angezeigte Stand inklusive eventueller ungespeicherter Änderungen. In der erzeugten Datei sind auch alle projektspezifischen Wertelisten enthalten.
+
+Über die Menüoption "Projektkonfiguration" ➝ "Konfiguration importieren..." kann die Datei anschließend wieder importiert werden, um die Konfiguration in ein anderes Projekt zu übernehmen oder den gespeicherten Stand der Konfiguration im gleichen Projekt wiederherzustellen.
 
 
 <hr>
 
 
-## Matrix
+# Workflow
+
+Die Workflow-Funktionalitäten von Field Desktop ermöglichen es, die in einem Projekt durchgeführten Prozesse (z. B. Probenentnahme, Restaurierungsarbeiten, die Anfertigung von Zeichnungen usw.) zu dokumentieren.
+
+
+## Konfiguration
+
+Ein Prozess wird durch eine Ressource der Oberkategorie "Prozess" abgebildet. Die Kategorie "Prozess" selbst ist abstrakt, das heißt es können ausschließlich Ressourcen ihrer Unterkategorien angelegt werden. Um mit der Workflow-Dokumentation zu arbeiten, müssen für das Projekt daher zunächst eine oder mehrere Unterkategorien der Kategorie "Prozess" konfiguriert werden. Die Unterkategorie bestimmt, um welche Art von Prozess es sich handelt.
+
+Um eine Unterkategorie hinzuzufügen, öffnen Sie den Konfigurationseditor über das Menü "Werkzeuge" ➝ "Projektkonfiguration", stellen Sie den Kategoriefilter auf die Option "Workflow" oder "Alle" ein und klicken Sie anschließend auf den Plus-Button neben der Kategorie "Prozess". Es öffnet sich ein Fenster, in dem alle Prozess-Unterkategorien angezeigt werden, die in der Field-Kategoriebibliothek enthalten sind. Wählen Sie das gewünschte Formular einer dieser Kategorien aus oder geben Sie alternativ den Namen einer neuen Kategorie ein, um eine eigene Prozess-Unterkategorie anzulegen.
+
+In beiden Fällen haben Sie nun die Möglichkeit, die erlaubten Zielkategorien für die Relationen "Durchgeführt an" und "Ergibt" einzurichten.
+
+Die Relation "Durchgeführt an" dient zur Verknüpfung des Prozesses mit denjenigen Ressourcen, an denen er **durchgeführt** wird. Diese Relation ist ein Pflichtfeld, weshalb an dieser Stelle die Auswahl mindestens einer Zielkategorie verpflichtend ist. Wählen Sie hier beispielsweise die Kategorie "Fund" aus, dann bedeutet dies, dass Prozesse dieser Kategorie an Funden durchgeführt werden können.
+
+Die Relation "Ergibt" dient zur Verknüpfung des Prozesses mit Ressourcen, die ein **Ergebnis** des Prozesses sind. Die Angabe dieser Relation ist optional. Wenn Sie an dieser Stelle keine Zielkategorien auswählen, dann ist die Relation für diese Prozess-Unterkategorie zunächst nicht verfügbar. Sie können die Relation aber jederzeit später zum Formular hinzufügen (siehe Abschnitt *Hinzufügen von Feldern* im Kapitel *Projektkonfiguration*).
+
+Die erlaubten Zielkategorien der beiden Relationen können nachträglich angepasst werden, indem das entsprechende Relationsfeld ("Durchgeführt an" bzw. "Ergibt") der Kategorie editiert wird. Die beiden Relationsfelder befinden sich standardmäßig in der Gruppe "Workflow".
+
+Weitere Informationen zum Hinzufügen von Unterkategorien finden Sie im Abschnitt *Kategorien und Formulare* des Kapitels *Projektkonfiguration*.
+
+
+## Dokumentation
+
+Prozesse können über zwei verschiedene Wege angelegt und eingesehen werden: über die Workflow-Gesamtübersicht sowie über die Option "Workflow dokumentieren" des Ressourcen-Kontextmenüs.
+
+
+### Gesamtübersicht
+
+Eine Übersicht aller im Projekt dokumentierten Prozesse kann über das Menü "Werkzeuge" ➝ "Workflow" aufgerufen werden. Die Prozesse können wahlweise per Bezeichner oder Datum der Durchführung sortiert werden. Darüber hinaus stehen die gewohnten Möglichkeiten zum Filtern per Kategorie und Bezeichner sowie die feldspezifische Suche zur Verfügung (siehe Kapitel *Suche*). Über den Plus-Button am unteren Bildschirmrand können neue Prozesse angelegt werden.
+
+
+### Workflow für ausgewählte Ressourcen dokumentieren
+
+Um lediglich die an bestimmten Ressourcen durchgeführten Prozesse einzusehen, selektieren Sie die gewünschten Ressourcen (bei gedrückter Strg/Cmd- oder Shift-Taste auch mehrere Ressourcen gleichzeitig) und öffnen Sie per Rechtsklick das Kontextmenü. Über die Option "Workflow dokumentieren" können Sie nun ein Fenster aufrufen, in dem alle Prozesse aufgelistet werden, die an einer oder mehrerer der selektierten Ressourcen durchgeführt wurden. Das Fenster stellt außerdem erweiterte Möglichkeiten zum Anlegen und Verknüpfen von Prozessen bereit.
+
+
+#### Prozesse anlegen
+
+Über den Plus-Button am unteren Rand des Fensters können Sie neue Prozesse anlegen. Wählen Sie dabei zunächst die gewünschte Prozess-Unterkategorie aus. Zur Auswahl stehen ausschließlich Prozess-Unterkategorien, die an allen selektierten Ressourcen durchgeführt werden können. Gibt es keine entsprechende Schnittmenge, wird der Plus-Button nicht angezeigt. Sind mehrere Ressourcen selektiert, können Sie beim Klick auf den Plus-Button zwischen zwei Optionen wählen:
+
+* *Ein gemeinsamer Prozess für alle ausgewählten Ressourcen*: Es wird ein einziger neuer Prozess angelegt. Dieser Prozess wird über die Relation "Durchgeführt an" mit allen ausgewählten Ressourcen verknüpft.
+* *Ein eigener Prozess pro Ressource*: Es wird für jede der selektierten Ressourcen ein eigener neuer Prozess angelegt und jeweils über die Relation "Durchgeführt an" mit der entsprechenden Ressource verknüpft.
+
+
+#### Prozesse verknüpfen
+
+Über den blauen Link-Button am unteren Rand des Fensters können Sie bereits bestehende Prozesse mit den selektierten Ressourcen verknüpfen. Nach dem Klick auf den Button öffnet sich ein Fenster, in dem Sie nach einer Ressource suchen können. Haben Sie eine Ressource ausgewählt, erscheinen alle Prozesse, die über die Relation "Durchgeführt an" mit dieser Ressource verknüpft sind. Wählen Sie einen der Prozesse aus, um ihn mit allen selektierten Ressourcen zu verknüpfen. Bestehende Verknüpfungen des Prozesses bleiben erhalten.
+
+Zur Auswahl stehen ausschließlich Prozesse derjenigen Unterkategorien, die an allen selektierten Ressourcen durchgeführt werden können. Gibt es keine entsprechende Schnittmenge, wird der Link-Button nicht angezeigt.
+
+
+### Felder eines Prozesses
+
+Jeder Prozess verfügt über die beiden Pflichtfelder "Status" und "Datum", die für jeden Prozess ausgefüllt werden müssen.
+
+Das Feld "Status" ist ein Dropdown-Feld, in dem einer der folgenden Werte ausgewählt werden kann:
+
+* *Geplant*: Der Prozess wurde noch nicht durchgeführt, ist aber für die Zukunft geplant.
+* *Laufend*: Der Prozess wird aktuell durchgeführt, ist aber noch nicht abgeschlossen.
+* *Abgeschlossen*: Der Prozess wurde vollständig durchgeführt.
+* *Abgebrochen*: Der Prozess wurde begonnen, aber abgebrochen.
+
+Im Feld "Datum" wird das Datum der Durchführung angegeben (das sich je nach Status in der Vergangenheit, Gegenwart oder Zukunft befinden kann). Die Art der Datumsangabe kann im Konfigurationseditor angepasst werden, indem das Feld "Datum" bearbeitet wird. Standardmäßig kann optional zusätzlich zum Tag auch eine Uhrzeit angegeben werden und es ist sowohl die Angabe eines Einzeldatums als auch eines Datumsbereichs möglich. Weitere Informationen zu den Anpassungsmöglichkeiten für Datumsfelder finden Sie im Abschnitt *Konfiguration von Datumsfeldern* des Kapitels *Projektkonfiguration*.
+
+Bitte beachten Sie, dass das eingetragene Datum zum ausgewählten Status passen muss. Ist dies nicht der Fall (weil etwa der Status "Abgeschlossen" gewählt wurde, aber das eingetragene Datum in der Zukunft liegt), erscheint eine entsprechende Warnung (siehe Abschnitt *Ungültiger Status* im Kapitel *Warnungen*).
+
+
+<hr>
+
+
+# Matrix
 
 In der Ansicht **Matrix** (erreichbar über das Menu "Werkzeuge") finden Sie für jeden Schnitt des Projekts
 eine Matrix vor, die automatisch aus den stratigraphischen Einheiten des jeweiligen Schnitts generiert wird.
@@ -754,7 +1097,7 @@ Wählen Sie den Schnitt, für den Sie eine Matrix generieren möchten, über den
 Toolbar aus.
 
 
-### Optionen
+## Optionen
 
 Über den **Optionsbutton** in der rechten oberen Ecke der Matrixansicht können Sie verschiedene Einstellungen
 vornehmen, mit denen Sie die Darstellung der Matrix individuell anpassen können. Die gewählten Einstellungen
@@ -764,7 +1107,7 @@ erhalten.
 <p align="center"><img src="images/de/matrix/matrix_tools.png" alt="Optionsmenü"/></p>
 
 
-#### Relationen
+### Relationen
 
 * *Zeitlich*: Kanten werden auf Basis der Relationen "Zeitlich vor", "Zeitlich nach" und "Zeitgleich mit"
   (Feldgruppe "Zeit") erstellt.
@@ -772,14 +1115,14 @@ erhalten.
   geschnitten von" und "Gleich wie" (Feldgruppe "Lage") erstellt.
 
 
-#### Kanten
+### Kanten
 
 * *Gerade*: Alle Kanten bestehen aus geraden Linien.
 * *Gebogen*: Kanten können gebogen sein, wenn keine direkte Verbindungslinie zwischen zwei Einheiten der
   Matrix gezogen werden kann.
 
 
-#### Gruppierung nach Grobdatierung
+### Gruppierung nach Grobdatierung
 
 Aktivieren Sie diese Option, um die stratigraphischen Einheiten in der Matrix anhand des Eintrags im Feld
 "Grobdatierung" zu gruppieren. Sind als Grobdatierung zwei Werte (von/bis) eingetragen, wird jeweils nur
@@ -789,7 +1132,7 @@ Grobdatierung werden nun nahe beieinander platziert und mit einem Rechteck umrah
 <p align="center"><img src="images/de/matrix/matrix_phases.png" alt="Gruppierung nach Grobdatierung"/></p>
 
 
-### Navigation
+## Navigation
 
 Bewegen Sie die Maus bei gedrückter **rechter Maustaste**, um die Position der Matrix innerhalb des
 Anzeigebereichs zu verändern. Verwenden Sie das **Mausrad** oder die **Zoom-Buttons** in der linken oberen
@@ -802,7 +1145,7 @@ Grüne Linien zeigen Verbindungen zu Einheiten auf höheren Ebenen an, blaue zu 
 und orange zu Einheiten auf der gleichen Ebene innerhalb der Matrix.
 
 
-### Editierung
+## Editierung
 
 Standardmäßig befinden Sie sich im **Editierungsmodus**: Klicken Sie auf eine Einheit in der Matrix, um den
 Editor zu öffnen, in dem Sie die entsprechende Ressource bearbeiten können. Durch die Editierung der
@@ -811,7 +1154,7 @@ innerhalb der Matrix verändern. Nach einem Klick auf den Button **Speichern** w
 Grundlage der geänderten Daten aktualisiert.
 
 
-### Anzeige von Teilmatrizen
+## Anzeige von Teilmatrizen
 
 Um die Übersicht in großen Matrizen zu erleichtern, können auch Teilmatrizen aus ausgewählten Einheiten
 der Matrix generiert werden. Verwenden Sie die Buttons auf der rechten Seite der Toolbar, um Einheiten zu
@@ -834,3 +1177,1322 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
   schnelle Weise zu prüfen, ob zwei Einheiten über mehrere Relationen/Ressourcen hinweg miteinander
   verknüpft sind.
 * *Matrix neu laden*: Die ursprüngliche Matrix mit allen stratigraphischen Einheiten des gewählten Schnitts wird wiederhergestellt.
+
+
+## Export
+
+Verwenden Sie den Export-Button ganz rechts in der Toolbar, um die aktuell dargestellte Matrix als Datei zu exportieren.
+
+<p align="center"><img src="images/de/matrix/export_matrix.png" alt="Export-Button"/></p>
+
+Sie können dabei zwischen zwei verschiedenen Dateiformaten wählen:
+
+* *Dot (Graphviz)*: Ein Format zur Beschreibung von Graphen, das u. a. von der OpenSource-Software Graphviz eingelesen werden kann. (Dateiendung *gv*)
+* *SVG*: Ein Format zur Darstellung von Vektorgrafiken. (Dateiendung *svg*)
+
+
+<hr>
+
+
+# Import und Export
+
+## Import
+
+Rufen Sie das Menü "Werkzeuge" ➝ "Import" auf, um Ressourcen in das aktuell geöffnete Projekt zu importieren.
+
+* *Quelle*: Wählen Sie die Art der Importquelle aus. Es stehen zwei Optionen zur Auswahl:
+    * *Datei*: Die zu importierenden Daten werden aus einer Datei eingelesen, die auf Ihrem Computer, einem angeschlossenen Speichermedium oder einem anderen über das Netzwerk verfügbaren Computer vorliegt.
+    * *HTTP*: Die zu importierenden Daten werden per HTTP oder HTTPS anhand einer URL geladen. Bitte beachten Sie, dass ein Import von Dateien der Formate *Shapefile* und *Katalog* bei Auswahl dieser Option nicht möglich ist. 
+* *Pfad*: Wählen Sie über einen Dateiauswahldialog die gewünschte Importdatei aus (nur verfügbar bei Quelle "Datei").  
+* *URL*: Geben Sie die URL ein, unter der die zu importierenden Daten zur Verfügung stehen (nur verfügbar bei Quelle "HTTP").
+
+Abhängig vom Format der ausgewählten Datei, das anhand der Dateiendung erkannt wird, können weitere Optionen verfügbar sein (siehe Abschnitt zum entsprechenden Format im Unterkapitel *Formate*).
+
+Starten Sie den Importprozess über den Button **Import starten**.
+
+Unterstützte Import-Formate sind:
+* CSV (.csv)
+* GeoJSON (.geojson, .json)
+* Shapefile (.shp)
+* JSON Lines (.jsonl)
+* Katalog (.catalog)
+
+Für das Anlegen neuer Ressourcen oder das Editieren bestehender Ressourcen eignen sich die Formate *CSV* und *JSON Lines*. Geometrien können über die Formate *GeoJSON*, *Shapefile* oder *JSON Lines* hinzugefügt bzw. bearbeitet werden. Das Format *Katalog* kann zum Austausch von Field-Typenkatalogen eingesetzt werden.
+
+Bitte beachten Sie, dass neue Bilder ausschließlich über das Menü "Werkzeuge" ➝ "Bilderverwaltung" importiert werden können. Die Ressourcendaten bereits importierter Bilder können allerdings per CSV- oder JSON-Lines-Import bearbeitet werden.
+
+Hinweise für den Import von Projektkonfigurationen (.configuration) finden Sie im Kapitel *Projektkonfiguration*. 
+
+
+## Export
+
+Rufen Sie das Menü "Werkzeuge" ➝ "Export" auf, um Ressourcen des aktuell geöffneten Projekts zu exportieren.
+
+Wählen Sie im Dropdown-Menü **Format** das gewünschte Exportformat aus. Abhängig vom Format können weitere Optionen verfügbar sein (siehe Abschnitt zum entsprechenden Format im Unterkapitel *Formate*).
+
+Nach Klick auf den Button **Export starten** öffnet sich ein Dateiauswahldialog, über den Sie Namen und Zielverzeichnis der zu erstellenden Datei festlegen können. Anschließend startet der Exportprozess.
+
+Unterstützte Export-Formate sind:
+* CSV (.csv)
+* GeoJSON (.geojson, .json)
+* Shapefile (.zip)
+* Katalog (.catalog)
+
+Hinweise für den Export von Projektkonfigurationen (.configuration) finden Sie im Kapitel *Projektkonfiguration*. 
+
+## Formate
+
+### CSV
+
+CSV (Dateiendung *csv*) ist das hauptsächliche Dateiformat zum Import und Export von Ressourcendaten im Kontext von Field Desktop. CSV-Dateien können von allen gängigen Tabellenkalkulationsprogrammen gelesen und bearbeitet werden.
+
+CSV-Dateien enthalten **keine Geodaten**. Verwenden Sie eines der beiden Formate *GeoJSON* oder *Shapefile*, um Geodaten zu exportieren oder per Import zu existierenden Ressourcen hinzuzufügen.
+
+#### Aufbau
+
+Eine CSV-Datei enthält immer nur Ressourcen einer einzigen Kategorie. Jede Spalte gehört zu einem der Felder, die für das im Projekt verwendete Formular dieser Kategorie konfiguriert wurden. Abhängig vom Eingabetyp kann mehr als eine Spalte nötig sein, um ein Feld zu beschreiben. Bitte beachten Sie, dass im Spaltenkopf der eindeutige Feldname stehen muss, wie er im Menü "Projektkonfiguration" für das jeweilige Feld in magentafarbener Schrift angezeigt wird. Die mehrsprachigen Anzeigenamen, die in anderen Bereichen der Anwendung angezeigt werden, können in CSV-Dateien **nicht** verwendet werden.
+
+Obligatorisch ist die Angabe des Bezeichners in der Spalte *identifier*. Alle weiteren Felder sind optional.
+
+Für einen schnellen Überblick und als Vorlage für den CSV-Import können Sie über die Option *Nur Schema* im Menü "Werkzeuge" ➝ "Export" eine leere CSV-Datei mit vorausgefüllten Spaltenköpfen für alle Felder einer beliebigen Kategorie erstellen (siehe Abschnitt *Exportoptionen*).
+
+
+##### Wertelistenfelder
+
+Bei Feldern, die eine Auswahl aus einer Werteliste erlauben, muss jeweils der Bezeichner des entsprechenden Wertes eingetragen werden. Der Werte-Bezeichner wird im Menü "Projektkonfiguration" bei der Anzeige der jeweiligen Werteliste für jeden Wert in magentafarbener Schrift angezeigt. Die mehrsprachigen Anzeigetexte können **nicht** verwendet werden (außer in Fällen, in denen der Werte-Bezeichner mit dem Anzeigetext in einer der Sprachen identisch ist).
+
+
+##### Ja/Nein-Felder
+
+Für Felder des Eingabetyps "Ja / Nein" können die Werte *true* (Ja) und *false* (Nein) eingetragen werden.
+
+
+##### Mehrsprachige Felder
+
+Können in ein Feld Werte in verschiedenen Sprachen eingetragen werden, so wird in der CSV-Datei für jede Sprache eine eigene Spalte angelegt. Der Spaltenkopf enthält (durch einen Punkt vom Feldbezeichner getrennt) jeweils das Sprachkürzel, wie es im Menü "Einstellungen" für jede Sprache in magentafarbener Schrift angezeigt wird (z. B. *shortDescription.en* für den englischen Text der Kurzbeschreibung).
+
+In Projekten, die mit älteren Versionen von Field Desktop erstellt wurden, sowie durch Änderungen an der Projektkonfiguration kann es vorkommen, dass in einem mehrsprachigen Feld ein Wert ohne Sprachangabe eingetragen ist. In diesen Fällen wird im Spaltenkopf anstelle des Sprachkürzels der Text *unspecifiedLanguage* angefügt.
+
+*Beispiel:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>description.de</th>
+        <th>description.en</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Beispieltext</td>
+        <td>Example text</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Dropdown-Listen (Bereich)
+
+Felder des Eingabetyps "Dropdown-Liste (Bereich)" bestehen aus bis zu zwei Unterfeldern, für die jeweils eine eigene Spalte angelegt wird:
+
+* *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte.
+* *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind.
+
+*Beispiel (die Werte-Bezeichner sind in diesem Fall jeweils identisch mit dem deutschen Anzeigetext):*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>period.value</th>
+        <th>period.endValue</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Eisenzeitlich</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>Frühbronzezeitlich</td>
+        <td>Spätbronzezeitlich</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Datumsfelder
+
+Felder des Eingabetyps "Datum" bestehen aus bis zu drei Unterfeldern, für die jeweils eine eigene Spalte angelegt wird:
+
+* *value*: Die Datumsangabe bei einem Einzeldatum; das Startdatum bei einem Datumsbereich
+* *endValue*: Das Enddatum bei einem Datumsbereich
+* *isRange*: Gibt an ob es sich um einen Datumsbereich handelt. Mögliche Werte sind: *true* (Datumsbereich), *false* (Einzeldatum).
+
+Die Datumsangaben werden jeweils im Format "Tag.Monat.Jahr" (TT.MM.JJJJ) eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein bestimmter Monat eines Jahres bzw. ein bestimmtes Jahr angegeben werden kann.
+
+Darüber hinaus kann (durch ein Leerzeichen getrennt) optional eine Uhrzeit im Format "Stunden:Minuten" eingetragen werden, sofern die Angabe einer Uhrzeit für das entsprechende Feld in der Projektkonfiguration zugelassen ist. **Wichtig**: Die Uhrzeit wird stets in der Zeitzone UTC (Coordinated Universal Time, entspricht westeuropäischer Zeit/Greenwich Mean Time) angegeben.
+
+*Beispiel:*
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>date.value</th>
+        <th>date.endValue</th>
+        <th>date.isRange</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>A</td>
+        <td>19.08.2017 17:25</td>
+        <td>20.08.2017 11:09</td>
+        <td>true</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>12.01.2025</td>
+        <td></td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>C</td>
+        <td>09.2008</td>
+        <td>11.2008</td>
+        <td>true</td>
+      </tr>
+      <tr>
+        <td>D</td>
+        <td>1995</td>
+        <td></td>
+        <td>false</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Listenfelder
+
+Bei Feldern des Eingabetyps "Checkboxen" wird für das Feld nur eine Spalte angelegt. Die Feldwerte werden jeweils durch ein Semikolon ohne Leerzeichen voneinander getrennt (z. B. "Granit;Kalkstein;Schiefer").
+
+Bei Feldern der Eingabetypen "Datierungsangabe", "Längenangabe", "Gewichtsangabe", "Volumenangabe", "Literaturangabe", "Kompositfeld" und "Einzeiliger Text (Liste)" werden **für jeden Listeneintrag** die entsprechenden Spalten für die jeweiligen Unterfelder bzw. Sprachen angelegt. Hinter den Feldnamen wird dabei (beginnend bei 0 und durch Punkte getrennt) eine Nummer zur Identifikation des jeweiligen Eintrags eingefügt.
+
+*Beispiel für ein Feld des Eingabetyps "Einzeiliger Text (Liste)" mit Mehrsprachigkeit:*
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>exampleField.0.de</th>
+        <th>exampleField.0.en</th>
+        <th>exampleField.1.de</th>
+        <th>exampleField.1.en</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Wert A1</td>
+        <td>Value A1</td>
+        <td>Wert A2</td>
+        <td>Value A2</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>Wert B1</td>
+        <td>Value B1</td>
+        <td>Wert B2</td>
+        <td>Value B2</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Relationen
+
+Der Spaltenkopf enthält jeweils vor dem Namen der Relation (durch einen Punkt getrennt) das Präfix *relations*. Eingetragen werden die Bezeichner der Zielressourcen, getrennt durch ein Semikolon.
+
+Zusätzlich zu den Relationen, die in der Projektkonfiguration im Formular der jeweiligen Kategorie aufgeführt sind, können die folgenden Spalten verwendet werden:
+* *relations.isChildOf*: Gibt die übergeordnete Ressource in der Hierarchie an; bleibt bei Ressourcen auf oberster Ebene leer.
+* *relations.depicts* (nur bei Bildressourcen): Verknüpft das Bild mit einer oder mehreren Ressourcen.
+* *relations.isDepictedIn* (nicht bei Bildressourcen): Verknüpft die Ressource mit einem oder mehreren Bildern.
+* *relations.isMapLayerOf* (nur bei Bildressourcen): Fügt das Bild als Kartenhintergrund im Kontext der als Ziel angegebenen Ressource hinzu.
+* *relations.hasMapLayer* (nicht bei Bildressourcen): Fügt im Kontext dieser Ressource eines oder mehrere Bilder als Kartenhintergrund hinzu.
+
+Um Bilder mit dem Projekt zu verknüpfen oder auf Projektebene als Kartenhintergrund einzurichten, tragen Sie in der Spalte *relations.depicts* bzw. *relations.isMapLayerOf* die Projektkennung ein.
+
+*Beispiel:*
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>relations.isAbove</th>
+        <th>relations.isChildOf</th>
+        <th>relations.isDepictedIn</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>B;C;D</td>
+        <td>E</td>
+        <td>Image1.png;Image2.png</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### QR-Codes
+
+In der Spalte *scanCode* kann eine Zeichenkette eingetragen werden, mit der die Ressource eindeutig identifiziert werden kann und die als QR-Code in der Anwendung angezeigt werden soll. Die Verwendung von QR-Codes muss für die entsprechende Kategorie zuvor im Konfigurationseditor aktiviert worden sein.
+
+*Beispiel:*
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>scanCode</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>06ad7807-b363-4609-8db8-e33779faecf7</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Datierungsangaben
+
+Felder des Eingabetyps "Datierungsangabe" sind Listenfelder, die jeweils mehrere Datierungen enthalten können. Eine Datierung besteht aus folgenden Unterfeldern, für die jeweils pro Datierung eine eigene Spalte angelegt wird:
+
+* *type*: Der Datierungstyp. Mögliche Werte sind: *range* (Zeitraum), *single* (Einzelnes Jahr), *before* (Vor), *after* (Nach), *scientific* (Naturwissenschaftlich).
+* *begin*: Jahresangabe, die beim Datierungstyp *after* sowie für das Anfangsdatum beim Datierungstyp *range* gesetzt wird.
+* *end*: Jahresangabe, die bei den Datierungstypen *single*, *before*, *scientific* sowie für das Enddatum beim Datierungstyp *range* gesetzt wird.
+* *margin*: Toleranzspanne in Jahren beim Datierungstyp *scientific*.
+* *source*: Grundlage der Datierung, mehrsprachiges Textfeld.
+* *isImprecise*: Angabe "Ungenau". Kann beim Datierungstyp *scientific* nicht gesetzt werden. Mögliche Werte sind: *true* (ja), *false* (nein).
+* *isUncertain*: Angabe "Unsicher". Kann beim Datierungstyp *scientific* nicht gesetzt werden. Mögliche Werte sind: *true* (ja), *false* (nein).
+
+Die Jahresangaben *begin* und *end* bestehen wiederum aus zwei Unterfeldern:
+
+* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr.), *ce* (n. Chr.), *bp* (BP).
+* *inputYear*: Die Jahreszahl.
+
+*Beispiel:*
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>dating.0.type</th>
+        <th>dating.0.begin.inputType</th>
+        <th>dating.0.begin.inputYear</th>
+        <th>dating.0.end.inputType</th>
+        <th>dating.0.end.inputYear</th>
+        <th>dating.0.margin</th>
+        <th>dating.0.source.de</th>
+        <th>dating.0.source.en</th>
+        <th>dating.0.isImprecise</th>
+        <th>dating.0.isUncertain</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>range</td>
+        <td>bce</td>
+        <td>100</td>
+        <td>ce</td>
+        <td>200</td>
+        <td></td>
+        <td>Beispieltext</td>
+        <td>Example text</td>
+        <td>false</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>single</td>
+        <td></td>
+        <td></td>
+        <td>ce</td>
+        <td>750</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>C</td>
+        <td>before</td>
+        <td></td>
+        <td></td>
+        <td>bp</td>
+        <td>20</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>false</td>
+        <td>true</td>
+      </tr>
+      <tr>
+        <td>D</td>
+        <td>after</td>
+        <td>bce</td>
+        <td>350</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>false</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>E</td>
+        <td>scientific</td>
+        <td></td>
+        <td></td>
+        <td>ce</td>
+        <td>1200</td>
+        <td>50</td>
+        <td></td>
+        <td></td>
+        <td>false</td>
+        <td>false</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Längen-, Gewichts- und Volumenangaben
+
+Felder der Eingabetypen "Längenangabe", "Gewichtsangabe" und "Volumenangabe" sind Listenfelder, die jeweils mehrere Einträge enthalten können. Ein Eintrag besteht aus folgenden Unterfeldern, für die jeweils pro Eintrag eine eigene Spalte angelegt wird:
+
+* *inputValue*: Der gemessene Zahlenwert.
+* *inputRangeEndValue*: Der zweite gemessene Zahlenwert, falls es sich um einen Bereich handelt.
+* *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m* (Längenangabe) / *mg*, *g*, *kg* (Gewichtsangabe) / *ml*, *l* (Volumenangabe).
+* *measurementPosition*: Feld "Gemessen an" (nur bei Längenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementDevice*: Feld "Messgerät" (nur bei Gewichtsangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementTechnique*: Feld "Messverfahren" (nur bei Volumenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementComment*: Kommentar, mehrsprachiges Textfeld.
+* *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein).
+
+*Beispiel (die Werte-Bezeichner in der Spalte "dimensionLength.0.measurementPosition" sind in diesem Fall jeweils identisch mit dem deutschen Anzeigetext):*
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>dimensionLength.0.inputValue</th>
+        <th>dimensionLength.0.inputRangeEndValue</th>
+        <th>dimensionLength.0.inputUnit</th>
+        <th>dimensionLength.0.measurementPosition</th>
+        <th>dimensionLength.0.measurementComment.de</th>
+        <th>dimensionLength.0.measurementComment.en</th>
+        <th>dimensionLength.0.isImprecise</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>50</td>
+        <td></td>
+        <td>cm</td>
+        <td>Minimale Ausdehnung</td>
+        <td>Beispieltext</td>
+        <td>Example text</td>
+        <td>false</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td>10</td>
+        <td>15</td>
+        <td>m</td>
+        <td>Maximale Ausdehnung</td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Literaturangaben
+
+Felder des Eingabetyps "Literaturangabe" sind Listenfelder, die jeweils mehrere Literaturangaben enthalten können. Eine Literaturangabe besteht aus folgenden Unterfeldern, für die jeweils pro Literaturangabe eine eigene Spalte angelegt wird:
+
+* *quotation*: Literaturzitat
+* *zenonId*: Zenon-ID
+* *doi*: DOI
+* *page*: Seite
+* *figure*: Abbildung
+
+*Beispiel:*
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>identifier</th>
+        <th>literature.0.quotation</th>
+        <th>literature.0.zenonId</th>
+        <th>literature.0.doi</th>
+        <th>literature.0.page</th>
+        <th>literature.0.figure</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A</td>
+        <td>Hohl S., Kleinke T., Riebschläger F., Watson J. 2023, iDAI.field: developing software for the documentation of archaeological fieldwork, in Bogdani J., Costa S. (eds.), ArcheoFOSS 2022. Proceedings of the 16th International Conference on Open Software, Hardware, Processes, Data and Formats in Archaeological Research (Rome, 22-23 September 2022), «Archeologia e Calcolatori», 34.1, 85-94</td>
+        <td>002038255</td>
+        <td>https://doi.org/10.19282/ac.34.1.2023.10</td>
+        <td>90</td>
+        <td>3</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+##### Kompositfelder
+
+Felder des Eingabetyps "Kompositfeld" sind Listenfelder, die jeweils mehrere Einträge enthalten können. Für jedes konfigurierte Unterfeld wird pro Eintrag eine Spalte angelegt (bei mehrsprachigen Textfeldern entsprechend eine Spalte für jede Sprache). Im Spaltenkopf wird jeweils der Bezeichner des Unterfelds angegeben.
+
+
+#### Import-Optionen
+
+Bei einem CSV-Import können entweder neue Ressourcen erstellt oder bereits vorhandene Ressourcen bearbeitet werden. Sie können zwischen den folgenden beiden Optionen wählen:
+
+* *Neue Ressourcen importieren*: Ist diese Option aktiviert, wird für jede Zeile der CSV-Tabelle eine neue Ressource angelegt. Datensätze, deren Bezeichner (Spalte *identifier*) bereits vergeben sind, werden ignoriert.
+* *Vorhandene Ressourcen ergänzen*: Ist diese Option aktiviert, so werden bereits existierende Ressourcen mit den Daten aus der CSV-Tabelle ergänzt. Felder des Importdatensatzes überschreiben dabei Felder mit dem gleichen Bezeichner im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann durch den Import nicht verändert werden. Die Zuordnung von Importdatensätzen zu existierenden Datensätzen geschieht per Bezeichner (Spalte *identifier*). Datensätze in der CSV-Tabelle, die nicht zugeordnet werden können, werden ignoriert.
+
+Darüber hinaus stehen die folgenden Optionen zur Auswahl:
+* *Löschen erlauben*: Ist diese Option aktiviert, so können Felder nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder (auch Relationen), bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgeführte Felder bleiben unverändert. Diese Option ist nur bei Auswahl der Option *Vorhandene Ressourcen ergänzen* verfügbar.
+* *Nicht konfigurierte Felder ignorieren*: Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen, sobald nicht konfigurierte Felder in der Datei gefunden werden.
+* *Kategorie auswählen*: Falls der Bezeichner der Kategorie im Dateinamen steht (durch einen Punkt vom Rest des Dateinamens abgetrennt), wird die Kategorie automatisch erkannt (z. B. "example.find.csv" für eine CSV-Datei, die Ressourcen der Kategorie "Fund" enthält). Enthält der Dateiname keinen Kategoriebezeichner, muss die Kategorie manuell über dieses Dropdown-Menü ausgewählt werden. Bitte beachten Sie, dass die Kategorie "Bild" und ihre Unterkategorien nicht zur Auswahl stehen, wenn die Option *Neue Ressourcen importieren* gewählt wurde.
+* *Daten einer Maßnahme zuordnen*: Wählen Sie eine der im Projekt angelegten Maßnahmen aus, der alle neu angelegten Ressourcen untergeordnet werden sollen. Die Angabe einer Maßnahme ist nicht erforderlich, wenn in der CSV-Datei für alle Datensätze bereits der jeweilige Bezeichner einer übergeordneten Ressource in der Spalte *relations.isChildOf* angegeben wurde, oder wenn Ressourcen der Kategorie nicht innerhalb einer Maßnahme angelegt werden müssen (beispielsweise bei den Kategorien "Ort", "Maßnahme" oder "Bild"). Diese Option ist nur bei Auswahl der Option *Neue Ressourcen importieren* verfügbar.
+* *Feldtrennzeichen*: Tragen Sie das Zeichen ein, das in der CSV-Datei als Feldtrennzeichen verwendet wird (die Standardeinstellung ist das Komma). Geben Sie das gleiche Zeichen an, das Sie beim Erstellen der CSV-Datei (z. B. in Field Desktop über das Menü "Export" oder in einem Tabellenkalkulationsprogramm) gewählt haben. In der Regel wird als Feldtrennzeichen für CSV-Dateien entweder das Komma oder das Semikolon verwendet. Wenn es beim Import zu Fehlern kommt, prüfen Sie bitte zunächst, ob Sie das richtige Feldtrennzeichen eingetragen haben, da die Datei andernfalls nicht korrekt gelesen werden kann.
+
+
+#### Export-Optionen
+
+Wählen Sie zunächst die Art des CSV-Exports aus. Sie können zwischen den folgenden beiden Optionen wählen:
+* *Komplett*: Es werden alle Ressourcen anhand der gewählten Einstellungen zu Kontext und Kategorie (siehe unten) exportiert.
+* *Nur Schema*: Es wird lediglich die Kopfzeile mit den Spaltenköpfen aller für die gewählte Kategorie konfigurierten Feldern exportiert. Die ausgegebene Datei kann beispielsweise als Ausgangspunkt für die Erstellung einer Importdatei genutzt werden.
+
+Darüber hinaus stehen die folgenden Optionen zur Auswahl:
+* *Kontext*: Wählen Sie hier optional eine Maßnahme aus, deren Ressourcen exportiert werden sollen. Bei Auswahl der standardmäßig verwendeten Option "Keine Einschränkung" werden alle Ressourcen des Projekts exportiert, die der ausgewählten Kategorie angehören. Diese Option steht ausschließlich bei Auswahl der Option *Komplett* zur Auswahl.
+* *Kategorie*: Wählen Sie hier die gewünschte Kategorie aus. Es werden ausschließlich Ressourcen der gewählten Kategorie exportiert. Zur Auswahl stehen nur Kategorien, von denen Ressourcen im gewählten Kontext existieren. In Klammern wird die Anzahl der in diesem Kontext vorhandenen Ressourcen angezeigt.
+* *Feldtrennzeichen*: Tragen Sie das Zeichen ein, das in der zu erstellenden CSV-Datei als Feldtrennzeichen verwendet werden soll (die Standardeinstellung ist das Komma).
+* *Hierarchische Relationen zusammenfassen*: Ist diese Option aktiviert, werden die hierarchischen Relationen zur vereinfachten Relation *isChildOf* zusammengefasst, die jeweils die unmittelbar übergeordnete Ressource angibt. Diese Option ist standardmäßig aktiviert und sollte im Normalfall nicht deaktiviert werden. Bei Deaktivierung der Option werden statt der Spalte *relations.isChildOf* die beiden Spalten *relations.liesWithin* und *relations.isRecordedIn* angelegt. In der Spalte *relations.liesWithin* wird dabei die direkt übergeordnete Ressource gesetzt (falls es sich bei der übergeordneten Ressource um keine Maßnahme handelt), in der Spalte *relations.isRecordedIn* dagegen die Maßnahme, der die Ressource untergeordnet ist. 
+
+
+### GeoJSON
+
+GeoJSON (Dateiendungen *geojson* und *json*) ist ein offenes Format zum Austausch von Vektor-Geodaten, basierend auf dem Format JSON. In Field Desktop kann es zum Import und Export von Geometrien eingesetzt werden.
+
+Beim GeoJSON-Import werden **keine neuen Ressourcen** angelegt, sondern existierenden Ressourcen **Geometrien hinzugefügt**. Verwenden Sie zum Import neuer Ressourcen eines der beiden Formate *CSV* oder *JSON Lines* und fügen Sie den auf diese Weise importierten Ressourcen anschließend per GeoJSON-Import Geometrien hinzu.
+
+
+#### Aufbau
+
+Der Aufbau einer GeoJSON-Datei richtet sich nach der <a href="https://geojson.org" target="_blank">GeoJSON-Spezifikation</a>. Für den Import oder Export im Kontext von Field Desktop gelten zusätzlich die folgenden Regeln:
+
+Eine GeoJSON-Datei muss immer auf der obersten Ebene ein Objekt vom Typ *FeatureCollection* enthalten. Dieses Objekt beinhaltet wiederum einzelne Objekte vom Typ *Feature*.
+
+*Beispiel:*
+
+    {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          ...
+        },
+        {
+          "type": "Feature",
+          ...
+        }
+      ]
+    }
+
+Jedes Objekt vom Typ *Feature* entspricht einer Ressource in Field und der dazugehörigen Geometrie. Ein Feature enthält stets die beiden Felder *geometry* und *properties*: Während das Feld *geometry* die Geometriedaten beinhaltet, stellen die Daten im Feld *properties* die Verknüpfung zur Ressource in Field her.
+
+##### Geometrie
+
+Unterstützt werden die folgenden Geometrie-Typen:
+
+* *Point* (Punkt)
+* *MultiPoint* (Multipunkt)
+* *LineString* (Polyline)
+* *MultiLineString* (Multipolyline)
+* *Polygon* (Polygon)
+* *MultiPolygon* (Multipolygon)
+
+Die Koordinaten werden gemäß der GeoJSON-Spezifikation angegeben.
+
+
+##### Eigenschaften
+
+Im Objekt *properties* werden beim Export die folgenden Felder der jeweiligen Ressource ausgegeben:
+
+* *identifier*: Der Bezeichner der Ressource.
+* *category*: Der Bezeichner der für die Ressource gewählten Kategorie.
+* *shortDescription*: Die Kurzbeschreibung der Ressource. Die Ausgabe ist abhängig von der Konfiguration des Feldes *Kurzbeschreibung* der entsprechenden Kategorie:
+    * Einzeiliger Text ohne Eingabe in mehreren Sprachen: Der Text der Kurzbeschreibung als String.
+    * Einzeiliger Text mit Eingabe in mehreren Sprachen / Mehrzeiliger Text: Ein Objekt mit den Sprachkürzeln als Feldnamen.
+    * Dropdown-Liste / Radiobutton: Der Bezeichner des ausgewählten Wertes aus der konfigurierten Werteliste.
+
+Beim Import findet die Zuordnung von Datensätzen über den Bezeichner statt. Das Feld *identifier* im Objekt *properties* muss also gesetzt sein, damit ein GeoJSON-Import erfolgreich durchgeführt werden kann. Weitere Felder des Objekts *properties* werden beim Import **nicht** berücksichtigt, es wird ausschließlich die Geometrie in der entsprechenden Ressource aktualisiert. Bitte beachten Sie, dass bereits vorhandene Geometrien beim Import überschrieben werden. Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert.
+
+
+##### Beispiel
+
+Dieses Beispiel zeigt den Inhalt einer GeoJSON-Exportdatei für eine Ressource mit einer Punktgeometrie. Für den Import müssen die beiden Felder *category* und *shortDescription* im Objekt *properties* nicht gesetzt sein.
+
+    {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              28.189335972070695,
+              40.14122423529625
+            ]
+          },
+          "properties": {
+            "identifier": "F1",
+            "category": "Find",
+            "shortDescription": {
+              "de": "Beispielfund",
+              "en": "Example find"
+            }
+          }
+        }
+      ]
+    }
+
+
+### Shapefile
+
+Shapefile ist ein weit verbreitetes Format zum Austausch von Vektor-Geodaten und kann im Kontext von Field Desktop alternativ zum Format GeoJSON eingesetzt werden.
+
+Wie beim GeoJSON-Import werden auch beim Shapefile-Import **keine neuen Ressourcen** angelegt, sondern existierenden Ressourcen **Geometrien hinzugefügt**. Verwenden Sie zum Import neuer Ressourcen eines der beiden Formate *CSV* oder *JSON Lines* und fügen Sie den auf diese Weise importierten Ressourcen anschließend per Shapefile-Import Geometrien hinzu.
+
+
+#### Aufbau
+
+Ein Shapefile besteht jeweils aus einer Gruppe mehrerer Dateien, von denen einige optional sind. Beim Export in Field Desktop werden Dateien mit den folgenden Endungen angelegt:
+
+* *shp*: Enthält die eigentlichen Geodaten.
+* *dbf*: Enthält die Daten der Attributtabelle, d. h. Sachdaten der zugehörigen Ressource (siehe Unterkapitel *Attributtabelle*).
+* *shx*: Stellt die Verknüpfung zwischen Geo- und Sachdaten her.
+* *cpg*: Gibt den Zeichensatz an, der in der *dbf*-Datei verwendet wird.
+* *prj*: Gibt die Projektion an. Diese Datei wird nur dann exportiert, wenn in den Projekteigenschaften eine Auswahl im Feld *Koordinatenbezugssystem* getroffen wurde.
+
+Da ein Shapefile immer nur Geometrien eines einzigen Typs enthalten kann, werden beim Export in Field Desktop insgesamt drei Shapefiles (bestehend jeweils aus den vier bzw. fünf oben angegebenen Dateien) für die einzelnen Geometrietypen erstellt. Einfachtypen werden dabei im Shapefile als Mehrfachtypen gespeichert:
+
+  * Dateiname "multipoints.\*", enthält Geometrien der Typen *Punkt* und *Multipunkt*.
+  * Dateiname "multipolylines.\*", enthält Geometrien der Typen *Polyline* und *Multipolyline*.
+  * Dateiname "multipolygons.\*", enthält Geometrien der Typen *Polygon* und *Multipolygon*.
+
+Alle Dateien werden in einem Zip-Archiv gebündelt ausgegeben.
+
+Beim Import müssen alle dem Shapefile zugehörigen Dateien gemeinsam in einem Verzeichnis liegen. Wählen Sie im Dateiauswahldialog des Import-Menüs die Datei mit der Endung *shp* aus; alle übrigen Dateien werden automatisch erkannt. Bitte beachten Sie, dass Zip-Archive beim Import **nicht** unterstützt werden. Um eine in Field Desktop exportierte Shapedatei in ein anderes Projekt zu importieren, muss die entsprechende Zip-Datei also zunächst entpackt werden.
+
+
+##### Attributtabelle
+
+Beim Export werden die folgenden Felder in der Attributtabelle des Shapefiles ausgegeben:
+
+* *identifier*: Der Bezeichner der Ressource.
+* *category*: Der Bezeichner der für die Ressource gewählten Kategorie.
+* *sdesc*: Die Kurzbeschreibung der Ressource. Die Ausgabe ist abhängig von der Konfiguration des Feldes *Kurzbeschreibung* der entsprechenden Kategorie:
+    * Einzeiliger Text ohne Eingabe in mehreren Sprachen: Der Text der Kurzbeschreibung.
+    * Einzeiliger Text mit Eingabe in mehreren Sprachen / Mehrzeiliger Text: Ein eigenes Feld für jede Sprache mit dem Sprachkürzel im Feldnamen, getrennt durch einen Unterstrich (z. B. *sdesc\_de* oder *sdesc\_en*).
+    * Dropdown-Liste / Radiobutton: Der Bezeichner des ausgewählten Wertes aus der konfigurierten Werteliste.
+  
+Beim Import findet die Zuordnung von Datensätzen über den Bezeichner statt. Das Feld *identifier* in der Attributtabelle muss also gesetzt sein, damit ein Shapefile-Import erfolgreich durchgeführt werden kann. Weitere Felder der Attributtabelle werden beim Import **nicht** berücksichtigt, es wird ausschließlich die Geometrie in der entsprechenden Ressource aktualisiert. Bitte beachten Sie, dass bereits vorhandene Geometrien beim Import überschrieben werden. Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert.
+
+
+### JSON Lines
+
+JSON Lines (Dateiendung *jsonl*) ist ein auf JSON basierendes Textformat, bei dem jede Zeile der Datei einem JSON-Objekt entspricht. Es kann in Field Desktop zum Anlegen und Bearbeiten von Ressourcen (inklusive Geometrien) verwendet werden.
+
+Das Format JSON Lines steht beim Export **nicht** zur Verfügung. Bitte beachten Sie, dass über das Menü "Projekt" ➝ "Backup erstellen..." angelegte Backup-Dateien zwar ebenfalls das Format JSON Lines und die Dateiendung *jsonl* verwenden, allerdings **nicht** über das Menü "Import" eingelesen werden können. Backups können ausschließlich über das Menü "Projekt" ➝ "Backup einlesen..." wiederhergestellt werden.
+
+
+#### Aufbau
+
+Das grundsätzliche Format einer JSON-Lines-Datei richtet sich nach der <a href="https://jsonlines.org" target="_blank">JSON-Lines-Dokumentation</a>. Jedes JSON-Objekt entspricht einer Ressource in Field und enthält obligatorisch die folgenden Felder:
+
+* *identifier*: Der Bezeichner der Ressource.
+* *category*: Der Bezeichner der für die Ressource gewählten Kategorie.
+
+Ein Objekt kann außerdem die folgenden optionalen Felder enthalten:
+
+* *relations*: Enthält alle Felder vom Eingabetyp *Relation* (siehe Unterkapitel *Relationen*).
+* *geometry*: Die Geometrie der Ressource (siehe Unterkapitel *Geometrie*).
+
+Darüber hinaus kann das Objekt eine beliebige Anzahl derjenigen Felder enthalten, die für das im Projekt verwendete Formular dieser Kategorie konfiguriert wurden. Bitte beachten Sie, dass dabei der eindeutige Feldbezeichner angegeben werden muss, wie er im Menü "Projektkonfiguration" für das jeweilige Feld in magentafarbener Schrift angezeigt wird. Die mehrsprachigen Anzeigenamen, die in anderen Bereichen der Anwendung angezeigt werden, können als Feldnamen in JSON-Lines-Dateien **nicht** verwendet werden.
+
+Aus Gründen der Übersichtlichkeit werden die Beispiele im Folgenden jeweils in mehreren Zeilen dargestellt. In tatsächlichen Importdateien muss jedes JSON-Objekt **genau eine Zeile** einnehmen, damit der Import erfolgreich durchgeführt werden kann.
+
+
+##### Relationen
+
+Felder vom Eingabetyp *Relation* werden im Objekt *relations* gebündelt. Die Feldnamen des Objekts entsprechen den Bezeichnern der Relationen, als Feldwert wird jeweils ein Array mit den Bezeichnern der Zielressourcen eingetragen. Einzige Ausnahme ist die Relation *isChildOf*: In diesem Fall wird kein Array, sondern unmittelbar der Bezeichner gesetzt (siehe Beispiel unten).
+
+Zusätzlich zu den Relationen, die in der Projektkonfiguration im Formular der jeweiligen Kategorie aufgeführt sind, können die folgenden Relationen verwendet werden:
+
+* *isChildOf*: Gibt die übergeordnete Ressource in der Hierarchie an; wird bei Ressourcen auf oberster Ebene nicht gesetzt.
+* *depicts* (nur bei Bildressourcen): Verknüpft das Bild mit einer oder mehreren Ressourcen.
+* *isDepictedIn* (nicht bei Bildressourcen): Verknüpft die Ressource mit einem oder mehreren Bildern.
+* *isMapLayerOf* (nur bei Bildressourcen): Fügt das Bild als Kartenhintergrund im Kontext der als Ziel angegebenen Ressource hinzu.
+* *hasMapLayer* (nicht bei Bildressourcen): Fügt im Kontext dieser Ressource eines oder mehrere Bilder als Kartenhintergrund hinzu.
+
+Um Bilder mit dem Projekt zu verknüpfen oder auf Projektebene als Kartenhintergrund einzurichten, tragen Sie im Array der Relation *depicts* bzw. *isMapLayerOf* die Projektkennung ein.
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "relations": { "isAbove": ["B", "C", "D"], "isChildOf": "E", "isDepictedIn": ["Image1.png", "Image2.png"] }
+    }
+
+
+##### Geometrie
+
+Geometrien können gemäß der GeoJSON-Spezifikation angegeben werden. Im Feld *geometry* wird dabei ein Objekt eingetragen, dessen Aufbau demjenigen des Objekts *geometry* innerhalb eines GeoJSON-Features entspricht (siehe Unterkapitel *GeoJSON*).
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          28.189335972070695,
+          40.14122423529625
+        ]
+      }
+    }
+
+
+##### QR-Code
+
+Im Feld *scanCode* kann eine Zeichenkette eingetragen werden, mit der die Ressource eindeutig identifiziert werden kann und die als QR-Code in der Anwendung angezeigt werden soll. Die Verwendung von QR-Codes muss für die entsprechende Kategorie zuvor im Konfigurationseditor aktiviert worden sein.
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "Find",
+      "scanCode": "06ad7807-b363-4609-8db8-e33779faecf7"
+    }
+
+##### Wertelistenfelder
+
+Bei Feldern, die eine Auswahl aus einer Werteliste erlauben, muss jeweils der Bezeichner des entsprechenden Wertes eingetragen werden. Der Werte-Bezeichner wird im Menü "Projektkonfiguration" bei der Anzeige der jeweiligen Werteliste für jeden Wert in magentafarbener Schrift angezeigt. Die mehrsprachigen Anzeigetexte können **nicht** verwendet werden (außer in Fällen, in denen der Werte-Bezeichner mit dem Anzeigetext in einer der Sprachen identisch ist).
+
+
+##### Numerische Felder
+
+Für Felder der Eingabetypen "Ganzzahl", "Positive Ganzzahl", "Kommazahl" und "Positive Kommazahl" kann jeweils ein numerischer Wert (ohne Anführungszeichen) eingetragen werden.
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "FindCollection",
+      "amount": 12
+    }
+
+
+##### Ja/Nein-Felder
+
+Für Felder des Eingabetyps "Ja / Nein" können die Werte *true* (Ja) und *false* (Nein) als boolesche Werte (ohne Anführungszeichen) eingetragen werden.
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "hasDisturbance": true
+    }
+
+##### Mehrsprachige Felder
+
+Für Felder, in denen Werte in verschiedenen Sprachen eingetragen werden können, muss ein Objekt angelegt werden, dessen Feldnamen den Kürzeln der verwendeten Sprachen entsprechen. Die Sprachkürzel werden im Menü "Einstellungen" für jede Sprache in magentafarbener Schrift angezeigt.
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "description": { "de": "Beispieltext", "en": "Example text" }
+    }
+
+
+##### Dropdown-Listen (Bereich)
+
+Für Felder des Eingabetyps "Dropdown-Liste (Bereich)" wird ein Objekt eingetragen, das die folgenden beiden Unterfelder enthält:
+
+* *value*: Der Bezeichner des ausgewählten Wertes; bei zwei ausgewählten Werten der erste der beiden Werte.
+* *endValue*: Der Bezeichner des zweiten ausgewählten Wertes, falls zwei Werte ausgewählt sind.
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "period1": { "value": "Eisenzeitlich" },
+      "period2": { "value": "Frühbronzezeitlich", "endValue": "Spätbronzezeitlich" }
+    }
+
+
+##### Datumsfelder
+
+Für Felder des Eingabetyps "Datum" wird ein Objekt eingetragen, das bis zu drei Unterfelder enthält:
+
+* *value*: Die Datumsangabe bei einem Einzeldatum; das Startdatum bei einem Datumsbereich
+* *endValue*: Das Enddatum bei einem Datumsbereich
+* *isRange*: Gibt an ob es sich um einen Datumsbereich handelt. Mögliche Werte sind: *true* (Datumsbereich), *false* (Einzeldatum).
+
+Die Datumsangaben werden jeweils im Format "Tag.Monat.Jahr" (TT.MM.JJJJ) eingetragen. Die Angaben für Tag und Monat sind optional, sodass auch lediglich ein bestimmter Monat eines Jahres bzw. ein bestimmtes Jahr angegeben werden kann.
+
+Darüber hinaus kann (durch ein Leerzeichen getrennt) optional eine Uhrzeit im Format "Stunden:Minuten" eingetragen werden, sofern die Angabe einer Uhrzeit für das entsprechende Feld in der Projektkonfiguration zugelassen ist. **Wichtig**: Die Uhrzeit wird stets in der Zeitzone UTC (Coordinated Universal Time, entspricht westeuropäischer Zeit/Greenwich Mean Time) angegeben.
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "Feature",
+      "date1": { "value": "19.08.2017 17:25", "endValue": "20.08.2017 11:09", "isRange": true },
+      "date2": { "value": "12.01.2025", "isRange": false },
+      "date3": { "value": "09.2008", "endValue": "11.2008", "isRange": true },
+      "date4": { "value": "1995", "isRange": false }
+    }
+
+##### Listenfelder
+
+Felder der Eingabetypen "Einzeiliger Text (Liste)", "Checkboxen", "Datierungsangabe", "Längenangabe", "Gewichtsangabe", "Volumenangabe", "Literaturangabe" und "Kompositfeld" können mehrere Einträge enthalten. Für diese Felder wird daher ein Array eingetragen.
+
+
+##### Datierungsangaben
+
+Felder des Eingabetyps "Datierungsangabe" sind Listenfelder, die jeweils mehrere Datierungen enthalten können. Eine Datierung ist ein Objekt, das aus folgenden Unterfeldern besteht:
+
+* *type*: Der Datierungstyp. Mögliche Werte sind: *range* (Zeitraum), *single* (Einzelnes Jahr), *before* (Vor), *after* (Nach), *scientific* (Naturwissenschaftlich).
+* *begin*: Jahresangabe, die beim Datierungstyp *after* sowie für das Anfangsdatum beim Datierungstyp *range* gesetzt wird.
+* *end*: Jahresangabe, die bei den Datierungstypen *single*, *before*, *scientific* sowie für das Enddatum beim Datierungstyp *range* gesetzt wird.
+* *margin*: Toleranzspanne in Jahren beim Datierungstyp *scientific*.
+* *source*: Grundlage der Datierung, mehrsprachiges Textfeld.
+* *isImprecise*: Angabe "Ungenau". Kann beim Datierungstyp *scientific* nicht gesetzt werden. Mögliche Werte sind: *true* (ja), *false* (nein).
+* *isUncertain*: Angabe "Unsicher". Kann beim Datierungstyp *scientific* nicht gesetzt werden. Mögliche Werte sind: *true* (ja), *false* (nein).
+
+Die Jahresangaben *begin* und *end* sind wiederum Objekte, die aus zwei Unterfeldern bestehen:
+
+* *inputType*: Die Zeitrechnung. Mögliche Werte sind: *bce* (v. Chr.), *ce* (n. Chr.), *bp* (BP).
+* *inputYear*: Die Jahreszahl.
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "Feature", 
+      "dating": [
+        { "type": "range", "begin": { "inputType": "bce", "inputYear": 100 }, "end": { "inputType": "ce", "inputYear": 200 }, "source": { "de": "Beispieltext", "en": "Example text" }, "isImprecise": false, "isUncertain": false },
+        { "type": "single", "end": { "inputType": "ce", "inputYear": 750 }, "isImprecise": true, "isUncertain": false },
+        { "type": "before", "end": { "inputType": "bp", "inputYear": 20 }, "isImprecise": false, "isUncertain": true },
+        { "type": "after", "begin": { "inputType": "bce", "inputYear": 350 }, "isImprecise": false, "isUncertain": false },
+        { "type": "scientific", "end": { "inputType": "ce", "inputYear": 1200 }, "margin": 50, "isImprecise": false, "isUncertain": false }
+      ]
+    }
+
+
+##### Längen-, Gewichts- und Volumenangaben
+
+Felder der Eingabetypen "Längenangabe", "Gewichtsangabe" und "Volumenangabe" sind Listenfelder, die jeweils mehrere Objekte mit den folgenden Unterfeldern enthalten können:
+
+* *inputValue*: Der gemessene Zahlenwert.
+* *inputRangeEndValue*: Der zweite gemessene Zahlenwert, falls es sich um einen Bereich handelt.
+* *inputUnit*: Die Maßeinheit. Mögliche Werte: *mm*, *cm*, *m* (Längenangabe) / *mg*, *g*, *kg* (Gewichtsangabe) / *ml*, *l* (Volumenangabe).
+* *measurementPosition*: Feld "Gemessen an" (nur bei Längenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementDevice*: Feld "Messgerät" (nur bei Gewichtsangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementTechnique*: Feld "Messverfahren" (nur bei Volumenangaben). Es muss der Bezeichner eines Wertes aus der für das Feld konfigurierten Werteliste eingetragen werden.
+* *measurementComment*: Kommentar, mehrsprachiges Textfeld.
+* *isImprecise*: Angabe "Ungenau". Mögliche Werte sind: *true* (ja), *false* (nein).
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "Feature", 
+      "dimensionLength": [
+        { "inputValue": 50, "inputUnit": "cm", "measurementPosition": "Minimale Ausdehnung", "measurementComment": { "de": "Beispieltext", "en": "Example text" }, "isImprecise": false },
+        { "inputValue": 10, "inputRangeEndValue": 15, "inputUnit": "m", "measurementPosition": "Maximale Ausdehnung", "isImprecise": true }
+      ]
+    }
+
+
+##### Literaturangaben
+
+Felder des Eingabetyps "Literaturangabe" sind Listenfelder, die jeweils mehrere Literaturangaben enthalten können. Eine Literaturangabe ist ein Objekt, das aus folgenden Unterfeldern besteht:
+
+* *quotation*: Literaturzitat
+* *zenonId*: Zenon-ID
+* *doi*: DOI
+* *page*: Seite
+* *figure*: Abbildung
+
+*Beispiel:*
+
+    {
+      "identifier": "A",
+      "category": "Type", 
+      "literature": [
+        {
+          "quotation": "Hohl S., Kleinke T., Riebschläger F., Watson J. 2023, iDAI.field: developing software for the documentation of archaeological fieldwork, in Bogdani J., Costa S. (eds.), ArcheoFOSS 2022. Proceedings of the 16th International Conference on Open Software, Hardware, Processes, Data and Formats in Archaeological Research (Rome, 22-23 September 2022), «Archeologia e Calcolatori», 34.1, 85-94",
+          "zenonId": "002038255",
+          "doi": "https://doi.org/10.19282/ac.34.1.2023.10",
+          "page": "90",
+          "figure": "3"
+        }
+      ]
+    }
+
+
+##### Kompositfelder
+
+Felder des Eingabetyps "Kompositfeld" sind Listenfelder, die jeweils mehrere Einträge enthalten können. Jeder Eintrag ist ein Objekt, dessen Feldnamen jeweils den Bezeichnern der Unterfelder entsprechen, die für das Kompositfeld konfiguriert wurden.
+
+
+#### Import-Optionen
+
+Bei einem JSON-Lines-Import können entweder neue Ressourcen erstellt oder bereits vorhandene Ressourcen bearbeitet werden. Sie können zwischen den folgenden beiden Optionen wählen:
+
+* *Neue Ressourcen importieren*: Ist diese Option aktiviert, wird für jede Zeile der JSON-Lines-Datei eine neue Ressource angelegt.  Datensätze, deren Bezeichner (Feld *identifier*) bereits vergeben sind, werden ignoriert.
+* *Vorhandene Ressourcen ergänzen*: Ist diese Option aktiviert, so werden bereits existierende Ressourcen mit den Daten aus der JSON-Lines-Datei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld *identifier*). Datensätze in der JSON-Lines-Datei, die nicht zugeordnet werden können, werden ignoriert.
+
+Darüber hinaus stehen die folgenden Optionen zur Auswahl:
+
+* *Löschen erlauben*: Ist diese Option aktiviert, so können Felder nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder (auch Relationen), denen in der Importdatei der Wert *null* zugewiesen ist. Nicht aufgeführte Felder bleiben unverändert. Diese Option ist nur bei Auswahl der Option *Vorhandene Ressourcen ergänzen* verfügbar.
+* *Nicht konfigurierte Felder ignorieren*: Ist diese Option aktiviert, so werden Felder in der Importdatei, die nicht Teil der Projektkonfiguration sind, beim Import ignoriert. Andernfalls wird der Import abgebrochen, sobald nicht konfigurierte Felder in der Datei gefunden werden.
+* *Daten einer Maßnahme zuordnen*: Wählen Sie eine der im Projekt angelegten Maßnahmen aus, der alle neu angelegten Ressourcen untergeordnet werden sollen. Die Angabe einer Maßnahme ist nicht erforderlich, wenn in der JSON-Lines-Datei für alle Datensätze bereits eine übergeordnete Ressource über die Relation *isChildOf* angegeben wurde, oder wenn Ressourcen der Kategorie nicht innerhalb einer Maßnahme angelegt werden müssen (beispielsweise bei den Kategorien "Ort", "Maßnahme" oder "Bild"). Diese Option ist nur bei Auswahl der Option *Neue Ressourcen importieren* verfügbar.
+
+
+### Katalog
+
+Das ausschließlich von Field Desktop verwendete Katalog-Format (Dateiendung *catalog*) kann dazu verwendet werden, Typenkataloge, die über das Menü "Werkzeuge" ➝ "Typenverwaltung" angelegt wurden, zwischen verschiedenen Projekten zu teilen.
+
+Exportiert wird jeweils ein Typenkatalog mitsamt aller darin enthaltenen Typen sowie verknüpfter Bilder. Verknüpfte Funde werden **nicht** exportiert.
+
+Nach dem Import der Katalogdatei in ein anderes Projekt kann der Typenkatalog wie gewohnt in der Typenverwaltung eingesehen und zur Bestimmung von Funden eingesetzt werden. Die Bearbeitung eines aus einem anderen Projekt importierten Katalogs ist **nicht** möglich: Importierte Typenkataloge sowie verknüpfte Bilder können als Ganzes wieder aus dem Projekt gelöscht, allerdings nicht editiert, erweitert oder nur in Teilen (d. h. einzelne Typen oder verknüpfte Bilder) gelöscht werden. Es ist jedoch möglich, den Typenkatalog durch den Import einer neuen Katalogdatei durch eine aktualisierte Version zu ersetzen. Bereits angelegte Verknüpfungen zu Funden bleiben dabei erhalten. Die Einschränkung gilt darüber hinaus nicht für Typenkataloge, die nach dem Export zu einem späteren Zeitpunkt wieder in das gleiche Projekt importiert werden. In diesen Fällen kann der Katalog in vollem Umfang bearbeitet und erweitert werden.
+
+Bitte beachten Sie, dass beim Import von Typenkatalogen in ein anderes Projekt eine identische Konfiguration für die Kategorien der exportierten Ressourcen ("Typenkatalog", "Typ", "Abbildung" bzw. eventuell genutzte Unterkategorien) in beiden Projekten vorhanden sein sollte. Nicht im Zielprojekt konfigurierte Felder werden **nicht** angezeigt. Enthält die Katalogdatei Ressourcen, die einer im Zielprojekt nicht vorhandenen Unterkategorie angehören, schlägt der Importprozess fehl. 
+
+#### Export-Optionen
+
+Beim Export von Katalogdateien steht die folgende Option zur Verfügung:
+
+* *Katalog*: Wählen Sie hier den zu exportierenden Typenkatalog aus. Diese Option wird nur angezeigt, wenn im aktuell geöffneten Projekt Typenkataloge vorhanden sind. Aus anderen Projekten importierte Kataloge stehen nicht zur Auswahl.
+
+
+<hr>
+
+
+# Backups
+
+Um Datenverlust zu vermeiden, ist es wichtig, regelmäßig Sicherungskopien der Projektdatenbanken anzulegen. Field Desktop bietet dazu umfangreiche Optionen zur automatischen oder manuellen Erstellung von Backup-Dateien im JSONL-Format an.
+
+**Wichtig**: Die so angelegten Backup-Dateien enthalten sämtliche im Projekt eingetragenen Daten, allerdings **keine Bilder**. Die Bilddateien befinden sich im Bilderverzeichnis, dessen Verzeichnispfad in den Einstellungen unter "Erweiterte Optionen" eingesehen werden kann. Es wird empfohlen, zusätzlich zu den Datenbank-Backups regelmäßig Sicherungskopien des Bilderverzeichnisses anzulegen. Darüber hinaus können Datenbank- sowie Bilddaten durch die Synchronisation mit einem Field-Hub-Server gesichert werden.
+
+Bitte beachten Sie, dass die JSONL-Dateien, die durch die Backup-Funktion angelegt werden, nicht für den Import in bestehende Projekte geeignet sind, sondern ausschließlich über das Menü "Projekt" ➝ "Backup einlesen..." als eigenes Projekt wiederhergestellt werden können.
+
+
+## Automatische Backups
+
+Field Desktop erstellt nach jeder Änderung an den Projektdaten automatisch eine Backup-Datei des entsprechenden Projekts. Standardmäßig wird dabei nur das aktuellste Backup pro Projekt vorgehalten, während ältere Backups gelöscht werden. Dieses Verhalten kann allerdings in den Einstellungen angepasst werden (siehe Abschnitt *Aufbewahrung von Backups*).
+
+Der Dateiname enthält die Projektkennung sowie das Datum und die Uhrzeit, zu der das Backup erstellt wurde (beispielsweise "example-project.2025-05-14.11-28-25.jsonl" für ein Projekt "example-project", das am 14. Mai 2025 um 11:28:25 Uhr gesichert wurde.)
+
+Bitte beachten Sie, dass (unabhängig von den gewählten Einstellungen) stets nur dann ein neues Backup angelegt wird, wenn sich seit der Erstellung des letzten Backups Änderungen an den Projektdaten ergeben haben. Ziel ist die Vermeidung von identischen Kopien zur Einsparung von Speicherplatz.
+
+**Wichtig**: Es werden nur dann Backups angelegt, wenn die Anwendung geöffnet ist. Bei geöffneter Anwendung werden Backups aller Projekte erstellt, nicht nur des aktuell in der Anwendung aufgerufenen Projekts.
+
+Die Optionen zur Konfiguration der automatischen Backups finden Sie in den Einstellungen unter "Erweiterte Optionen".
+
+
+### Verzeichnispfad ändern
+
+Den Pfad des Verzeichnisses, in dem automatisch erstellte Backup-Dateien aufbewahrt werden, können Sie über das Eingabefeld "Pfad" einsehen und ändern. Bitte beachten Sie, dass bestehende Backup-Dateien bei einem Wechsel des Backup-Verzeichnisses nicht automatisch in das neue Verzeichnis verschoben werden. Die Dateien im alten Verzeichnis bleiben bestehen, während die Backup-Dateien im neuen Verzeichnis für alle Projekte neu angelegt werden.
+
+
+### Aufbewahrung von Backups
+
+Zusätzlich zum grundsätzlich gesicherten Backup der aktuellsten Version jedes Projekts können weitere Backup-Dateien aufbewahrt werden. Dazu können in den Einstellungen die Regeln "Backups nach Uhrzeit aufbewahren" und "Backups nach Datum aufbewahren" konfiguriert werden.
+
+
+#### Backups nach Uhrzeit aufbewahren
+
+Diese Regel erlaubt es, Backup-Dateien in einem zeitlichen Abstand (alle X Stunden) aufzubewahren.
+
+* *Abstand in Stunden*: Gibt an, in welchem zeitlichen Abstand Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "3" wird beispielsweise alle drei Stunden eine Backup-Datei aufbewahrt.
+* *Anzahl*: Gibt an, wieviele Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "5" werden beispielsweise die fünf zuletzt erstellten Backup-Dateien aufbewahrt.
+
+
+#### Backups nach Datum aufbewahren
+
+Diese Regel erlaubt es, eine Backup-Datei pro Tag, Woche oder Monat aufzubewahren.
+
+* *Tag*: Gibt an, wieviele tägliche Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "7" werden beispielsweise die sieben aktuellsten täglichen Backups aufbewahrt. Es wird jeweils das erste erstellte Backup des Tages aufbewahrt.
+* *Woche*: Gibt an, wieviele wöchentliche Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "4" werden beispielsweise die vier aktuellsten wöchentlichen Backups aufbewahrt. Es wird jeweils das erste erstellte Backup der Woche (beginnend am Montag) aufbewahrt.
+* *Monat*: Gibt an, wieviele monatliche Backup-Dateien aufbewahrt werden sollen. Bei einem eingetragenen Wert von "12" werden beispielsweise die zwölf aktuellsten monatlichen Backups aufbewahrt. Es wird jeweils das erste erstellte Backup des Monats aufbewahrt.
+
+Bitte berücksichtigen Sie, dass Backup-Dateien nur angelegt werden, wenn die Anwendung geöffnet ist und sich seit dem letzten Backup Änderungen an den Projektdaten ergeben haben. Daher bedeutet etwa eine Einstellung von "7" bei den täglichen Backups nicht zwingend, dass für jedes Projekt ein Backup-File für jeden Tag der vergangenen Woche vorliegt. Dies ist nur dann der Fall, wenn die Anwendung an jedem Tag der Woche geöffnet war und das entsprechende Projekt an jedem Tag bearbeitet wurde.
+
+
+#### Benötiger Festplattenspeicher
+
+Je mehr Backups aufbewahrt werden, desto größer wird der erforderliche Speicherplatz im ausgewählten Backup-Verzeichnis. In den Einstellungen können Sie den aktuell durch automatische Backups belegten Festplattenspeicher einsehen. Darüber hinaus wird der voraussichtlich in Zukunft beanspruchte Speicherplatz angezeigt: Dabei handelt es sich um den Speicherplatz, der benötigt wird, wenn für die aktuell auf dem Rechner vorhandenen Projekte die maximale Anzahl von Backup-Dateien gemäß der eingestellten Regeln vorgehalten werden. Diese Prognose kann vom tatsächlich nötigen Speicherplatz abweichen, wenn Projekte gelöscht oder neu erstellt werden bzw. wenn sich die Größe bestehender Projekte verändert.
+
+
+## Manuelles Backup anlegen
+
+Über das Menü "Projekt" ➝ "Backup erstellen..." können Backup-Dateien manuell für das aktuell geöffnete Projekt angelegt werden. Verwenden Sie dazu den Button "Backup erstellen" und wählen Sie ein Verzeichnis sowie einen Namen für die zu erstellende Backup-Datei.
+
+
+## Backup einlesen
+
+Um ein Projekt aus einer Backup-Datei wiederherzustellen, rufen Sie das Menü "Projekt" ➝ "Backup einlesen..." auf. Wählen Sie hier zunächst über das Dateiauswahlfeld "Pfad" die gewünschte Backup-Datei aus. Dabei muss es sich um eine per automatischem oder manuellem Backup in Field Desktop erstellte JSONL-Datei handeln. Im Eingabefeld "Projektkennung" können Sie anschließend eine eindeutige Kennung für das neue Projekt angeben, das aus der Backup-Datei erstellt wird. Dabei kann es sich sowohl um die Kennung des ursprünglichen Projekts als auch um eine andere Kennung handeln. Bei einer deutlich abweichenden Projektkennung erscheint eine Warnung, um auf eine mögliche versehentliche Wiederherstellung eines falschen Backups aufmerksam zu machen.
+
+**Wichtig**: Geben Sie die Kennung eines bereits bestehenden Projekts an, so wird dieses Projekt beim Wiederherstellungsprozess überschrieben.
+
+
+<hr>
+
+
+# Warnungen
+
+Aus verschiedenen Gründen, etwa Änderungen der Projektkonfiguration, können in einem Projekt inkonsistente oder anderweitig fehlerhafte Daten entstehen. In diesen Fällen zeigt die Anwendung eine Warnung an und stellt Möglichkeiten zur Behebung des Problems bereit. Fehlerhafte Ressourcen werden mit einem roten Balken neben dem Listeneintrag der entsprechenden Ressource markiert. In der Navigationsleiste oben rechts wird zudem ein Icon angezeigt, das die Anzahl der Ressourcen angibt, für die Warnungen aufgrund von Datenproblemen vorliegen:
+
+<p align="center"><img src="images/de/warnings/warnings_icon.png" alt="Warnungen-Icon"/></p>
+
+Mit einem Klick auf das Icon oder über das Kontextmenü einer betroffenen Ressource gelangen Sie in das Menü "Warnungen", wo Sie die Liste der fehlerhaften Ressourcen einsehen und nach dem Typ der Warnung filtern können. Es stehen darüber hinaus Möglichkeiten zum Filtern nach Bezeichner und Kurzbeschreibung (per Texteingabe) sowie nach Kategorie bereit.
+
+Wählen Sie eine der angezeigten Ressourcen aus, um die Liste der vorliegenden Warnungen für diese Ressource einzusehen. Für die meisten Warnungen werden Tools angeboten, mit denen sich die Fehler beheben lassen; viele Warnungen können außerdem durch eine Anpassung der Projektkonfiguration gelöst werden. Legen Sie bitte in jedem Fall im Vorfeld ein **Backup** des Projekts über das Menü "Projekt" ➝ "Backup erstellen..." an. Nähere Informationen zu den Ursachen und Lösungsmöglichkeiten der einzelnen Warnungstypen finden Sie im Folgenden.
+
+## Warnungstypen
+### Konflikt
+Es existieren mehrere Versionen der Ressource, die miteinander in Konflikt stehen.
+
+#### Mögliche Ursachen
+* Die Ressource wurde auf verschiedenen Rechern gleichzeitig bei bestehender Synchronisationsverbindung   bearbeitet.
+* Die Ressource wurde auf verschiedenen Rechern ohne bestehende Synchronisationsverbindung bearbeitet; erst zu einem späteren Zeitpunkt wurden die Daten synchronisiert.
+
+#### Mögliche Lösungen
+* Button *Konflikt lösen*: Lösen Sie die Konflikte im Ressourceneditor (siehe Abschnitt *Konflikte* des Kapitels *Synchronisation*).
+
+### Unkonfigurierte Kategorie
+Für die Ressource ist eine Kategorie eingetragen, die nicht in der Projektkonfiguration gefunden werden kann. Die Ressource wird daher nicht angezeigt.
+
+#### Mögliche Ursachen
+* Die Kategorie wurde im Konfigurationseditor gelöscht.
+
+#### Mögliche Lösungen
+* Button *Neue Kategorie auswählen*: Wählen Sie eine der für das Projekt konfigurierten Kategorien aus. Die gewählte Kategorie wird anschließend für die betroffene Ressource gesetzt. Optional können Sie die neue Kategorie für alle Ressourcen setzen, bei denen die gleiche unkonfigurierte Kategorie eingetragen ist.
+* Button *Ressource löschen*: Die betroffene Ressource wird vollständig gelöscht.
+* Fügen Sie im Konfigurationseditor eine Kategorie gleichen Namens hinzu.
+
+### Unkonfiguriertes Feld
+Es wurden Daten in ein Feld eingetragen, das in der Projektkonfiguration nicht gefunden werden kann. Die eingetragenen Daten werden daher nicht angezeigt.
+
+#### Mögliche Ursachen
+* Das Feld wurde im Konfigurationseditor gelöscht.
+
+#### Mögliche Lösungen
+* Button *Neues Feld auswählen*: Wählen Sie eines der für die Kategorie der Ressource konfigurierten Felder aus. Die eingetragenen Daten werden anschließend in dieses Feld übertragen. Bitte beachten Sie, dass eventuell bereits vorhandene Daten im Zielfeld dabei überschrieben werden. Optional können Sie das neue Feld für alle Ressourcen setzen, bei denen Daten im gleichen unkonfigurierten Feld eingetragen sind.
+* Button *Felddaten löschen*: Die in das Feld eingetragenen Daten werden vollständig gelöscht. Optional können Sie die Felddaten bei allen Ressourcen löschen, bei denen Daten im gleichen unkonfigurierten Feld eingetragen sind.
+* Fügen Sie im Konfigurationseditor für die Kategorie der betroffenen Ressource ein Feld gleichen Namens hinzu.
+
+### Ungültige Felddaten
+Die in ein Feld eingetragenen Daten entsprechen nicht dem Eingabetyp, der für das Feld gewählt wurde.
+
+#### Mögliche Ursachen
+* Der Eingabetyp des Feldes wurde im Konfigurationseditor geändert.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um die ungültigen Felddaten zu entfernen und gegebenenfalls neu einzutragen.
+* Button *Felddaten konvertieren*: Die Daten werden automatisch in das korrekte Format des jeweiligen Eingabetyps konvertiert. Optional können Sie die Daten bei allen Ressourcen konvertieren lassen, bei denen im gleichen Feld ungültige Daten eingetragen sind. Bitte beachten Sie, dass eine automatische Konvertierung nicht in allen Fällen möglich ist und dieser Button daher nicht immer zur Verfügung steht.
+* Button *Neues Feld auswählen*: Wählen Sie eines der für die Kategorie der Ressource konfigurierten Felder aus. Die eingetragenen Daten werden anschließend in dieses Feld verschoben. Bitte beachten Sie, dass eventuell bereits vorhandene Daten im Zielfeld dabei überschrieben werden. Optional können Sie das neue Feld für alle Ressourcen setzen, bei denen im gleichen Feld ungültige Daten eingetragen sind (gültige Daten verbleiben im ursprünglichen Feld).
+
+### Nicht ausgefülltes Pflichtfeld
+In ein als Pflichtfeld konfiguriertes Feld wurden keine Daten eingetragen.
+
+#### Mögliche Ursachen
+* Das Feld wurde im Konfigurationseditor als Pflichtfeld konfiguriert, nachdem die Ressource angelegt wurde.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um das Pflichtfeld auszufüllen.
+
+### Nicht erfüllte Anzeigebedingung eines Feldes
+Es sind Daten in ein Feld eingetragen, obwohl die Bedingung zur Anzeige dieses Feldes nicht erfüllt ist.
+
+#### Mögliche Ursachen
+* Die Anzeigebedingung wurde im Konfigurationseditor eingerichtet oder geändert, nachdem bereits Daten in das Feld eingetragen wurden.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um die Daten im Bedingungsfeld so anzupassen, dass die Bedingung erfüllt ist.
+* Button *Felddaten löschen*: Die in das Feld eingetragenen Daten werden vollständig gelöscht.
+* Entfernen Sie die Anzeigebedingung des Feldes im Konfigurationseditor oder passen Sie sie so an, dass die Bedingung für die betroffene Ressource erfüllt ist.
+
+### Nicht in Werteliste enthaltener Wert
+In einem Feld sind einer oder mehrere Werte eingetragen, die nicht in der für das Feld konfigurierten Werteliste enthalten sind.
+
+#### Mögliche Ursachen
+* Die Werteliste des Feldes wurde im Konfigurationseditor durch eine andere ausgetauscht.
+* Werte wurden im Wertelisten-Editor aus einer projektspezifischen Werteliste entfernt.
+* Der Eingabetyp des Feldes wurde im Konfigurationseditor von einem Eingabetyp, der die freie Eingabe von Text erlaubt, zu einem Eingabetyp mit Werteliste geändert.
+* Bei Feldern, die auf die eingetragenen Werte in den Feldern *Team* und *Kampagnen* der Projekteigenschaften zurückgreifen: Es wurden Einträge aus dem entsprechenden Feld in den Projekteigenschaften entfernt.
+* Beim Feld *Kampagne*: Werte wurden aus dem gleichnamigen Feld der übergeordneten Ressource entfernt (für das Feld *Kampagne* dürfen lediglich Werte ausgewählt werden, die in der übergeordneten Ressource gesetzt wurden).
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um die nicht in der Werteliste enthaltenen Werte zu entfernen und gegebenenfalls durch andere Werte zu ersetzen.
+* Button *Wert korrigieren*: Wählen Sie aus der für das Feld konfigurierten Werteliste einen neuen Wert aus. Der bisherige Wert wird durch den ausgewählten Wert ersetzt. Optional können Sie den neuen Wert bei allen Feldern sämtlicher Ressourcen setzen, in denen der gleiche Wert eingetragen ist und die die gleiche Werteliste verwenden.
+* Button *Wert löschen*: Der im Feld eingetragene Wert wird vollständig gelöscht. Optional können Sie den Wert aus allen Feldern sämtlicher Ressourcen setzen, in denen der gleiche Wert eingetragen ist.
+* Wechseln Sie die Werteliste im Konfigurationseditor durch eine Werteliste aus, die den entsprechenden Wert enthält.
+* Fügen Sie der für das Feld konfigurierten Werteliste den fehlenden Wert hinzu. Bei nicht projektspezifischen Wertelisten müssen Sie für die Werteliste dazu mit der Option *Werteliste erweitern* zunächst eine Erweiterungsliste anlegen (siehe Abschnitt *Erstellen und Erweitern von Wertelisten* im Kapitel *Projektkonfiguration*).
+* Bei Feldern, die auf die eingetragenen Werte in den Feldern *Team* und *Kampagnen* der Projekteigenschaften zurückgreifen: Fügen Sie den fehlenden Wert dem entsprechenden Feld in den Projekteigenschaften hinzu.
+* Beim Feld *Kampagne*: Setzen Sie den Wert bei der übergeordneten Ressource, falls dort noch nicht vorhanden.
+
+### Fehlende Zielressource einer Relation
+Eine als Ziel einer Relation angegebene Ressource kann nicht gefunden werden.
+
+#### Mögliche Ursachen
+* Ein Synchronisationsvorgang wurde nicht vollständig abgeschlossen.
+
+#### Mögliche Lösungen
+* Stellen Sie sicher, dass die Daten aller mit dem Field-Projekt arbeitenden Teammitglieder synchronisiert sind.
+* Button *Relation bereinigen*: Alle Verweise auf nicht existierende Ressourcen werden aus der Relation gelöscht.
+
+### Ungültige Zielressource einer Relation
+Die Kategorie einer als Ziel einer Relation angegebenen Ressource ist keine gültige Zielkategorie dieser Relation.
+
+#### Mögliche Ursachen
+* Die Liste der für diese Relation erlaubten Zielkategorien wurde im Konfigurationseditor bearbeitet.
+* Die Kategorie der Ressource wurde geändert.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie die Ressource im Ressourceneditor, um den Verweis auf die ungültige Zielressource aus der Relation zu entfernen.
+* Button *Relation bereinigen*: Alle Verweise auf ungültige Zielressourcen werden aus der Relation gelöscht.
+* Fügen Sie die Kategorie der Zielressource im Konfigurationseditor als gültige Zielkategorie der entsprechenden Relation hinzu.
+
+### Fehlende oder ungültige übergeordnete Ressource
+Die Ressource besitzt keine gültige übergeordnete Ressource. Dies kann entweder bedeuten, dass für die Ressource keine übergeordnete Ressource gesetzt wurde, dass die angegebene übergeordnete Ressource nicht gefunden werden kann oder dass sie aufgrund ihrer Kategorie keine gültige übergeordnete Ressource ist. Die Ressource wird daher nicht angezeigt.
+
+#### Mögliche Ursachen
+* Ein Synchronisationsvorgang wurde nicht vollständig abgeschlossen.
+* Die Ressource wurde mit einer veralteten Version von Field Desktop angelegt.
+
+#### Mögliche Lösungen
+* Stellen Sie sicher, dass die Daten aller mit dem Field-Projekt arbeitenden Teammitglieder synchronisiert sind.
+* Button *Übergeordnete Ressource neu setzen*: Wählen Sie eine neue Ressource als übergeordnete Ressource aus. Die Ressource wird in den Kontext der gewählten Ressource verschoben.
+* Button *Ressource löschen*: Die betroffene Ressource wird vollständig gelöscht.
+
+### Fehlendes Bezeichner-Präfix
+Der Bezeichner der Ressource enthält nicht das für die entsprechende Kategorie konfigurierte Präfix.
+
+#### Mögliche Ursachen
+* Die Ressource wurde angelegt, bevor das Bezeichner-Präfix konfiguriert wurde.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um den Bezeichner neu einzutragen.
+
+### Uneindeutiger Bezeichner
+Der Bezeichner der Ressource wird auch von einer oder mehreren anderen Ressourcen verwendet. Es kann daher zu Fehlern beim Import und Export von Daten kommen.
+
+#### Mögliche Ursachen
+* Die Bezeichner wurden auf verschiedenen Rechnern ohne bestehende Synchronisationsverbindung eingetragen; erst zu einem späteren Zeitpunkt wurden die Daten synchronisiert.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um einen neuen Bezeichner einzutragen.
+
+### Uneindeutiger QR-Code
+Der für die Ressource gesetzte QR-Code wird auch von einer oder mehreren anderen Ressourcen verwendet. Die betroffenen Ressourcen können daher nicht eindeutig über ihren QR-Code identifiziert werden.
+
+#### Mögliche Ursachen
+* Der QR-Code wurde auf verschiedenen Rechnern ohne bestehende Synchronisationsverbindung mit unterschiedlichen Ressourcen verknüpft; erst zu einem späteren Zeitpunkt wurden die Daten synchronisiert.
+
+#### Mögliche Lösungen
+* Button *QR-Code bearbeiten*: Öffnen Sie den QR-Code-Editor, um den QR-Code zu löschen und gegebenenfalls einen anderen  QR-Code zu verknüpfen bzw. neu zu erzeugen.
+
+### Nicht erlaubte Zeichen
+Eines oder mehrere der in das Feld eingetragenen Zeichen sind in Feldern des entsprechenden Eingabetyps nicht erlaubt.
+
+#### Mögliche Ursachen
+* Das Feld wurde mit einer veralteten Version von Field Desktop ausgefüllt.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um nicht erlaubte Zeichen aus dem Feld zu entfernen.
+
+### Nicht erlaubter Geometrietyp
+Die Geometrie der Ressource entspricht keinem Geometrietyp, der für die entsprechende Kategorie erlaubt ist.
+
+#### Mögliche Ursachen
+* Der Geometrietyp wurde als erlaubter Geometrietyp für die entsprechende Kategorie abgewählt, nachdem die Geometrie zur Ressource hinzugefügt wurde.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um die Geometrie anzupassen und einen erlaubten Geometrietyp zu wählen.
+* Bearbeiten Sie das Feld *Geometrie* der entsprechenden Kategorie im Konfigurationseditor und wählen Sie den Geometrietyp der Ressource dabei als erlaubten Geometrietyp aus.
+
+### Ressourcenlimit überschritten
+Es existieren mehr Ressourcen einer Kategorie, als das für diese Kategorie konfigurierte Ressourcenlimit erlaubt.
+
+#### Mögliche Ursachen
+* Die Ressourcen wurden angelegt, bevor das Ressourcenlimit konfiguriert wurde.
+* Die Ressourcen wurden auf verschiedenen Rechnern ohne bestehende Synchronisationsverbindung angelegt; erst zu einem späteren Zeitpunkt wurden die Daten synchronisiert.
+
+#### Mögliche Lösungen
+* Löschen Sie Ressourcen der entsprechenden Kategorie, bis das Ressourcenlimit eingehalten wird.
+* Erhöhen Sie das Ressourcenlimit im Konfigurationseditor.
+
+### Ungültiger Status
+Der Status eines Prozesses widerspricht dem angegebenen Datum. Dies ist beispielsweise der Fall, wenn das Datum eines Prozesses mit dem Status "Geplant" in der Vergangenheit liegt oder das Datum eines Prozesses mit dem Status "Abgeschlossen" in der Zukunft.
+
+#### Mögliche Ursachen
+* Der Status wurde nicht angepasst, nachdem der Arbeitsgang begonnen, abgeschlossen oder abgebrochen wurde.
+* Ein geplanter Prozess wurde zum angegebenen Datum noch nicht durchgeführt.
+
+#### Mögliche Lösungen
+* Button *Bearbeiten*: Öffnen Sie den Ressourceneditor, um den Status oder das Datum des Prozesses anzupassen.
+
+
+# API
+
+Field Desktop stellt eine REST-API bereit, über die Daten per HTTP abgefragt und in die Anwendung eingespielt werden können. Bei geöffneter Anwendung erreichen Sie die API über die folgende URL:
+
+http://localhost:3000
+
+Beim Zugriff auf jeden der API-Endpunkte muss per *Basic Auth* dasjenige Passwort angegeben werden, das im Menü "Einstellungen" unter "Synchronisation" als "Eigenes Passwort" eingetragen ist. Die Angabe eines Usernamens ist nicht erforderlich.
+
+Wenn nicht anders angegeben, werden Daten im JSON-Format zurückgegeben und auch im Request-Body von POST-Requests als JSON erwartet.
+
+## Endpunkte
+
+### GET /info
+
+Dieser API-Endpoint liefert einige Informationen zur laufenden Instanz von Field Desktop im JSON-Format zurück.
+
+Rückgabe:
+* *version (String)*: Die Programmversion der laufenden Anwendung
+* *projects (String-Array)*: Die Kennungen aller Projekte, die auf diesem Rechner derzeit gespeichert sind
+* *activeProject (String)*: Die Kennung des derzeit in der Anwendung geöffneten Projekts
+* *user (String)*: Der Name, der in Field Desktop als "Name der Benutzerin/des Benutzers" eingetragen wurde
+
+
+### GET /configuration/{project}
+
+Über diesen API-Endpunkt kann die Projektkonfiguration im JSON-Format abgerufen werden. Während die Konfigurationsdateien, die über das Menü "Projektkonfiguration" ➝ "Konfiguration exportieren..." erstellt werden können, ausschließlich den projektspezifischen Teil der Konfiguration enthalten, wird über den API-Endpunkt die komplette Konfiguration inklusive aller im Projekt verwendeten Konfigurationselemente aus den Field-Bibliotheken (Standardformulare, Wertelisten usw.) ausgegeben.
+
+Bitte beachten Sie, dass die JSON-Ausgabe des API-Endpunkts **nicht** über das Menü "Projektkonfiguration" ➝ "Konfiguration importieren..." eingelesen werden kann. Verwenden Sie die Menüoption "Projektkonfiguration" ➝ "Konfiguration exportieren...", um eine für diesen Zweck geeignete Konfigurationsdatei zu erhalten.
+
+Parameter:
+* *project*: Der Name des Projekts, dessen Konfiguration abgerufen werden soll
+
+
+### POST /import/{format}
+
+Über diesen API-Endpunkt können Daten in das aktuell in der Anwendung geöffnete Projekt importiert werden. Die Funktionalität entspricht dabei derjenigen des Import-Tools, das über das Menü "Werkzeuge" ➝ "Import" erreicht werden kann. Detaillierte Erklärungen zu den Optionen und Formaten finden Sie im Kapitel "Import und Export".
+
+Die zu importierenden Daten müssen im Request-Body mitgeliefert werden.
+
+Parameter:
+* *format*: Das Format der zu importierenden Daten. Unterstützte Formate: *csv*, *geojson*, *jsonl*
+
+Query-Parameter:
+* *merge (Boolean)*: Ergänzt bestehende Ressourcen statt neue Ressourcen anzulegen. Entspricht der Option "Vorhandene Ressourcen ergänzen" in der Benutzeroberfläche. (Standardwert: false)
+* *permitDeletions (Boolean)*: Erlaubt es, Felder beim Import zu entfernen. Entspricht der Checkbox "Löschen erlauben" in der Benutzeroberfläche. (Standardwert: false)
+* *ignoreUnconfiguredFields (Boolean)*: Bricht den Import nicht ab, wenn unkonfigurierte Felder gefunden werden. Entspricht der Checkbox "Nicht konfigurierte Felder ignorieren" in der Benutzeroberfläche. (Standardwert: false)
+* *category (String)*: Der Name der Kategorie, der die zu importierenden Daten angehören. Nur erforderlich beim CSV-Import. Entspricht dem Auswahlfeld "Kategorie" in der Benutzeroberfläche. (Standardwert: "Project")
+* *operation (String)*: Der Bezeichner einer Maßnahme, der die importierten Ressourcen zugeordnet werden sollen. Entspricht dem Auswahlfeld "Daten einer Maßnahme zuordnen" in der Benutzeroberfläche. (Standardwert: nicht gesetzt)
+* *separator (String)*: Das Trennzeichen, das in den CSV-Daten verwendet wird. Nur erforderlich beim CSV-Import. Entspricht dem Eingabefeld "Feldtrennzeichen" in der Benutzeroberfläche. (Standardwert: ",")
+* *command (String)*: Gibt an, ob der Import unmittelbar gestartet oder die Importdaten für einen Importvorgang vorgemerkt werden sollen, der später mit einer weiteren Anfrage an den gleichen API-Endpunkt gestartet werden kann. Mögliche Werte sind "start" für die Durchführung des Imports und "add" für das Hinzufügen der Daten des Request-Bodys zu demjenigen Importvorgang, der durch die ID im Query-Parameter "importId" identifiziert wird. (Standardwert: "start")
+* *importId (String)*: Gibt an, auf welchen Importvorgang sich die Anfrage bezieht. Nur erforderlich, wenn über mehrere Anfragen hinweg CSV-Daten mit *command=add* hinzugefügt werden.
+
+
+### GET /export/{format}
+
+Über diesen API-Endpunkt können Daten aus dem aktuell in der Anwendung geöffneten Projekt exportiert werden. Die Funktionalität entspricht dabei derjenigen des Export-Tools, das über das Menü "Werkzeuge" ➝ "Export" erreicht werden kann. Detaillierte Erklärungen zu den Optionen und Formaten finden Sie im Kapitel "Import und Export".
+
+Parameter:
+* *format*: Das Format, in das die Daten exportiert werden sollen. Unterstützte Formate: *csv*, *geojson*
+
+Query-Parameter:
+* *schemaOnly (Boolean)*: Gibt ausschließlich die Kopfzeile der CSV-Tabelle aus. Nur verfügbar beim CSV-Export. (Standardwert: false)
+* *context (String)*: Gibt den Kontext an, aus dem Ressourcen exportiert werden sollen. Mögliche Werte sind "project" für das gesamte Projekt oder der Bezeichner einer Maßnahme. Entspricht dem Auswahlfeld "Kontext" in der Benutzeroberfläche. (Standardwert: "project")
+* *category (String)*: Der Name der Kategorie, deren Daten exportiert werden sollen. Nur erforderlich beim CSV-Export. Entspricht dem Auswahlfeld "Kategorie" in der Benutzeroberfläche. (Standardwert: "Project")
+* *separator (String)*: Das Trennzeichen, das in den exportierten CSV-Daten verwendet werden soll. Nur erforderlich beim CSV-Export. Entspricht dem Eingabefeld "Feldtrennzeichen" in der Benutzeroberfläche. (Standardwert: ",")
+* *combineHierarchicalRelations (Boolean)*: Fasst hierarchische Relationen zur vereinfachten Relation "isChildOf" zusammen. Nur verfügbar beim CSV-Export. Entspricht der Checkbox "Hierarchische Relationen zusammenfassen" in der Benutzeroberfläche. (Standardwert: true)
+* *formatted (Boolean)*: Setzt Einrückungen zur formatierten Ausgabe der exportierten Daten. Nur verfügbar beim GeoJSON-Export. (Standardwert: true)
+
+
+### POST /fileImport
+
+Über diesen API-Endpunkt können Bilddateien und World-Files in das aktuell in der Anwendung geöffnete Projekt importiert werden, indem eine Importanfrage im JSON-Format übergeben wird. Die Funktionalität entspricht dabei dem Import von Dateien über das Menü "Werkzeuge" ➝ "Bilderverwaltung".
+Detaillierte Erklärungen zum Importvorgang finden Sie im Kapitel "Bilder".
+
+Im Request-Body werden JSON-Daten erwartet. Die Antwort wird ebenfalls im JSON-Format zurückgegeben.
+
+Request-Body:
+* *filePaths (String-Array)*: Die Dateipfade der zu importierenden Dateien
+* *category (String)*: Der Name der Kategorie, die für importierte Bilder gesetzt werden soll (Standardwert: "Image")
+* *readCreatorsFromMetadata (Boolean)*: Liest die Metadaten von Bilddateien aus, um das Feld "Bildersteller/Bilderstellerin" automatisch auszufüllen
+* *checkOriginalFilename (Boolean)*: Bilddateien werden grundsätzlich nicht importiert, wenn es im Projekt bereits ein Bild mit dem gleichen Bezeichner gibt. Ist diese Option aktiviert, wird der Import darüber hinaus auch dann abgelehnt, wenn es bereits ein Bild mit dem gleichen ursprünglichen Dateinamen gibt.
+
+Rückgabe:
+* *importedImages (Integer)*: Die Anzahl der erfolgreich importierten Bilddateien
+* *importedWorldFiles (Integer)*: Die Anzahl der erfolgreich importierten World-Files
+* *messages* (String-Array): Meldungen, die während des Importvorgangs aufgetreten sind
+
+
+### GET /fileExport/:format/:identifier
+
+Über diesen API-Endpunkt können Bilddateien und World-Files aus dem aktuell in der Anwendung geöffneten Projekt abgerufen werden.
+
+Parameter:
+* *format*: Gibt an, ob die Bilddatei selbst oder die dazugehörigen Georeferenzierungsinformationen exportiert werden sollen. Mögliche Werte: *image* (Export der Bilddatei), *worldFile* (Export der Georeferenzierungsdaten im World-File-Format)
+* *identifier*: Der Bezeichner der Bildressource, deren Daten abgerufen werden sollen
+
+Das Format der zurückgelieferten Daten richtet sich nach dem entsprechenden Dateiformat. Gesetzt wird jeweils einer der folgenden MIME-Types im Header "Content-Type":
+* *image/jpeg*: Bild im JPG-Format
+* *image/png*: Bild im PNG-Format
+* *image/tiff*: Bild im TIFF-Format
+* *text/plain*: World File

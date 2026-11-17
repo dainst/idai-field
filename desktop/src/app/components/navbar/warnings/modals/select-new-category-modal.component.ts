@@ -3,13 +3,17 @@ import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
 import { CategoryForm, Datastore, Document, Labels, ProjectConfiguration } from 'idai-field-core';
 import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-modal.component';
 import { WarningsService } from '../../../../services/warnings/warnings-service';
+import { AngularUtility } from '../../../../angular/angular-utility';
+import { Menus } from '../../../../services/menus';
+import { MenuContext } from '../../../../services/menu-context';
 
 
 @Component({
     templateUrl: './select-new-category-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-    }
+    },
+    standalone: false
 })
 /**
  * @author Thomas Kleinke
@@ -21,6 +25,9 @@ export class SelectNewCategoryModalComponent {
     public availableTopLevelCategories: Array<CategoryForm>;
     public selectedCategory: CategoryForm;
     public multiple: boolean;
+    public countAffected: number;
+
+    private affectedDocuments: Array<Document>;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -28,7 +35,8 @@ export class SelectNewCategoryModalComponent {
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
                 private labels: Labels,
-                private warningsService: WarningsService) {}
+                private warningsService: WarningsService,
+                private menuService: Menus) {}
 
     
     public getCategoryLabel = (category: CategoryForm) => this.labels.get(category);
@@ -40,11 +48,24 @@ export class SelectNewCategoryModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 
-    public initialize() {
+    public async initialize() {
+
+        const foundDocuments: Array<Document> = (await this.datastore.find(
+            { categories: ['UNCONFIGURED'] },
+            { includeResourcesWithoutValidParent: true }
+        )).documents;
+
+        this.affectedDocuments = foundDocuments.filter(document => {
+            return document.resource.category === this.document.resource.category;
+        });
+
+        this.countAffected = this.affectedDocuments.length;
 
         this.availableTopLevelCategories = this.getAvailableTopLevelCategories();
     }
@@ -55,6 +76,8 @@ export class SelectNewCategoryModalComponent {
         if (!this.selectedCategory) return;
 
         const fixingDataInProgressModal: NgbModalRef = this.openFixingDataInProgressModal();
+
+        await AngularUtility.refresh();
 
         if (this.multiple) {
             await this.performMultiple();
@@ -78,14 +101,9 @@ export class SelectNewCategoryModalComponent {
 
     private async performMultiple() {
 
-        const documents = (await this.datastore.find({
-            categories: ['UNCONFIGURED'],
-        })).documents;
+        this.affectedDocuments.forEach(document => document.resource.category = this.selectedCategory.name);
 
-        documents.filter(document => document.resource.category === this.document.resource.category)
-            .forEach(document => document.resource.category = this.selectedCategory.name);
-
-        await this.datastore.bulkUpdate(documents);
+        await this.datastore.bulkUpdate(this.affectedDocuments);
     }
 
 

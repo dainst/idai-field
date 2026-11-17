@@ -1,3 +1,7 @@
+<warnings-context-menu *ngIf="contextMenu.isOpen()"
+                       [contextMenu]="contextMenu"
+                       (onSelectAction)="performContextMenuAction($event)"></warnings-context-menu>
+
 <div class="modal-header warnings-modal-header">
     <h5 class="modal-title"
         i18n="@@navbar.taskbar.warnings.header">Warnungen</h5>
@@ -25,13 +29,16 @@
                         [waitForUserInput]="false"
                         [markSelected]="true"
                         [autoSelect]="true"
+                        [selectOnRightClick]="true"
+                        [allowKeyboardNavigation]="!isModalOpened()"
                         [preselectedDocumentId]="preselectedDocumentId"
                         [showConfigurationOption]="isConfigurationOptionVisible()"
                         [showNoQueryMessage]="false"
                         [showLoadingIcon]="warningFilters[0].count >= 1000"
                         [includeBrokenDocuments]="true"
                         (documentSelected)="selectDocument($event)"
-                        (documentDoubleClicked)="openDoceditModal()"></document-picker>
+                        (documentDoubleClicked)="openDoceditModal()"
+                        (documentRightClicked)="contextMenu?.open($event.event, $event.document)"></document-picker>
     </div>
     <div *ngIf="selectedDocument" id="document-warnings-container" class="col-md-7">
         <div id="document-warnings-header">
@@ -53,6 +60,18 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.invalidField">
                             Ungültige Daten im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
+                        <span *ngIf="section.type === 'missingMandatoryFields'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.missingMandatoryField">
+                            Nicht ausgefülltes Pflichtfeld <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'unfulfilledConditionFields'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.unfulfilledConditionField">
+                            Nicht erfüllte Anzeigebedingung des Feldes <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'unallowedCharacterFields'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.unallowedCharacterField">
+                            Nicht erlaubtes Zeichen im Feld <b>{{getFieldLabel(section)}}</b>
+                        </span>
                         <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.single">
                             Ungültiger Wert im Feld <b>{{getFieldLabel(section)}}</b>
@@ -61,13 +80,21 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.outlierValues.multiple">
                             Ungültige Werte im Feld <b>{{getFieldLabel(section)}}</b>
                         </span>
-                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length === 1"
+                        <span *ngIf="section.type === 'missingRelationTargets' && getRelationTargetIds(section).length === 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.missingRelationTargets.single">
                             Fehlende Zielressource der Relation <b>{{getFieldLabel(section)}}</b>
                         </span>
-                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length > 1"
+                        <span *ngIf="section.type === 'missingRelationTargets' && getRelationTargetIds(section).length > 1"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.missingRelationTargets.multiple">
                             Fehlende Zielressourcen der Relation <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'invalidRelationTargets' && getRelationTargetIds(section).length === 1"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.invalidRelationTargets.single">
+                            Ungültige Zielressource der Relation <b>{{getFieldLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'invalidRelationTargets' && getRelationTargetIds(section).length > 1"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.invalidRelationTargets.multiple">
+                            Ungültige Zielressourcen der Relation <b>{{getFieldLabel(section)}}</b>
                         </span>
                         <span *ngIf="section.type === 'missingOrInvalidParent'"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.missingOrInvalidParent">
@@ -85,9 +112,21 @@
                               i18n="@@navbar.taskbar.warnings.sectionTitle.nonUniqueIdentifier">
                             Uneindeutiger <b>Bezeichner</b>
                         </span>
+                        <span *ngIf="section.type === 'nonUniqueQrCode'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.nonUniqueQrCode">
+                            Uneindeutiger <b>QR-Code</b>
+                        </span>
                         <span *ngIf="section.type === 'resourceLimitExceeded'"
                               i18n="@@navbar.taskbar.warnings.sectionTitle.resourceLimitExceeded">
                             Ressourcenlimit für Kategorie <b>{{getCategoryLabel(section)}}</b> überschritten
+                        </span>
+                        <span *ngIf="section.type === 'invalidProcessState'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.invalidProcessState">
+                            Ungültiger Status <b>{{getValueLabel(section)}}</b>
+                        </span>
+                        <span *ngIf="section.type === 'unallowedGeometryType'"
+                              i18n="@@navbar.taskbar.warnings.sectionTitle.unallowedGeometryType">
+                            Nicht erlaubter Geometrietyp <b>{{section.geometryTypeLabel}}</b>
                         </span>
                     </span>
                 </div>
@@ -106,10 +145,47 @@
                                 Die in diesem Feld eingetragenen Daten werden daher nicht angezeigt.
                             </span>
                         </span>
-                        <span *ngIf="section.type === 'invalidFields'"
+                        <span *ngIf="section.type === 'invalidFields' && !section.dateValidationError"
                               i18n="@@navbar.taskbar.warnings.info.invalidField">
                             Die in diesem Feld eingetragenen Daten entsprechen nicht dem konfigurierten
                             Eingabetyp <i>{{getInputTypeLabel(section)}}</i>.
+                        </span>
+                        <span *ngIf="section.type === 'invalidFields' && section.dateValidationError">
+                            <span i18n="@@navbar.taskbar.warnings.info.invalidField.date">
+                                Die in diesem Feld eingetragene Datumsangabe ist ungültig.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'rangeNotAllowed'"
+                                  i18n="@@navbar.taskbar.warnings.info.invalidField.date.rangeNotAllowed">
+                                Die Angabe eines Datumsbereichs ist für dieses Feld nicht erlaubt.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'singleNotAllowed'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.singleNotAllowed">
+                                Die Angabe eines Einzeldatums ist für dieses Feld nicht erlaubt.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'timeNotAllowed'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.timeNotAllowed">
+                                Die Angabe einer Uhrzeit ist für dieses Feld nicht erlaubt.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'timeNotSet'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.timeNotSet">
+                                Für dieses Feld ist die Angabe einer Uhrzeit erforderlich.
+                            </span>
+                            <span *ngIf="section.type === 'invalidFields' && section.dateValidationError === 'endDateBeforeBeginningDate'"
+                                i18n="@@navbar.taskbar.warnings.info.invalidField.date.endDateBeforeBeginningDate">
+                                Das Enddatum des Datumsbereichs liegt zeitlich vor dem Startdatum.
+                            </span>
+                        </span>
+                        <span *ngIf="section.type === 'missingMandatoryFields'"
+                              i18n="@@navbar.taskbar.warnings.info.missingMandatoryField">
+                            In ein als Pflichtfeld konfiguriertes Feld wurden keine Daten eingetragen.
+                        </span>
+                        <span *ngIf="section.type === 'unfulfilledConditionFields'"
+                              i18n="@@navbar.taskbar.warnings.info.unfulfilledConditionField">
+                            Es sind Daten eingetragen, obwohl die Anzeigebedingung des Feldes nicht erfüllt ist.
+                        </span>
+                        <span *ngIf="section.type === 'unallowedCharacterFields'"
+                              i18n="@@navbar.taskbar.warnings.info.unallowedCharacterField">
+                            Das Zeichen <b>;</b> ist in Feldern des Eingabetyps <i>{{getInputTypeLabel(section)}}</i> nicht erlaubt.
                         </span>
                         <span *ngIf="section.type === 'outliers' && section.outlierValues.length === 1"
                               i18n="@@navbar.taskbar.warnings.info.outlierValues.single">
@@ -121,17 +197,27 @@
                             Es wurden Werte ausgewählt, die in der für dieses Feld konfigurierten Werteliste
                             <i>{{getValuelistId(section)}}</i> nicht enthalten sind.
                         </span>
-                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length === 1"
+                        <span *ngIf="section.type === 'missingRelationTargets' && getRelationTargetIds(section).length === 1"
                               i18n="@@navbar.taskbar.warnings.info.missingRelationTargets.single">
                             Eine als Zielressource der Relation angegebene Ressource kann nicht gefunden werden.
                             Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht
                             vollständig abgeschlossen.
                         </span>
-                        <span *ngIf="section.type === 'missingRelationTargets' && getMissingRelationTargetIds(section).length > 1"
+                        <span *ngIf="section.type === 'missingRelationTargets' && getRelationTargetIds(section).length > 1"
                               i18n="@@navbar.taskbar.warnings.info.missingRelationTargets.multiple">
                             Mehrere als Zielressourcen der Relation angegebene Ressourcen können nicht gefunden werden.
                             Möglicherweise wurde ein Synchronisationsvorgang auf einem anderen Rechner nicht
                             vollständig abgeschlossen.
+                        </span>
+                        <span *ngIf="section.type === 'invalidRelationTargets' && getRelationTargetIds(section).length === 1"
+                              i18n="@@navbar.taskbar.warnings.info.invalidRelationTargets.single">
+                            Die Kategorie einer als Zielressource der Relation angegebenen Ressource ist keine gültige
+                            Zielkategorie.
+                        </span>
+                        <span *ngIf="section.type === 'invalidRelationTargets' && getRelationTargetIds(section).length > 1"
+                              i18n="@@navbar.taskbar.warnings.info.invalidRelationTargets.multiple">
+                            Die Kategorien mehrerer als Zielressourcen der Relation angegebenen Ressourcen sind keine
+                            gültigen Zielkategorien.
                         </span>
                         <span *ngIf="section.type === 'missingOrInvalidParent'"
                               i18n="@@navbar.taskbar.warnings.info.missingOrInvalidParent">
@@ -152,6 +238,11 @@
                             Der Bezeichner dieser Ressource wird mehrfach verwendet und ist daher nicht eindeutig. Es
                             können dadurch Fehler beim Import und Export von Daten auftreten.
                         </span>
+                        <span *ngIf="section.type === 'nonUniqueQrCode'"
+                              i18n="@@navbar.taskbar.warnings.info.nonUniqueQrCode">
+                            Der QR-Code dieser Ressource wird mehrfach verwendet und kann daher nicht zum eindeutigen
+                            Zugriff auf die Ressource verwendet werden.
+                        </span>
                         <span *ngIf="section.type === 'resourceLimitExceeded' && section.category.resourceLimit === 1"
                               i18n="@@navbar.taskbar.warnings.info.resourceLimitExceeded.single">
                             Es darf nur <b>eine</b> Ressource der Kategorie <i>{{getCategoryLabel(section)}}</i>
@@ -162,12 +253,36 @@
                             Es dürfen nur <b>{{section.category.resourceLimit}}</b> Ressourcen der Kategorie
                             <i>{{getCategoryLabel(section)}}</i> angelegt werden.
                         </span>
+                        <span *ngIf="section.type === 'invalidProcessState'"
+                            i18n="@@navbar.taskbar.warnings.info.invalidProcessState">
+                            Der für diesen Prozess angegebene Status <i>{{getValueLabel(section)}}</i> widerspricht
+                            dem eingetragenen Datum <i>{{getDateLabel(selectedDocument.resource.date)}}</i>.
+                        </span>
+                        <span *ngIf="section.type === 'unallowedGeometryType'"
+                            i18n="@@navbar.taskbar.warnings.info.unallowedGeometryType">
+                            Geometrien des Typs <i>{{section.geometryTypeLabel}}</i> sind für Ressourcen der Kategorie
+                            <i>{{getCategoryLabel(section)}}</i> nicht erlaubt.
+                        </span>
                     </div>
-                    <div *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields' || section.type === 'missingIdentifierPrefix'"
+                    <div *ngIf="section.type === 'unfulfilledConditionFields'" class="data-info">
+                        <div><b i18n="@@navbar.taskbar.warnings.condition">Bedingung für Anzeige des Feldes:</b></div>
+                        <div class="data-info-content">
+                            <i>{{section.conditionFieldLabel}}:</i> {{section.conditionValuesLabel}}
+                        </div>
+                    </div>
+                    <div *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields'
+                                || section.type === 'missingIdentifierPrefix'
+                                || section.type === 'unfulfilledConditionFields'"
                          class="data-info">
                         <div><b i18n="@@navbar.taskbar.warnings.enteredData">Eingetragene Daten:</b></div>
-                        <div *ngIf="section.dataLabel" class="data-info-content" [innerHTML]="section.dataLabel"></div>
-                        <div *ngIf="!section.dataLabel" class="data-info-content"
+                        <div *ngIf="section.dataLabel && !section.isRelationField"
+                             class="data-info-content"
+                             [innerHTML]="section.dataLabel"></div>
+                        <div *ngIf="section.isRelationField" class="data-info-content">
+                            <document-teaser *ngFor="let targetDocument of section.relationTargets"
+                                             [document]="targetDocument"></document-teaser>
+                        </div>
+                        <div *ngIf="!section.dataLabel && !section.relationTargets" class="data-info-content"
                              i18n="@@navbar.taskbar.warnings.fieldData.none"><i>Keine</i></div>
                     </div>
                     <div *ngIf="section.type === 'unconfiguredCategory'" class="data-info">
@@ -191,6 +306,13 @@
                             </div>
                         </div>
                     </div>
+                    <div *ngIf="section.type === 'invalidRelationTargets'" class="data-info">
+                        <div><b i18n="@@navbar.taskbar.warnings.invalidRelationTargets">Ungültige Zielressourcen:</b></div>
+                        <div class="data-info-content">
+                            <document-teaser *ngFor="let targetDocument of section.relationTargets"
+                                             [document]="targetDocument"></document-teaser>
+                        </div>
+                    </div>
                     <span *ngIf="section.type === 'conflicts'">
                         <button class="btn btn-primary solve-conflict-button"
                                 (click)="openConflictResolver()">
@@ -199,13 +321,25 @@
                                   i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'invalidFields' || section.type === 'missingIdentifierPrefix'
-                            || section.type === 'outliers' || section.type === 'nonUniqueIdentifier'">
+                    <span *ngIf="section.type === 'invalidFields' || section.type === 'missingMandatoryFields'
+                            || section.type === 'unfulfilledConditionFields'
+                            || section.type === 'unallowedCharacterFields' || section.type === 'invalidRelationTargets'
+                            || section.type === 'missingIdentifierPrefix' || section.type === 'outliers'
+                            || section.type === 'nonUniqueIdentifier' || section.type === 'invalidProcessState'
+                            || section.type === 'unallowedGeometryType'">
                         <button class="btn btn-primary edit-button"
                                 (click)="openDoceditModal(section)">
                             <span class="mdi mdi-pencil"></span>
                             <span class="button-label"
                                   i18n="@@resources.contextMenu.edit">Bearbeiten</span>
+                        </button>
+                    </span>
+                    <span *ngIf="section.type === 'nonUniqueQrCode'">
+                        <button class="btn btn-primary edit-qr-code-button"
+                                (click)="openQrCodeEditorModal()">
+                            <span class="mdi mdi-qrcode"></span>
+                            <span class="button-label"
+                                  i18n="@@navbar.taskbar.warnings.editQrCode">QR-Code bearbeiten</span>
                         </button>
                     </span>
                     <span *ngIf="section.type === 'invalidFields' && isConvertible(section)">
@@ -258,7 +392,8 @@
                                   i18n="@@navbar.taskbar.warnings.deleteResource">Ressource löschen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields'">
+                    <span *ngIf="section.type === 'unconfiguredFields' || section.type === 'invalidFields'
+                                 || section.type === 'unfulfilledConditionFields'">
                         <button class="btn btn-danger delete-field-data-button"
                                 (click)="openDeleteFieldDataModal(section)">
                             <span class="mdi mdi-delete"></span>
@@ -266,7 +401,8 @@
                                   i18n="@@navbar.taskbar.warnings.deleteFieldData">Felddaten löschen</span>
                         </button>
                     </span>
-                    <span *ngIf="section.type == 'missingRelationTargets'">
+                    <span *ngIf="section.type === 'missingRelationTargets'
+                            || section.type === 'invalidRelationTargets'">
                         <button class="btn btn-danger clean-up-relation-button"
                                 (click)="openCleanUpRelationModal(section)">
                             <span class="mdi mdi-delete"></span>

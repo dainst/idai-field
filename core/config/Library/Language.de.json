@@ -1265,19 +1265,11 @@
         }
       }
     },
-    "SpatialReferencePoint": {
-      "label": "Räumlicher Bezugspunkt",
+    "SpatialReferenceElement": {
+      "label": "Räumliches Bezugselement",
       "fields": {
-        "spatialReferencePointType": {
-          "label": "Art des räumlichen Bezugspunkts"
-        }
-      }
-    },
-    "SpatialReferenceLine": {
-      "label": "Räumliche Bezugslinie",
-      "fields": {
-        "spatialReferenceLineType": {
-          "label": "Art der räumlichen Bezugslinie"
+        "spatialReferenceElementType": {
+          "label": "Art des räumlichen Bezugselements"
         }
       }
     },
@@ -1950,8 +1942,14 @@
         }
       }
     },
-    "SpatialReferencePoint:archaeoDox": {
+    "SpatialReferenceElement:archaeoDox": {
       "fields": {
+        "archaeoDox:spatialReferencePointType": {
+          "label": "Art des räumlichen Bezugspunkts"
+        },
+        "archaeoDox:spatialReferenceLineType": {
+          "label": "Art der räumlichen Bezugslinie"
+        },
         "archaeoDox:paarView": {
           "label": "ProfileAAR Blickrichtung"
         },

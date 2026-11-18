@@ -2972,7 +2972,7 @@
       "Pollenanalyse": {}
     }
   },
-  "SpatialReferencePoint-spatialReferencePointType-default": {
+  "SpatialReferenceElement-spatialReferenceElementType-default": {
     "createdBy": "",
     "creationDate": "",
     "values": {
@@ -2982,7 +2982,17 @@
       "Fotogrammnagel": {}
     }
   },
-  "SpatialReferenceLine-spatialReferenceLineType-default": {
+  "SpatialReferenceElement-spatialReferencePointType-archaeoDox": {
+    "createdBy": "",
+    "creationDate": "",
+    "values": {
+      "Nivellement": {},
+      "Hauptmesspunkt": {},
+      "Profilnagel": {},
+      "Fotogrammnagel": {}
+    }
+  },
+  "SpatialReferenceElement-spatialReferenceLineType-archaeoDox": {
     "createdBy": "",
     "creationDate": "",
     "values": {

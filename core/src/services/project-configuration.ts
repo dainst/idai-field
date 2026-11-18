@@ -320,7 +320,7 @@ export class ProjectConfiguration {
 
         return flow(this.categoryForms,
             removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'StoragePlace', 'Process', 'Image', 'Operation',
-                'SpatialReferencePoint', 'SpatialReferenceLine'),
+                'SpatialReferenceElement'),
             Tree.flatten
         );
     }
@@ -338,7 +338,7 @@ export class ProjectConfiguration {
     private filterOverviewCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            filterTrees('Operation', 'Place', 'SpatialReferencePoint', 'SpatialReferenceLine'),
+            filterTrees('Operation', 'Place', 'SpatialReferenceElement'),
             Tree.flatten
         );
     }
@@ -347,7 +347,7 @@ export class ProjectConfiguration {
     private filterConcreteOverviewCategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            filterTrees('Operation', 'Place', 'SpatialReferencePoint', 'SpatialReferenceLine'),
+            filterTrees('Operation', 'Place', 'SpatialReferenceElement'),
             Tree.flatten,
             remove(Named.onName(is('Operation')))
         ) as any;
@@ -357,10 +357,10 @@ export class ProjectConfiguration {
     private filterOverviewSupercategories(): Array<CategoryForm> {
 
         return flow(this.categoryForms,
-            filterTrees('Operation', 'Place', 'SpatialReferencePoint', 'SpatialReferenceLine'),
+            filterTrees('Operation', 'Place', 'SpatialReferenceElement'),
             Tree.flatten,
             filter(Named.onName(
-                includedIn(['Operation', 'Place', 'SpatialReferencePoint', 'SpatialReferenceLine'])
+                includedIn(['Operation', 'Place', 'SpatialReferenceElement'])
             )) as any
         );
     }

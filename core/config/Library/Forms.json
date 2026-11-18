@@ -1597,11 +1597,11 @@
         }
       ]
     },
-    "SpatialReferencePoint:default": {
+    "SpatialReferenceElement:default": {
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "categoryName": "SpatialReferencePoint",
+      "categoryName": "SpatialReferenceElement",
       "groups": [
         {
           "name": "stem",
@@ -1609,7 +1609,7 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "spatialReferencePointType"]
+          "fields": ["description", "spatialReferenceElementType"]
         },
         {
           "name": "position",
@@ -1617,12 +1617,22 @@
         }
       ]
     },
-    "SpatialReferencePoint:archaeoDox": {
+    "SpatialReferenceElement:archaeoDox": {
       "description": {},
       "createdBy": "",
       "creationDate": "",
-      "categoryName": "SpatialReferencePoint",
+      "categoryName": "SpatialReferenceElement",
       "fields": {
+        "archaeoDox:spatialReferencePointType": {
+          "inputType": "radio",
+          "constraintIndexed": true,
+          "valuelistId": "SpatialReferenceElement-spatialReferencePointType-archaeoDox"
+        },
+        "archaeoDox:spatialReferenceLineType": {
+          "inputType": "radio",
+          "constraintIndexed": true,
+          "valuelistId": "SpatialReferenceElement-spatialReferenceLineType-archaeoDox"
+        },
         "archaeoDox:paarView": {
           "inputType": "input"
         },
@@ -1640,51 +1650,12 @@
         },
         {
           "name": "properties",
-          "fields": ["description", "spatialReferencePointType", "archaeoDox:paarView", "archaeoDox:paarUpts"]
+          "fields": ["description", "archaeoDox:spatialReferencePointType", "archaeoDox:spatialReferenceLineType",
+            "archaeoDox:paarView", "archaeoDox:paarUpts"]
         },
         {
           "name": "position",
           "fields": ["geometry", "archaeoDox:zValue", "isSpatialReferenceElementFor"]
-        }
-      ]
-    },
-    "SpatialReferenceLine:default": {
-      "description": {},
-      "createdBy": "",
-      "creationDate": "",
-      "categoryName": "SpatialReferenceLine",
-      "groups": [
-        {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "date"]
-        },
-        {
-          "name": "properties",
-          "fields": ["description", "spatialReferenceLineType"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "isSpatialReferenceElementFor"]
-        }
-      ]
-    },
-    "SpatialReferenceLine:archaeoDox": {
-      "description": {},
-      "createdBy": "",
-      "creationDate": "",
-      "categoryName": "SpatialReferenceLine",
-      "groups": [
-        {
-          "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "date"]
-        },
-        {
-          "name": "properties",
-          "fields": ["description", "spatialReferenceLineType"]
-        },
-        {
-          "name": "position",
-          "fields": ["geometry", "isSpatialReferenceElementFor"]
         }
       ]
     },

@@ -81,7 +81,7 @@ export module Importer {
             && !options.mergeMode
             && (!options.selectedCategory ||
                 projectConfiguration.getRegularCategories().map(to(Named.NAME))
-                    .concat(['SpatialReferencePoint', 'SpatialReferenceLine'])
+                    .concat(['SpatialReferenceElement'])
                     .includes(options.selectedCategory.name));
     }
 

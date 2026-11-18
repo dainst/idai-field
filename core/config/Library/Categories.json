@@ -1593,23 +1593,13 @@
       }
     }
   },
-  "SpatialReferencePoint": {
+  "SpatialReferenceElement": {
     "description": {},
     "fields": {
-      "spatialReferencePointType": {
+      "spatialReferenceElementType": {
         "inputType": "radio",
         "constraintIndexed": true,
-        "valuelistId": "SpatialReferencePoint-spatialReferencePointType-default"
-      }
-    }
-  },
-  "SpatialReferenceLine": {
-    "description": {},
-    "fields": {
-      "spatialReferenceLineType": {
-        "inputType": "radio",
-        "constraintIndexed": true,
-        "valuelistId": "SpatialReferenceLine-spatialReferenceLineType-default"
+        "valuelistId": "SpatialReferenceElement-spatialReferenceElementType-default"
       }
     }
   },

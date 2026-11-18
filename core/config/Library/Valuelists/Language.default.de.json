@@ -5536,7 +5536,7 @@
       }
     }
   },
-  "SpatialReferencePoint-spatialReferencePointType-default": {
+  "SpatialReferenceElement-spatialReferenceElementType-default": {
     "values": {
       "Nivellement": {
         "label": "Nivellement"
@@ -5552,7 +5552,23 @@
       }
     }
   },
-  "SpatialReferenceLine-spatialReferenceLineType-default": {
+  "SpatialReferenceElement-spatialReferencePointType-archaeoDox": {
+    "values": {
+      "Nivellement": {
+        "label": "Nivellement"
+      },
+      "Hauptmesspunkt": {
+        "label": "Hauptmesspunkt"
+      },
+      "Profilnagel": {
+        "label": "Profilnagel"
+      },
+      "Fotogrammnagel": {
+        "label": "Fotogrammnagel"
+      }
+    }
+  },
+  "SpatialReferenceElement-spatialReferenceLineType-archaeoDox": {
     "values": {
       "Kontur unsicher": {
         "label": "Kontur unsicher"

@@ -371,13 +371,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public getAvailableGeometryTypes() {
 
-        if (this.category.name === 'SpatialReferencePoint') {
-            return ['Point', 'MultiPoint'];
-        } else if (this.category.name === 'SpatialReferenceLine') {
-            return ['LineString', 'MultiLineString'];
-        } else {
-            return FieldGeometry.getAvailableGeometryTypes();
-        }
+        return FieldGeometry.getAvailableGeometryTypes();
     }
 
     

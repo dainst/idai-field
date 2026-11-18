@@ -208,11 +208,7 @@
       "hidden": [],
       "fields": {}
     },
-    "SpatialReferencePoint:default": {
-      "hidden": [],
-      "fields": {}
-    },
-    "SpatialReferenceLine:default": {
+    "SpatialReferenceElement:default": {
       "hidden": [],
       "fields": {}
     },
@@ -307,8 +303,7 @@
     "FindCollection",
     "Inscription",
     "Sample",
-    "SpatialReferencePoint",
-    "SpatialReferenceLine",
+    "SpatialReferenceElement",
     "Process",
     "Image",
     "Drawing",

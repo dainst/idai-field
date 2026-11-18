@@ -1641,6 +1641,9 @@
         },
         "archaeoDox:zValue": {
           "inputType": "float"
+        },
+        "geometry": {
+          "geometryTypes": ["Point", "LineString"]
         }
       },
       "groups": [

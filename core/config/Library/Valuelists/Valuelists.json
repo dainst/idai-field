@@ -2978,18 +2978,8 @@
     "values": {
       "Nivellement": {},
       "Hauptmesspunkt": {},
-      "Profilnagel": {},
-      "Fotogrammnagel": {}
-    }
-  },
-  "SpatialReferenceElement-spatialReferencePointType-archaeoDox": {
-    "createdBy": "",
-    "creationDate": "",
-    "values": {
-      "Nivellement": {},
-      "Hauptmesspunkt": {},
-      "Profilnagel": {},
-      "Fotogrammnagel": {}
+      "Zeichnungsreferenzpunkt": {},
+      "Fotogrammetriepunkt": {}
     }
   },
   "SpatialReferenceElement-spatialReferenceLineType-archaeoDox": {
@@ -2997,9 +2987,9 @@
     "creationDate": "",
     "values": {
       "Kontur unsicher": {},
-      "Profilschnitt": {},
-      "Böschung Oberkante": {},
-      "Böschung Unterkante": {}
+      "Zeichnungsreferenzlinie": {},
+      "Oberkante": {},
+      "Unterkante": {}
     }
   },
   "TypeCatalog-criterion-default": {

@@ -1626,7 +1626,7 @@
         "archaeoDox:spatialReferencePointType": {
           "inputType": "radio",
           "constraintIndexed": true,
-          "valuelistId": "SpatialReferenceElement-spatialReferencePointType-archaeoDox"
+          "valuelistId": "SpatialReferenceElement-spatialReferenceElementType-default"
         },
         "archaeoDox:spatialReferenceLineType": {
           "inputType": "radio",

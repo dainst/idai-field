@@ -5544,27 +5544,11 @@
       "Hauptmesspunkt": {
         "label": "Hauptmesspunkt"
       },
-      "Profilnagel": {
-        "label": "Profilnagel"
+      "Zeichnungsreferenzpunkt": {
+        "label": "Zeichnungsreferenzpunkt"
       },
-      "Fotogrammnagel": {
-        "label": "Fotogrammnagel"
-      }
-    }
-  },
-  "SpatialReferenceElement-spatialReferencePointType-archaeoDox": {
-    "values": {
-      "Nivellement": {
-        "label": "Nivellement"
-      },
-      "Hauptmesspunkt": {
-        "label": "Hauptmesspunkt"
-      },
-      "Profilnagel": {
-        "label": "Profilnagel"
-      },
-      "Fotogrammnagel": {
-        "label": "Fotogrammnagel"
+      "Fotogrammetriepunkt": {
+        "label": "Fotogrammetriepunkt"
       }
     }
   },
@@ -5573,14 +5557,14 @@
       "Kontur unsicher": {
         "label": "Kontur unsicher"
       },
-      "Profilschnitt": {
-        "label": "Profilschnitt"
+      "Zeichnungsreferenzlinie": {
+        "label": "Zeichnungsreferenzlinie"
       },
-      "Böschung Oberkante": {
-        "label": "Böschung Oberkante"
+      "Oberkante": {
+        "label": "Oberkante"
       },
-      "Böschung Unterkante": {
-        "label": "Böschung Unterkante"
+      "Unterkante": {
+        "label": "Unterkante"
       }
     }
   },

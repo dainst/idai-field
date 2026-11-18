@@ -1605,11 +1605,11 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "processor", "date"]
+          "fields": ["identifier", "category", "shortDescription", "spatialReferenceElementType", "processor", "date"]
         },
         {
           "name": "properties",
-          "fields": ["description", "spatialReferenceElementType"]
+          "fields": ["description"]
         },
         {
           "name": "position",
@@ -1646,12 +1646,12 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "archaeoDox:documentationUnit", "processor", "date"]
+          "fields": ["identifier", "category", "shortDescription", "archaeoDox:spatialReferencePointType", "archaeoDox:spatialReferenceLineType",
+            "archaeoDox:documentationUnit", "processor", "date"]
         },
         {
           "name": "properties",
-          "fields": ["description", "archaeoDox:spatialReferencePointType", "archaeoDox:spatialReferenceLineType",
-            "archaeoDox:paarView", "archaeoDox:paarUpts"]
+          "fields": ["description", "archaeoDox:paarView", "archaeoDox:paarUpts"]
         },
         {
           "name": "position",

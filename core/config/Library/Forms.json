@@ -27,7 +27,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "spatialLocation"]
+          "fields": ["geometry", "usedSpatialReference", "spatialLocation"]
         },
         {
           "name": "time",
@@ -63,7 +63,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "spatialLocation"]
+          "fields": ["geometry", "usedSpatialReference", "spatialLocation"]
         },
         {
           "name": "time",
@@ -99,7 +99,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "spatialLocation"]
+          "fields": ["geometry", "usedSpatialReference", "spatialLocation"]
         },
         {
           "name": "time",
@@ -149,7 +149,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "spatialLocation"]
+          "fields": ["geometry", "usedSpatialReference", "spatialLocation"]
         },
         {
           "name": "time",
@@ -185,7 +185,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "spatialLocation"]
+          "fields": ["geometry", "usedSpatialReference", "spatialLocation"]
         },
         {
           "name": "time",
@@ -221,7 +221,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "spatialLocation"]
+          "fields": ["geometry", "usedSpatialReference", "spatialLocation"]
         },
         {
           "name": "time",
@@ -271,7 +271,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "spatialLocation"]
+          "fields": ["geometry", "usedSpatialReference", "spatialLocation"]
         },
         {
           "name": "time",
@@ -303,7 +303,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "spatialLocation"]
+          "fields": ["geometry", "usedSpatialReference", "spatialLocation"]
         },
         {
           "name": "time",
@@ -541,7 +541,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "spatialLocation"]
+          "fields": ["geometry", "usedSpatialReference", "spatialLocation"]
         }
       ]
     },
@@ -569,7 +569,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement"]
+          "fields": ["geometry", "usedSpatialReference"]
         }
       ]
     },
@@ -599,7 +599,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "spatialLocation"]
+          "fields": ["geometry", "usedSpatialReference", "spatialLocation"]
         },
         {
           "name": "time",
@@ -631,7 +631,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement"]
+          "fields": ["geometry", "usedSpatialReference"]
         }
       ]
     },
@@ -684,7 +684,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "dimensionVerticalExtent", "isPresentIn"]
+          "fields": ["geometry", "usedSpatialReference", "dimensionVerticalExtent", "isPresentIn"]
         },
         {
           "name": "time",
@@ -763,7 +763,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "isPresentIn"]
+          "fields": ["geometry", "usedSpatialReference", "isPresentIn"]
         }
       ]
     },
@@ -795,7 +795,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "dimensionVerticalExtent", "isPresentIn"]
+          "fields": ["geometry", "usedSpatialReference", "dimensionVerticalExtent", "isPresentIn"]
         },
         {
           "name": "time",
@@ -846,7 +846,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "isPresentIn"]
+          "fields": ["geometry", "usedSpatialReference", "isPresentIn"]
         }
       ]
     },
@@ -874,7 +874,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "dimensionVerticalExtent", "isPresentIn"]
+          "fields": ["geometry", "usedSpatialReference", "dimensionVerticalExtent", "isPresentIn"]
         },
         {
           "name": "time",
@@ -917,7 +917,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "isPresentIn"]
+          "fields": ["geometry", "usedSpatialReference", "isPresentIn"]
         }
       ]
     },
@@ -1102,7 +1102,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "dimensionVerticalExtent"]
+          "fields": ["geometry", "usedSpatialReference", "dimensionVerticalExtent"]
         },
         {
           "name": "time",
@@ -1138,7 +1138,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "dimensionVerticalExtent"]
+          "fields": ["geometry", "usedSpatialReference", "dimensionVerticalExtent"]
         },
         {
           "name": "time",
@@ -1213,7 +1213,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "spatialLocation"]
+          "fields": ["geometry", "usedSpatialReference", "spatialLocation"]
         }
       ]
     },
@@ -1283,7 +1283,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "spatialLocation", "dimensionVerticalExtent"]
+          "fields": ["geometry", "usedSpatialReference", "spatialLocation", "dimensionVerticalExtent"]
         },
         {
           "name": "time",
@@ -1348,7 +1348,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement"]
+          "fields": ["geometry", "usedSpatialReference"]
         }
       ]
     },
@@ -1380,7 +1380,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement"]
+          "fields": ["geometry", "usedSpatialReference"]
         },
         {
           "name": "time",
@@ -1460,7 +1460,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement"]
+          "fields": ["geometry", "usedSpatialReference"]
         }
       ]
     },
@@ -1492,7 +1492,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "dimensionVerticalExtent"]
+          "fields": ["geometry", "usedSpatialReference", "dimensionVerticalExtent"]
         }
       ]
     },
@@ -1543,7 +1543,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "spatialLocation"]
+          "fields": ["geometry", "usedSpatialReference", "spatialLocation"]
         }
       ]
     },
@@ -1593,7 +1593,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement"]
+          "fields": ["geometry", "usedSpatialReference"]
         }
       ]
     },
@@ -1613,7 +1613,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "isSpatialReferenceElementFor"]
+          "fields": ["geometry", "usedAsSpatialReferenceBy"]
         }
       ]
     },
@@ -1655,7 +1655,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "archaeoDox:zValue", "isSpatialReferenceElementFor"]
+          "fields": ["geometry", "archaeoDox:zValue", "usedAsSpatialReferenceBy"]
         }
       ]
     },
@@ -1781,7 +1781,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "dimensionVerticalExtent", "orientation", "includesStratigraphicalUnits"]
+          "fields": ["geometry", "usedSpatialReference", "dimensionVerticalExtent", "orientation", "includesStratigraphicalUnits"]
         },
         {
           "name": "time",
@@ -1816,7 +1816,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "dimensionVerticalExtent", "includesStratigraphicalUnits"]
+          "fields": ["geometry", "usedSpatialReference", "dimensionVerticalExtent", "includesStratigraphicalUnits"]
         }
       ]
     },
@@ -1844,7 +1844,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "dimensionVerticalExtent", "includesStratigraphicalUnits"]
+          "fields": ["geometry", "usedSpatialReference", "dimensionVerticalExtent", "includesStratigraphicalUnits"]
         },
         {
           "name": "time",
@@ -1872,7 +1872,7 @@
         },
         {
           "name": "position",
-          "fields": ["geometry", "hasSpatialReferenceElement", "dimensionVerticalExtent", "includesStratigraphicalUnits"]
+          "fields": ["geometry", "usedSpatialReference", "dimensionVerticalExtent", "includesStratigraphicalUnits"]
         }
       ]
     },

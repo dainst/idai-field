@@ -115,9 +115,9 @@ export namespace Relation {
 
     export module Position {
 
-        export const IS_SPATIAL_REFERENCE_ELEMENT_FOR = 'isSpatialReferenceElementFor';
-        export const HAS_SPATIAL_REFERENCE_ELEMENT = 'hasSpatialReferenceElement'
-        export const ALL = [IS_SPATIAL_REFERENCE_ELEMENT_FOR, HAS_SPATIAL_REFERENCE_ELEMENT];
+        export const USED_AS_SPATIAL_REFERENCE_BY = 'usedAsSpatialReferenceBy';
+        export const USED_SPATIAL_REFERENCE = 'usedSpatialReference'
+        export const ALL = [USED_AS_SPATIAL_REFERENCE_BY, USED_SPATIAL_REFERENCE];
     }
 
 

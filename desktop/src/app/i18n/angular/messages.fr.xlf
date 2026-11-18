@@ -10,9 +10,9 @@
           <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="ngb.carousel.slide-number" datatype="html">
-        <source>Slide <x id="INTERPOLATION" equiv-text="lse);   private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </source>
-        <target state="translated">Diapositive <x id="INTERPOLATION" equiv-text="lse);   private"/> of <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
+      <trans-unit id="ngb.carousel.slide-number" datatype="html" xml:space="preserve">
+        <source>Slide <x id="INTERPOLATION" equiv-text="ueryList&lt;NgbSli"/> of <x id="INTERPOLATION_1" equiv-text="EventSource = N"/> </source>
+        <target state="translated">Diapositive <x id="INTERPOLATION" equiv-text="lse);   private"/> de <x id="INTERPOLATION_1" equiv-text="pauseOnHover$ ="/> </target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/src/carousel/carousel.ts</context>
           <context context-type="linenumber">109,117</context>
@@ -347,9 +347,9 @@
           <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.searchBar.categoryFilter" datatype="html">
+      <trans-unit id="widgets.searchBar.categoryFilter" datatype="html" xml:space="preserve">
         <source>Nach Kategorie filtern:</source>
-        <target state="translated">Filtrer par catégorie :</target>
+        <target state="translated">Filtrer par catégorie :</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-bar.component.ts</context>
           <context context-type="linenumber">97</context>
@@ -893,7 +893,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.loadBackup" datatype="html" xml:space="preserve">
         <source>Backup einlesen</source>
-        <target state="needs-translation">Restaurer sauvegarde</target>
+        <target state="translated">Restaurer sauvegarde</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.component.ts</context>
           <context context-type="linenumber">52</context>
@@ -1289,7 +1289,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.url" datatype="html" xml:space="preserve">
         <source>URL</source>
-        <target state="needs-translation">URL</target>
+        <target state="translated">URL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1421,7 +1421,7 @@
       </trans-unit>
       <trans-unit id="config.inputType.relation" datatype="html" xml:space="preserve">
         <source>Relation</source>
-        <target state="needs-translation">Relation</target>
+        <target state="translated">Relation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -1579,7 +1579,7 @@
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.qrCodes" datatype="html">
+      <trans-unit id="configuration.qrCodes" datatype="html" xml:space="preserve">
         <source>QR-Codes</source>
         <target state="needs-translation">QR-Codes</target>
         <context-group purpose="location">
@@ -1587,41 +1587,41 @@
           <context context-type="linenumber">57,62</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.qrCodes.enable" datatype="html">
+      <trans-unit id="configuration.qrCodes.enable" datatype="html" xml:space="preserve">
         <source>QR-Codes zur Identifikation verwenden</source>
-        <target state="needs-translation">QR-Codes zur Identifikation verwenden</target>
+        <target state="translated">Utiliser des QR-codes à des fins d'identification</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.qrCodes.autoCreate" datatype="html">
+      <trans-unit id="configuration.qrCodes.autoCreate" datatype="html" xml:space="preserve">
         <source>Für neue Ressourcen automatisch erzeugen</source>
-        <target state="needs-translation">Für neue Ressourcen automatisch erzeugen</target>
+        <target state="translated">Générer automatiquement pour les nouvelles ressources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.qrCodes.printedFields" datatype="html">
+      <trans-unit id="configuration.qrCodes.printedFields" datatype="html" xml:space="preserve">
         <source>Zu druckende Felder:</source>
-        <target state="needs-translation">Zu druckende Felder:</target>
+        <target state="translated">Champs à imprimer :</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">120,125</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.qrCodes.printFieldLabels" datatype="html">
+      <trans-unit id="configuration.qrCodes.printFieldLabels" datatype="html" xml:space="preserve">
         <source>Feldbezeichnung drucken</source>
-        <target state="needs-translation">Feldbezeichnung drucken</target>
+        <target state="translated">Imprimer le libellé du champ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">136,141</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.basicSettings" datatype="html">
+      <trans-unit id="configuration.basicSettings" datatype="html" xml:space="preserve">
         <source>Grundeinstellungen</source>
-        <target state="needs-translation">Grundeinstellungen</target>
+        <target state="translated">Paramètres par défaut</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.component.ts</context>
           <context context-type="linenumber">72</context>
@@ -1631,41 +1631,41 @@
           <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.allowFieldSpecificSearch" datatype="html">
+      <trans-unit id="configuration.allowFieldSpecificSearch" datatype="html" xml:space="preserve">
         <source>Feldspezifische Suche erlauben</source>
-        <target state="needs-translation">Feldspezifische Suche erlauben</target>
+        <target state="translated">Autoriser la recherche par champ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/field/field-editor-modal.component.ts</context>
           <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.multiLanguageInput.chooseLanguage" datatype="html">
+      <trans-unit id="configuration.multiLanguageInput.chooseLanguage" datatype="html" xml:space="preserve">
         <source>Sprache auswählen</source>
-        <target state="needs-translation">Sprache auswählen</target>
+        <target state="translated">Sélectionner la langue</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/widgets/multi-language-input.component.ts</context>
           <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.importModal.header" datatype="html">
+      <trans-unit id="configuration.importModal.header" datatype="html" xml:space="preserve">
         <source>Konfiguration aus anderem Projekt importieren</source>
-        <target state="needs-translation">Konfiguration aus anderem Projekt importieren</target>
+        <target state="translated">Importer une configuration depuis un autre projet</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.importModal.warning" datatype="html">
+      <trans-unit id="configuration.importModal.warning" datatype="html" xml:space="preserve">
         <source>Bitte beachten Sie, dass sämtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import verloren gehen. Die Projektkonfiguration wird vollständig durch die importierte Konfiguration ersetzt.</source>
-        <target state="needs-translation">Bitte beachten Sie, dass sämtliche Konfigurationsanpassungen (inklusive Wertelisten) beim Import verloren gehen. Die Projektkonfiguration wird vollständig durch die importierte Konfiguration ersetzt.</target>
+        <target state="translated">Veuillez noter que toutes les modifications de configuration (y compris les listes de valeurs) seront perdues lors de l'importation. La configuration du projet sera entièrement remplacée par la configuration importée.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.importModal.project" datatype="html">
+      <trans-unit id="configuration.importModal.project" datatype="html" xml:space="preserve">
         <source>Projekt</source>
-        <target state="needs-translation">Projekt</target>
+        <target state="translated">Projet</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/import/import-configuration-modal.component.ts</context>
           <context context-type="linenumber">167</context>
@@ -1675,113 +1675,115 @@
           <context context-type="linenumber">167</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.projectLanguages" datatype="html">
+      <trans-unit id="configuration.projectLanguages" datatype="html" xml:space="preserve">
         <source>Projektsprachen auswählen</source>
-        <target state="needs-translation">Projektsprachen auswählen</target>
+        <target state="translated">Sélectionner les langues du projet</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/languages/project-languages-modal.component.ts</context>
           <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.changeNotification.header" datatype="html">
+      <trans-unit id="configuration.changeNotification.header" datatype="html" xml:space="preserve">
         <source>Die Projektkonfiguration hat sich geändert.</source>
-        <target state="needs-translation">Die Projektkonfiguration hat sich geändert.</target>
+        <target state="translated">La configuration du projet a changé.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/notifications/configuration-change-notification-modal.component.ts</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.changeNotification.applyChanges" datatype="html">
+      <trans-unit id="configuration.changeNotification.applyChanges" datatype="html" xml:space="preserve">
         <source>Änderungen anwenden</source>
-        <target state="needs-translation">Änderungen anwenden</target>
+        <target state="translated">Appliquer les modifications</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/notifications/configuration-change-notification-modal.component.ts</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.saveChanges" datatype="html">
+      <trans-unit id="configuration.saveChanges" datatype="html" xml:space="preserve">
         <source>Konfigurationsänderungen speichern</source>
-        <target state="needs-translation">Konfigurationsänderungen speichern</target>
+        <target state="translated">Enregistrer les modifications de configuration</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.saveInfo.general" datatype="html">
+      <trans-unit id="configuration.saveInfo.general" datatype="html" xml:space="preserve">
         <source>Möchten Sie die von Ihnen vorgenommenen Änderungen an der Konfiguration wirklich speichern? Bitte beachten Sie, dass Ihre Änderungen das gesamte Projekt betreffen.</source>
-        <target state="needs-translation">Möchten Sie die von Ihnen vorgenommenen Änderungen an der Konfiguration wirklich speichern? Bitte beachten Sie, dass Ihre Änderungen das gesamte Projekt betreffen.</target>
+        <target state="translated">Souhaitez-vous vraiment enregistrer les modifications que vous avez apportées à la configuration ? Veuillez noter que vos modifications s'appliquent à l'ensemble du projet.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.saveInfo.synchronization" datatype="html">
+      <trans-unit id="configuration.saveInfo.synchronization" datatype="html" xml:space="preserve">
         <source>Andere Benutzerinnen und Benutzer, die über eine Synchronisationsverbindung am gleichen Projekt arbeiten, werden die Field-Desktopanwendung neustarten müssen, um die Konfigurationsänderungen zu übernehmen.</source>
-        <target state="needs-translation">Andere Benutzerinnen und Benutzer, die über eine Synchronisationsverbindung am gleichen Projekt arbeiten, werden die Field-Desktopanwendung neustarten müssen, um die Konfigurationsänderungen zu übernehmen.</target>
+        <target state="translated">Les autres utilisateurs travaillant sur le même projet via une connexion de synchronisation devront redémarrer l'application Field Desktop pour que les modifications de configuration soient prises en compte.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/save/save-modal.component.ts</context>
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.valueDescription" datatype="html">
+      <trans-unit id="configuration.valueDescription" datatype="html" xml:space="preserve">
         <source>Beschreibung</source>
-        <target state="needs-translation">Beschreibung</target>
+        <target state="translated">Description</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/value-editor-modal.component.ts</context>
           <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.editValue" datatype="html">
+      <trans-unit id="configuration.editValue" datatype="html" xml:space="preserve">
         <source>Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten</source>
-        <target state="needs-translation">Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> bearbeiten</target>
+        <target state="translated">Modifier valeur <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/>
+<x id="INTERPOLATION" equiv-text="{{valueId}}"/>
+<x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/value-editor-modal.component.ts</context>
           <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.createValue" datatype="html">
+      <trans-unit id="configuration.createValue" datatype="html" xml:space="preserve">
         <source>Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</source>
-        <target state="needs-translation">Wert <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/> erstellen</target>
+        <target state="translated">Créer valeur <x id="START_TAG_CODE" ctype="x-code" equiv-text="&lt;code&gt;"/><x id="INTERPOLATION" equiv-text="{{valueId}}"/><x id="CLOSE_TAG_CODE" ctype="x-code" equiv-text="&lt;/code&gt;"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/value-editor-modal.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.values" datatype="html">
+      <trans-unit id="configuration.values" datatype="html" xml:space="preserve">
         <source>Werte</source>
-        <target state="needs-translation">Werte</target>
+        <target state="translated">Valeurs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/valuelist-editor-modal.component.ts</context>
           <context context-type="linenumber">121</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.createdBy" datatype="html">
+      <trans-unit id="configuration.createdBy" datatype="html" xml:space="preserve">
         <source>Erstellt von:</source>
-        <target state="needs-translation">Erstellt von:</target>
+        <target state="translated">Créé par:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
           <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.descriptionHeading" datatype="html">
+      <trans-unit id="configuration.descriptionHeading" datatype="html" xml:space="preserve">
         <source>Beschreibung:</source>
-        <target state="needs-translation">Beschreibung:</target>
+        <target state="translated">Description :</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
           <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.usedBy" datatype="html">
+      <trans-unit id="configuration.usedBy" datatype="html" xml:space="preserve">
         <source>Verwendet von:</source>
-        <target state="needs-translation">Verwendet von:</target>
+        <target state="translated">Utilisé par :</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-preview.component.ts</context>
           <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuation.filterResults" datatype="html">
+      <trans-unit id="configuation.filterResults" datatype="html" xml:space="preserve">
         <source>Suchergebnisse filtern:</source>
-        <target state="needs-translation">Suchergebnisse filtern:</target>
+        <target state="translated">Filtrer résultats :</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/valuelist/valuelist-search-bar.component.ts</context>
           <context context-type="linenumber">51</context>
@@ -8977,9 +8979,9 @@
           <context context-type="linenumber">74,76</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.label" datatype="html">
+      <trans-unit id="configuration.label" datatype="html" xml:space="preserve">
         <source>Anzeigename</source>
-        <target state="needs-translation">Anzeigename</target>
+        <target state="translated">Libellé</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/category/category-editor-modal.html</context>
           <context context-type="linenumber">24,26</context>
@@ -9001,9 +9003,9 @@
           <context context-type="linenumber">9,11</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.valueLabel" datatype="html">
+      <trans-unit id="configuration.valueLabel" datatype="html" xml:space="preserve">
         <source>Anzeigetext</source>
-        <target state="needs-translation">Anzeigetext</target>
+        <target state="translated">Libéllé</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/editor/valuelist/value-editor-modal.html</context>
           <context context-type="linenumber">9,11</context>
@@ -10101,9 +10103,9 @@
           <context context-type="linenumber">14,17</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.createProcess.info.resultsIn.3" datatype="html">
+      <trans-unit id="configuration.createProcess.info.resultsIn.3" datatype="html" xml:space="preserve">
         <source>Sollten Sie an dieser Stelle keine Auswahl treffen, können Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> jederzeit nachträglich zur neuen Kategorie hinzufügen. </source>
-        <target state="needs-translation">Sollten Sie an dieser Stelle keine Auswahl treffen, können Sie das Feld <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> jederzeit nachträglich zur neuen Kategorie hinzufügen. </target>
+        <target state="translated">Si vous ne faites pas de sélection à ce stade, vous pouvez ajouter à tout moment le champ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>"<x id="INTERPOLATION" equiv-text="{{getFieldLabel('resultsIn')}}"/> "<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> à tout moment ultérieurement à la nouvelle catégorie. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/add/category/create-process-modal.html</context>
           <context context-type="linenumber">39,42</context>

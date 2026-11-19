@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { is, isArray, on } from 'tsfun';
-import { Field, Labels, Named, Condition, Valuelist, BaseField } from 'idai-field-core';
+import { Field, Labels, Named, Condition, Valuelist, BaseField, FieldGeometry } from 'idai-field-core';
 import { UtilTranslations } from '../../../../../util/util-translations';
 
 
@@ -94,7 +94,7 @@ export class ConditionSectionComponent {
     public getConditionValues(): string[] {
 
         return this.getConditionField()?.inputType === Field.InputType.GEOMETRY
-            ? (this.getConditionField() as Field).geometryTypes
+            ? ((this.getConditionField() as Field).geometryTypes ?? FieldGeometry.getAvailableGeometryTypes())
             : this.labels.orderKeysByLabels(this.getConditionValuelist());
     }
 

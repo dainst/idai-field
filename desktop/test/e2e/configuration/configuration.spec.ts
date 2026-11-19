@@ -1136,6 +1136,59 @@ test.describe('configuration', () => {
     });
 
 
+    test('do not allow removing geometry types of a geometry field that is configured as a condition for another field',
+            async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('field');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickSelectConditionField('geometry', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 1, 'field'); // Geometry type 'MultiPolygon'
+        await EditConfigurationPage.clickConfirm();
+
+        await ConfigurationPage.clickSelectGroup('position');
+        await ConfigurationPage.clickOpenContextMenuForField('geometry');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        await EditConfigurationPage.clickGeometryTypeCheckbox(1); // Disable 'MultiPolygon'
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForMessage('Die erlaubten Geometrietypen dieses Feldes können nicht verändert werden, da es als '
+            + 'Bedingungsfeld für das Feld "test:field" konfiguriert wurde.');
+
+        await EditConfigurationPage.clickCancel(true);
+        await ConfigurationPage.save();
+    });
+
+
+    test('do not allow removing geometry types of a field that is configured as a condition for a '
+            + 'subcategory field', async () => {
+
+        await CategoryPickerPage.clickSelectCategory('Layer', 'Feature');
+        await ConfigurationPage.clickAddFieldButton();
+        await AddFieldModalPage.typeInSearchFilterInput('field');
+        await AddFieldModalPage.clickCreateNewField();
+        await EditConfigurationPage.clickSelectConditionField('geometry', 'field');
+        await EditConfigurationPage.clickSelectConditionValue('valuelist', 1, 'field'); // Geometry type 'MultiPolygon'
+        await EditConfigurationPage.clickConfirm();
+
+        await CategoryPickerPage.clickSelectCategory('Feature');
+        await ConfigurationPage.clickSelectGroup('position');
+        await ConfigurationPage.clickOpenContextMenuForField('geometry');
+        await ConfigurationPage.clickContextMenuEditOption();
+
+        await EditConfigurationPage.clickGeometryTypeCheckbox(1); // Disable 'MultiPolygon'
+        await EditConfigurationPage.clickConfirm();
+
+        await waitForMessage('Die erlaubten Geometrietypen dieses Feldes können nicht verändert werden, da es als '
+            + 'Bedingungsfeld für das Feld "test:field" der Unterkategorie "Erdbefund" konfiguriert wurde.');
+
+        await EditConfigurationPage.clickCancel(true);
+        await ConfigurationPage.save();
+    });
+
+
     test('create composite field', async () => {
 
         await CategoryPickerPage.clickSelectCategory('Place');

@@ -1280,7 +1280,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_GEOMETRY_TYPES_CHILD_CATEGORY] = {
-            content: $localize `:@@messages.configuration.error.fieldConditionViolation.geometryTypes.childCategory:Die erlaubten Geometrietypen dieses Feldes kann nicht verändert werden, da es als Bedingungsfeld für das Feld "[0]" der Unterkategorie "[1]" konfiguriert wurde.`,
+            content: $localize `:@@messages.configuration.error.fieldConditionViolation.geometryTypes.childCategory:Die erlaubten Geometrietypen dieses Feldes können nicht verändert werden, da es als Bedingungsfeld für das Feld "[0]" der Unterkategorie "[1]" konfiguriert wurde.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE] = {

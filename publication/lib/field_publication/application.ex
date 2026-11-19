@@ -72,7 +72,7 @@ defmodule FieldPublication.Application do
           [[response, minor_version_string]] ->
             {minor_version, ""} = Integer.parse(minor_version_string)
 
-            if minor_version >= 10 do
+            if minor_version >= 8 do
               {:ok, response}
             else
               {:error, response}

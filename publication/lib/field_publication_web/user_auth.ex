@@ -28,6 +28,7 @@ defmodule FieldPublicationWeb.UserAuth do
   @remember_me_cookie "_field_publication_web_user_remember_me"
   @remember_me_options [sign: true, max_age: @max_age, same_site: "Lax"]
   @cache_name Application.compile_env(:field_publication, :user_tokens_cache_name)
+  @authorization_failed_message "You are not allowed to access that page."
 
   @doc """
   Logs the user in.
@@ -218,7 +219,7 @@ defmodule FieldPublicationWeb.UserAuth do
     else
       socket =
         socket
-        |> Phoenix.LiveView.put_flash(:error, "You are not allowed to access that page.")
+        |> Phoenix.LiveView.put_flash(:error, @authorization_failed_message)
         |> Phoenix.LiveView.redirect(to: ~p"/")
 
       {:halt, socket}
@@ -248,7 +249,7 @@ defmodule FieldPublicationWeb.UserAuth do
           {
             :halt,
             socket
-            |> Phoenix.LiveView.put_flash(:error, "You are not allowed to access that page.")
+            |> Phoenix.LiveView.put_flash(:error, @authorization_failed_message)
             |> Phoenix.LiveView.redirect(to: ~p"/")
           }
         else
@@ -288,7 +289,7 @@ defmodule FieldPublicationWeb.UserAuth do
     else
       socket =
         socket
-        |> Phoenix.LiveView.put_flash(:error, "You are not allowed to access that page.")
+        |> Phoenix.LiveView.put_flash(:error, @authorization_failed_message)
         |> Phoenix.LiveView.redirect(to: ~p"/")
 
       {:halt, socket}
@@ -355,7 +356,7 @@ defmodule FieldPublicationWeb.UserAuth do
       conn
     else
       conn
-      |> put_flash(:error, "You are not allowed to access that page.")
+      |> put_flash(:error, @authorization_failed_message)
       |> redirect(to: ~p"/")
       |> halt()
     end
@@ -364,22 +365,32 @@ defmodule FieldPublicationWeb.UserAuth do
   def ensure_publication_access(
         %{params: %{"project_identifier" => project_identifier, "draft_date" => draft_date}} =
           conn,
-        _options
+        options
       ) do
     Publication.get(project_identifier, draft_date)
     |> case do
       {:error, _} ->
-        conn
-        |> resp(
-          404,
+        publication_not_found_message =
           "No publication found for project '#{project_identifier}' with a publication date of '#{draft_date}'."
-        )
+
+        if options == :api do
+          resp(conn, 404, publication_not_found_message)
+        else
+          conn
+          |> put_flash(:error, publication_not_found_message)
+          |> redirect(to: ~p"/")
+        end
         |> halt()
 
       {:ok, %Publication{} = publication} ->
         if not Project.has_publication_access?(publication, conn.assigns.current_user) do
-          conn
-          |> resp(403, "You are not allowed to access that page.")
+          if options == :api do
+            resp(conn, 403, @authorization_failed_message)
+          else
+            conn
+            |> put_flash(:error, @authorization_failed_message)
+            |> redirect(to: ~p"/")
+          end
           |> halt()
         else
           conn
@@ -404,14 +415,14 @@ defmodule FieldPublicationWeb.UserAuth do
   end
 
   @doc """
-  Used for routes exclusive to the CouchDB admin.
+  Used for routes exclusive to administrators.
   """
   def require_administrator(conn, _opts) do
     if User.is_admin?(conn.assigns[:current_user]) do
       conn
     else
       conn
-      |> put_flash(:error, "You are not allowed to access that page.")
+      |> put_flash(:error, @authorization_failed_message)
       |> redirect(to: ~p"/")
       |> halt()
     end

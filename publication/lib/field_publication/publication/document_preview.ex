@@ -95,6 +95,29 @@ defmodule FieldPublication.Publication.DocumentPreview do
     end
   end
 
+  def get(%Publication{meta_database: db_name}, uuid) when is_binary(uuid) do
+    uuid
+    |> id()
+    |> CouchService.get_document(db_name)
+    |> case do
+      {:ok, %{status: 200, body: body}} ->
+        {:ok,
+         body
+         |> Jason.decode!()
+         |> Map.get("preview")
+         |> Document.from_map()}
+
+      _ ->
+        {:error, :found}
+    end
+  end
+
+  def get!(%Publication{} = pub, uuid) when is_binary(uuid) do
+    {:ok, doc} = get(pub, uuid)
+
+    doc
+  end
+
   def recreate_previews(%Publication{} = publication) do
     clear_all(publication)
     create_all(publication)

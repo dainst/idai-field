@@ -74,6 +74,7 @@ defmodule FieldPublication.FileService do
   end
 
   def initialize!(project_identifier) do
+    # TODO: Add missing?
     [
       get_raw_image_data_path(project_identifier),
       get_web_images_path(project_identifier),
@@ -88,6 +89,7 @@ defmodule FieldPublication.FileService do
   end
 
   def delete(project_identifier) do
+    # TODO: Add missing?
     [
       get_raw_data_path(project_identifier),
       get_web_images_path(project_identifier),

@@ -270,8 +270,7 @@ defmodule FieldPublicationWeb.UI.ManagementLive do
   end
 
   def handle_info(
-        {FieldPublicationWeb.Management.Modals.ReplicationFormComponent,
-         {%ReplicationInput{} = params, %Publication{} = publication}},
+        {:publication_initialized, {%ReplicationInput{} = params, %Publication{} = publication}},
         socket
       ) do
     FieldPublication.Replication.start(

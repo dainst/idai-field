@@ -32,9 +32,7 @@ export namespace CategoryFormIndex {
     }
 
 
-    export function find(index: CategoryFormIndex,
-                         searchTerm: string,
-                         parentCategory?: Name,
+    export function find(index: CategoryFormIndex, searchTerm: string, parentCategory?: Name,
                          onlySupercategories?: boolean): Array<CategoryForm> {
 
         return set(flatten(keysValues(index)

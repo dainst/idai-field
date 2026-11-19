@@ -67,7 +67,73 @@ defmodule FieldPublication.Test.DataScaffolding do
     Map.put(context, :administrator, user)
   end
 
+  def add_projects(%{editor: editor} = context) do
+    {project_a, project_b, project_c} = projects_setup(editor)
+
+    on_exit(fn ->
+      projects_exit([project_a, project_b, project_c])
+    end)
+
+    context
+    |> Map.put(:project_a, project_a)
+    |> Map.put(:project_b, project_b)
+    |> Map.put(:project_c, project_c)
+  end
+
   def add_projects_and_empty_publications(%{editor: editor} = context) do
+    {project_a, project_b, project_c} = projects_setup(editor)
+
+    {published_project_a, unpublished_project_a, unpublished_project_b} =
+      publications_setup(project_a, project_b)
+
+    on_exit(fn ->
+      projects_exit([project_a, project_b, project_c])
+    end)
+
+    context
+    |> Map.put(:project_a, project_a)
+    |> Map.put(:project_b, project_b)
+    |> Map.put(:project_c, project_c)
+    |> Map.put(:published_project_a, published_project_a)
+    |> Map.put(:unpublished_project_a, unpublished_project_a)
+    |> Map.put(:unpublished_project_b, unpublished_project_b)
+  end
+
+  def add_projects_and_publications(%{editor: editor} = context) do
+    {project_a, project_b, project_c} = projects_setup(editor)
+
+    {published_project_a, unpublished_project_a, unpublished_project_b} =
+      publications_setup(project_a, project_b)
+
+    FieldPublication.Test.ProjectSeed.seed_data(published_project_a)
+    FieldPublication.Test.ProjectSeed.seed_data(unpublished_project_a)
+
+    on_exit(fn ->
+      projects_exit([project_a, project_b, project_c])
+    end)
+
+    context
+    |> Map.put(:project_a, project_a)
+    |> Map.put(:project_b, project_b)
+    |> Map.put(:project_c, project_c)
+    |> Map.put(:published_project_a, published_project_a)
+    |> Map.put(:unpublished_project_a, unpublished_project_a)
+    |> Map.put(:unpublished_project_b, unpublished_project_b)
+  end
+
+  def pick_map_layer_image(%{published_project_a: %Publication{} = publication} = context) do
+    image_doc =
+      Publication.get_raw_document("project", publication)
+      |> Map.get("resource", %{})
+      |> Map.get("relations", %{})
+      |> Map.get("hasMapLayer", [])
+      |> List.first()
+      |> Publication.get_raw_document(publication)
+
+    Map.put(context, :image_doc, image_doc)
+  end
+
+  defp projects_setup(editor) do
     {:ok, project_a} =
       Project.put(%Project{
         identifier: "test_project_a",
@@ -79,6 +145,19 @@ defmodule FieldPublication.Test.DataScaffolding do
         identifier: "test_project_b"
       })
 
+    {:ok, project_c} =
+      Project.put(%Project{
+        identifier: "test_project_c"
+      })
+
+    {project_a, project_b, project_c}
+  end
+
+  defp projects_exit(projects) do
+    Enum.each(projects, fn project -> Project.delete(project) end)
+  end
+
+  def publications_setup(project_a, project_b) do
     {:ok, published_project_a} =
       Publication.create_from_replication_input(%ReplicationInput{
         delete_existing_publication: true,
@@ -112,6 +191,12 @@ defmodule FieldPublication.Test.DataScaffolding do
           %{
             language: "en",
             text: "This is the project description."
+          }
+        ],
+        publication_description: [
+          %{
+            language: "en",
+            text: "This is a publication created by the test scaffolding."
           }
         ]
       })
@@ -188,16 +273,6 @@ defmodule FieldPublication.Test.DataScaffolding do
         ]
       })
 
-    on_exit(fn ->
-      Project.delete(project_a)
-      Project.delete(project_b)
-    end)
-
-    context
-    |> Map.put(:project_a, project_a)
-    |> Map.put(:project_b, project_b)
-    |> Map.put(:published_project_a, published_project_a)
-    |> Map.put(:unpublished_project_a, unpublished_project_a)
-    |> Map.put(:unpublished_project_b, unpublished_project_b)
+    {published_project_a, unpublished_project_a, unpublished_project_b}
   end
 end

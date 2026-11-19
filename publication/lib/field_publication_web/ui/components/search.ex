@@ -6,6 +6,7 @@ defmodule FieldPublicationWeb.UI.Components.Search do
   alias FieldPublication.Publication.Search
   alias FieldPublication.Publication.Search.SearchDocument
 
+  attr(:id, :string, required: true)
   attr(:current_query, :string, required: true)
   attr(:total, :integer, required: true)
   attr(:active_filters, :map, default: %{})
@@ -17,6 +18,7 @@ defmodule FieldPublicationWeb.UI.Components.Search do
       phx-change="search"
       phx-submit="search"
       class="pb-2"
+      id={@id}
     >
       <input
         class="w-full border p-2"

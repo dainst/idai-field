@@ -43,6 +43,7 @@ export interface Field extends BaseField {
     constraintName?: string;                            // For input type "derivedRelation"
     geometryTypes?: Array<FieldGeometryType>;           // For input type "geometry"
     defaultGeometryTypes?: Array<FieldGeometryType>;    // For input type "geometry"
+    editableOnMap?: boolean;                            // For input type "geoemtry"
 }
 
 

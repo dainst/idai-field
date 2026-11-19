@@ -785,7 +785,17 @@ Legen Sie hier fest, ob in das Feld ein Einzeldatum oder ein Datumsbereich einge
 
 ### Konfiguration von Geometriefeldern
 
-Das Formular jeder Kategorie, für die Geometrien angelegt werden können, enthält immer ein Feld des Eingabetyps "Geometrie". Im Feldeditor können Sie die erlaubten Geometrietypen für dieses Feld auswählen. Beim Anlegen von Geometrien für Ressourcen der entsprechenden Kategorie stehen anschließend nur die ausgewählten Geometrietypen zur Auswahl. Standardmäßig sind alle Geometrietypen erlaubt.
+Das Formular jeder Kategorie, für die Geometrien angelegt werden können, enthält immer ein Feld des Eingabetyps "Geometrie". Im Feldeditor stehen für dieses Feld zusätzliche Optionen zur Einschränkung der Bearbeitung auf der Karte sowie zur Auswahl der erlaubten Geometrietypen zur Verfügung.
+
+
+#### Bearbeitung auf der Karte erlauben
+
+Über diese Option kann festgelegt werden, ob die Geometrie manuell auf der Karte angelegt und editiert werden kann. Die Option ist standardmäßig aktiviert. Wird sie deaktiviert, können Geometriedaten nur noch über den Ressourceneditor oder per Import hinzugefügt bzw. bearbeitet werden.
+
+
+#### Erlaubte Geometrietypen
+
+Hier können Sie einen oder mehrere Geometrietypen auswählen. Beim Anlegen von Geometrien für Ressourcen der entsprechenden Kategorie stehen anschließend nur die ausgewählten Geometrietypen zur Auswahl. Standardmäßig sind alle Geometrietypen erlaubt.
 
 Field Desktop unterstützt die folgenden Geometrietypen:
 

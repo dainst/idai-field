@@ -7,7 +7,7 @@
     <:loading>Searching...</:loading>
     <div class="w-64">
       <div class="sticky top-4">
-        <.search_input total={total} current_query={@url_parameters.q} />
+        <.search_input id="system_search_input" total={total} current_query={@url_parameters.q} />
         <.filter_list
           available_filters={available_filters}
           active_filters={@url_parameters.filters}

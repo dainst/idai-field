@@ -57,7 +57,7 @@ describe('ConfigLoader', () => {
     });
 
 
-    it('mix in common fields', async done => {
+    it('mix in common fields', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -106,12 +106,10 @@ describe('ConfigLoader', () => {
         }
 
         expect(pconf.getCategory('B').groups[0].fields[0]['name']).toBe('processor');
-        
-        done();
     });
 
 
-    it('translate common fields', async done => {
+    it('translate common fields', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -173,12 +171,10 @@ describe('ConfigLoader', () => {
 
         expect(pconf.getCategory('B').groups[0].fields[0].label.de).toBe('Bearbeiter/Bearbeiterin');
         expect(pconf.getCategory('B').groups[0].fields[0].description.de).toBe('abc');
-
-        done();
     });
 
 
-    it('mix existing externally configured with internal inherits relation', async done => {
+    it('mix existing externally configured with internal inherits relation', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -262,12 +258,10 @@ describe('ConfigLoader', () => {
         expect((pconf.getRelationsForDomainCategory('A1') as any)[0].range).toContain('B');
         expect((pconf.getRelationsForDomainCategory('A2') as any)[0].range).toContain('B2');
         expect((pconf.getRelationsForDomainCategory('C') as any)[0].range).toContain('D');
-
-        done();
     });
 
 
-    it('preprocess - apply language confs', async done => {
+    it('preprocess - apply language confs', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             Parent: { 
@@ -332,12 +326,10 @@ describe('ConfigLoader', () => {
 
         expect(pconf.getRelationsForDomainCategory('A')[1].label.de).toEqual('r1_');
         expect(pconf.getRelationsForDomainCategory('A')[0].label).toEqual({});
-
-        done();
     });
 
 
-    it('preprocess - apply custom fields configuration', async done => {
+    it('preprocess - apply custom fields configuration', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             F: {
@@ -422,12 +414,10 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
-
-        done();
     });
 
 
-    it('preprocess - apply custom fields configuration - add subcategories', async done => {
+    it('preprocess - apply custom fields configuration - add subcategories', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             Find: {
@@ -488,12 +478,10 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
-
-        done();
     });
 
 
-    it('preprocess - apply custom fields configuration - add subcategories - parent not defined', async done => {
+    it('preprocess - apply custom fields configuration - add subcategories - parent not defined', async () => {
 
         const customForms: Map<CustomFormDefinition> = {
             'B': {
@@ -515,12 +503,10 @@ describe('ConfigLoader', () => {
         } catch(err) {
             expect(err).toEqual([ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, 'Find']);
         }
-
-        done();
     });
 
 
-    it('preprocess - apply custom fields configuration - add subcategories - non extendable categories not allowed', async done => {
+    it('preprocess - apply custom fields configuration - add subcategories - non extendable categories not allowed', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             Place: {
@@ -552,12 +538,10 @@ describe('ConfigLoader', () => {
         } catch(err) {
             expect(err).toEqual([ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY, 'Place']);
         }
-
-        done();
     });
 
 
-    it('preprocess - apply mandatory setting', async done => {
+    it('preprocess - apply mandatory setting', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -606,12 +590,10 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
-
-        done();
     });
 
 
-    it('apply groups configuration', async done => {
+    it('apply groups configuration', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             Parent1: {
@@ -821,12 +803,10 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
-
-        done();
     });
 
 
-    it('add fields only once even if they are mentioned multiple times in groups configuration', async done => {
+    it('add fields only once even if they are mentioned multiple times in groups configuration', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             Parent: {
@@ -877,12 +857,10 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
-
-        done();
     });
 
 
-   it('apply hidden', async done => {
+   it('apply hidden', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -978,12 +956,10 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
-
-        done();
     });
 
 
-    it('set libraryId', async done => {
+    it('set libraryId', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -1040,12 +1016,11 @@ describe('ConfigLoader', () => {
         expect(pconf.getCategory('A').libraryId).toBe('A');
         expect(pconf.getCategory('B').libraryId).toBe('B:default');
         expect(pconf.getCategory('C').libraryId).toBe('C');
-        
-        done();
+    
     });
 
 
-    it('include all built-in relations', async done => {
+    it('include all built-in relations', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -1116,12 +1091,10 @@ describe('ConfigLoader', () => {
         expect(pconf.getCategory('A').groups[0].fields[1].name).toEqual('isRecordedIn');
         expect(pconf.getCategory('B').groups[0].fields.length).toBe(1);
         expect(pconf.getCategory('B').groups[0].fields[0].name).toEqual('isSameAs');
-
-        done();
     });
 
 
-    it('include custom relations', async done => {
+    it('include custom relations', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -1192,12 +1165,10 @@ describe('ConfigLoader', () => {
         expect(pconf.getRelations()[0].range.length).toBe(1);
         expect(pconf.getRelations()[0].range[0]).toBe('B');
         expect(pconf.getRelations()[1].name).toEqual('isSimilarTo');
-
-        done();
     });
 
 
-    it('read valuelists', async () => {
+    it('read valuelists', () => {
 
         const valuelists: Map<Valuelist> = {
             valuelistDefault: {
@@ -1278,7 +1249,7 @@ describe('ConfigLoader', () => {
     });
 
 
-    it('save original groups', async done => {
+    it('save original groups', async () => {
 
         const builtInCategories: Map<BuiltInCategoryDefinition> = {
             A: {
@@ -1334,7 +1305,5 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
-
-        done();
     });
 });

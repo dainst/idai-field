@@ -1,6 +1,6 @@
 services:
     couchdb:
-        image: couchdb:3.3.2
+        image: couchdb:3.5.3
         environment:
             - COUCHDB_USER=client_integration_test
             - COUCHDB_PASSWORD=pw

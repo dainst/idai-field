@@ -1,11 +1,9 @@
 defmodule FieldPublicationWeb.Api.V1.PublicationTest do
   use FieldPublicationWeb.ConnCase
 
-  alias FieldPublication.{
-    CouchService,
-    Project,
-    Publication
-  }
+  import FieldPublication.Test.DataScaffolding
+
+  alias FieldPublication.Publication
 
   alias FieldPublication.Publication.{
     Category,
@@ -15,35 +13,24 @@ defmodule FieldPublicationWeb.Api.V1.PublicationTest do
     RelationGroup
   }
 
-  alias FieldPublication.Test.ProjectSeed
+  setup_all [
+    :create_core_database,
+    :add_editor_user,
+    :add_admin_user,
+    :add_projects_and_publications,
+    :pick_document
+  ]
 
-  @core_database Application.compile_env(:field_publication, :core_database)
-  @test_project_identifier "test_project_a"
-
-  setup_all %{} do
-    CouchService.put_database(@core_database)
-
-    {project, publication} = ProjectSeed.create_full_publication(@test_project_identifier, true)
-
-    on_exit(fn ->
-      Project.get(@test_project_identifier)
-      |> case do
-        {:ok, %Project{} = project} ->
-          Project.delete(project)
-
-        _ ->
-          :ok
-      end
-
-      CouchService.delete_database(@core_database)
-    end)
-
+  def pick_document(%{published_project_a: %Publication{} = publication} = context) do
     [doc] = Publication.get_doc_stream_for_all(publication) |> Enum.take(1)
-
-    %{project: project, publication: publication, doc: doc}
+    Map.put(context, :doc, doc)
   end
 
-  test "returns raw data json for valid url", %{conn: conn, publication: publication, doc: doc} do
+  test "returns raw data json for valid url", %{
+    conn: conn,
+    published_project_a: publication,
+    doc: doc
+  } do
     assert get(
              conn,
              ~p"/api/v1/#{publication.project_identifier}/#{publication.draft_date}/doc/#{doc["_id"]}"
@@ -53,7 +40,7 @@ defmodule FieldPublicationWeb.Api.V1.PublicationTest do
 
   test "returns extended data json for valid url", %{
     conn: conn,
-    publication: publication,
+    published_project_a: publication,
     doc: doc
   } do
     assert %Document{} =

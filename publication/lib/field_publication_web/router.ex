@@ -40,7 +40,7 @@ defmodule FieldPublicationWeb.Router do
     end
 
     scope "/v1/:project_identifier/:draft_date/doc" do
-      pipe_through(:ensure_publication_access)
+      pipe_through({:ensure_publication_access, :api})
 
       get(
         "/:uuid/extended",
@@ -56,14 +56,14 @@ defmodule FieldPublicationWeb.Router do
     end
 
     scope "/v1/:project_identifier/:draft_date/geo" do
-      pipe_through(:ensure_publication_access)
+      pipe_through({:ensure_publication_access, :api})
 
       get("/:epsg", FieldPublicationWeb.Api.V1.Publication, :geo_vector_data)
       get("/", FieldPublicationWeb.Api.V1.Publication, :list_geo_vector_data)
     end
 
     scope "/v1/:project_identifier/:draft_date" do
-      pipe_through(:ensure_publication_access)
+      pipe_through({:ensure_publication_access, :api})
       get("/", FieldPublicationWeb.Api.V1.Publication, :index)
     end
 
@@ -172,7 +172,7 @@ defmodule FieldPublicationWeb.Router do
     #   path: "/api/spec",
     #   title: "API Specification · Field Publication"
 
-    get("/api_doc", FieldPublicationWeb.UI.ApiDocControllerController, :show)
+    get("/api_doc", FieldPublicationWeb.UI.ApiDocumentationController, :show)
     get("/select_locale", FieldPublicationWeb.UI.LanguageController, :selection)
     delete("/log_out", FieldPublicationWeb.UI.UserSessionController, :delete)
 

@@ -1,4 +1,4 @@
-defmodule FieldPublicationWeb.UI.ApiDocControllerHTML do
+defmodule FieldPublicationWeb.UI.ApiDocumentationHTML do
   use FieldPublicationWeb, :html
 
   def show(assigns) do

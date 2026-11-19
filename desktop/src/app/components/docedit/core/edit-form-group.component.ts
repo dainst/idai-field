@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, Output, OnChanges, OnDestroy } from '@angular/core';
 import { isArray, Map } from 'tsfun';
-import { Condition, Datastore, Document, Field, Labels, ProjectConfiguration, Relation, Valuelist, ValuelistUtil,
-    compare } from 'idai-field-core';
+import { Condition, Datastore, Document, Field, FieldResource, Labels, ProjectConfiguration, Relation, Valuelist,
+    ValuelistUtil, compare } from 'idai-field-core';
 import { Language } from '../../../services/languages';
 import { AngularUtility } from '../../../angular/angular-utility';
 import { UtilTranslations } from '../../../util/util-translations';
@@ -171,10 +171,18 @@ export class EditFormGroup extends ConfigurationInfoProvider implements OnChange
 
         if (field.condition.exists) {
             return $localize `:@@docedit.conditionalFieldInfo.tooltip.exists:Dieses Feld wird angezeigt, weil das Feld "${fieldLabel}" ausgefüllt ist.`;
-        } else if (isArray(field.condition.values) && (field.condition.values as string[]).length > 1) {
-            return $localize `:@@docedit.conditionalFieldInfo.tooltip.multiple:Dieses Feld wird angezeigt, weil im Feld "${fieldLabel}" einer der folgenden Werte eingetragen ist: ${conditionLabel}`;
+        } else if (field.condition.fieldName === FieldResource.GEOMETRY) {
+            if (isArray(field.condition.values) && (field.condition.values as string[]).length > 1) {
+                return $localize `:@@docedit.conditionalFieldInfo.tooltip.geometryType.multiple:Dieses Feld wird angezeigt, weil die Ressource eine Geometrie eines der folgenden Typen besitzt: ${conditionLabel}`;
+            } else {
+                return $localize `:@@docedit.conditionalFieldInfo.tooltip.geometryType.single:Dieses Feld wird angezeigt, weil die Ressource eine Geometrie des Typs "${conditionLabel}" besitzt.`;
+            }
         } else {
-            return $localize `:@@docedit.conditionalFieldInfo.tooltip.single:Dieses Feld wird angezeigt, weil im Feld "${fieldLabel}" der Wert "${conditionLabel}" eingetragen ist.`;
+            if (isArray(field.condition.values) && (field.condition.values as string[]).length > 1) {
+                return $localize `:@@docedit.conditionalFieldInfo.tooltip.multiple:Dieses Feld wird angezeigt, weil im Feld "${fieldLabel}" einer der folgenden Werte eingetragen ist: ${conditionLabel}`;
+            } else {
+                return $localize `:@@docedit.conditionalFieldInfo.tooltip.single:Dieses Feld wird angezeigt, weil im Feld "${fieldLabel}" der Wert "${conditionLabel}" eingetragen ist.`;
+            }
         }
     }
 

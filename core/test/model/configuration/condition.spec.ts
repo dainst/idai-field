@@ -205,6 +205,37 @@ describe('Condition', () => {
             subfields, 'subfield')).toBe(false);
         expect(Condition.isFulfilled(subfields[1].condition, {}, subfields, 'subfield')).toBe(false);
     });
+
+
+    it('check condition for geometry field', () => {
+
+        const fields: Array<Field> = [
+            {
+                name: 'geometry',
+                inputType: 'geometry'
+            },
+            {
+                name: 'field',
+                inputType: 'text',
+                condition: {
+                    fieldName: 'geometry',
+                    values: ['Point']
+                }
+            }
+        ];
+    
+        expect(Condition.isFulfilled(
+            fields[1].condition, { geometry: { type: 'Point', coordinates: [1, 1]} },
+            fields, 'field')
+        ).toBe(true);
+
+        expect(Condition.isFulfilled(
+            fields[1].condition, { geometry: { type: 'LineString', coordinates: [[1, 1], [1, 2]] } },
+            fields, 'field')
+        ).toBe(false);
+
+        expect(Condition.isFulfilled(fields[1].condition, {}, fields, 'field')).toBe(false);
+    });
     
     
     it('check chained condition', () => {

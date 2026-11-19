@@ -36,7 +36,7 @@
             </label>
         </div>
     </div>
-    <div *ngIf="condition[type + 'Name'] && this.getConditionType() === 'valuelist' && !condition.exists"
+    <div *ngIf="condition[type + 'Name'] && this.getConditionType() === 'values' && !condition.exists"
          class="valuelist-condition-checkboxes">
         <div *ngFor="let value of getConditionValues()" class="checkbox form-check form-check-inline">
             <label class="form-check-label" [class.disabled]="disabled">

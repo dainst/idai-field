@@ -1,5 +1,6 @@
 import { intersect, isArray } from 'tsfun';
-import { BaseField } from './field';
+import { BaseField, Field } from './field';
+import { FieldResource } from '../document/field-resource';
 
 
 export interface Condition {
@@ -34,7 +35,9 @@ export module Condition {
             return field.name === condition[type + 'Name'];
         });
 
-        const data: any = fieldContainer[conditionField.name];
+        let data: any = fieldContainer[conditionField.name];
+        if (conditionField.inputType === Field.InputType.GEOMETRY) data = data?.type;
+
         const fulfilled: boolean = data !== undefined
             ? condition.exists
                 ? true
@@ -79,7 +82,11 @@ export module Condition {
         } else if (condition.values === false) {
             return translate('false');
         } else {
-            return condition.values.map(valueId => getValueLabel(valueId)).join(', ');
+            return condition.values.map(valueId => {
+                return condition.fieldName === FieldResource.GEOMETRY
+                    ? translate('geometry.' + valueId)
+                    : getValueLabel(valueId);
+            }).join(', ');
         }
     }
 }

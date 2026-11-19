@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { is, isArray, on } from 'tsfun';
 import { Field, Labels, Named, Condition, Valuelist, BaseField } from 'idai-field-core';
+import { UtilTranslations } from '../../../../../util/util-translations';
 
 
 
@@ -21,14 +22,21 @@ export class ConditionSectionComponent {
     @Input() disabled: boolean = false;
 
 
-    constructor(private labels: Labels) {}
+    constructor(private labels: Labels,
+                private utilTranslations: UtilTranslations) {}
 
 
     public isVisible = () => this.condition && this.getConditionFields().length > 0;
 
     public getFieldLabel = (field: BaseField) => this.labels.get(field);
 
-    public getValueLabel = (valueId: string) => this.labels.getValueLabel(this.getConditionValuelist(), valueId);
+
+    public getValueLabel(valueId: string) {
+        
+        return this.getConditionField().inputType === Field.InputType.GEOMETRY
+            ? this.utilTranslations.getTranslation('geometry.' + valueId)
+            : this.labels.getValueLabel(this.getConditionValuelist(), valueId);
+    }
 
 
     public getConditionFields(): Array<BaseField> {
@@ -50,7 +58,7 @@ export class ConditionSectionComponent {
 
         if (this.condition.exists) {
             delete this.condition.exists;
-            this.condition.values = this.getConditionType() === 'valuelist' ? [] : true;
+            this.condition.values = this.getConditionType() === 'values' ? [] : true;
         } else {
             this.condition.exists = true;
             delete this.condition.values;
@@ -60,7 +68,7 @@ export class ConditionSectionComponent {
 
     public resetCondition() {
 
-        if (this.getConditionType() === 'valuelist') {
+        if (this.getConditionType() === 'values') {
             delete this.condition.exists;
             this.condition.values = [];
         } else if (this.getConditionType() === 'boolean') {
@@ -73,19 +81,21 @@ export class ConditionSectionComponent {
     }
 
 
-    public getConditionType(): 'valuelist'|'boolean'|'other' {
+    public getConditionType(): 'values'|'boolean'|'other' {
 
-        return this.getConditionField()?.inputType === 'boolean'
+        return this.getConditionField()?.inputType === Field.InputType.BOOLEAN
             ? 'boolean'
-            : this.getConditionField()?.valuelist
-                ? 'valuelist'
+            : (this.getConditionField()?.inputType === Field.InputType.GEOMETRY || this.getConditionField()?.valuelist)
+                ? 'values'
                 : 'other';
     }
 
 
     public getConditionValues(): string[] {
 
-        return this.labels.orderKeysByLabels(this.getConditionValuelist());
+        return this.getConditionField()?.inputType === Field.InputType.GEOMETRY
+            ? (this.getConditionField() as Field).geometryTypes
+            : this.labels.orderKeysByLabels(this.getConditionValuelist());
     }
 
 

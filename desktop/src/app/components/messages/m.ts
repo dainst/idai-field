@@ -292,6 +292,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static CONFIGURATION_ERROR_NO_SUBFIELDS = 'configuration.error.noSubfields';
     public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS = 'configuration.error.fieldConditionViolation.valuelists';
     public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS_CHILD_CATEGORY = 'configuration.error.fieldConditionViolation.valuelists.childCategory';
+    public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_GEOMETRY_TYPES = 'configuration.error.fieldConditionViolation.geometryTypes';
+    public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_GEOMETRY_TYPES_CHILD_CATEGORY = 'configuration.error.fieldConditionViolation.geometryTypes.childCategory';
     public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE = 'configuration.error.fieldConditionViolation.inputType';
     public static CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE_CHILD_CATEGORY = 'configuration.error.fieldConditionViolation.inputType.childCategory';
     public static CONFIGURATION_ERROR_SUBFIELD_CONDITION_VIOLATION_VALUELISTS = 'configuration.error.subfieldConditionViolation.valuelists';
@@ -1271,6 +1273,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS_CHILD_CATEGORY] = {
             content: $localize `:@@messages.configuration.error.fieldConditionViolation.valuelists.childCategory:Die Werteliste dieses Feldes kann nicht entfernt oder ausgetauscht werden, da es als Bedingungsfeld für das Feld "[0]" der Unterkategorie "[1]" konfiguriert wurde.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_GEOMETRY_TYPES] = {
+            content: $localize `:@@messages.configuration.error.fieldConditionViolation.geometryTypes:Die erlaubten Geometrietypen dieses Feldes können nicht verändert werden, da es als Bedingungsfeld für das Feld "[0]" konfiguriert wurde.`,
+            level: 'danger'
+        };
+        this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_GEOMETRY_TYPES_CHILD_CATEGORY] = {
+            content: $localize `:@@messages.configuration.error.fieldConditionViolation.geometryTypes.childCategory:Die erlaubten Geometrietypen dieses Feldes kann nicht verändert werden, da es als Bedingungsfeld für das Feld "[0]" der Unterkategorie "[1]" konfiguriert wurde.`,
             level: 'danger'
         };
         this.msgs[M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE] = {

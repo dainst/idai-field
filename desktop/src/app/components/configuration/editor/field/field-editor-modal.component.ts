@@ -726,22 +726,61 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         for (let [field, category] of conditionalFields) {
             if ((field.condition.values === true || field.condition.values === false)
                     && this.getInputType() !== Field.InputType.BOOLEAN) {
-                if (category === this.category) {
-                    throw [M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE, this.labels.get(field)];
-                } else {
-                    throw [M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE_CHILD_CATEGORY,
-                        this.labels.get(field), this.labels.get(category)];
-                }
-            } else if (isArray(field.condition.values)
-                && (!Field.InputType.VALUELIST_INPUT_TYPES.includes(this.getInputType())
-                        || !subsetOf(values, field.condition.values))) {
-                if (category === this.category) {
-                    throw [M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS, this.labels.get(field)];
-                } else {
-                    throw [M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS_CHILD_CATEGORY,
-                        this.labels.get(field), this.labels.get(category)];
+                this.throwInputTypeConditionError(category, field);
+            } else if (isArray(field.condition.values)) {
+                if (this.clonedField.inputType === Field.InputType.GEOMETRY) {
+                    if (!subsetOf(this.getClonedFieldDefinition().geometryTypes, field.condition.values)) {
+                       this.throwGeometryTypesConditionError(category, field);
+                    }
+                } else if (!Field.InputType.VALUELIST_INPUT_TYPES.includes(this.getInputType())
+                        || !subsetOf(values, field.condition.values)) {
+                    this.throwValuelistsConditionError(category, field);
                 }
             }
+        }
+    }
+
+
+    private throwInputTypeConditionError(category: CategoryForm, field: Field) {
+
+        this.throwConditionError(
+            category,
+            field,
+            M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE,
+            M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_INPUT_TYPE_CHILD_CATEGORY
+        );
+    }
+
+
+    private throwGeometryTypesConditionError(category: CategoryForm, field: Field) {
+
+        this.throwConditionError(
+            category,
+            field,
+            M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_GEOMETRY_TYPES,
+            M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_GEOMETRY_TYPES_CHILD_CATEGORY
+        );
+    }
+
+
+    private throwValuelistsConditionError(category: CategoryForm, field: Field) {
+
+        this.throwConditionError(
+            category,
+            field,
+            M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS,
+            M.CONFIGURATION_ERROR_FIELD_CONDITION_VIOLATION_VALUELISTS_CHILD_CATEGORY
+        );
+    }
+
+
+    private throwConditionError(category: CategoryForm, field: Field, defaultErrorMessage: string,
+                               childCategoryErrorMessage: string) {
+
+        if (category === this.category) {
+            throw [defaultErrorMessage, this.labels.get(field)];
+        } else {
+            throw [childCategoryErrorMessage, this.labels.get(field), this.labels.get(category)];
         }
     }
 

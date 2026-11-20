@@ -100,14 +100,11 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
               Directly associated finds {# pick_default_translation(associated_finds.labels)} ({directly_associated_finds_number}/{total_associated_finds})
             </.group_heading>
             <div class="grid grid-cols-3 gap-1 mt-2 mb-5">
-              <%= for %Document{} = doc <- associated_finds.docs do %>
-                <.document_link
-                  id={doc.id}
-                  doc={doc}
+                <.grouped_document_links
+                  docs={associated_finds.docs}
                   image_count={10}
                   image_height={200}
                 />
-              <% end %>
             </div>
           </section>
         <% end %>

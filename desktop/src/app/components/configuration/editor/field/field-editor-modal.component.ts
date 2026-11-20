@@ -75,7 +75,7 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
     public getDateConfiguration = () => this.getClonedFieldDefinition().dateConfiguration
 
     public isConditionSectionVisible = () => !this.isMandatory() && !OVERRIDE_VISIBLE_FIELDS.includes(this.field.name)
-        && this.field.name !== 'category';
+        && !Field.InputType.RELATION_INPUT_TYPES.includes(this.field.inputType) && this.field.name !== 'category';
 
     public isValuelistSectionVisible = () => Field.InputType.VALUELIST_INPUT_TYPES.includes(
         this.getClonedFieldDefinition()?.inputType as Field.InputType ?? this.field.inputType

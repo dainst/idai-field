@@ -711,7 +711,8 @@
           "intensity": "color-archaeodox-intensity",
           "tendency": "color-archaeodox-tendency",
           "baseColor": "color-archaeodox-base"
-        }
+        },
+        "archaeoDox:inclusions": "Feature-inclusions-archaeoDox"
       },
       "fields": {
         "shortDescription": {
@@ -765,6 +766,9 @@
               "inputType": "dropdown"
             }
           ]
+        },
+        "archaeoDox:inclusions": {
+          "inputType": "checkboxes"
         }
       },
       "groups": [

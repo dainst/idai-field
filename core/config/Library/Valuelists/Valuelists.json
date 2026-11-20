@@ -31136,5 +31136,21 @@
       "mittel",
       "gering"
     ]
+  },
+  "Feature-inclusions-archaeoDox": {
+    "createdBy": "Archäologisches Museum Hamburg",
+    "creationDate": "",
+    "values": {
+      "Ziegel": {},
+      "Mörtel": {},
+      "Holz": {},
+      "Holzkohle": {},
+      "Knochen": {},
+      "Keramik": {},
+      "Metall": {},
+      "Stein": {},
+      "Kies": {},
+      "Leder": {}
+    }
   }
 }

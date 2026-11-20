@@ -11,8 +11,11 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
     Document,
     Field,
     FieldGroup,
-    RelationGroup
+    RelationGroup,
+    Geo
   }
+
+  alias FieldPublicationWeb.UI.Components.DocumentMap
 
   def render(assigns) do
     ~H"""
@@ -104,6 +107,8 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
                   docs={associated_finds.docs}
                   image_count={10}
                   image_height={200}
+                  geometry_indicator={true}
+                  hover_target="associated_finds_map"
                 />
             </div>
           </section>
@@ -115,7 +120,7 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
             <section>
               <.group_heading>
                 Associated finds in nested types ({total_associated_finds -
-                  FieldPublication.Publication.count_directly_associated_finds(@doc)} /{total_associated_finds})
+                  FieldPublication.Publication.count_directly_associated_finds(@doc)}/{total_associated_finds})
               </.group_heading>
               <div class="grid grid-cols-1 gap-1 mt-2 mb-5">
                 <%= for %Document{} = doc <- children_types.docs do %>
@@ -125,13 +130,15 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
                     id={doc.id}
                     doc={doc}
                     image_count={10}
-                    image_height={50}
+                    image_height={20}
                   />
                   <div class="ml-4">
                     <.grouped_document_links
                       docs={childrens_accumulated_finds}
                       image_count={10}
                       image_height={50}
+                      geometry_indicator={true}
+                      hover_target="associated_finds_map"
                     />
                   </div>
                 <% end %>
@@ -139,6 +146,15 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
             </section>
           <% end %>
         </div>
+      </div>
+      <div  class="basis-1/3">
+          <.live_component
+            module={FieldPublicationWeb.UI.Components.DocumentMap}
+            id="associated_finds_map"
+            style="width:100%; height:500px;"
+            doc={@all_associated_finds_doc}
+            publication={@publication}
+          />
       </div>
     </div>
     """
@@ -148,15 +164,41 @@ defmodule FieldPublicationWeb.Presentation.Document.Type do
         %{doc: %Document{} = doc, publication: publication},
         socket
       ) do
-    todo = "todo "
     # url =  {Data.get_field_value(@doc, "projectURI")}
-    # IO.inspect(url)
+
+    # retrieve directly associated finds
+    associated_finds = Document.get_relation(doc, "hasInstance")
+    directly_associated_docs = if associated_finds, do: associated_finds.docs, else: []
+
+    # retrieve associated finds in nested types
+    childrens_accumulated_finds =
+      FieldPublication.Publication.get_all_associated_finds(doc.id, publication)
+
+    # combines all associateds finds and generate a document
+    all_associated_docs = directly_associated_docs ++ childrens_accumulated_finds
+    |> Enum.uniq_by(& &1.id)
+
+    all_associated_finds_doc = %Document{
+      id: "all_associated_finds_to_a_type_temporary_document",
+      identifier: "Map: #{doc.identifier}",
+      category: nil,
+      relations: [
+        %RelationGroup{
+          name: "all_associated_finds",
+          docs: all_associated_docs,
+          labels: nil
+        }
+      ],
+      project_identifier: publication.project_identifier,
+      publication_draft_date: publication.draft_date
+    }
+
     {
       :ok,
       socket
       |> assign(:doc, doc)
-      |> assign(:todo, todo)
       |> assign(:publication, publication)
+      |> assign(:all_associated_finds_doc, all_associated_finds_doc)
       #  |> assign(:url, url)
     }
   end

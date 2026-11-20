@@ -75,6 +75,31 @@ describe('Condition', () => {
     });
 
 
+    it('check exists condition for relation fields', () => {
+
+        const fields: Array<Field> = [
+            {
+                name: 'relation',
+                inputType: 'relation'
+            },
+            {
+                name: 'field',
+                inputType: 'text',
+                condition: {
+                    fieldName: 'relation',
+                    exists: true
+                }
+            }
+        ];
+    
+        expect(Condition.isFulfilled(fields[1].condition, { relations: { relation: ['1'] } }, fields, 'field'))
+            .toBe(true);
+        expect(Condition.isFulfilled(fields[1].condition, { relation: { otherRelation: ['1' ] }}, fields, 'field'))
+            .toBe(false);
+        expect(Condition.isFulfilled(fields[1].condition, {}, fields, 'field')).toBe(false);
+    });
+
+
     it('check exists condition for subfields', () => {
 
         const subfields: Array<Subfield> = [

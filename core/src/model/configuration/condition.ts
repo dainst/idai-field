@@ -35,7 +35,9 @@ export module Condition {
             return field.name === condition[type + 'Name'];
         });
 
-        let data: any = fieldContainer[conditionField.name];
+        let data: any = Field.InputType.EDITABLE_RELATION_INPUT_TYPES.includes(conditionField.inputType)
+            ? fieldContainer?.relations?.[conditionField.name]
+            : fieldContainer[conditionField.name];
         if (conditionField.inputType === Field.InputType.GEOMETRY) data = data?.type;
 
         const fulfilled: boolean = data !== undefined

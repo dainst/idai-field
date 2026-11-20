@@ -1945,6 +1945,42 @@
               "label": "Grundfarbe"
             }
           }
+        },
+        "archaeoDox:inclusions": {
+          "label": "Beischläge"
+        },
+        "archaeoDox:inclusionsDescription": {
+          "label": "Beischläge (Beschreibung)"
+        },
+        "archaeoDox:inclusionsPercentBricks": {
+          "label": "Flächenprozent Beischläge Ziegel"
+        },
+        "archaeoDox:inclusionsPercentMortar": {
+          "label": "Flächenprozent Beischläge Mörtel"
+        },
+        "archaeoDox:inclusionsPercentWood": {
+          "label": "Flächenprozent Beischläge Holz"
+        },
+        "archaeoDox:inclusionsPercentCharcoal": {
+          "label": "Flächenprozent Beischläge Holzkohle"
+        },
+        "archaeoDox:inclusionsPercentBones": {
+          "label": "Flächenprozent Beischläge Knochen"
+        },
+        "archaeoDox:inclusionsPercentCeramics": {
+          "label": "Flächenprozent Beischläge Keramik"
+        },
+        "archaeoDox:inclusionsPercentMetal": {
+          "label": "Flächenprozent Beischläge Metall"
+        },
+        "archaeoDox:inclusionsPercentStone": {
+          "label": "Flächenprozent Beischläge Stein"
+        },
+        "archaeoDox:inclusionsPercentGravel": {
+          "label": "Flächenprozent Beischläge Kies"
+        },
+        "archaeoDox:inclusionsPercentLeather": {
+          "label": "Flächenprozent Beischläge Leder"
         }
       }
     },

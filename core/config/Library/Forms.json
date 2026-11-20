@@ -742,13 +742,16 @@
           "constraintIndexed": true
         },
         "archaeoDox:coloration": {
-          "inputType": "dropdown"
+          "inputType": "dropdown",
+          "constraintIndexed": true
         },
         "archaeoDox:humusAmount": {
-          "inputType": "dropdown"
+          "inputType": "dropdown",
+          "constraintIndexed": true
         },
         "archaeoDox:organicAmount": {
-          "inputType": "dropdown"
+          "inputType": "dropdown",
+          "constraintIndexed": true
         },
         "archaeoDox:color": {
           "inputType": "composite",
@@ -768,7 +771,81 @@
           ]
         },
         "archaeoDox:inclusions": {
-          "inputType": "checkboxes"
+          "inputType": "checkboxes",
+          "constraintIndexed": true
+        },
+        "archaeoDox:inclusionsDescription": {
+          "inputType": "text"
+        },
+        "archaeoDox:inclusionsPercentBricks": {
+          "inputType": "unsignedInt",
+          "condition": {
+            "fieldName": "archaeoDox:inclusions",
+            "values": ["Ziegel"]
+          }
+        },
+        "archaeoDox:inclusionsPercentMortar": {
+          "inputType": "unsignedInt",
+          "condition": {
+            "fieldName": "archaeoDox:inclusions",
+            "values": ["Mörtel"]
+          }
+        },
+        "archaeoDox:inclusionsPercentWood": {
+          "inputType": "unsignedInt",
+          "condition": {
+            "fieldName": "archaeoDox:inclusions",
+            "values": ["Holz"]
+          }
+        },
+        "archaeoDox:inclusionsPercentCharcoal": {
+          "inputType": "unsignedInt",
+          "condition": {
+            "fieldName": "archaeoDox:inclusions",
+            "values": ["Holzkohle"]
+          }
+        },
+        "archaeoDox:inclusionsPercentBones": {
+          "inputType": "unsignedInt",
+          "condition": {
+            "fieldName": "archaeoDox:inclusions",
+            "values": ["Knochen"]
+          }
+        },
+        "archaeoDox:inclusionsPercentCeramics": {
+          "inputType": "unsignedInt",
+          "condition": {
+            "fieldName": "archaeoDox:inclusions",
+            "values": ["Keramik"]
+          }
+        },
+        "archaeoDox:inclusionsPercentMetal": {
+          "inputType": "unsignedInt",
+          "condition": {
+            "fieldName": "archaeoDox:inclusions",
+            "values": ["Metall"]
+          }
+        },
+        "archaeoDox:inclusionsPercentStone": {
+          "inputType": "unsignedInt",
+          "condition": {
+            "fieldName": "archaeoDox:inclusions",
+            "values": ["Stein"]
+          }
+        },
+        "archaeoDox:inclusionsPercentGravel": {
+          "inputType": "unsignedInt",
+          "condition": {
+            "fieldName": "archaeoDox:inclusions",
+            "values": ["Kies"]
+          }
+        },
+        "archaeoDox:inclusionsPercentLeather": {
+          "inputType": "unsignedInt",
+          "condition": {
+            "fieldName": "archaeoDox:inclusions",
+            "values": ["Leder"]
+          }
         }
       },
       "groups": [
@@ -790,7 +867,13 @@
           "fields": ["description", "featureForm", "featureBorders", "archaeoDox:distinguishingCriterium",
             "archaeoDox:isNatural", "archaeoDox:soilType", "archaeoDox:consistency",
             "archaeoDox:isArchaeologicallyIrrelevant", "comparison", "archaeoDox:color", "archaeoDox:coloration",
-            "archaeoDox:humusAmount", "archaeoDox:organicAmount"]
+            "archaeoDox:humusAmount", "archaeoDox:organicAmount", "archaeoDox:inclusions",
+            "archaeoDox:inclusionsDescription", "archaeoDox:inclusionsPercentWood",
+            "archaeoDox:inclusionsPercentCharcoal", "archaeoDox:inclusionsPercentCeramics",
+            "archaeoDox:inclusionsPercentGravel", "archaeoDox:inclusionsPercentBones",
+            "archaeoDox:inclusionsPercentLeather", "archaeoDox:inclusionsPercentMetal",
+            "archaeoDox:inclusionsPercentMortar", "archaeoDox:inclusionsPercentStone",
+            "archaeoDox:inclusionsPercentBricks"]
         },
         {
           "name": "stratigraphy",

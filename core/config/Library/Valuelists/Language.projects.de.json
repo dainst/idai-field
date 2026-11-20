@@ -29146,5 +29146,21 @@
       }
     },
     "description": "Archäologisches Museum Hamburg – Stadtmuseum Harburg/Helms-Museum: Befunde"
+  },
+  "SpatialReferenceElement-spatialReferenceLineType-archaeoDox": {
+    "values": {
+      "Kontur unsicher": {
+        "label": "Kontur unsicher"
+      },
+      "Zeichnungsreferenzlinie": {
+        "label": "Zeichnungsreferenzlinie"
+      },
+      "Oberkante": {
+        "label": "Oberkante"
+      },
+      "Unterkante": {
+        "label": "Unterkante"
+      }
+    }
   }
 }

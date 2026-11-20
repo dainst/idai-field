@@ -5552,22 +5552,6 @@
       }
     }
   },
-  "SpatialReferenceElement-spatialReferenceLineType-archaeoDox": {
-    "values": {
-      "Kontur unsicher": {
-        "label": "Kontur unsicher"
-      },
-      "Zeichnungsreferenzlinie": {
-        "label": "Zeichnungsreferenzlinie"
-      },
-      "Oberkante": {
-        "label": "Oberkante"
-      },
-      "Unterkante": {
-        "label": "Unterkante"
-      }
-    }
-  },
   "TypeCatalog-criterion-default": {
     "values": {
       "Form": {

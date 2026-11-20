@@ -1774,7 +1774,7 @@
           "inputType": "float"
         },
         "geometry": {
-          "geometryTypes": ["Point", "LineString"]
+          "geometryTypes": ["LineString", "Point"]
         }
       },
       "groups": [

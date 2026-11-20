@@ -48,12 +48,11 @@ services:
       - "4000:4000"
     volumes:
       - "/opt/idai-field/api/config:/opt/src/api/config"
-      - "imagemagick-configs:/etc/ImageMagick-6"
       - type: volume
         source: idai-field-web_images
         target: /imageroot
         volume:
-           nocopy: true
+          nocopy: true
     networks:
       - web
       - default
@@ -61,9 +60,10 @@ services:
       labels:
         - "traefik.docker.network=web"
         - "traefik.enable=true"
-        - "traefik.frontend.rule=Host:field.idai.world; PathPrefix:/api"
+        - "traefik.frontend.rule=Host:${FIELD_WEB_HOST},${SHAPES_HOST}; PathPrefix:/api"
+        - "traefik.frontend.whiteList.sourceRange=${CIDR_WHITELIST}"
         - "traefik.port=4000"
-
+      
   ui:
     image: "ghcr.io/dainst/idai-field-web-ui:latest"
     networks:
@@ -73,17 +73,45 @@ services:
       labels:
         - "traefik.docker.network=web"
         - "traefik.enable=true"
-        - "traefik.frontend.rule=Host:field.idai.world,field.dainst.org"
-        - "traefik.frontend.redirect.regex=^https://field.dainst.org(.*)"
-        - "traefik.frontend.redirect.replacement=https://field.idai.world$${1}"
-        - "traefik.frontend.redirect.permanent=true"
+        - "traefik.frontend.rule=Host:${FIELD_WEB_HOST},${SHAPES_HOST}"
+        - "traefik.frontend.whiteList.sourceRange=${CIDR_WHITELIST}"
+        - "traefik.frontend.entryPoints=anubis_internal"
+        - "traefik.frontend.rule=Host:://${FIELD_WEB_HOST}"
+        - "traefik.frontend.priority=10"
         - "traefik.port=80"
 
+  anubis:
+    image: ghcr.io/techarohq/anubis:v1.26.2
+    restart: unless-stopped
+    environment:
+      #TARGET: "http://${FIELD_WEB_HOST}:80"
+      TARGET: "http://traefik:3923" 
+      BIND: ":8080"
+      REDIRECT_DOMAINS: ${FIELD_WEB_HOST}
+      #PUBLIC_URL: "https://anubis.${FIELD_WEB_HOST}"
+      #REDIRECT_DOMAINS: 
+      PUBLIC_URL: "https://${FIELD_WEB_HOST}"
+      COOKIE_DOMAIN: ${FIELD_WEB_HOST}
+      POLICY_FNAME: "/data/cfg/botPolicy.yaml"
+    volumes:
+      - "/opt/idai-field/botPolicy.yaml:/data/cfg/botPolicy.yaml:ro"
+    networks:
+      - web
+      - default
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.anubis.rule=Host(`anubis.${FIELD_WEB_HOST}`)
+      - traefik.http.routers.anubis.entrypoints=websecure
+      - traefik.http.routers.anubis.tls.certresolver=letsencrypt
+      #- traefik.http.services.anubis.loadbalancer.server.port=8080 # Telling Traefik where to receive requests
+      #- traefik.http.routers.anubis.service=anubis # Telling Traefik to use the above specified port 
+      - "traefik.frontend.rule=PathPrefix:/"
+      #
+      - "traefik.frontend.priority=1" 
+      - "traefik.port=8080"
 volumes:
   elasticsearch-data:
   idai-field-web_images:
-    external: true
-  imagemagick-configs:
 
 networks:
   web:

@@ -1749,12 +1749,20 @@
         "archaeoDox:spatialReferencePointType": {
           "inputType": "radio",
           "constraintIndexed": true,
-          "valuelistId": "SpatialReferenceElement-spatialReferenceElementType-default"
+          "valuelistId": "SpatialReferenceElement-spatialReferenceElementType-default",
+          "condition": {
+            "fieldName": "geometry",
+            "values": ["Point"]
+          }
         },
         "archaeoDox:spatialReferenceLineType": {
           "inputType": "radio",
           "constraintIndexed": true,
-          "valuelistId": "SpatialReferenceElement-spatialReferenceLineType-archaeoDox"
+          "valuelistId": "SpatialReferenceElement-spatialReferenceLineType-archaeoDox",
+          "condition": {
+            "fieldName": "geometry",
+            "values": ["LineString"]
+          }
         },
         "archaeoDox:paarView": {
           "inputType": "input"

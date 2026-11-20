@@ -29162,5 +29162,179 @@
         "label": "Unterkante"
       }
     }
+  },
+  "Feature-coloration-archaeoDox": {
+    "values": {
+      "marmoriert": {
+        "label": "marmoriert"
+      },
+      "gefleckt": {
+        "label": "gefleckt"
+      },
+      "gebändert": {
+        "label": "gebändert"
+      },
+      "geadert": {
+        "label": "geadert"
+      }
+    }
+  },
+  "Feature-amount-archaeoDox": {
+    "values": {
+      "ausschließlich": {
+        "label": "ausschließlich"
+      },
+      "hauptsächlich": {
+        "label": "hauptsächlich"
+      },
+      "stark": {
+        "label": "stark"
+      },
+      "mittel": {
+        "label": "mittel"
+      },
+      "gering": {
+        "label": "gering"
+      }
+    }
+  },
+  "Feature-inclusions-archaeoDox": {
+    "values": {
+      "Ziegel": {
+        "label": "Ziegel"
+      },
+      "Mörtel": {
+        "label": "Mörtel"
+      },
+      "Holz": {
+        "label": "Holz"
+      },
+      "Holzkohle": {
+        "label": "Holzkohle"
+      },
+      "Knochen": {
+        "label": "Knochen"
+      },
+      "Keramik": {
+        "label": "Keramik"
+      },
+      "Metall": {
+        "label": "Metall"
+      },
+      "Stein": {
+        "label": "Stein"
+      },
+      "Kies": {
+        "label": "Kies"
+      },
+      "Leder": {
+        "label": "Leder"
+      }
+    }
+  },
+  "color-archaeodox-intensity": {
+    "values": {
+      "sehr hell": {
+        "label": "sehr hell"
+      },
+      "hell": {
+        "label": "hell"
+      },
+      "mittel": {
+        "label": "mittel"
+      },
+      "dunkel": {
+        "label": "dunkel"
+      },
+      "sehr dunkel": {
+        "label": "sehr dunkel"
+      },
+      "leuchtend": {
+        "label": "leuchtend"
+      },
+      "blass": {
+        "label": "blass"
+      },
+      "fahl": {
+        "label": "fahl"
+      },
+      "schmutzig": {
+        "label": "schmutzig"
+      }
+    }
+  },
+  "color-archaeodox-tendency": {
+    "values": {
+      "blau-": {
+        "label": "blau-"
+      },
+      "braun-": {
+        "label": "braun-"
+      },
+      "gelb-": {
+        "label": "gelb-"
+      },
+      "grün-": {
+        "label": "grün-"
+      },
+      "rot-": {
+        "label": "rot-"
+      },
+      "grau-": {
+        "label": "grau-"
+      },
+      "violett-": {
+        "label": "violett-"
+      },
+      "orange-": {
+        "label": "orange-"
+      },
+      "oliv-": {
+        "label": "oliv-"
+      },
+      "türkis-": {
+        "label": "türkis-"
+      },
+      "ocker-": {
+        "label": "ocker-"
+      }
+    }
+  },
+  "color-archaeodox-base": {
+    "values": {
+      "schwarz": {
+        "label": "schwarz"
+      },
+      "weiß": {
+        "label": "weiß"
+      },
+      "blau": {
+        "label": "blau"
+      },
+      "braun": {
+        "label": "braun"
+      },
+      "gelb": {
+        "label": "gelb"
+      },
+      "grün": {
+        "label": "grün"
+      },
+      "rot": {
+        "label": "rot"
+      },
+      "grau": {
+        "label": "grau"
+      },
+      "violett": {
+        "label": "violett"
+      },
+      "orange": {
+        "label": "orange"
+      },
+      "ocker": {
+        "label": "ocker"
+      }
+    }
   }
 }

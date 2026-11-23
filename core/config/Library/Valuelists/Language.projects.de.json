@@ -29152,11 +29152,11 @@
       "Zeichnungsreferenzlinie": {
         "label": "Zeichnungsreferenzlinie"
       },
-      "Oberkante": {
-        "label": "Oberkante"
+      "Topographische Referenzlinie": {
+        "label": "Topographische Referenzlinie"
       },
-      "Unterkante": {
-        "label": "Unterkante"
+      "Befundreferenzlinie": {
+        "label": "Befundreferenzlinie"
       }
     }
   },

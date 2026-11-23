@@ -3036,8 +3036,8 @@
     "creationDate": "",
     "values": {
       "Zeichnungsreferenzlinie": {},
-      "Oberkante": {},
-      "Unterkante": {}
+      "Topographische Referenzlinie": {},
+      "Befundreferenzlinie": {}
     }
   },
   "TypeCatalog-criterion-default": {

@@ -1956,34 +1956,34 @@
           "label": "Beischläge (Beschreibung)"
         },
         "archaeoDox:inclusionsPercentBricks": {
-          "label": "Flächenprozent Beischläge Ziegel"
+          "label": "Flächenanteile Ziegel in Prozent"
         },
         "archaeoDox:inclusionsPercentMortar": {
-          "label": "Flächenprozent Beischläge Mörtel"
+          "label": "Flächenanteile Mörtel in Prozent"
         },
         "archaeoDox:inclusionsPercentWood": {
-          "label": "Flächenprozent Beischläge Holz"
+          "label": "Flächenanteile Holz in Prozent"
         },
         "archaeoDox:inclusionsPercentCharcoal": {
-          "label": "Flächenprozent Beischläge Holzkohle"
+          "label": "Flächenanteile Holzkohle in Prozent"
         },
         "archaeoDox:inclusionsPercentBones": {
-          "label": "Flächenprozent Beischläge Knochen"
+          "label": "Flächenanteile Knochen in Prozent"
         },
         "archaeoDox:inclusionsPercentCeramics": {
-          "label": "Flächenprozent Beischläge Keramik"
+          "label": "Flächenanteile Keramik in Prozent"
         },
         "archaeoDox:inclusionsPercentMetal": {
-          "label": "Flächenprozent Beischläge Metall"
+          "label": "Flächenanteile Metall in Prozent"
         },
         "archaeoDox:inclusionsPercentStone": {
-          "label": "Flächenprozent Beischläge Stein"
+          "label": "Flächenanteile Stein in Prozent"
         },
         "archaeoDox:inclusionsPercentGravel": {
-          "label": "Flächenprozent Beischläge Kies"
+          "label": "Flächenanteile Kies in Prozent"
         },
         "archaeoDox:inclusionsPercentLeather": {
-          "label": "Flächenprozent Beischläge Leder"
+          "label": "Flächenanteile Leder in Prozent"
         }
       }
     },

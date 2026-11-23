@@ -1600,6 +1600,10 @@
         "inputType": "radio",
         "constraintIndexed": true,
         "valuelistId": "SpatialReferenceElement-spatialReferenceElementType-default"
+      },
+      "isUncertain": {
+        "inputType": "boolean",
+        "constraintIndexed": true
       }
     }
   },

@@ -1728,7 +1728,8 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "spatialReferenceElementType", "processor", "date"]
+          "fields": ["identifier", "category", "shortDescription", "spatialReferenceElementType", "isUncertain",
+            "processor", "date"]
         },
         {
           "name": "properties",
@@ -1780,8 +1781,8 @@
       "groups": [
         {
           "name": "stem",
-          "fields": ["identifier", "category", "shortDescription", "archaeoDox:spatialReferencePointType", "archaeoDox:spatialReferenceLineType",
-            "archaeoDox:documentationUnit", "processor", "date"]
+          "fields": ["identifier", "category", "shortDescription", "archaeoDox:spatialReferencePointType",
+            "archaeoDox:spatialReferenceLineType", "isUncertain", "archaeoDox:documentationUnit", "processor", "date"]
         },
         {
           "name": "properties",

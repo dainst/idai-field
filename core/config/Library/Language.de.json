@@ -1270,6 +1270,9 @@
       "fields": {
         "spatialReferenceElementType": {
           "label": "Art des räumlichen Bezugselements"
+        },
+        "isUncertain": {
+          "label": "Unsicher"
         }
       }
     },

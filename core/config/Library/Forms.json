@@ -1769,7 +1769,7 @@
           "inputType": "input"
         },
         "archaeoDox:paarUpts": {
-          "inputType": "int"
+          "inputType": "boolean"
         },
         "archaeoDox:zValue": {
           "inputType": "float"

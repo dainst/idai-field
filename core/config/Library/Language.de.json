@@ -2016,7 +2016,7 @@
           "label": "ProfileAAR Blickrichtung"
         },
         "archaeoDox:paarUpts": {
-          "label": "ProfileAAR verwendete Punkte"
+          "label": "ProfileAAR Punkte verwendet"
         },
         "archaeoDox:zValue": {
           "label": "Z"

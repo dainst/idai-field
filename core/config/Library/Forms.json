@@ -1753,7 +1753,7 @@
           "valuelistId": "SpatialReferenceElement-spatialReferenceElementType-default",
           "condition": {
             "fieldName": "geometry",
-            "values": ["Point"]
+            "values": ["Point", "MultiPoint"]
           }
         },
         "archaeoDox:spatialReferenceLineType": {
@@ -1762,7 +1762,7 @@
           "valuelistId": "SpatialReferenceElement-spatialReferenceLineType-archaeoDox",
           "condition": {
             "fieldName": "geometry",
-            "values": ["LineString"]
+            "values": ["LineString", "MultiLineString"]
           }
         },
         "archaeoDox:paarView": {
@@ -1775,7 +1775,7 @@
           "inputType": "float"
         },
         "geometry": {
-          "geometryTypes": ["LineString", "Point"]
+          "geometryTypes": ["LineString", "MultiLineString", "Point", "MultiPoint"]
         }
       },
       "groups": [

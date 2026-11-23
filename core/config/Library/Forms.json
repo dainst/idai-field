@@ -868,12 +868,12 @@
             "archaeoDox:isNatural", "archaeoDox:soilType", "archaeoDox:consistency",
             "archaeoDox:isArchaeologicallyIrrelevant", "comparison", "archaeoDox:color", "archaeoDox:coloration",
             "archaeoDox:humusAmount", "archaeoDox:organicAmount", "archaeoDox:inclusions",
-            "archaeoDox:inclusionsDescription", "archaeoDox:inclusionsPercentWood",
-            "archaeoDox:inclusionsPercentCharcoal", "archaeoDox:inclusionsPercentCeramics",
-            "archaeoDox:inclusionsPercentGravel", "archaeoDox:inclusionsPercentBones",
-            "archaeoDox:inclusionsPercentLeather", "archaeoDox:inclusionsPercentMetal",
-            "archaeoDox:inclusionsPercentMortar", "archaeoDox:inclusionsPercentStone",
-            "archaeoDox:inclusionsPercentBricks"]
+            "archaeoDox:inclusionsPercentWood", "archaeoDox:inclusionsPercentCharcoal",
+            "archaeoDox:inclusionsPercentCeramics", "archaeoDox:inclusionsPercentGravel",
+            "archaeoDox:inclusionsPercentBones", "archaeoDox:inclusionsPercentLeather",
+            "archaeoDox:inclusionsPercentMetal", "archaeoDox:inclusionsPercentMortar",
+            "archaeoDox:inclusionsPercentStone", "archaeoDox:inclusionsPercentBricks",
+            "archaeoDox:inclusionsDescription"]
         },
         {
           "name": "stratigraphy",

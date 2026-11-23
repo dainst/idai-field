@@ -29149,9 +29149,6 @@
   },
   "SpatialReferenceElement-spatialReferenceLineType-archaeoDox": {
     "values": {
-      "Kontur unsicher": {
-        "label": "Kontur unsicher"
-      },
       "Zeichnungsreferenzlinie": {
         "label": "Zeichnungsreferenzlinie"
       },

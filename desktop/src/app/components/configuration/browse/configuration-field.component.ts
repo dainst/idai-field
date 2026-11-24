@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { isArray } from 'tsfun';
+import { isArray, Map } from 'tsfun';
 import { CategoryForm, Condition, ConfigurationDocument, CustomFieldDefinition, Datastore, Field, FieldGeometry,
-    FieldGeometryType, Labels, ProjectConfiguration, Relation, Valuelist, ValuelistUtil } from 'idai-field-core';
+    FieldGeometryType, Labels, ProjectConfiguration, Relation, Subfield, Valuelist,
+    ValuelistUtil } from 'idai-field-core';
 import { SettingsProvider } from '../../../services/settings/settings-provider';
 import { ConfigurationUtil, InputType } from '../configuration-util';
 import { ConfigurationContextMenu } from '../context-menu/configuration-context-menu';
@@ -43,6 +44,7 @@ export class ConfigurationFieldComponent implements OnChanges {
     public allowedGeometryTypesLabel: string;
 
     private conditionFieldValuelist: Valuelist;
+    private conditionSubfieldValuelists: Map<Valuelist> = {};
 
 
     constructor(private labels: Labels,
@@ -53,9 +55,7 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public getFieldId = () => 'field-' + this.field.name.replace(':', '-');
 
-    public getInputTypeLabel = () => getInputTypeLabel(
-        this.field.inputType, this.utilTranslations
-    );
+    public getInputTypeLabel = (inputType: Field.InputType) => getInputTypeLabel(inputType, this.utilTranslations);
     
     public getCategoryLabel = (categoryName: string) => this.labels.get(
         this.clonedProjectConfiguration.getCategory(categoryName)
@@ -63,6 +63,10 @@ export class ConfigurationFieldComponent implements OnChanges {
 
     public getFieldLabel = (fieldName: string) => this.labels.get(
         CategoryForm.getField(this.category, fieldName)
+    );
+
+    public getSubfieldLabel = (fieldName: string, subfieldName: string) => this.labels.get(
+        CategoryForm.getField(this.category, fieldName).subfields.find(subfield => subfield.name === subfieldName)
     );
 
     public getRelationLabel = (relationName: string) => this.labels.getRelationLabel(
@@ -93,7 +97,7 @@ export class ConfigurationFieldComponent implements OnChanges {
 
         this.parentField = ConfigurationUtil.isParentField(this.category, this.field);
         this.updateLabelAndDescription();
-        await this.updateConditionFieldValuelist();
+        await this.updateConditionFieldValuelists();
         this.updateAllowedGeometryTypes();
     }
 
@@ -119,12 +123,17 @@ export class ConfigurationFieldComponent implements OnChanges {
     }
 
 
-    public getConditionValuesLabel(): string {
+    public getConditionValuesLabel(condition: Condition): string {
 
         return Condition.generateLabel(
-            this.field.condition,
+            condition,
             key => this.utilTranslations.getTranslation(key),
-            valueId => this.labels.getValueLabel(this.conditionFieldValuelist, valueId)
+            valueId => this.labels.getValueLabel(
+                condition.fieldName
+                    ? this.conditionFieldValuelist
+                    : this.conditionSubfieldValuelists[condition.subfieldName],
+                valueId
+            )
         );
     }
 
@@ -137,12 +146,33 @@ export class ConfigurationFieldComponent implements OnChanges {
     }
 
     
-    private async updateConditionFieldValuelist() {
+    private async updateConditionFieldValuelists() {
 
-        if (!this.field.condition || !isArray(this.field.condition.values)) return;
+        if (this.field.condition && isArray(this.field.condition.values)) {
+            this.conditionFieldValuelist = ValuelistUtil.getValuelist(
+                CategoryForm.getField(this.category, this.field.condition.fieldName),
+                await this.datastore.get('project')
+            );
+        }
 
-        this.conditionFieldValuelist = ValuelistUtil.getValuelist(
-            CategoryForm.getField(this.category, this.field.condition.fieldName),
+        if (this.field.subfields) {
+            for (let subfield of this.field.subfields) {
+                await this.updateSubfieldConditionFieldValuelist(this.field, subfield);
+            }
+        }
+    }
+
+
+    private async updateSubfieldConditionFieldValuelist(field: Field, subfield: Subfield) {
+
+        if (!subfield.condition || !isArray(subfield.condition.values)) return;
+
+        const conditionSubfield: Subfield = field.subfields.find(otherSubfield => {
+            return otherSubfield.name === subfield.condition.subfieldName;
+        });
+
+        this.conditionSubfieldValuelists[subfield.condition.subfieldName] = ValuelistUtil.getValuelist(
+            conditionSubfield,
             await this.datastore.get('project')
         );
     }

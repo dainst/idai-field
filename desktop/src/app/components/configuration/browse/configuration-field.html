@@ -30,13 +30,29 @@
             </li>
             <li class="list-group-item">
                 <b i18n="@@configuration.field.inputType">Eingabetyp</b><span class="oneliner-colon">:</span>
-                <span>{{getInputTypeLabel()}}</span>
+                <span>{{getInputTypeLabel(field.inputType)}}</span>
             </li>
             <li *ngIf="field.condition" class="list-group-item">
                 <div><b i18n="@@configuration.field.condition">Bedingung</b><span class="oneliner-colon">:</span></div>
                 <div class="field-condition-label">
-                    <i>{{getFieldLabel(field.condition.fieldName)}}:</i> {{getConditionValuesLabel()}}
+                    <i>{{getFieldLabel(field.condition.fieldName)}}:</i> {{getConditionValuesLabel(field.condition)}}
                 </div>
+            </li>
+             <li *ngIf="field.subfields" class="list-group-item">
+                <div><b i18n="@@configuration.field.subfields">Unterfelder</b><span class="oneliner-colon">:</span></div>
+                <ul class="list-group list-group-flush">
+                    <li *ngFor="let subfield of field.subfields" class="list-group-item">
+                        <div><b>{{getSubfieldLabel(field.name, subfield.name)}}</b></div>
+                        <div>
+                            <span i18n="@@configuration.field.inputType">Eingabetyp</span><span class="oneliner-colon">:</span>
+                            <span>{{getInputTypeLabel(subfield.inputType)}}</span>
+                        </div>
+                        <div *ngIf="subfield.condition">
+                            <span i18n="@@configuration.field.condition">Bedingung</span><span class="oneliner-colon">:</span>
+                            <i>{{getSubfieldLabel(field.name, subfield.condition.subfieldName)}}:</i> {{getConditionValuesLabel(subfield.condition)}}
+                        </div>
+                    </li>
+                </ul>
             </li>
             <li *ngIf="field.valuelist" class="list-group-item">
                 <valuelist-view [valuelist]="field.valuelist"></valuelist-view>

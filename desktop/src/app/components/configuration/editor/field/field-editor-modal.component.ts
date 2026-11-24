@@ -85,8 +85,6 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
 
     public isGeometrySectionVisible = () => this.getInputType() === Field.InputType.GEOMETRY;
 
-    public isSubfieldsSectionVisible = () => this.getInputType() === Field.InputType.COMPOSITE;
-
     public isRelationSectionVisible = () => this.getInputType() === Field.InputType.RELATION
         && (this.isCustomField() || Relation.Workflow.ALL.includes(this.field.name));
 
@@ -206,6 +204,15 @@ export class FieldEditorModalComponent extends ConfigurationEditorModalComponent
         }
 
         await super.confirm(true);
+    }
+
+
+    public isSubfieldsSectionVisible() {
+
+        if (this.getInputType() !== Field.InputType.COMPOSITE) return false;
+        if (this.field.subfields?.length && !this.getClonedFieldDefinition().subfields?.length) return false;
+
+        return true;
     }
 
 

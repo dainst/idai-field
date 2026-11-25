@@ -1,0 +1,25 @@
+<div id="brightness-slider-button"
+        class="btn btn-primary btn-square layer-button"
+        [class.active]="opened"
+        ngbTooltip="Hintergrundfarbe anpassen"
+        i18n-ngbTooltip="@@image.adjustBackgroundColor"
+        container="body"
+        placement="left"
+        triggers="manual"
+        #brightnessSliderButtonTooltip="ngbTooltip"
+        (mouseover)="brightnessSliderButtonTooltip.open()"
+        (mouseleave)="brightnessSliderButtonTooltip.close()"
+        (mousedown)="brightnessSliderButtonTooltip.close(); $event.stopPropagation();"
+        (click)="toggle()">
+    <span class="mdi mdi-circle-half-full mdi-18px"></span>
+</div>
+<div *ngIf="opened" id="brightness-slider-menu" class="card">
+    <div class="card-body" (mousedown)="$event.stopPropagation()">
+        <span class="mdi mdi-circle"></span>
+        <input type="range" min="0" max="100" step="1"
+               [value]="brightness"
+               (mousedown)="$event.stopPropagation()"
+               (input)="setBrightness($event.target.value)">
+        <span class="mdi mdi-circle-outline"></span>
+    </div>
+</div>

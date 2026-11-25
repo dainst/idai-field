@@ -2,7 +2,9 @@
      id="image-container"
      [class.panning-disabled]="!isOriginal"
      [class.panning]="panning">
-     <div #overlay id="image-overlay"></div>
+     <div #overlay
+          id="image-overlay"
+          [style.background-color]="backgroundColor"></div>
      <img *ngIf="isImageContainerVisible()"
           #image
           id="image"
@@ -27,6 +29,7 @@
              i18n-ngbTooltip="@@image.export">
           <span class="mdi mdi-file-export"></span>
      </button>
+     <brightness-slider (onBrightnessChanged)="updateBackgroundColor($event)"></brightness-slider>
      <div *ngIf="isOriginalNotFoundWarningVisible() && !isDownloadButtonVisible() && !isExportButtonVisible()"
           id="no-original-image-icon"
           placement="left" container="body"

@@ -46,6 +46,7 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
     public panning: boolean = false;
     public loadingIconVisible: boolean = false;
     public loadingIconTimeout: any = undefined;
+    public backgroundColor: string = '#ddd';
 
     private loadedImageId: string;
     private panzoomInstance: any;
@@ -134,6 +135,14 @@ export class ImageViewerComponent implements OnChanges, OnDestroy {
     public async exportImage() {
         
         await this.imageToolLauncher.exportImages([this.imageDocument]);
+    }
+
+
+    public updateBackgroundColor(brightness: number) {
+
+        this.backgroundColor = brightness <= 50
+            ? 'color-mix(in oklab, #ddd ' + brightness * 2 + '%, #000)'
+            : 'color-mix(in oklab, #fff ' + (brightness - 50) * 2 + '%, #ddd';
     }
 
 

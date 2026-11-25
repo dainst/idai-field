@@ -1,0 +1,48 @@
+#brightness-slider-button,
+#brightness-slider-menu {
+  position: absolute;
+  z-index: 1008;
+  border: none;
+}
+
+#brightness-slider-button {
+  width: 38px !important;
+  height: 38px !important;
+  bottom: 10px;
+  left: 10px;
+  padding-top: 6px;
+
+  .mdi {
+    position: relative;
+  }
+}
+
+#brightness-slider-menu {
+  bottom: 12px;
+  left: 59px;
+  height: 35px;
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  border-radius: 0.25rem !important;
+  background-color: #f8f9fa !important;
+  cursor: default !important;
+  user-select: none;
+
+  .card-body {
+    padding: 7px;
+
+    .mdi-circle,
+    .mdi-circle-outline {
+      position: relative;
+      bottom: 2px;
+    }
+
+    .mdi-circle {
+      margin-right: 5px;
+    }
+
+    .mdi-circle-outline {
+      margin-left: 5px;
+    }
+  }
+}

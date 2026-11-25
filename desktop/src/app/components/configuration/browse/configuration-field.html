@@ -55,6 +55,15 @@
                                 <i>{{getSubfieldLabel(field.name, subfield.condition.subfieldName)}}:</i> {{getConditionValuesLabel(subfield.condition)}}
                             </div>
                         </div>
+                        <div *ngIf="subfield.valuelist" class="subfield-valuelist-container">
+                            <valuelist-view [valuelist]="subfield.valuelist"></valuelist-view>
+                        </div>
+                        <div *ngIf="subfield.valuelistFromProjectField" class="list-group-item">
+                            <span i18n="@@configuration.field.subfield.valuelistFromProjectField">
+                                Die Werteliste für dieses Unterfeld entspricht den Einträgen im Feld 
+                                <code>{{subfield.valuelistFromProjectField}}</code> der Projekteinstellungen.
+                            </span>
+                        </div>
                     </li>
                 </ul>
             </li>

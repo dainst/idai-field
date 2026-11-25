@@ -1,4 +1,5 @@
-<div class="zoom-buttons btn-group-vertical">
+<div class="zoom-buttons btn-group-vertical"
+     (mousedown)="$event.stopPropagation()">
     <button id="zoom-in-button"
             class="btn btn-light"
             [class.disabled]="!zoomInEnabled"

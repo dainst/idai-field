@@ -39,17 +39,21 @@
                 </div>
             </li>
              <li *ngIf="field.subfields" class="list-group-item">
-                <div><b i18n="@@configuration.field.subfields">Unterfelder</b><span class="oneliner-colon">:</span></div>
+                <div>
+                    <b i18n="@@configuration.field.subfields">Unterfelder</b><span class="oneliner-colon">:</span>
+                </div>
                 <ul class="list-group list-group-flush">
                     <li *ngFor="let subfield of field.subfields" class="list-group-item">
-                        <div><b>{{getSubfieldLabel(field.name, subfield.name)}}</b></div>
-                        <div>
-                            <span i18n="@@configuration.field.inputType">Eingabetyp</span><span class="oneliner-colon">:</span>
+                        <div class="subfield-label"><b>{{getSubfieldLabel(field.name, subfield.name)}}</b></div>
+                        <div class="subfield-info">
+                            <b i18n="@@configuration.field.inputType">Eingabetyp</b><span class="oneliner-colon">:</span>
                             <span>{{getInputTypeLabel(subfield.inputType)}}</span>
                         </div>
-                        <div *ngIf="subfield.condition">
-                            <span i18n="@@configuration.field.condition">Bedingung</span><span class="oneliner-colon">:</span>
-                            <i>{{getSubfieldLabel(field.name, subfield.condition.subfieldName)}}:</i> {{getConditionValuesLabel(subfield.condition)}}
+                        <div *ngIf="subfield.condition" class="subfield-info">
+                            <b i18n="@@configuration.field.condition">Bedingung</b><span class="oneliner-colon">:</span>
+                            <div>
+                                <i>{{getSubfieldLabel(field.name, subfield.condition.subfieldName)}}:</i> {{getConditionValuesLabel(subfield.condition)}}
+                            </div>
                         </div>
                     </li>
                 </ul>

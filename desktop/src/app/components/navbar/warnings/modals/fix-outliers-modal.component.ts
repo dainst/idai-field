@@ -52,7 +52,7 @@ export class FixOutliersModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.WARNINGS_MODAL) {
             this.activeModal.dismiss('cancel');
         }
     }

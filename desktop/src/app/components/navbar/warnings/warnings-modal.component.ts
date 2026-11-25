@@ -316,7 +316,7 @@ export class WarningsModalComponent extends ContextMenuProvider {
 
         const [result, componentInstance] = this.modals.make<DeleteResourceModalComponent>(
             DeleteResourceModalComponent,
-            MenuContext.MODAL
+            MenuContext.WARNINGS_MODAL
         );
 
         componentInstance.document = this.selectedDocument;
@@ -337,7 +337,7 @@ export class WarningsModalComponent extends ContextMenuProvider {
 
         const [result, componentInstance] = this.modals.make<ConvertFieldDataModalComponent>(
             ConvertFieldDataModalComponent,
-            MenuContext.MODAL
+            MenuContext.WARNINGS_MODAL
         );
 
         componentInstance.document = this.selectedDocument;
@@ -362,7 +362,7 @@ export class WarningsModalComponent extends ContextMenuProvider {
 
         const [result, componentInstance] = this.modals.make<SelectNewFieldModalComponent>(
             SelectNewFieldModalComponent,
-            MenuContext.MODAL
+            MenuContext.WARNINGS_MODAL
         );
 
         componentInstance.document = this.selectedDocument;
@@ -387,7 +387,7 @@ export class WarningsModalComponent extends ContextMenuProvider {
 
         const [result, componentInstance] = this.modals.make<SelectNewCategoryModalComponent>(
             SelectNewCategoryModalComponent,
-            MenuContext.MODAL
+            MenuContext.WARNINGS_MODAL
         );
 
         componentInstance.document = this.selectedDocument;
@@ -434,7 +434,7 @@ export class WarningsModalComponent extends ContextMenuProvider {
 
         const [result, componentInstance] = this.modals.make<DeleteFieldDataModalComponent>(
             DeleteFieldDataModalComponent,
-            MenuContext.MODAL
+            MenuContext.WARNINGS_MODAL
         );
 
         componentInstance.document = this.selectedDocument;
@@ -459,7 +459,7 @@ export class WarningsModalComponent extends ContextMenuProvider {
 
         const [result, componentInstance] = this.modals.make<CleanUpRelationModalComponent>(
             CleanUpRelationModalComponent,
-            MenuContext.MODAL
+            MenuContext.WARNINGS_MODAL
         );
 
         componentInstance.document = this.selectedDocument;
@@ -804,7 +804,7 @@ export class WarningsModalComponent extends ContextMenuProvider {
 
         const [result, componentInstance] = this.modals.make<FixOutliersModalComponent>(
             FixOutliersModalComponent,
-            MenuContext.MODAL
+            MenuContext.WARNINGS_MODAL
         );
 
         const field: Field = CategoryForm.getField(section.category, section.fieldName);
@@ -832,7 +832,7 @@ export class WarningsModalComponent extends ContextMenuProvider {
 
         const [result, componentInstance] = this.modals.make<DeleteOutliersModalComponent>(
             DeleteOutliersModalComponent,
-            MenuContext.MODAL
+            MenuContext.WARNINGS_MODAL
         );
 
         const field: Field = CategoryForm.getField(section.category, section.fieldName);

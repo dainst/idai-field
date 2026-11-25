@@ -52,7 +52,7 @@ export class SelectNewFieldModalComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) {
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.WARNINGS_MODAL) {
             this.activeModal.dismiss('cancel');
         }
     }
@@ -134,6 +134,8 @@ export class SelectNewFieldModalComponent {
 
     private async openConfirmationModal(): Promise<boolean> {
 
+        this.menuService.setContext(MenuContext.MODAL);
+
         const confirmOverwritingFieldModal: NgbModalRef = this.modalService.open(
             ConfirmOverwritingFieldModalComponent,
             { backdrop: 'static', keyboard: false, animation: false }
@@ -148,7 +150,7 @@ export class SelectNewFieldModalComponent {
         } catch (err) {
             return false;
         } finally {
-            this.menuService.setContext(MenuContext.MODAL);
+            this.menuService.setContext(MenuContext.WARNINGS_MODAL);
         }
     }
 

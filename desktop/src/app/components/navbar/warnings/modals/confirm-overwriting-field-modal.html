@@ -1,0 +1,20 @@
+<div id="confirm-overwriting-fields-modal-header" class="modal-header">
+    <h5 class="modal-title" i18n="@@navbar.taskbar.overwriteFields.header">
+        Feld <b>{{fieldLabel}}</b> überschreiben?
+    </h5>
+</div>
+
+<div id="confirm-overwriting-fields-modal-body" class="modal-body">
+    <div class="text-center alert alert-warning"
+         i18n="@@navbar.taskbar.overwriteFields.warning">
+        Bitte beachten Sie: Das ausgewählte Feld enthält bereits Daten, die beim Überschreiben des Feldes verloren
+        gehen.
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" id="overwrite-fields-confirm" class="btn btn-danger"
+            (click)="activeModal.close('delete')" i18n="@@navbar.taskbar.overwriteField">Feld überschreiben</button>
+    <button type="button" id="overwrite-fields-cancel" class="btn btn-secondary"
+            (click)="activeModal.dismiss('cancel')" i18n="@@buttons.cancel">Abbrechen</button>
+</div>

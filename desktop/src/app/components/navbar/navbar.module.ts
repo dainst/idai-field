@@ -21,6 +21,7 @@ import { SelectNewFieldModalComponent } from './warnings/modals/select-new-field
 import { SelectNewCategoryModalComponent } from './warnings/modals/select-new-category-modal.component';
 import { InvalidResourceViewComponent } from './warnings/widgets/invalid-resource-view.component';
 import { WarningsContextMenuComponent } from './warnings/context-menu/warnings-context-menu.component';
+import { ConfirmOverwritingFieldModalComponent } from './warnings/modals/confirm-overwriting-field-modal.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { WarningsContextMenuComponent } from './warnings/context-menu/warnings-c
         TaskbarSyncStatusComponent,
         TaskbarUpdateComponent,
         ProjectsComponent,
-        WarningsContextMenuComponent
+        WarningsContextMenuComponent,
+        ConfirmOverwritingFieldModalComponent
     ],
     exports: [
         NavbarComponent

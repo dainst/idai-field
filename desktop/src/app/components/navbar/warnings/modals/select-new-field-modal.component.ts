@@ -5,6 +5,7 @@ import { FixingDataInProgressModalComponent } from './fixing-data-in-progress-mo
 import { AngularUtility } from '../../../../angular/angular-utility';
 import { Menus } from '../../../../services/menus';
 import { MenuContext } from '../../../../services/menu-context';
+import { ConfirmOverwritingFieldModalComponent } from './confirm-overwriting-field-modal.component';
 
 
 @Component({
@@ -87,6 +88,8 @@ export class SelectNewFieldModalComponent {
 
         if (!this.selectedFieldName) return;
 
+        if (this.hasExistingData() && !(await this.openConfirmationModal())) return;
+
         const fixingDataInProgressModal: NgbModalRef = this.openFixingDataInProgressModal();
 
         await AngularUtility.refresh();
@@ -114,6 +117,39 @@ export class SelectNewFieldModalComponent {
         this.affectedDocuments.forEach(document => this.moveDataToNewField(document));
 
         await this.datastore.bulkUpdate(this.affectedDocuments);
+    }
+
+
+    private hasExistingData(): boolean {
+
+        const documents: Array<Document> = this.multiple ? this.affectedDocuments : [this.document];
+
+        return documents.some(document => {
+            return this.isRelationField
+                ? document.resource.relations[this.selectedFieldName]?.length
+                : document.resource[this.selectedFieldName] !== undefined;
+        });
+    }
+
+
+    private async openConfirmationModal(): Promise<boolean> {
+
+        const confirmOverwritingFieldModal: NgbModalRef = this.modalService.open(
+            ConfirmOverwritingFieldModalComponent,
+            { backdrop: 'static', keyboard: false, animation: false }
+        );
+        confirmOverwritingFieldModal.componentInstance.fieldLabel = this.getFieldLabel(
+            this.availableFields.find(field => field.name === this.selectedFieldName)
+        );
+
+         try {
+            await confirmOverwritingFieldModal.result;
+            return true;
+        } catch (err) {
+            return false;
+        } finally {
+            this.menuService.setContext(MenuContext.MODAL);
+        }
     }
 
 
